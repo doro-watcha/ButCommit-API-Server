@@ -78,6 +78,7 @@ class reportController {
       const {
         user
       } = req;
+      console.log(user);
       const reports = await _services.reportService.findList(user.id);
       const response = {
         success: true,

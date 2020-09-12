@@ -51,6 +51,10 @@ class MajorDataService {
              [Op.gt]: (score-10)
           }
         }
+      },
+      include : {
+        model: Major,
+          as: 'major',
       }
     })
   }

@@ -58,6 +58,10 @@ class MajorDataService {
             [Op.gt]: score - 10
           }
         }
+      },
+      include: {
+        model: _models.Major,
+        as: 'major'
       }
     });
   }
