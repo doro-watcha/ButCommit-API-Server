@@ -26,13 +26,7 @@ export default class reportController {
 
       if ( score == null ) throw Error('SCORE_NOT_FOUND')
 
-
-      console.log("zxcvzxcv")
-
       const modelObj = await reportController.getScore(score , majorData , true)
-
-
-    
 
       const report = await reportService.create(modelObj)
 
@@ -692,7 +686,6 @@ export default class reportController {
 
     else if ( reflectionSubject.indexOf("수+국,영,탐,한중 택1") >= 0 ) {
 
-      console.log("여기다 시벌남아")
 
       var scores = [totalScore.korean, totalScore.english , totalScore.tamgu , totalScore.history]
 
@@ -741,7 +734,7 @@ export default class reportController {
         extraScore.english = 0
         extraScore.tamgu = 0
       }
-      console.log("레전드")
+
 
     }
     else if ( reflectionSubject.indexOf("탐+국,수,영중 상위 2개 영역") >= 0 ) {

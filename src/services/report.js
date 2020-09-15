@@ -1,4 +1,4 @@
-import { Report , MajorData , User, Major } from '../models'
+import { Report , MajorData , User, Major ,Score} from '../models'
 import { majorDataService } from './majorData'
 
 let instance = null
@@ -50,7 +50,13 @@ class ReportService {
                 
 				{
 					model: User,
-					as: 'user',
+                    as: 'user',
+                    include : [
+                        {
+                            model : Score,
+                            as : 'score'
+                        }
+                    ]
 				},
 			],
 		})

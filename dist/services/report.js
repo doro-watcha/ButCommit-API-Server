@@ -54,7 +54,11 @@ class ReportService {
         }]
       }, {
         model: _models.User,
-        as: 'user'
+        as: 'user',
+        include: [{
+          model: _models.Score,
+          as: 'score'
+        }]
       }]
     });
   }
