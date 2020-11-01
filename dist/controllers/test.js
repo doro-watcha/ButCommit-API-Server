@@ -101,15 +101,14 @@ class testController {
         const answer = parseFloat(sheetData[i][7]);
         var determinant = 0;
 
-        if (value < answer && answer - value < answer * 0.1) {
+        if (value - answer < 0 && answer - value > -3) {
           determinant = 1;
         }
 
-        if (value > answer && value - answer < answer * 0.1) {
+        if (value - answer > 0 && value - answer < 3) {
           determinant = 1;
         }
 
-        console.log("zxcvzxvxzcvz");
         let obj1 = {
           id: i - 2,
           line: sheetData[i][0],
@@ -155,7 +154,32 @@ class testController {
   }
 
   static async test(req, res) {
-    try {} catch (e) {
+    try {
+      const result = await _joi.default.validate(req.query, {
+        scoreId: _joi.default.number().required(),
+        majorDataId: _joi.default.number().required()
+      });
+      const {
+        scoreId,
+        majorDataId
+      } = result;
+      const score = await _services.scoreService.findOne({
+        id: scoreId
+      });
+      const majorData = await _services.majorDataService.findOne({
+        id: majorDataId
+      });
+      const return_value = await _report.default.getScore(score, majorData, true);
+      const response = {
+        success: true,
+        data: {
+          return_value,
+          score,
+          majorData
+        }
+      };
+      res.send(response);
+    } catch (e) {
       res.send((0, _functions.createErrorResponse)(e));
     }
   }

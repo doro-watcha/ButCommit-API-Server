@@ -102,14 +102,14 @@ export default class testController {
           const answer = parseFloat(sheetData[i][7])
           var determinant = 0
 
-          if ( value < answer && answer - value < answer * 0.1) {
+          if ( value - answer < 0 && answer - value > -3) {
             determinant = 1
           }
 
-          if ( value > answer && value - answer < answer * 0.1 ) {
+          if ( value - answer > 0 && value - answer < 3 ) {
             determinant = 1
           }
-          console.log("zxcvzxvxzcvz")
+
             let obj1 = {
               id : i-2,
               line : sheetData[i][0], // 인문 
@@ -170,6 +170,30 @@ export default class testController {
 
       try {
 
+        const result = await Joi.validate(req.query, {
+          scoreId : Joi.number().required(),
+          majorDataId : Joi.number().required()
+        })
+
+        const { scoreId, majorDataId } = result
+
+
+        const score = await scoreService.findOne({id : scoreId})
+
+        const majorData = await majorDataService.findOne({id : majorDataId})
+
+        const return_value = await reportController.getScore(score,majorData,true)
+
+        const response = {
+          success : true,
+          data : {
+            return_value,
+            score,
+            majorData
+          }
+        }
+
+        res.send(response)
       }
 
       catch ( e ) {

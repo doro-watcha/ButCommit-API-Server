@@ -37,7 +37,7 @@ export default class AuthController {
 				},
 			}
 			res.send(response)
-		} catch (e) {
+		} catch (e) {	
 			res.send(createErrorResponse(e))
 		}
   }

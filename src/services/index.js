@@ -9,6 +9,7 @@ import academyService from './academy'
 import fileService from './file'
 import majorDataService from './majorData'
 import testService from './test'
+import highestScoreService from './highestScore'
 
 module.exports = {
     universityService,
@@ -21,5 +22,6 @@ module.exports = {
     academyService,
     fileService,
     majorDataService,
-    testService
+    testService,
+    highestScoreService
 }

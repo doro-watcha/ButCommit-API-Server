@@ -44,15 +44,11 @@ class Score extends _sequelize.default.Model {
         type: _sequelize.default.JSON,
         allowNull: true
       },
-      naesin1: {
+      naesin: {
         type: _sequelize.default.FLOAT,
         defaultValue: 0.0
       },
-      naesin2: {
-        type: _sequelize.default.FLOAT,
-        defaultValue: 0.0
-      },
-      naesin3: {
+      gumjeong: {
         type: _sequelize.default.FLOAT,
         defaultValue: 0.0
       },

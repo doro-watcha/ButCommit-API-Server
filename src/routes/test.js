@@ -28,7 +28,7 @@ router.get('/file',  (req,res) => {
 })
 
 router.post('/file', upload_test.fields([{ name: 'excel', maxCount: 1 }]) , (req,res) => {
-  console.log("tlqkf")
+
   testController.uploadFile(req,res)
 })
 
@@ -36,7 +36,7 @@ router.get('/parse', (req,res) => {
   testController.parse(req,res)
 })
 
-router.get('/', authenticate, (req,res) => {
+router.get('/', (req,res) => {
     testController.test(req,res)
 })
 
