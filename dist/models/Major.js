@@ -37,6 +37,10 @@ class Major extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allowNull: true
       },
+      sosokUniversity: {
+        type: _sequelize.default.STRING,
+        allowNull: true
+      },
       //모집 단위
       recruitmentUnit: {
         type: _sequelize.default.STRING,

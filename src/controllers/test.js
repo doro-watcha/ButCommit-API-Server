@@ -64,11 +64,11 @@ export default class testController {
       const user = { req }
 
 
-      const path = ('../excelfile/test.xlsx')
+      const path = ('../excelfile/major.xlsx')
       let workbook = xlsx.readFile(path, {sheetRows: 5603})
       let sheetsList = workbook.SheetNames
 
-      let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[0]], {
+      let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
            header: 1,
            defval: '',
            blankrows: true
@@ -182,14 +182,12 @@ export default class testController {
 
         const majorData = await majorDataService.findOne({id : majorDataId})
 
-        const return_value = await reportController.getScore(score,majorData,true)
+        const detail = await reportController.getScore(score,majorData,true)
 
         const response = {
           success : true,
           data : {
-            return_value,
-            score,
-            majorData
+            detail
           }
         }
 

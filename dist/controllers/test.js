@@ -64,7 +64,7 @@ class testController {
       const user = {
         req
       };
-      const path = '../excelfile/test.xlsx';
+      const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
         sheetRows: 5603
@@ -72,7 +72,7 @@ class testController {
 
       let sheetsList = workbook.SheetNames;
 
-      let sheetData = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[0]], {
+      let sheetData = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
         header: 1,
         defval: '',
         blankrows: true
@@ -169,13 +169,11 @@ class testController {
       const majorData = await _services.majorDataService.findOne({
         id: majorDataId
       });
-      const return_value = await _report.default.getScore(score, majorData, true);
+      const detail = await _report.default.getScore(score, majorData, true);
       const response = {
         success: true,
         data: {
-          return_value,
-          score,
-          majorData
+          detail
         }
       };
       res.send(response);
