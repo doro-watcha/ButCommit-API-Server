@@ -156,7 +156,7 @@ class testController {
   static async test(req, res) {
     try {
       const result = await _joi.default.validate(req.query, {
-        scoreId: _joi.default.number().required(),
+        userId: _joi.default.number().required(),
         majorDataId: _joi.default.number().required()
       });
       const {
@@ -164,7 +164,7 @@ class testController {
         majorDataId
       } = result;
       const score = await _services.scoreService.findOne({
-        id: scoreId
+        userId
       });
       const majorData = await _services.majorDataService.findOne({
         id: majorDataId

@@ -171,14 +171,14 @@ export default class testController {
       try {
 
         const result = await Joi.validate(req.query, {
-          scoreId : Joi.number().required(),
+          userId : Joi.number().required(),
           majorDataId : Joi.number().required()
         })
 
         const { scoreId, majorDataId } = result
 
 
-        const score = await scoreService.findOne({id : scoreId})
+        const score = await scoreService.findOne({userId})
 
         const majorData = await majorDataService.findOne({id : majorDataId})
 
