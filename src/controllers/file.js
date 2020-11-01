@@ -50,7 +50,7 @@ export default class fileController {
 
     try { 
 
-     // await majorService.deleteAll()
+      await majorService.deleteAll()
       await majorDataService.deleteAll()
 
 
@@ -83,7 +83,7 @@ export default class fileController {
           majorName : sheetData[i][7] // 경찰행정학과 
         }
 
-      //  await majorService.create(obj1)
+        await majorService.create(obj1)
       }
 
       // 2021년 
