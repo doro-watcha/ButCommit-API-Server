@@ -175,7 +175,7 @@ export default class testController {
           majorDataId : Joi.number().required()
         })
 
-        const { scoreId, majorDataId } = result
+        const { userId, majorDataId } = result
 
 
         const score = await scoreService.findOne({userId})

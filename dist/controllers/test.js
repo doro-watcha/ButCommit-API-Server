@@ -160,7 +160,7 @@ class testController {
         majorDataId: _joi.default.number().required()
       });
       const {
-        scoreId,
+        userId,
         majorDataId
       } = result;
       const score = await _services.scoreService.findOne({
