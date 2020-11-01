@@ -30,6 +30,10 @@ export default class Major extends Sequelize.Model {
           type : Sequelize.STRING,
           allowNull : true
         },
+        sosokUniversity : {
+          type : Sequelize.STRING,
+          allowNull : true 
+        },
         //모집 단위
         recruitmentUnit : {
           type : Sequelize.STRING,
