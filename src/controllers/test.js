@@ -51,7 +51,6 @@ export default class testController {
 
     try {
 
-      await testService.deleteAll()
 
       const result = await Joi.validate(req.query, {
         societyUserId : Joi.number().required(),
@@ -84,17 +83,19 @@ export default class testController {
       console.log(scienceScore)
       const societyScore = await scoreService.findOne({userId : societyUserId})
 
-      if ( scienceScore == null || soceityScore == null) Error('SCORE_NOT_FOUND')
+      if ( scienceScore == null || soceityScore == null) throw Error('SCORE_NOT_FOUND')
 
       let data = []
 
+
+      await testService.deleteAll()
         // 파싱을 해보자 
         for ( let i = 3 ; i < 5563 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
 
-          if ( majorData == null) Error('MAJOR_DATA_NOT_FOUND')
+          if ( majorData == null) throw Error('MAJOR_DATA_NOT_FOUND')
 
           console.log( majorData.id)
 

@@ -52,7 +52,6 @@ class testController {
 
   static async parse(req, res) {
     try {
-      await _services.testService.deleteAll();
       const result = await _joi.default.validate(req.query, {
         societyUserId: _joi.default.number().required(),
         scienceUserId: _joi.default.number().required()
@@ -86,14 +85,15 @@ class testController {
       const societyScore = await _services.scoreService.findOne({
         userId: societyUserId
       });
-      if (scienceScore == null || soceityScore == null) Error('SCORE_NOT_FOUND');
-      let data = []; // 파싱을 해보자 
+      if (scienceScore == null || soceityScore == null) throw Error('SCORE_NOT_FOUND');
+      let data = [];
+      await _services.testService.deleteAll(); // 파싱을 해보자 
 
       for (let i = 3; i < 5563; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
-        if (majorData == null) Error('MAJOR_DATA_NOT_FOUND');
+        if (majorData == null) throw Error('MAJOR_DATA_NOT_FOUND');
         console.log(majorData.id);
         var value = -1;
 
