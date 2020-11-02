@@ -271,8 +271,8 @@ export default class reportController {
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
       newScore.math = score.math.score * ( perfectScore.math  ) / 200
 
-      newScore.tamgu1.score = tamguPercentileToScore[score.tamgu1.percentile-1] * perfectScore.tamgu / 200
-      newScore.tamgu2.score = tamguPercentileToScore[score.tamgu2.percentile-1] * perfectScore.tamgu / 200 
+      newScore.tamgu1.score = tamguPercentileToScore[score.tamgu1.percentile-1] * perfectScore.tamgu / 100
+      newScore.tamgu2.score = tamguPercentileToScore[score.tamgu2.percentile-1] * perfectScore.tamgu / 100 
       newScore.foreign.score = tamguPercentileToScore[score.foreign.percentile-1] * perfectScore.tamgu / 200 
 
     }
