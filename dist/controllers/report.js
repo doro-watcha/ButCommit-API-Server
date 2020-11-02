@@ -252,7 +252,7 @@ class reportController {
             console.log(highestMath.score);
             console.log(highestTamgu1.score);
             console.log(highestTamgu2.score);
-            console.log(highestForeign.score);
+            console.log(highestForeign);
             console.log("-------------------------");
             console.log(score.korean.score);
             console.log(perfectScore.korean);
