@@ -86,13 +86,14 @@ class testController {
       const societyScore = await _services.scoreService.findOne({
         userId: societyUserId
       });
-      console.log(societyScore);
+      if (scienceScore == null || soceityScore == null) Error('SCORE_NOT_FOUND');
       let data = []; // 파싱을 해보자 
 
       for (let i = 3; i < 5563; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
+        if (majorData == null) Error('MAJOR_DATA_NOT_FOUND');
         console.log(majorData.id);
         var value = -1;
 

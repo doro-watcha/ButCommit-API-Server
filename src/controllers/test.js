@@ -84,7 +84,7 @@ export default class testController {
       console.log(scienceScore)
       const societyScore = await scoreService.findOne({userId : societyUserId})
 
-      console.log(societyScore)
+      if ( scienceScore == null || soceityScore == null) Error('SCORE_NOT_FOUND')
 
       let data = []
 
@@ -93,6 +93,8 @@ export default class testController {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
+
+          if ( majorData == null) Error('MAJOR_DATA_NOT_FOUND')
 
           console.log( majorData.id)
 
