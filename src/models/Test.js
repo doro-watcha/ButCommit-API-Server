@@ -26,13 +26,13 @@ export default class Test extends Sequelize.Model {
                 type : Sequelize.STRING,
                 allowNull : true 
               },
-              total : {
-                type : Sequelize.STRING,
+              answer : {
+                type : Sequelize.FLOAT,
                 allowNull : true 
               },
-              score : {
+              sosokUniversity : {
                 type : Sequelize.STRING,
-                allowNull : true
+                allowNull : true 
               },
               test : {
                 type : Sequelize.FLOAT,

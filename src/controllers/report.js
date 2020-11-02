@@ -221,6 +221,9 @@ export default class reportController {
       }
     }
 
+    console.log("만점 구하기 성공!")
+
+    console.log(applicationIndicatorType)
 
     /**
      * 점수를 구해보자 
@@ -353,6 +356,8 @@ export default class reportController {
         newScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv
       }
     }
+
+    console.log("변환 점수 구하기 성공!")
 
   
     // 가산점을 구해보자!
@@ -673,6 +678,8 @@ export default class reportController {
     }
 
 
+    console.log("가산점 구하기 성공!")
+
     const totalScore = {
       korean : newScore.korean + extraScore.korean,
       math : newScore.math + extraScore.math,
@@ -682,24 +689,36 @@ export default class reportController {
       foreign : newScore.foreign + extraScore.foreign
     }
 
+    console.log("탐구반영은 따로 구해보자")
 
     /**
      * 탐구 반영 갯수에 따라서 달라진다
      */
     if ( majorData.metadata.tamguNumber == 1 ) {
+      console.log("여기긴하잖아")
+      console.log(newScore.tamgu1.score)
+      console.log(extraScore.tamgu1)
+      console.log(newScore.tamgu2.score)
+      console.log(extraScore.tamgu2)
+      console.log("여기중에 에러가 나는구나")
       totalScore.tamgu = Math.max(newScore.tamgu1.score + extraScore.tamgu1 , newScore.tamgu2.score + extraScore.tamgu2 )
     }
     
     else if ( majorData.metadata.tamguNumber == 2 ) {
+
+      console.log("탐구가 2과목이라고..?")
       totalScore.tamgu = Math.floor( ( newScore.tamgu1.score + extraScore.tamgu1 + newScore.tamgu2.score + extraScore.tamgu2 ) / 2)
 
     }
     
+    console.log("반영비율별로해서 구해보자")
 
     /**
      * 반영비율별로 해서 구해보자!
      */
     const reflectionSubject = majorData.metadata.reflectionSubject
+
+    console.log(reflectionSubject)
 
     var totalSum = 0
 
@@ -749,13 +768,13 @@ export default class reportController {
         return b - a
       })
 
-      totalSum = scoreList1[0] + scoreList2[0] + scoreList[1]
+      totalSum = scoreList1[0] + scoreList2[0] + scoreList2[1]
     }
 
     else if ( reflectionSubject == "( 국,수,영 중 택1 ) + ( 나머지 영역,탐 중 택1 )") {
 
       const scoreList1 = [totalScore.korean, totalScore.math, totalScore.english]
-      const scoreList2 = [totalScore.history , totalScore,tamgu]
+      const scoreList2 = [totalScore.history , totalScore.tamgu]
 
       
       scoreList1.sort(function(a, b) { 
@@ -770,11 +789,15 @@ export default class reportController {
     }
     else if ( reflectionSubject == "국,수,영,탐 중 택2"){
 
-      const scoreList = [totalScore.korean , totalSocre.math, totalScore.english , totalScore.tamgu]
+      console.log("여기가 문제가 아니라고?")
+
+      const scoreList = [totalScore.korean , totalScore.math, totalScore.english , totalScore.tamgu]
       
       scoreList.sort(function(a, b) { 
         return b - a
       })
+
+      console.log("여기가 문제야!")
      
       totalSum = scoreList[0] + scoreList[1]
 
@@ -786,6 +809,8 @@ export default class reportController {
       scoreList.sort(function(a, b) { 
         return b - a
       })
+
+      console.log("asldkfjasldkfjasdlkfjasldkfjaslkdfj")
 
       totalSum = scoreList[0] + scoreList[1] + scoreList[2]
     }
@@ -853,7 +878,7 @@ export default class reportController {
         return b - a
       })
 
-      totalSum = totalScore.korean + totalScore.english + scoreeList[0]
+      totalSum = totalScore.korean + totalScore.english + scoreList[0]
 
     }
 
@@ -1053,8 +1078,11 @@ export default class reportController {
     }
 
     else {
+      console.log("에러야 에러 순서에서 에러")
       totalSum = -1
     }
+
+    console.log("순서까지 다 정했어!")
 
     if ( create == true ) {
 
@@ -1229,10 +1257,10 @@ export default class reportController {
       else if ( score.english.grade == 7 ) englishScore = 230
       else if ( score.english.grade == 8 ) englishScore = 180
 
-      if ( score.tamgu.grade < 6 ) tamguScore = 350 - 10 * ( score.tamgu.grade - 1 )
-      else if ( score.tamgu.grade == 6 ) tamguScore = 210
-      else if ( score.tamgu.grade == 7 ) tamguScore = 190
-      else if ( score.tamgu.grade == 8 ) tamguScore = 100
+      if ( tamgu < 6 ) tamguScore = 350 - 10 * ( tamgu - 1 )
+      else if ( tamgu == 6 ) tamguScore = 210
+      else if ( tamgu == 7 ) tamguScore = 190
+      else if ( tamgu == 8 ) tamguScore = 100
 
       translationScore = maxScore + englishScore + tamguScore 
     }
@@ -1269,10 +1297,15 @@ export default class reportController {
 
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade)
 
+      console.log("tamgu man " + tamgu )
       const newAverageGrade = score.korean.grade * 0.4 + score.english.grade * 0.3 + tamgu * 0.3
 
-      if ( metadata.major.line == "예체능") translationScore = 200 - Math.floor(newAverageGrade) * 10 
+      console.log(newAverageGrade)
+
+      if ( majorData.major.line == "예체능") translationScore = 200 - Math.floor(newAverageGrade) * 10 
       else translationScore = 50 - 2.5 * Math.floor(newAverageGrade)
+
+      console.log(translationScore)
 
 
     }
@@ -1303,7 +1336,8 @@ export default class reportController {
       korean : koreanScore,
       english : englishScore,
       math : mathScore,
-      tamgu : tamguScore,
+      tamgu1 : tamguScore,
+      tamgu2 : tamguScore,
       history : historyScore,
       foreign : foreignScore
     }

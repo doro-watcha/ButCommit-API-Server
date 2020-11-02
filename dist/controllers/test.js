@@ -61,13 +61,11 @@ class testController {
         societyUserId,
         scienceUserId
       } = result;
-      const user = {
-        req
-      };
+      console.log("zxcvzxcvzxcvz");
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5603
+        sheetRows: 5563
       });
 
       let sheetsList = workbook.SheetNames;
@@ -78,61 +76,96 @@ class testController {
         blankrows: true
       });
 
+      console.log("zxcvzxcvzxvzxvzxzxcv");
+      console.log(scienceUserId);
+      console.log(societyUserId);
       const scienceScore = await _services.scoreService.findOne({
         userId: scienceUserId
       });
+      console.log(scienceScore);
       const societyScore = await _services.scoreService.findOne({
         userId: societyUserId
       });
+      console.log(societyScore);
       let data = []; // 파싱을 해보자 
 
-      for (let i = 3; i < 5603; i++) {
+      for (let i = 3; i < 5563; i++) {
         const majorData = await _services.majorDataService.findOne({
-          id: 2 * i - 5
+          id: i - 2
         });
+        console.log(majorData.id);
         var value = -1;
 
         if (sheetData[i][0] == "인문") {
+          console.log("퍽맨!");
           value = await _report.default.getScore(societyScore, majorData, false);
+          console.log(value);
         } else {
           value = await _report.default.getScore(scienceScore, majorData, false);
         }
 
-        const answer = parseFloat(sheetData[i][7]);
-        var determinant = 0;
+        const answer = parseFloat(sheetData[i][26]);
+        console.log(answer);
+        console.log(value);
+        console.log("가즈아");
+        var determinant = -1;
+        console.log(answer);
+        console.log(value);
 
         if (value - answer < 0 && answer - value > -3) {
-          determinant = 1;
+          determinant = 0;
         }
 
         if (value - answer > 0 && value - answer < 3) {
           determinant = 1;
         }
 
-        let obj1 = {
-          id: i - 2,
-          line: sheetData[i][0],
-          // 인문 
-          group: sheetData[i][1],
-          // 다 
-          name: sheetData[i][2],
-          // 대학명
-          recruitmentType: sheetData[i][3],
-          // 일반전형
-          major: sheetData[i][4],
-          // 세부전공
-          total: sheetData[i][6],
-          score: sheetData[i][7],
-          test: value,
-          result: determinant
-        };
-        data.push(obj1);
-        await _services.testService.create(obj1);
+        if (answer != null && determinant != -1) {
+          let obj1 = {
+            id: i - 2,
+            line: sheetData[i][0],
+            // 인문 
+            group: sheetData[i][1],
+            // 다 
+            name: sheetData[i][3],
+            // 대학명
+            recruitmentType: sheetData[i][6],
+            // 경찰행정학과
+            major: sheetData[i][7],
+            // 경찰행정학과
+            sosokUniversity: sheetData[i][5],
+            // 사회과학계열
+            answer,
+            test: value,
+            result: determinant
+          };
+          data.push(obj1);
+          console.log("가즈아2");
+          await _services.testService.create(obj1);
+        } else {
+          let obj2 = {
+            id: i - 2,
+            line: sheetData[i][0],
+            // 인문 
+            group: sheetData[i][1],
+            // 다 
+            name: sheetData[i][2],
+            // 대학명
+            recruitmentType: sheetData[i][6],
+            // 경찰행정학과
+            major: sheetData[i][7],
+            // 경찰행정학과
+            sosokUniversity: sheetData[i][5],
+            // 사회과학계열
+            result: -1
+          };
+          await _services.testService.create(obj2);
+        }
       }
 
+      console.log("zxcvzxv");
       const response = {
-        success: true,
-        data: data
+        success: true
       };
       res.send(response);
     } catch (e) {}

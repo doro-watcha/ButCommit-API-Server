@@ -190,11 +190,13 @@ class reportController {
         score.math.grade = score.math.grade - 1;
       }
     }
+
+    console.log("만점 구하기 성공!");
+    console.log(applicationIndicatorType);
     /**
      * 점수를 구해보자 
      */
     //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
-
 
     if (applicationIndicatorType == "A") {
       newScore.korean = score.korean.percentile * perfectScore.korean / 100;
@@ -269,8 +271,9 @@ class reportController {
       if (hmv == "x비율") {} else if (hmv == "평균등급활용") {} else if (hmv == "예외/옵션창고") {} else {
         newScore.history = majorData.gradeToScore.history.score[score.history.grade - 1] * hmv;
       }
-    } // 가산점을 구해보자!
+    }
 
+    console.log("변환 점수 구하기 성공!"); // 가산점을 구해보자!
 
     const extraType = majorData.metadata.extraType;
     const extraSubject = majorData.metadata.extraSubject;
@@ -432,6 +435,7 @@ class reportController {
       }
     }
 
+    console.log("가산점 구하기 성공!");
     const totalScore = {
       korean: newScore.korean + extraScore.korean,
       math: newScore.math + extraScore.math,
@@ -440,21 +444,31 @@ class reportController {
       history: newScore.history + extraScore.history,
       foreign: newScore.foreign + extraScore.foreign
     };
+    console.log("탐구반영은 따로 구해보자");
     /**
      * 탐구 반영 갯수에 따라서 달라진다
      */
 
     if (majorData.metadata.tamguNumber == 1) {
+      console.log("여기긴하잖아");
+      console.log(newScore.tamgu1.score);
+      console.log(extraScore.tamgu1);
+      console.log(newScore.tamgu2.score);
+      console.log(extraScore.tamgu2);
+      console.log("여기중에 에러가 나는구나");
       totalScore.tamgu = Math.max(newScore.tamgu1.score + extraScore.tamgu1, newScore.tamgu2.score + extraScore.tamgu2);
     } else if (majorData.metadata.tamguNumber == 2) {
+      console.log("탐구가 2과목이라고..?");
       totalScore.tamgu = Math.floor((newScore.tamgu1.score + extraScore.tamgu1 + newScore.tamgu2.score + extraScore.tamgu2) / 2);
     }
+
+    console.log("반영비율별로해서 구해보자");
     /**
      * 반영비율별로 해서 구해보자!
      */
 
-
     const reflectionSubject = majorData.metadata.reflectionSubject;
+    console.log(reflectionSubject);
     var totalSum = 0;
 
     if (reflectionSubject == "국") {
@@ -486,10 +500,10 @@ class reportController {
       scoreList2.sort(function (a, b) {
         return b - a;
       });
-      totalSum = scoreList1[0] + scoreList2[0] + scoreList[1];
+      totalSum = scoreList1[0] + scoreList2[0] + scoreList2[1];
     } else if (reflectionSubject == "( 국,수,영 중 택1 ) + ( 나머지 영역,탐 중 택1 )") {
       const scoreList1 = [totalScore.korean, totalScore.math, totalScore.english];
-      const scoreList2 = [totalScore.history, totalScore, tamgu];
+      const scoreList2 = [totalScore.history, totalScore.tamgu];
       scoreList1.sort(function (a, b) {
         return b - a;
       });
@@ -498,16 +512,19 @@ class reportController {
       });
       totalSum = scoreList1[0] + scoreList2[0];
     } else if (reflectionSubject == "국,수,영,탐 중 택2") {
-      const scoreList = [totalScore.korean, totalSocre.math, totalScore.english, totalScore.tamgu];
+      console.log("여기가 문제가 아니라고?");
+      const scoreList = [totalScore.korean, totalScore.math, totalScore.english, totalScore.tamgu];
       scoreList.sort(function (a, b) {
         return b - a;
       });
+      console.log("여기가 문제야!");
       totalSum = scoreList[0] + scoreList[1];
     } else if (reflectionSubject == "국,수,영,탐 중 택3") {
       const scoreList = [totalScore.korean, totalScore.english, totalScore.math, totalScore.tamgu];
       scoreList.sort(function (a, b) {
         return b - a;
       });
+      console.log("asldkfjasldkfjasdlkfjasldkfjaslkdfj");
       totalSum = scoreList[0] + scoreList[1] + scoreList[2];
     } else if (reflectionSubject == "국,수,영,탐,제2외국어 중 택3") {
       const scoreList = [totalScore.korean, totalScore.math, totalScore.english, totalScore.tamgu, totalScore.foreign];
@@ -544,7 +561,7 @@ class reportController {
       scoreList.sort(function (a, b) {
         return b - a;
       });
-      totalSum = totalScore.korean + totalScore.english + scoreeList[0];
+      totalSum = totalScore.korean + totalScore.english + scoreList[0];
     } else if (reflectionSubject == "국+탐+( 수,영 중 택1 )") {
       const scoreList = [totalScore.math, totalScore.english];
       scoreList.sort(function (a, b) {
@@ -652,8 +669,11 @@ class reportController {
       });
       totalSum = scoreList1[0] * 0.8 + scoreList2[0] * 0.2;
     } else {
+      console.log("에러야 에러 순서에서 에러");
       totalSum = -1;
     }
+
+    console.log("순서까지 다 정했어!");
 
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
@@ -764,7 +784,7 @@ class reportController {
       if (score.math.grade < 8) mathScore = 350 - 35 * (score.math.grade - 1);else if (score.math.grade == 8) mathScore = 80;
       const maxScore = Math.max(koreanScore, mathScore);
       if (score.english.grade < 6) englishScore = 350 - 10 * (score.english.grade - 1);else if (score.english.grade == 6) englishScore = 250;else if (score.english.grade == 7) englishScore = 230;else if (score.english.grade == 8) englishScore = 180;
-      if (score.tamgu.grade < 6) tamguScore = 350 - 10 * (score.tamgu.grade - 1);else if (score.tamgu.grade == 6) tamguScore = 210;else if (score.tamgu.grade == 7) tamguScore = 190;else if (score.tamgu.grade == 8) tamguScore = 100;
+      if (tamgu < 6) tamguScore = 350 - 10 * (tamgu - 1);else if (tamgu == 6) tamguScore = 210;else if (tamgu == 7) tamguScore = 190;else if (tamgu == 8) tamguScore = 100;
       translationScore = maxScore + englishScore + tamguScore;
     } else if (univName == "호원대") {
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
@@ -782,8 +802,11 @@ class reportController {
       translationScore = koreanScore;
     } else if (univName == "서울기독대") {
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
+      console.log("tamgu man " + tamgu);
       const newAverageGrade = score.korean.grade * 0.4 + score.english.grade * 0.3 + tamgu * 0.3;
-      if (metadata.major.line == "예체능") translationScore = 200 - Math.floor(newAverageGrade) * 10;else translationScore = 50 - 2.5 * Math.floor(newAverageGrade);
+      console.log(newAverageGrade);
+      if (majorData.major.line == "예체능") translationScore = 200 - Math.floor(newAverageGrade) * 10;else translationScore = 50 - 2.5 * Math.floor(newAverageGrade);
+      console.log(translationScore);
     } else if (univName == "가야대") {
       const tamgu = Math.max(score.tamgu1.percentile, score.tamgu2.percentile);
       koreanScore = await reportController.gayaScore(score.korean.percentile);
@@ -802,7 +825,8 @@ class reportController {
       korean: koreanScore,
       english: englishScore,
       math: mathScore,
-      tamgu: tamguScore,
+      tamgu1: tamguScore,
+      tamgu2: tamguScore,
       history: historyScore,
       foreign: foreignScore
     };

@@ -32,11 +32,11 @@ class Test extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allowNull: true
       },
-      total: {
-        type: _sequelize.default.STRING,
+      answer: {
+        type: _sequelize.default.FLOAT,
         allowNull: true
       },
-      score: {
+      sosokUniversity: {
         type: _sequelize.default.STRING,
         allowNull: true
       },
