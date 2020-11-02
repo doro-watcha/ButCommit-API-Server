@@ -100,7 +100,7 @@ class testController {
 
         const answer = parseFloat(sheetData[i][26]);
         var determinant = -1;
-        if (isNaN(answer) == false) determinant = 2;
+        if (isNaN(answer) == true) determinant = 2;
 
         if (value - answer <= 0) {
           if (value - answer >= -10) determinant = 1;else determinant = 0;
