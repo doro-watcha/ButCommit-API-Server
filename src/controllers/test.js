@@ -113,13 +113,14 @@ export default class testController {
 
             var determinant = -1
 
-            if ( value - answer < 0 && answer - value > -10) {
-              determinant = 0
-            }
+            if ( value - answer < 0 && value - answer < -10) {
+              determinant = 1
+            } 
+            else determinant = 0
 
             if ( value - answer > 0 && value - answer < 10 ) {
               determinant = 1
-            }
+            } else determinant = 0 
 
             if ( !isNaN(answer) && determinant != -1) {
 
