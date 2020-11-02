@@ -296,7 +296,7 @@ export default class reportController {
 
       const highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       const highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
-      const highestForeign = await highestScoreService.findOne("제 2외국어 한문", score.foreign.name )
+      const highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
 
       
 
