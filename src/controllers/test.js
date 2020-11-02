@@ -197,7 +197,7 @@ export default class testController {
 
 
     } catch ( e ) {
-
+      res.send(createErrorResponse(e))
     }
   }
 

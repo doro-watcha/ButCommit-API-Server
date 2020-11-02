@@ -169,7 +169,9 @@ class testController {
         success: true
       };
       res.send(response);
-    } catch (e) {}
+    } catch (e) {
+      res.send((0, _functions.createErrorResponse)(e));
+    }
   }
 
   static async getList(req, res) {
