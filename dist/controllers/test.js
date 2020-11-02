@@ -103,11 +103,11 @@ class testController {
         if (isNaN(answer) == true) determinant = 2;
 
         if (value - answer <= 0) {
-          if (value - answer >= -100) determinant = 1;else determinant = 0;
+          if (value - answer >= -10) determinant = 1;else determinant = 0;
         }
 
         if (value - answer > 0) {
-          if (value - answer <= 100) determinant = 1;else determinant = 0;
+          if (value - answer <= 10) determinant = 1;else determinant = 0;
         } // console.log("value")
         // console.log(value)
         // console.log("answer")
