@@ -101,13 +101,18 @@ class testController {
         const answer = parseFloat(sheetData[i][26]);
         var determinant = -1;
 
-        if (value - answer < 0) {
+        if (value - answer <= 0) {
           if (value - answer >= -10) determinant = 1;else determinant = 0;
         }
 
         if (value - answer > 0) {
           if (value - answer <= 10) determinant = 1;else determinant = 0;
-        }
+        } // console.log("value")
+        // console.log(value)
+        // console.log("answer")
+        // console.log(answer)
+        // if ( !isNaN(answer) && determinant == -1 ) throw Error('SCORE_NOT_FOUND')
+
 
         if (!isNaN(answer) && determinant != -1) {
           console.log("test값은 = ");
