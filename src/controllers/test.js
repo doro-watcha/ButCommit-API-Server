@@ -111,7 +111,11 @@ export default class testController {
       
           const answer = parseFloat(sheetData[i][26])
 
+          
+
             var determinant = -1
+
+            if ( isNaN(answer) == false ) determinant = 2
 
             if ( value - answer <= 0 ) {
               if ( value - answer >=-10 ) determinant = 1
@@ -123,6 +127,7 @@ export default class testController {
               if ( value - answer <= 10) determinant = 1
               else determinant = 0 
             }
+
             
             // console.log("value")
             // console.log(value)
@@ -130,7 +135,7 @@ export default class testController {
             // console.log(answer)
             // if ( !isNaN(answer) && determinant == -1 ) throw Error('SCORE_NOT_FOUND')
 
-            if ( !isNaN(answer) && determinant != -1 ) {
+            if ( !isNaN(answer) && determinant != -1 && determinant != 2  ) {
 
               console.log("test값은 = ")
               console.log(value)
@@ -164,7 +169,7 @@ export default class testController {
               recruitmentType : sheetData[i][6], // 경찰행정학과
               major : sheetData[i][7], // 경찰행정학과
               sosokUniversity : sheetData[i][5],// 사회과학계열
-              result : -1
+              result : determinant
             }
 
             await testService.create(obj2)
