@@ -28,6 +28,10 @@ class HighestScoreService {
     });
   }
 
+  async create(modelObj) {
+    return await _models.HighestScore.create(modelObj);
+  }
+
 }
 
 var _default = new HighestScoreService();

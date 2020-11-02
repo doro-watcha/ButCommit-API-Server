@@ -60,7 +60,6 @@ class testController {
         societyUserId,
         scienceUserId
       } = result;
-      console.log("zxcvzxcvzxcvz");
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -75,13 +74,9 @@ class testController {
         blankrows: true
       });
 
-      console.log("zxcvzxcvzxvzxvzxzxcv");
-      console.log(scienceUserId);
-      console.log(societyUserId);
       const scienceScore = await _services.scoreService.findOne({
         userId: scienceUserId
       });
-      console.log(scienceScore);
       const societyScore = await _services.scoreService.findOne({
         userId: societyUserId
       });
@@ -94,24 +89,17 @@ class testController {
           id: i - 2
         });
         if (majorData == null) throw Error('MAJOR_DATA_NOT_FOUND');
-        console.log(majorData.id);
+        console.log("majorDataId야 " + majorData.id);
         var value = -1;
 
         if (sheetData[i][0] == "인문") {
-          console.log("퍽맨!");
           value = await _report.default.getScore(societyScore, majorData, false);
-          console.log(value);
         } else {
           value = await _report.default.getScore(scienceScore, majorData, false);
         }
 
         const answer = parseFloat(sheetData[i][26]);
-        console.log(answer);
-        console.log(value);
-        console.log("가즈아");
         var determinant = -1;
-        console.log(answer);
-        console.log(value);
 
         if (value - answer < 0 && answer - value > -3) {
           determinant = 0;
@@ -121,7 +109,11 @@ class testController {
           determinant = 1;
         }
 
-        if (answer != null && determinant != -1) {
+        if (!isNaN(answer) && determinant != -1) {
+          console.log("test값은 = ");
+          console.log(value);
+          console.log("answer값은 = ");
+          console.log(answer);
           let obj1 = {
             id: i - 2,
             line: sheetData[i][0],
@@ -136,12 +128,12 @@ class testController {
             // 경찰행정학과
             sosokUniversity: sheetData[i][5],
             // 사회과학계열
+            perfectScore: sheetData[i][56],
             answer,
             test: value,
             result: determinant
           };
           data.push(obj1);
-          console.log("가즈아2");
           await _services.testService.create(obj1);
         } else {
           let obj2 = {
@@ -164,7 +156,6 @@ class testController {
         }
       }
 
-      console.log("zxcvzxv");
       const response = {
         success: true
       };

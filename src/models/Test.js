@@ -34,6 +34,10 @@ export default class Test extends Sequelize.Model {
                 type : Sequelize.STRING,
                 allowNull : true 
               },
+              perfectScore : {
+                type : Sequelize.INTEGER,
+                allowNull : true 
+              },
               test : {
                 type : Sequelize.FLOAT,
                 alloNull : true 

@@ -24,6 +24,8 @@ var _majorData = _interopRequireDefault(require("./majorData"));
 
 var _test = _interopRequireDefault(require("./test"));
 
+var _highestScore = _interopRequireDefault(require("./highestScore"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -38,5 +40,6 @@ module.exports = {
   academyController: _academy.default,
   fileController: _file.default,
   majorDataController: _majorData.default,
-  testController: _test.default
+  testController: _test.default,
+  highestScoreController: _highestScore.default
 };

@@ -40,6 +40,10 @@ class Test extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allowNull: true
       },
+      perfectScore: {
+        type: _sequelize.default.INTEGER,
+        allowNull: true
+      },
       test: {
         type: _sequelize.default.FLOAT,
         alloNull: true

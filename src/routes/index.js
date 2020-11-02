@@ -13,6 +13,7 @@ import academyRouter from './academy'
 import fileRouter from './file'
 import majorDataRouter from './majorData'
 import testRouter from './test'
+import highestScoreRouter from './highestScore'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -31,6 +32,7 @@ router.use('/academy', academyRouter)
 router.use('/file' , fileRouter)
 router.use('/majorData', majorDataRouter)
 router.use('/test', testRouter)
+router.use('/highestScore', highestScoreRouter)
 
 
 module.exports = router

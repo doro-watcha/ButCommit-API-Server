@@ -60,8 +60,7 @@ export default class testController {
 
       const { societyUserId , scienceUserId } = result
 
-      console.log("zxcvzxcvzxcvz")
-
+ 
 
       const path = ('../excelfile/major.xlsx')
       let workbook = xlsx.readFile(path, {sheetRows: 5563})
@@ -73,14 +72,10 @@ export default class testController {
            blankrows: true
       })
 
-      console.log("zxcvzxcvzxvzxvzxzxcv")
-
-      console.log(scienceUserId)
-      console.log(societyUserId)
 
       const scienceScore = await scoreService.findOne({userId : scienceUserId})
 
-      console.log(scienceScore)
+     
       const societyScore = await scoreService.findOne({userId : societyUserId})
 
       if ( scienceScore == null || societyScore == null) throw Error('SCORE_NOT_FOUND')
@@ -90,24 +85,22 @@ export default class testController {
 
       await testService.deleteAll()
         // 파싱을 해보자 
-        for ( let i = 3 ; i < 5563 ; i++) {
+        for ( let i = 3; i < 5563 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
 
           if ( majorData == null) throw Error('MAJOR_DATA_NOT_FOUND')
 
-          console.log( majorData.id)
+          console.log( "majorDataId야 " + majorData.id)
 
           var value = -1
 
           
           if ( sheetData[i][0] == "인문") {
       
-  
-            console.log("퍽맨!")
             value = await reportController.getScore(societyScore, majorData,false)
-            console.log(value)
+  
     
           } else {
 
@@ -115,26 +108,10 @@ export default class testController {
           
           }
 
-        
-         
-
-
+      
           const answer = parseFloat(sheetData[i][26])
 
-          console.log(answer)
-
-          console.log(value)
-
-
-   
-
-            console.log("가즈아")
-        
             var determinant = -1
-
-
-            console.log(answer)
-            console.log(value)
 
             if ( value - answer < 0 && answer - value > -3) {
               determinant = 0
@@ -144,7 +121,13 @@ export default class testController {
               determinant = 1
             }
 
-            if ( answer != null && determinant != -1) {
+            if ( !isNaN(answer) && determinant != -1) {
+
+              console.log("test값은 = ")
+              console.log(value)
+
+              console.log("answer값은 = ")
+              console.log(answer)
 
               let obj1 = {
                 id : i-2,
@@ -154,14 +137,12 @@ export default class testController {
                 recruitmentType : sheetData[i][6], // 경찰행정학과
                 major : sheetData[i][7], // 경찰행정학과
                 sosokUniversity : sheetData[i][5],// 사회과학계열
+                perfectScore : sheetData[i][56], 
                 answer,
                 test : value,
                 result : determinant
               }
               data.push(obj1)
-
-
-              console.log("가즈아2")
             await testService.create(obj1)
           }
           else {
@@ -182,8 +163,6 @@ export default class testController {
         }
 
     
-
-        console.log("zxcvzxv")
 
 
       const response = {

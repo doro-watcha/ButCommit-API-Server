@@ -159,13 +159,25 @@ export default class reportController {
 
     let perfectScore = {
       korean : major_perfectScore * ( major_ratio.korean / 100 ),
-      english : major_perfectScore * ( major_ratio.english / 100 ),
+      english : major_perfectScore * (major_ratio.english / 100),
       math : 0,
       tamgu : 0,
-      history : major_perfectScore * ( major_ratio.history / 100 )
+      history : major_perfectScore * (major_ratio.history / 100)
     }
+
     const math_type = score.math.type
     const tamgu_type = score.line
+    const english_type = major_ratio.english 
+    const history_type = major_ratio.history 
+
+    console.log(math_type)
+    console.log(tamgu_type)
+
+    console.log("english_type ")
+    console.log(english_type)
+
+    console.log("history_type")
+    console.log(history_type)
 
     if ( math_type == "가") {
       perfectScore.math = major_perfectScore * ( major_ratio.math.ga / 100 )
@@ -174,9 +186,17 @@ export default class reportController {
     }
 
     if ( tamgu_type == "인문"){
-      perfectScore.tamgu = major_perfectScore * ( major_ratio.tamgu.science / 100)
-    } else {
       perfectScore.tamgu = major_perfectScore * ( major_ratio.tamgu.society / 100)
+    } else {
+      perfectScore.tamgu = major_perfectScore * ( major_ratio.tamgu.science / 100)
+    }
+
+    if ( english_type =="가산") {
+      perfectScore.english = 0
+    }
+
+    if ( history_type == "가산" || history_type =="필수") {
+      perfectScore.history = 0 
     }
 
     /**
@@ -260,22 +280,41 @@ export default class reportController {
     // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "D") {
 
-      const highestKorean = await highestScoreService.findOne("국아","국어")
+      const highestKorean = await highestScoreService.findOne("국어","국어")
       const highestMath = await highestScoreService.findOne("수학",math_type)
 
       const tempTamgu1 = tamguPercentileToScore[score.tamgu1.percentile-1]
       const tempTamgu2 = tamguPercentileToScore[score.tamgu2.percentile-1]
       const tempForeign = tamguPercentileToScore[score.foreign.percentile-1]
 
-      const highestTamgu1 = await highestScoreService.findOne(tamgu_type, score.tamgu1.name)
-      const highestTamgu2 = await highestScoreService.findOne(tamgu_type, score.tamgu2.name)
+      var highest_tamgu_type = ""
+      if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
+      else highest_tamgu_type = "사회탐구"
+
+      console.log(score.tamgu1.name)
+      console.log(score.tamgu2.name)
+
+      const highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
+      const highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
       const highestForeign = await highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name )
 
-      newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean
-      newScore.math = score.math.score * (perfectScore.math ) / highestMath
-      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1
-      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2
-      newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign
+      console.log(highestKorean.score)
+      console.log(highestMath.score)
+      console.log(highestTamgu1.score)
+      console.log(highestTamgu2.score)
+      console.log(highestForeign.score)
+
+      console.log("-------------------------")
+
+      console.log(score.korean.score)
+      console.log(perfectScore.korean)
+      console.log(highestKorean)
+
+      newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean.score
+      newScore.math = score.math.score * (perfectScore.math ) / highestMath.score
+      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
+      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
+      newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
     }
 
     // ( 표준점수 / 160 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -291,11 +330,15 @@ export default class reportController {
     
     // 표준점수의 합
     else if ( applicationIndicatorType == "F") {
+
       newScore.korean = score.korean.score
       newScore.math = score.math.score
-      newScore.tamgu1 = score.tamgu1.score
-      newScore.tamgu2 = score.tamgu2.score
-      newScore.foreign = score.foreign.score   
+      newScore.tamgu1.score = score.tamgu1.score
+      newScore.tamgu2.score = score.tamgu2.score
+      newScore.foreign.score = score.foreign.score   
+
+      console.log(newScore.tamgu1)
+      console.log(newScore.tamgu2)
     }
     
     // 등급: 4과목 평균 등급 환산점수
@@ -316,7 +359,9 @@ export default class reportController {
     const emv = majorData.metadata.emv
     const hmv = majorData.metadata.hmv
 
-    if ( emv != "반영x") {
+    if ( emv == "반영x") {
+
+    } else {
 
       if ( emv == "x비율"){
 
@@ -330,14 +375,20 @@ export default class reportController {
 
 
       }
-      else {
 
+      else {
+      
         newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
 
       }
     }
 
-    if ( hmv != "반영x") {
+    
+
+    if ( hmv == "반영x") {
+
+
+    } else {
 
       if ( hmv == "x비율"){
 
@@ -351,6 +402,7 @@ export default class reportController {
 
 
       }
+
       else {
 
         newScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv
@@ -377,6 +429,14 @@ export default class reportController {
       foreign : 0
     }
 
+    if ( english_type == "가산") {
+      extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
+    }
+
+    if ( history_type == "가산") {
+      extraScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv 
+    }
+
     var extra1 = 0
     var extra2 = 0
 
@@ -398,29 +458,29 @@ export default class reportController {
 
       else if ( extraSubject == "과탐") {
         if (score.line =="자연") {
-          extraScore.tamgu1 = ( newScore.tamgu1 * extraValue) / 100 
-          extraScore.tamgu2 = ( newScore.tamgu2 * extraValue) / 100
+          extraScore.tamgu1 = ( newScore.tamgu1.score * extraValue) / 100 
+          extraScore.tamgu2 = ( newScore.tamgu2.score * extraValue) / 100
 
         }
       }
 
       else if ( extraSubject == "과탐Ⅱ") {
 
-        if ( score.tamgu1.name.indexOf("Ⅱ") >= 0) extraScore.tamgu1 = ( newScore.tamgu1 * extraValue) / 100
-        if ( score.tamgu2.name.indexOf("Ⅱ") >= 0) extraScore.tamgu2 = ( newScore.tamgu2 * extraValue) / 100 
+        if ( score.tamgu1.name.indexOf("2") >= 0) extraScore.tamgu1 = ( newScore.tamgu1.score * extraValue) / 100
+        if ( score.tamgu2.name.indexOf("2") >= 0) extraScore.tamgu2 = ( newScore.tamgu2.score * extraValue) / 100 
       }
 
       else if ( extraSubject == "물리") {
 
-        if ( score.tamgu1.name.indexOf("물리") >= 0) extraScore.tamgu1 = (newScore.tamgu1 * extraValue) / 100
-        if ( score.tamgu2.name.indexOf("물리") >= 0) extraScore.tamgu2 = (newScore.tamgu2 * extraValue) / 100 
+        if ( score.tamgu1.name.indexOf("물리") >= 0) extraScore.tamgu1 = (newScore.tamgu1.score * extraValue) / 100
+        if ( score.tamgu2.name.indexOf("물리") >= 0) extraScore.tamgu2 = (newScore.tamgu2.score * extraValue) / 100 
 
       }
       else if ( extraSubject == "사탐" ){
 
         if ( score.line == "인문") {
-          extraScore.tamgu1 = ( newScore.tamgu1 * extraValue) / 100 
-          extraScore.tamgu2 = ( newScore.tamgu2 * extraValue) / 100
+          extraScore.tamgu1 = ( newScore.tamgu1.score * extraValue) / 100 
+          extraScore.tamgu2 = ( newScore.tamgu2.score * extraValue) / 100
         }
 
       }
@@ -477,8 +537,8 @@ export default class reportController {
         if ( score.math.type == "가") extraScore.math = ( newScore.math * extra1) / 100 
 
         if ( score.line == "자연") {
-          extraScore.tamgu1 = ( newScore.tamgu1 * extra2 ) / 100
-          extraScore.tamgu2 = ( newScore.tamgu2 * extra2 ) / 100 
+          extraScore.tamgu1 = ( newScore.tamgu1.score * extra2 ) / 100
+          extraScore.tamgu2 = ( newScore.tamgu2.score * extra2 ) / 100 
         }
 
 
@@ -571,7 +631,8 @@ export default class reportController {
     else if ( extraType == "% 감산") {
       
       if ( extraSubject == "수나") {
-        extraScore.math = -( newScore.math.score * extraValue) / 100 
+        console.log("여기맞잖아!@!@)$(#*$)#($*#)(*")
+        extraScore.math = -1 * ( newScore.math * extraValue) / 100 
       }
     }
     
@@ -666,7 +727,7 @@ export default class reportController {
           extraScore.math = newScore.math * 0.1
         }
 
-        if ( score.tamgu1.name == ("물Ⅱ") || score.tamgu1.name == "화Ⅱ" || score.tamgu1.name =="생Ⅱ") {
+        if ( score.tamgu1.name == ("물리2") || score.tamgu1.name == "화학2" || score.tamgu1.name =="생물2") {
 
 
         }
@@ -733,6 +794,7 @@ export default class reportController {
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu + totalScore.history 
     }
     else if ( reflectionSubject == "국+수+영+탐") {
+      console.log("반영비율도 에러가 나냐..")
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu
     }
 
@@ -827,7 +889,9 @@ export default class reportController {
 
     }
     else if ( reflectionSubject == "국,수,영,탐,한 중 택3"){
-      const scoreList = [ totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu + totalScore.history]
+
+      console.log("국수영탐한중택3 여기 맞아?")
+      const scoreList = [ totalScore.korean , totalScore.math , totalScore.english ,totalScore.tamgu , totalScore.history]
 
       scoreList.sort(function(a, b) { 
         return b - a
@@ -1084,6 +1148,15 @@ export default class reportController {
 
     console.log("순서까지 다 정했어!")
 
+    console.log("newScore")
+    console.log(newScore)
+    console.log("perfectScore")
+    console.log(perfectScore)
+    console.log("extraScore")
+    console.log(extraScore)
+    console.log("합계")
+    console.log(totalSum)
+
     if ( create == true ) {
 
 
@@ -1091,7 +1164,6 @@ export default class reportController {
 
       var total_sum = Math.round(totalSum)
 
-      console.log(total_sum)
 
       const modelObj = {
         score : newScore,
@@ -1102,6 +1174,9 @@ export default class reportController {
         totalScore : total_sum,
         recommendations
       }
+
+      console.log("계산결과값!")
+      console.log(modelObj)
 
       return modelObj
     }
@@ -1336,10 +1411,18 @@ export default class reportController {
       korean : koreanScore,
       english : englishScore,
       math : mathScore,
-      tamgu1 : tamguScore,
-      tamgu2 : tamguScore,
+      tamgu1 : {
+        score : tamguScore,
+        name : score.tamgu1.name},
+      
+      tamgu2 : {
+        score : tamguScore,
+        name : score.tamgu2.name
+      },
       history : historyScore,
-      foreign : foreignScore
+      foreign : {
+        score :foreignScore,
+        name : score.foreign.name}
     }
 
     return newScore 

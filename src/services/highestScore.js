@@ -19,6 +19,10 @@ class HighestScoreService {
         type
       }
 		})
+	}
+	
+  async create ( modelObj ) {
+    return await HighestScore.create(modelObj)
   }
   
 }

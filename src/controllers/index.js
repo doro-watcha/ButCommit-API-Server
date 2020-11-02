@@ -10,6 +10,7 @@ import academyController from './academy'
 import fileController from './file'
 import majorDataController from './majorData'
 import testController from './test'
+import highestScoreController from './highestScore'
 
 module.exports = {
 
@@ -24,5 +25,6 @@ module.exports = {
     academyController,
     fileController,
     majorDataController,
-    testController
+    testController,
+    highestScoreController
 }
