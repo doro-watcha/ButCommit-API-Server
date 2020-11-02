@@ -85,7 +85,7 @@ class testController {
       const societyScore = await _services.scoreService.findOne({
         userId: societyUserId
       });
-      if (scienceScore == null || soceityScore == null) throw Error('SCORE_NOT_FOUND');
+      if (scienceScore == null || societyScore == null) throw Error('SCORE_NOT_FOUND');
       let data = [];
       await _services.testService.deleteAll(); // 파싱을 해보자 
 

@@ -83,7 +83,7 @@ export default class testController {
       console.log(scienceScore)
       const societyScore = await scoreService.findOne({userId : societyUserId})
 
-      if ( scienceScore == null || soceityScore == null) throw Error('SCORE_NOT_FOUND')
+      if ( scienceScore == null || societyScore == null) throw Error('SCORE_NOT_FOUND')
 
       let data = []
 
