@@ -101,11 +101,11 @@ class testController {
         const answer = parseFloat(sheetData[i][26]);
         var determinant = -1;
 
-        if (value - answer < 0 && answer - value > -3) {
+        if (value - answer < 0 && answer - value > -10) {
           determinant = 0;
         }
 
-        if (value - answer > 0 && value - answer < 3) {
+        if (value - answer > 0 && value - answer < 10) {
           determinant = 1;
         }
 
