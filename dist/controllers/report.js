@@ -660,7 +660,7 @@ class reportController {
         userId: score.userId,
         perfectScore,
         extraScore: extraScore,
-        totalScore: totalSum,
+        totalScore,
         recommendations
       };
       return modelObj;
