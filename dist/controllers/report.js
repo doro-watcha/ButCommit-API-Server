@@ -247,7 +247,7 @@ class reportController {
             console.log(score.tamgu2.name);
             const highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
             const highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
-            const highestForeign = await _services.highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name);
+            const highestForeign = await _services.highestScoreService.findOne("제 2외국어 한문", score.foreign.name);
             console.log(highestKorean.score);
             console.log(highestMath.score);
             console.log(highestTamgu1.score);
