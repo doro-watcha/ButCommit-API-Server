@@ -685,11 +685,11 @@ export default class reportController {
      * 탐구 반영 갯수에 따라서 달라진다
      */
     if ( majorData.metadata.tamguNumber == 1 ) {
-      totalScore.tamgu = Math.max(newScore.tamgu1 + extraScore.tamgu1 , newScore.tamgu2 + extraScore.tamgu2 )
+      totalScore.tamgu = Math.max(newScore.tamgu1.score + extraScore.tamgu1 , newScore.tamgu2.score + extraScore.tamgu2 )
     }
     
     else if ( majorData.metadata.tamguNumber == 2 ) {
-      totalScore.tamgu = Math.floor( ( newScore.tamgu1 + extraScore.tamgu1 + newScore.tamgu2 + extraScore.tamgu2 ) / 2)
+      totalScore.tamgu = Math.floor( ( newScore.tamgu1.score + extraScore.tamgu1 + newScore.tamgu2.score + extraScore.tamgu2 ) / 2)
 
     }
     
@@ -980,7 +980,19 @@ export default class reportController {
         return b - a
       })
 
+      console.log(totalScore.korean)
+
+      console.log(scoreList[0])
+
+      console.log("씨빨 DHORMFO SKGKSXP")
+
+      console.log(totalScore.history)
+
+      console.log(totalScore.tamgu)
+
       totalSum = totalScore.tamgu + totalScore.history + scoreList[0] + scoreList[1]
+
+      console.log(totalSum)
     }
 
     else if ( reflectionSubject == "우수영역 순서대로 50% + 30% + 20%") {
@@ -1048,10 +1060,18 @@ export default class reportController {
 
     }
 
+    else {
+      totalSum = -1
+    }
+
     if ( create == true ) {
 
 
       const recommendations = await majorDataService.findRecommendations(totalSum)
+
+      var total_sum = Math.round(totalSum)
+
+      console.log(total_sum)
 
       const modelObj = {
         score : newScore,
@@ -1059,7 +1079,7 @@ export default class reportController {
         userId : score.userId,
         perfectScore,
         extraScore : extraScore,
-        totalScore,
+        totalScore : total_sum,
         recommendations
       }
 

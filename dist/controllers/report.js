@@ -444,9 +444,9 @@ class reportController {
      */
 
     if (majorData.metadata.tamguNumber == 1) {
-      totalScore.tamgu = Math.max(newScore.tamgu1 + extraScore.tamgu1, newScore.tamgu2 + extraScore.tamgu2);
+      totalScore.tamgu = Math.max(newScore.tamgu1.score + extraScore.tamgu1, newScore.tamgu2.score + extraScore.tamgu2);
     } else if (majorData.metadata.tamguNumber == 2) {
-      totalScore.tamgu = Math.floor((newScore.tamgu1 + extraScore.tamgu1 + newScore.tamgu2 + extraScore.tamgu2) / 2);
+      totalScore.tamgu = Math.floor((newScore.tamgu1.score + extraScore.tamgu1 + newScore.tamgu2.score + extraScore.tamgu2) / 2);
     }
     /**
      * 반영비율별로 해서 구해보자!
@@ -615,7 +615,13 @@ class reportController {
       scoreList.sort(function (a, b) {
         return b - a;
       });
+      console.log(totalScore.korean);
+      console.log(scoreList[0]);
+      console.log("씨빨 DHORMFO SKGKSXP");
+      console.log(totalScore.history);
+      console.log(totalScore.tamgu);
       totalSum = totalScore.tamgu + totalScore.history + scoreList[0] + scoreList[1];
+      console.log(totalSum);
     } else if (reflectionSubject == "우수영역 순서대로 50% + 30% + 20%") {
       const scoreList = [totalScore.korean, totalScore.math, totalScore.english, totalScore.tamgu, totalScore.history];
       scoreList.sort(function (a, b) {
@@ -650,17 +656,21 @@ class reportController {
         return b - a;
       });
       totalSum = scoreList1[0] * 0.8 + scoreList2[0] * 0.2;
+    } else {
+      totalSum = -1;
     }
 
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
+      var total_sum = Math.round(totalSum);
+      console.log(total_sum);
       const modelObj = {
         score: newScore,
         majorDataId: majorData.id,
         userId: score.userId,
         perfectScore,
         extraScore: extraScore,
-        totalScore,
+        totalScore: total_sum,
         recommendations
       };
       return modelObj;
