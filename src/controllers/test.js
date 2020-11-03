@@ -85,7 +85,7 @@ export default class testController {
 
       await testService.deleteAll()
         // 파싱을 해보자 
-        for ( let i = 321; i < 5563 ; i++) {
+        for ( let i = 3; i < 5563 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
