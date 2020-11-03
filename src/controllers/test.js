@@ -129,11 +129,11 @@ export default class testController {
             }
 
             
-            console.log("value")
-            console.log(value)
-            console.log("answer")
-            console.log(answer)
-            if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
+            // console.log("value")
+            // console.log(value)
+            // console.log("answer")
+            // console.log(answer)
+            // if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
 
             if ( !isNaN(answer) && determinant != -1 && determinant != 2  ) {
 
