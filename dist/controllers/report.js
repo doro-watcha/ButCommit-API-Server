@@ -224,23 +224,24 @@ class reportController {
     else if (applicationIndicatorType == "B") {
         newScore.korean = score.korean.score * perfectScore.korean / 100;
         newScore.math = score.math.score * perfectScore.math / 100;
-        newScore.tamgu1.score = tamguPercentileToScore[score.tamgu1.percentile - 1] * perfectScore.tamgu / 100;
-        newScore.tamgu2.score = tamguPercentileToScore[score.tamgu2.percentile - 1] * perfectScore.tamgu / 100;
-        newScore.foreign.score = tamguPercentileToScore[score.foreign.percentile - 1] * perfectScore.tamgu / 100;
+        newScore.tamgu1.score = tamguPercentileToScore[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
+        newScore.tamgu2.score = tamguPercentileToScore[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
+        newScore.foreign.score = tamguPercentileToScore[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
       } // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
       else if (applicationIndicatorType == "C") {
           newScore.korean = score.korean.score * perfectScore.korean / 200;
           newScore.math = score.math.score * perfectScore.math / 200;
-          newScore.tamgu1.score = tamguPercentileToScore[score.tamgu1.percentile - 1] * perfectScore.tamgu / 100;
-          newScore.tamgu2.score = tamguPercentileToScore[score.tamgu2.percentile - 1] * perfectScore.tamgu / 100;
-          newScore.foreign.score = tamguPercentileToScore[score.foreign.percentile - 1] * perfectScore.tamgu / 200;
+          newScore.tamgu1.score = tamguPercentileToScore[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
+          newScore.tamgu2.score = tamguPercentileToScore[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
+          newScore.foreign.score = tamguPercentileToScore[100 - score.foreign.percentile] * perfectScore.tamgu / 200;
         } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
         else if (applicationIndicatorType == "D") {
             const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
             const highestMath = await _services.highestScoreService.findOne("수학", math_type);
-            const tempTamgu1 = tamguPercentileToScore[score.tamgu1.percentile - 1];
-            const tempTamgu2 = tamguPercentileToScore[score.tamgu2.percentile - 1];
-            const tempForeign = tamguPercentileToScore[score.foreign.percentile - 1];
+            console.log("백분위 = " + score.tamgu1.percentile);
+            const tempTamgu1 = tamguPercentileToScore[100 - score.tamgu1.percentile];
+            const tempTamgu2 = tamguPercentileToScore[100 - score.tamgu2.percentile];
+            const tempForeign = tamguPercentileToScore[100 - score.foreign.percentile];
             var highest_tamgu_type = "";
             if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
             console.log(score.tamgu1.name);
@@ -248,27 +249,27 @@ class reportController {
             const highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
             const highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
             const highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name);
-            console.log(highestKorean.score);
-            console.log(highestMath.score);
-            console.log(highestTamgu1.score);
-            console.log(highestTamgu2.score);
-            console.log(highestForeign);
             console.log("-------------------------");
-            console.log(score.korean.score);
-            console.log(perfectScore.korean);
-            console.log(highestKorean);
             newScore.korean = score.korean.score * perfectScore.korean / highestKorean.score;
             newScore.math = score.math.score * perfectScore.math / highestMath.score;
             newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
             newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
             newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
+            console.log(tempTamgu1);
+            console.log(tempTamgu2);
+            console.log(perfectScore.tamgu);
+            console.log(highestTamgu1.score);
+            console.log(highestTamgu2.score);
+            console.log("탐구맨~");
+            console.log(newScore.tamgu1.score);
+            console.log(newScore.tamgu2.score);
           } // ( 표준점수 / 160 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
           else if (applicationIndicatorType == "E") {
               newScore.korean = score.korean.score * perfectScore.korean / 160;
               newScore.math = score.math.score * perfectScore.math / 160;
-              newScore.tamgu1.score = tamguPercentileToScore[score.tamgu1.percentile - 1] / 160;
-              newScore.tamgu2.score = tamguPercentileToScore[score.tamgu2.percentile - 1] / 160;
-              newScore.foreign.score = tamguPercentileToScore[score.foreign.percentile - 1] / 160;
+              newScore.tamgu1.score = tamguPercentileToScore[100 - score.tamgu1.percentile] / 160;
+              newScore.tamgu2.score = tamguPercentileToScore[100 - score.tamgu2.percentile] / 160;
+              newScore.foreign.score = tamguPercentileToScore[100 - score.foreign.percentile] / 160;
             } // 표준점수의 합
             else if (applicationIndicatorType == "F") {
                 newScore.korean = score.korean.score;
@@ -280,7 +281,16 @@ class reportController {
                 console.log(newScore.tamgu2);
               } // 등급: 4과목 평균 등급 환산점수
               else if (applicationIndicatorType == "G") {
-                  newScore = await reportController.getScoreByGrade(score, majorData);
+                  console.log(majorData.major.univName);
+
+                  if (majorData.major.univName.indexOf("경동대") >= 0) {
+                    console.log("경동대로 가즈아!");
+                    const gyungDongScore = await reportController.getScoreByGrade(score, majorData);
+                    console.log("GyungDong Score" + gyungDongScore);
+                    return gyungDongScore;
+                  } else {
+                    newScore = await reportController.getScoreByGrade(score, majorData);
+                  }
                 } // 등급: [ 국,수,탐,영 평균 등급 활용 : ( 각 과목 별 평균등급에  해당하는 점수 x 비율 ) 의 합 ]
                 else if (applicationIndicatorType == "H") {
                     newScore = await reportController.getScoreByGrade(score, majorData);
@@ -330,11 +340,16 @@ class reportController {
 
     var extra1 = 0;
     var extra2 = 0;
+    console.log(extraValue);
 
-    if (extraValue.length > 0 && extraValue.indexOf(" / ") >= 0) {
-      extra1 = parseInt(extraValue.split(" / ")[0]);
-      extra2 = parseInt(extraValue.split(" / ")[1]);
+    if (extraValue.length > 0 && extraValue.indexOf(" // ") >= 0) {
+      extra1 = parseInt(extraValue.split(" // ")[0]);
+      extra2 = parseInt(extraValue.split(" // ")[1]);
     }
+
+    console.log("extra값이 시발 제대로 안구해져");
+    console.log(extra1);
+    console.log(extra2);
 
     if (extraType == "% 가산") {
       if (extraSubject == "수가") {
@@ -382,6 +397,8 @@ class reportController {
           extraScore.foreign = newScore.foreign * extraValue / 100;
         }
       } else if (extraSubject == "수가 / 과탐") {
+        console.log("수가 /가탐 으로 들어오긴해!");
+        console.log(score.math.type);
         if (score.math.type == "가") extraScore.math = newScore.math * extra1 / 100;
 
         if (score.line == "자연") {
@@ -723,6 +740,8 @@ class reportController {
     console.log(perfectScore);
     console.log("extraScore");
     console.log(extraScore);
+    console.log("totalScore");
+    console.log(totalScore);
     console.log("합계");
     console.log(totalSum);
 
@@ -756,13 +775,15 @@ class reportController {
     var mathScore = 0;
     var foreignScore = 0;
 
-    if (univName == "경동대") {
+    if (univName.indexOf("경동대") >= 0) {
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
       const originalGrade = (score.korean.grade + score.math.grade + score.english.grade + tamgu) / 4;
       const grade = Math.floor(originalGrade);
       if (grade == 9) translationScore = 630;else {
         translationScore = 700 - (grade - 1) * 8;
       }
+      console.log("경동대의 리턴값!" + translationScore);
+      return translationScore;
     } else if (univName == "광주여대") {
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
       koreanScore = (450 - 10 * (score.korean.grade - 1)) / 3;
