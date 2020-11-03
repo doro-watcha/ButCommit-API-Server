@@ -611,10 +611,12 @@ class reportController {
       });
       totalSum = totalScore.korean + scoreList[0] + scoreList[1];
     } else if (reflectionSubject == "국+( 수,영,탐,한 중 택1 )") {
-      const scoreList = [totalScore.math + totalScore.english, totalScore.tamgu, totalScore.history];
+      const scoreList = [totalScore.math, totalScore.english, totalScore.tamgu, totalScore.history];
       scoreList.sort(function (a, b) {
         return b - a;
       });
+      console.log("이 구역의 최고점은!");
+      console.log(scoreList[0]);
       totalSum = totalScore.korean + scoreList[0];
     } else if (reflectionSubject == "국+영+( 수,탐 중 택1 )") {
       const scoreList = [totalScore.math, totalScore.tamgu];
@@ -634,6 +636,12 @@ class reportController {
         return b - a;
       });
       totalSum = totalScore.math + scoreList[0];
+    } else if (reflectionSubject == "영+탐+(국,수 중 택1)") {
+      const scoreList = [totalScore.korean, totalScore.english];
+      scoreList.sort(function (a, b) {
+        return b - a;
+      });
+      totalSum = totalScore.english + totalScore.tamgu + scoreList[0];
     } else if (reflectionSubject == "수+( 국,영,탐 중 택2 )") {
       const scoreList = [totalScore.korean, totalScore.english, totalScore.tamgu];
       scoreList.sort(function (a, b) {
@@ -647,11 +655,18 @@ class reportController {
       });
       totalSum = totalScore.math + scoreList[0];
     } else if (reflectionSubject == "수+영+( 국,탐 중 택1 )") {
+      console.log("수+영+국탐중택1로 들어왔엉!");
       const scoreList = [totalScore.korean, totalScore.tamgu];
       scoreList.sort(function (a, b) {
         return b - a;
       });
       totalSum = totalScore.math + totalScore.english + scoreList[0];
+    } else if (reflectionSubject == "영+( 국,수,탐 중 택2)") {
+      const scoreList = [totalScore.korean, totalScore.math, totalScore.tamgu];
+      scoreList.sort(function (a, b) {
+        return b - a;
+      });
+      totalSum = totalScore.english + scoreList[0] + scoreList[1];
     } else if (reflectionSubject == "수+탐+( 국,영 중 택1 )") {
       const scoreList = [totalScore.korean, totalScore.english];
       scoreList.sort(function (a, b) {
@@ -659,6 +674,12 @@ class reportController {
       });
       totalSum = totalScore.math + totalScore.tamgu + scoreList[0];
     } else if (reflectionSubject == "영+( 국,수,탐 중 택2 )") {
+      const scoreList = [totalScore.korean, totalScore.math, totalScore.tamgu];
+      scoreList.sort(function (a, b) {
+        return b - a;
+      });
+      totalSum = totalScore.english + scoreList[0] + scoreList[1];
+    } else if (reflectionSubject == "영+(국,수,탐 중 택2)") {
       const scoreList = [totalScore.korean, totalScore.math, totalScore.tamgu];
       scoreList.sort(function (a, b) {
         return b - a;
@@ -791,7 +812,7 @@ class reportController {
       tamguScore = (450 - 10 * (tamgu - 1)) / 3;
       englishScore = 150 - 5 * (score.english.grade - 1);
       translationScore = koreanScore + mathScore + tamguScore + englishScore;
-    } else if (univName == "세한대") {
+    } else if (univName.indexOf("세한대") >= 0) {
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
       var difference = 0;
       var perfectScore = 0;
