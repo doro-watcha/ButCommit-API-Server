@@ -84,7 +84,7 @@ class testController {
       let data = [];
       await _services.testService.deleteAll(); // 파싱을 해보자 
 
-      for (let i = 3; i < 5563; i++) {
+      for (let i = 321; i < 5563; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
@@ -103,17 +103,18 @@ class testController {
         if (isNaN(answer) == true) determinant = 2;
 
         if (value - answer <= 0) {
-          if (value - answer >= -10) determinant = 1;else determinant = 0;
+          if (value - answer >= -100) determinant = 1;else determinant = 0;
         }
 
         if (value - answer > 0) {
-          if (value - answer <= 10) determinant = 1;else determinant = 0;
-        } // console.log("value")
-        // console.log(value)
-        // console.log("answer")
-        // console.log(answer)
-        // if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
+          if (value - answer <= 100) determinant = 1;else determinant = 0;
+        }
 
+        console.log("value");
+        console.log(value);
+        console.log("answer");
+        console.log(answer);
+        if (!isNaN(answer) && determinant == 0) throw Error('SCORE_NOT_FOUND');
 
         if (!isNaN(answer) && determinant != -1 && determinant != 2) {
           console.log("test값은 = ");
@@ -148,7 +149,7 @@ class testController {
             // 인문 
             group: sheetData[i][1],
             // 다 
-            name: sheetData[i][2],
+            name: sheetData[i][3],
             // 대학명
             recruitmentType: sheetData[i][6],
             // 경찰행정학과
