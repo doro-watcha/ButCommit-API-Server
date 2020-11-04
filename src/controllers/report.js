@@ -52,16 +52,34 @@ export default class reportController {
 
     try {
 
-      const id = req.params.id
+      const id = req.params.id 
 
       const report = await reportService.findOne({id})
 
       if ( report == null ) throw Error('REPORT_NOT_FOUND')
 
+      const majorDataId = report.majorDataId
+
+      const reports = await reportService.findAll(majorDataId)
+
+      console.log(reports)
+      
+      reports.sort(function(a, b){
+        return b.totalScore - a.totalScore
+      })
+
+      const applicantsNumber = Object.keys(reports).length
+      const myRank = reports.findIndex( function ( item , index) {
+
+        return item.id == id
+      }) + 1
+
       const response = {
         success : true,
         data : {
-          report
+          report,
+          applicantsNumber,
+          myRank
         }
       }
       res.send(response)

@@ -91,6 +91,13 @@ class ReportService {
         return await Report.findAll(options)
     }
 
+    async findAll ( majorDataId) {
+
+        return await Report.findAll ( {
+            where : { majorDataId }
+        })
+    }
+
     
 
     async update ( id , report) {
