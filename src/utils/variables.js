@@ -130,6 +130,22 @@ module.exports = {
 			status : 420,
 			ko : '해당 학원 없음'
 		},
+		MATH_GA_NOT_FOUND : {
+			status : 421,
+			ko : '수가 성적 없음'
+		},
+		MATH_NA_NOT_FOUND : {
+			status : 422,
+			ko : '수나 성적 없음'
+		},
+		SCIENCE_NOT_FOUND : {
+			status : 423,
+			ko : '과탐 성적 없음'
+		},
+		SOCIETY_NOT_FOUND : {
+			status : 424,
+			ko : '사탐 성적 없음'
+		},
 		// 409
 		USER_ALREADY_EXISTS: {
 			status: 500,

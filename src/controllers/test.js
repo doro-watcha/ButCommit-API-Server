@@ -85,7 +85,7 @@ export default class testController {
 
       await testService.deleteAll()
         // 파싱을 해보자 
-        for ( let i = 980; i < 1000 ; i++) {
+        for ( let i = 3; i < 5563 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
@@ -129,11 +129,11 @@ export default class testController {
             }
 
             
-            console.log("value")
-            console.log(value)
-            console.log("answer")
-            console.log(answer)
-            if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
+            // console.log("value")
+            // console.log(value)
+            // console.log("answer")
+            // console.log(answer)
+            // if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
 
             if ( !isNaN(answer) && determinant != -1 && determinant != 2  ) {
 
