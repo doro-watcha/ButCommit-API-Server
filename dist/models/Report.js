@@ -24,6 +24,10 @@ class Report extends _sequelize.default.Model {
         type: _sequelize.default.JSON,
         allowNull: true
       },
+      actualPerfectScore: {
+        type: _sequelize.default.INTEGER,
+        allowNull: true
+      },
       recommendations: {
         type: _sequelize.default.JSON,
         allowNull: true

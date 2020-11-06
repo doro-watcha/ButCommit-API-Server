@@ -18,6 +18,10 @@ export default class Report extends Sequelize.Model {
                 type : Sequelize.JSON,
                 allowNull : true,
               },
+              actualPerfectScore : {
+                type : Sequelize.INTEGER,
+                allowNull : true 
+              },
               recommendations : {
                 type : Sequelize.JSON,
                 allowNull : true

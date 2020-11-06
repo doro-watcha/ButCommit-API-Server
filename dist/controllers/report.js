@@ -789,7 +789,8 @@ class reportController {
         perfectScore,
         extraScore: extraScore,
         totalScore: total_sum,
-        recommendations
+        recommendations,
+        actualPerfectScore: major_perfectScore
       };
       console.log("계산결과값!");
       console.log(modelObj);
