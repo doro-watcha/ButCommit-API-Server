@@ -38,7 +38,7 @@ class reportController {
         userId: user.id
       });
       if (score == null) throw Error('SCORE_NOT_FOUND');
-      if (majorData.ratio.math.ga == 0 && score.math.type == "나") throw Error('MATH_GA_NOT_FOUND');else if (majorData.ratio.math.na == 0 && score.math.type == "가") throw Error('MATH_NA_NOT_FOUND');else if (majorData.ratio.tamgu.science == 0 && score.line == "인문") throw Error('SOCIETY_NOT_FOUND');else if (majorData.ratio.tamgu.society == 0 && score.line == "자연") throw Error('SCIENCE_NOT_FOUND');
+      if (majorData.ratio.math.ga == 0 && score.math.type == "가") throw Error('MATH_NA_NOT_FOUND');else if (majorData.ratio.math.na == 0 && score.math.type == "나") throw Error('MATH_GA_NOT_FOUND');else if (majorData.ratio.tamgu.science == 0 && score.line == "자연") throw Error('SCIENCE_NOT_FOUND');else if (majorData.ratio.tamgu.society == 0 && score.line == "인문") throw Error('SOCIET_NOT_FOUND');
       const modelObj = await reportController.getScore(score, majorData, true);
       const report = await _services.reportService.create(modelObj);
       console.log("FUCK");
