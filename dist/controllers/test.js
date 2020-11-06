@@ -60,10 +60,10 @@ class testController {
         societyUserId,
         scienceUserId
       } = result;
-      const path = '../excelfile/major.xlsx';
+      const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5563
+        sheetRows: 5525
       });
 
       let sheetsList = workbook.SheetNames;
@@ -84,23 +84,25 @@ class testController {
       let data = [];
       await _services.testService.deleteAll(); // 파싱을 해보자 
 
-      for (let i = 3; i < 5563; i++) {
+      for (let i = 3; i < 5525; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
         if (majorData == null) throw Error('MAJOR_DATA_NOT_FOUND');
         console.log("majorDataId야 " + majorData.id);
-        var value = -1;
+        let value = -1;
+        let answer = -1;
 
         if (sheetData[i][0] == "인문") {
           value = await _report.default.getScore(societyScore, majorData, false);
+          answer = parseFloat(sheetData[i][10]);
         } else {
           value = await _report.default.getScore(scienceScore, majorData, false);
+          answer = parseFloat(sheetData[i][12]);
         }
 
-        const answer = parseFloat(sheetData[i][26]);
         var determinant = -1;
-        if (isNaN(answer) == true) determinant = 2;
+        if (answer == -1) determinant = 2;
 
         if (value - answer <= 0) {
           if (value - answer >= -10) determinant = 1;else determinant = 0;
@@ -115,7 +117,7 @@ class testController {
         // if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
 
 
-        if (!isNaN(answer) && determinant != -1 && determinant != 2) {
+        if (answer != -1 && determinant != -1 && determinant != 2) {
           console.log("test값은 = ");
           console.log(value);
           console.log("answer값은 = ");
@@ -134,7 +136,7 @@ class testController {
             // 경찰행정학과
             sosokUniversity: sheetData[i][5],
             // 사회과학계열
-            perfectScore: sheetData[i][56],
+            perfectScore: sheetData[i][9],
             answer,
             test: value,
             result: determinant

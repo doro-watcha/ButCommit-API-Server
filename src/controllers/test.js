@@ -62,8 +62,8 @@ export default class testController {
 
  
 
-      const path = ('../excelfile/major.xlsx')
-      let workbook = xlsx.readFile(path, {sheetRows: 5563})
+      const path = ('../excelfile/test.xlsx')
+      let workbook = xlsx.readFile(path, {sheetRows: 5525})
       let sheetsList = workbook.SheetNames
 
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
@@ -85,7 +85,7 @@ export default class testController {
 
       await testService.deleteAll()
         // 파싱을 해보자 
-        for ( let i = 3; i < 5563 ; i++) {
+        for ( let i = 3; i < 5525 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
@@ -94,28 +94,27 @@ export default class testController {
 
           console.log( "majorDataId야 " + majorData.id)
 
-          var value = -1
+          let value = -1
+          let answer = -1
 
           
           if ( sheetData[i][0] == "인문") {
       
             value = await reportController.getScore(societyScore, majorData,false)
+            answer = parseFloat(sheetData[i][10])
   
     
           } else {
 
             value = await reportController.getScore(scienceScore, majorData, false)
-          
+            answer = parseFloat(sheetData[i][12])
           }
-
-      
-          const answer = parseFloat(sheetData[i][26])
 
           
 
             var determinant = -1
 
-            if ( isNaN(answer) == true ) determinant = 2
+            if ( answer == -1) determinant = 2
 
             if ( value - answer <= 0 ) {
               if ( value - answer >=-10 ) determinant = 1
@@ -135,7 +134,7 @@ export default class testController {
             // console.log(answer)
             // if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
 
-            if ( !isNaN(answer) && determinant != -1 && determinant != 2  ) {
+            if ( answer != -1 && determinant != -1 && determinant != 2  ) {
 
               console.log("test값은 = ")
               console.log(value)
@@ -151,7 +150,7 @@ export default class testController {
                 recruitmentType : sheetData[i][6], // 경찰행정학과
                 major : sheetData[i][7], // 경찰행정학과
                 sosokUniversity : sheetData[i][5],// 사회과학계열
-                perfectScore : sheetData[i][56], 
+                perfectScore : sheetData[i][9], 
                 answer,
                 test : value,
                 result : determinant

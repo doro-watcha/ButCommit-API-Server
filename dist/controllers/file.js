@@ -57,7 +57,7 @@ class fileController {
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5563
+        sheetRows: 5525
       });
 
       let sheetsList = workbook.SheetNames;
@@ -70,7 +70,7 @@ class fileController {
 
       let data = [];
 
-      for (let i = 3; i < 5563; i++) {
+      for (let i = 3; i < 5525; i++) {
         /**
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
          */
@@ -97,7 +97,7 @@ class fileController {
       } // 2021년 
 
 
-      for (let i = 3; i < 5563; i++) {
+      for (let i = 3; i < 5525; i++) {
         let korean_ratio = sheetData[i][58];
         let math_ratio = sheetData[i][59];
         let english_ratio = sheetData[i][60];
@@ -184,18 +184,18 @@ class fileController {
             // 2.33
             reflectionSubject: sheetData[i][38],
             // 탐,한+국,수,영중 택2
-            tamguNumber: sheetData[i][39],
+            tamguNumber: sheetData[i][40],
             // 1 
-            applicationIndicator: sheetData[i][42],
+            applicationIndicator: sheetData[i][43],
             // 백분위 X 비율 
-            applicationIndicatorType: sheetData[i][41],
+            applicationIndicatorType: sheetData[i][42],
             // A
             tamguReplace: sheetData[i][37],
-            extraType: sheetData[i][48],
+            extraType: sheetData[i][49],
             // 특정 영역 가산 ex ) 수가 5%, 과탐 3% 가산
-            extraSubject: sheetData[i][49],
-            extraValue: sheetData[i][50],
-            extraPoint: sheetData[i][52],
+            extraSubject: sheetData[i][50],
+            extraValue: sheetData[i][51],
+            extraPoint: sheetData[i][53],
             perfectScore: sheetData[i][56],
             // 총 만점 ex) 700 ,
             emv: english_multiple_value,
