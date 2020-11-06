@@ -264,10 +264,15 @@ class reportController {
             const highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name);
             console.log("-------------------------");
             newScore.korean = score.korean.score * perfectScore.korean / highestKorean.score;
+            console.log("zxcv");
             newScore.math = score.math.score * perfectScore.math / highestMath.score;
+            console.log("zxcvzxvzxv");
             newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
+            console.log("zxcvzxcvxvxcvx");
             newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
+            console.log("zxcvxzcvxzcvz");
             newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
+            console.log("zxcvzxcvzxv");
             console.log(tempTamgu1);
             console.log(tempTamgu2);
             console.log(perfectScore.tamgu);
