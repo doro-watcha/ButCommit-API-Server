@@ -340,7 +340,7 @@ export default class reportController {
       console.log("zxcvzxcvxvxcvx")
       newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
       console.log("zxcvxzcvxzcvz")
-      newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
+      if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
       console.log("zxcvzxcvzxv")
 
       console.log(tempTamgu1)
