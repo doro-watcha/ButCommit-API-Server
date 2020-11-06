@@ -106,10 +106,11 @@ export default class scoreController {
                 foreign : Joi.object().required(),
                 line : Joi.string().required(),
                 naesin : Joi.number(),
-                naesin_type : Joi.string()
+                naesin_type : Joi.string(),
+                gumjeong : Joi.number()
             })
             
-            const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesin, naesin_type } = result 
+            const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesin, naesin_type, gumjeong } = result 
 
             const modelObj = {
                 userId : user.id,
@@ -122,7 +123,8 @@ export default class scoreController {
                 foreign,
                 line,
                 naesin,
-                naesin_type
+                naesin_type,
+                gumjeong
             }
 
             user.searchScore = (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile ) / 4

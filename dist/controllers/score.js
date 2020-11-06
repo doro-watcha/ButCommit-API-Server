@@ -113,7 +113,8 @@ class scoreController {
         foreign: _joi.default.object().required(),
         line: _joi.default.string().required(),
         naesin: _joi.default.number(),
-        naesin_type: _joi.default.string()
+        naesin_type: _joi.default.string(),
+        gumjeong: _joi.default.number()
       });
       const {
         korean,
@@ -125,7 +126,8 @@ class scoreController {
         foreign,
         line,
         naesin,
-        naesin_type
+        naesin_type,
+        gumjeong
       } = result;
       const modelObj = {
         userId: user.id,
@@ -138,7 +140,8 @@ class scoreController {
         foreign,
         line,
         naesin,
-        naesin_type
+        naesin_type,
+        gumjeong
       };
       user.searchScore = (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile) / 4;
       await _services.userService.update(user.id, user);
