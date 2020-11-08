@@ -68,9 +68,10 @@ export default class fileController {
       let data = []
       for ( let i = 3 ; i < 5525 ; i++) {
 
-        /**
+        /*
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
          */
+         
         let obj1 = {
           id : i-2,
           line : sheetData[i][0], // 인문 
@@ -82,6 +83,8 @@ export default class fileController {
           recruitmentUnit : sheetData[i][6], // 경찰행정학과 
           majorName : sheetData[i][7] // 경찰행정학과 
         }
+
+
 
         await majorService.create(obj1)
       }
@@ -170,7 +173,7 @@ export default class fileController {
             tamguNumber : sheetData[i][40], // 1 
             applicationIndicator : sheetData[i][43], // 백분위 X 비율 
             applicationIndicatorType : sheetData[i][42], // A
-            tamguReplace :sheetData[i][37],
+            tamguReplace :sheetData[i][45],
             extraType : sheetData[i][49], // 특정 영역 가산 ex ) 수가 5%, 과탐 3% 가산
             extraSubject : sheetData[i][50],
             extraValue : sheetData[i][51],

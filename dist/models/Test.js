@@ -32,10 +32,6 @@ class Test extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allowNull: true
       },
-      answer: {
-        type: _sequelize.default.FLOAT,
-        allowNull: true
-      },
       sosokUniversity: {
         type: _sequelize.default.STRING,
         allowNull: true
@@ -44,11 +40,27 @@ class Test extends _sequelize.default.Model {
         type: _sequelize.default.INTEGER,
         allowNull: true
       },
-      test: {
+      scienceValue: {
         type: _sequelize.default.FLOAT,
-        alloNull: true
+        allowNull: true
       },
-      result: {
+      scienceAnswer: {
+        type: _sequelize.default.FLOAT,
+        allowNull: true
+      },
+      scienceDeterminant: {
+        type: _sequelize.default.INTEGER,
+        allowNull: true
+      },
+      societyValue: {
+        type: _sequelize.default.FLOAT,
+        allowNull: true
+      },
+      societyAnswer: {
+        type: _sequelize.default.FLOAT,
+        allowNull: true
+      },
+      societyDeterminant: {
         type: _sequelize.default.INTEGER,
         allowNull: true
       },

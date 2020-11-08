@@ -90,38 +90,61 @@ class testController {
         });
         if (majorData == null) throw Error('MAJOR_DATA_NOT_FOUND');
         console.log("majorDataId야 " + majorData.id);
-        let value = -1;
-        let answer = -1;
+        let societyAnswer = parseFloat(sheetData[i][10]);
+        let scienceAnswer = parseFloat(sheetData[i][12]);
+        console.log(majorData.major.univName);
+        console.log(majorData.major.majorName);
+        console.log(sheetData[i][10]);
+        console.log(sheetData[i][12]);
+        let societyValue = -1;
+        let scienceValue = -1;
+        /**
+         * 문과 예측 점수 구하기 
+         */
 
-        if (sheetData[i][0] == "인문") {
-          value = await _report.default.getScore(societyScore, majorData, false);
-          answer = parseFloat(sheetData[i][10]);
-        } else {
-          value = await _report.default.getScore(scienceScore, majorData, false);
-          answer = parseFloat(sheetData[i][12]);
+        if (isNaN(societyAnswer)) societyAnswer = -1;else societyValue = await _report.default.getScore(societyScore, majorData, false);
+        /**
+         * 이과 예측 점수 구하기
+         */
+
+        if (isNaN(scienceAnswer)) scienceAnswer = -1;else scienceValue = await _report.default.getScore(scienceScore, majorData, false);
+        var societyDeterminant = -1;
+        var scienceDeterminant = -1;
+        /**
+         * answer이 둘 다 NAN이니깐 data가 없는거임
+         */
+
+        if (societyAnswer == -1 && scienceAnswer == -1) societyDeterminant = 2;
+        /**
+         * 문과 점수 판단하기
+         */
+
+        if (societyValue - societyAnswer <= 0) {
+          if (societyValue - societyAnswer >= -10) societyDeterminant = 1;else societyDeterminant = 0;
         }
 
-        var determinant = -1;
-        if (answer == -1) determinant = 2;
+        if (societyValue - societyAnswer > 0) {
+          if (societyValue - societyAnswer <= 10) societyDeterminant = 1;else societyDeterminant = 0;
+        }
+        /**
+         * 이과 점수 판단하기
+         */
 
-        if (value - answer <= 0) {
-          if (value - answer >= -10) determinant = 1;else determinant = 0;
+
+        if (scienceValue - scienceAnswer <= 0) {
+          if (scienceValue - scienceAnswer >= -10) scienceDeterminant = 1;else scienceDeterminant = 0;
         }
 
-        if (value - answer > 0) {
-          if (value - answer <= 10) determinant = 1;else determinant = 0;
-        } // console.log("value")
-        // console.log(value)
-        // console.log("answer")
-        // console.log(answer)
-        // if ( !isNaN(answer) && determinant == 0 ) throw Error('SCORE_NOT_FOUND')
+        if (scienceValue - scienceAnswer > 0) {
+          if (scienceValue - scienceAnswer <= 10) scienceDeterminant = 1;else scienceDeterminant = 0;
+        }
 
+        console.log("이과예측점수");
+        console.log(scienceAnswer);
+        console.log("문과예측점수");
+        console.log(societyAnswer); //if ( (societyDeterminant == 0 && societyAnswer != -1) || ( scienceDeterminant == 0 && scienceAnswer != -1) ) throw Error('SCORE_NOT_FOUND')
 
-        if (answer != -1 && determinant != -1 && determinant != 2) {
-          console.log("test값은 = ");
-          console.log(value);
-          console.log("answer값은 = ");
-          console.log(answer);
+        if (isNaN(societyValue) == false && isNaN(scienceValue) == false) {
           let obj1 = {
             id: i - 2,
             line: sheetData[i][0],
@@ -137,14 +160,16 @@ class testController {
             sosokUniversity: sheetData[i][5],
             // 사회과학계열
             perfectScore: sheetData[i][9],
-            answer,
-            test: value,
-            result: determinant
+            societyAnswer,
+            societyValue,
+            societyDeterminant,
+            scienceAnswer,
+            scienceValue,
+            scienceDeterminant
           };
-          data.push(obj1);
           await _services.testService.create(obj1);
-        } else {
-          let obj2 = {
+        } else if (isNaN(societyValue) == true && isNaN(scienceValue) == true) {
+          let obj3 = {
             id: i - 2,
             line: sheetData[i][0],
             // 인문 
@@ -158,10 +183,62 @@ class testController {
             // 경찰행정학과
             sosokUniversity: sheetData[i][5],
             // 사회과학계열
-            result: determinant
+            perfectScore: sheetData[i][9],
+            societyDeterminant,
+            scienceDeterminant
           };
-          await _services.testService.create(obj2);
-        }
+          await _services.testService.create(obj3);
+        } // 문과만됨
+        else if (isNaN(scienceValue) == true) {
+            let obj3 = {
+              id: i - 2,
+              line: sheetData[i][0],
+              // 인문 
+              group: sheetData[i][1],
+              // 다 
+              name: sheetData[i][3],
+              // 대학명
+              recruitmentType: sheetData[i][6],
+              // 경찰행정학과
+              major: sheetData[i][7],
+              // 경찰행정학과
+              sosokUniversity: sheetData[i][5],
+              // 사회과학계열
+              perfectScore: sheetData[i][9],
+              societyAnswer,
+              societyValue,
+              societyDeterminant,
+              scienceAnswer: -1,
+              scienceValue: -1,
+              scienceDeterminant: -1
+            };
+            await _services.testService.create(obj3);
+          } // 문과만됨
+          else if (isNaN(societyValue) == true) {
+              let obj2 = {
+                id: i - 2,
+                line: sheetData[i][0],
+                // 인문 
+                group: sheetData[i][1],
+                // 다 
+                name: sheetData[i][3],
+                // 대학명
+                recruitmentType: sheetData[i][6],
+                // 경찰행정학과
+                major: sheetData[i][7],
+                // 경찰행정학과
+                sosokUniversity: sheetData[i][5],
+                // 사회과학계열
+                perfectScore: sheetData[i][9],
+                societyAnswer: -1,
+                societyValue: -1,
+                societyDeterminant: -1,
+                scienceAnswer,
+                scienceValue,
+                scienceDeterminant
+              };
+              await _services.testService.create(obj2);
+            }
       }
 
       const response = {
