@@ -339,13 +339,13 @@ class reportController {
     const hmv = majorData.metadata.hmv;
 
     if (emv == "반영x") {} else {
-      if (emv == "x비율") {} else if (emv == "평균등급활용") {} else if (emv == "예외/옵션참고") {} else {
+      if (emv == "x비율") {} else if (emv == "평균등급활용") {} else if (emv == "예외/옵션참고") {} else if (majorData.gradeToScore.english.way == "수능비율포함") {} else {
         extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
       }
     }
 
     if (hmv == "반영x") {} else {
-      if (hmv == "x비율") {} else if (hmv == "평균등급활용") {} else if (hmv == "예외/옵션창고") {} else {
+      if (hmv == "x비율") {} else if (hmv == "평균등급활용") {} else if (hmv == "예외/옵션창고") {} else if (majorData.gradeToScore.history.way == "수능비율포함") {} else {
         extraScore.history = majorData.gradeToScore.history.score[score.history.grade - 1] * hmv;
       }
     }
@@ -786,7 +786,8 @@ class reportController {
     } else {
       console.log("에러야 에러 순서에서 에러");
       totalSum = -1;
-    }
+    } // 마지막으로 totalSum을 조정해보장
+
 
     if (majorData.gradeToScore.history.way == "가산점") {
       totalSum += totalScore.history;
@@ -794,6 +795,10 @@ class reportController {
 
     if (majorData.gradeToScore.english.way == "가산점") {
       totalSum += totalScore.english;
+    }
+
+    if (majorData.metadata.extraPoint.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0 && major_perfectScore < totalSum) {
+      totalSum = major_perfectScore;
     }
 
     console.log("순서까지 다 정했어!");

@@ -450,6 +450,10 @@ export default class reportController {
 
       }
 
+      else if ( majorData.gradeToScore.english.way == "수능비율포함") {
+
+      }
+
       else {
       
         extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
@@ -475,6 +479,10 @@ export default class reportController {
       else if ( hmv == "예외/옵션창고") {
 
 
+      }
+
+      else if ( majorData.gradeToScore.history.way =="수능비율포함") {
+        
       }
 
       else {
@@ -1273,12 +1281,19 @@ export default class reportController {
       totalSum = -1
     }
 
+
+    // 마지막으로 totalSum을 조정해보장
     if ( majorData.gradeToScore.history.way == "가산점") {
       totalSum += totalScore.history
     }
 
     if ( majorData.gradeToScore.english.way == "가산점") {
       totalSum += totalScore.english
+    }
+
+    if ( majorData.metadata.extraPoint.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0 && major_perfectScore < totalSum) {
+
+      totalSum = major_perfectScore
     }
 
     console.log("순서까지 다 정했어!")
