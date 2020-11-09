@@ -413,6 +413,23 @@ export default class reportController {
       newScore = await reportController.getScoreByGrade(score,majorData)
     }
 
+    // 가산점을 구해보자!
+
+    const extraType = majorData.metadata.extraType
+    const extraSubject = majorData.metadata.extraSubject
+    const extraValue = majorData.metadata.extraValue
+    const extraPoint = majorData.metadata.extraPoint
+
+    let extraScore = {
+      korean : 0,
+      english : 0,
+      math : 0,
+      tamgu1 : 0,
+      tamgu2 : 0, 
+      history : 0,
+      foreign : 0
+    }
+
     const emv = majorData.metadata.emv
     const hmv = majorData.metadata.hmv
 
@@ -435,7 +452,7 @@ export default class reportController {
 
       else {
       
-        newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
+        extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
 
       }
     }
@@ -462,29 +479,14 @@ export default class reportController {
 
       else {
 
-        newScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv
+        extraScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv
       }
     }
 
     console.log("변환 점수 구하기 성공!")
 
   
-    // 가산점을 구해보자!
 
-    const extraType = majorData.metadata.extraType
-    const extraSubject = majorData.metadata.extraSubject
-    const extraValue = majorData.metadata.extraValue
-    const extraPoint = majorData.metadata.extraPoint
-
-    let extraScore = {
-      korean : 0,
-      english : 0,
-      math : 0,
-      tamgu1 : 0,
-      tamgu2 : 0, 
-      history : 0,
-      foreign : 0
-    }
 
     if ( english_type == "가산") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv

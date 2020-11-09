@@ -319,24 +319,8 @@ class reportController {
                   } // 등급: 과목 별 등급에 따른 환산점수의 합
                   else if (applicationIndicatorType == "I") {
                       newScore = await reportController.getScoreByGrade(score, majorData);
-                    }
+                    } // 가산점을 구해보자!
 
-    const emv = majorData.metadata.emv;
-    const hmv = majorData.metadata.hmv;
-
-    if (emv == "반영x") {} else {
-      if (emv == "x비율") {} else if (emv == "평균등급활용") {} else if (emv == "예외/옵션참고") {} else {
-        newScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
-      }
-    }
-
-    if (hmv == "반영x") {} else {
-      if (hmv == "x비율") {} else if (hmv == "평균등급활용") {} else if (hmv == "예외/옵션창고") {} else {
-        newScore.history = majorData.gradeToScore.history.score[score.history.grade - 1] * hmv;
-      }
-    }
-
-    console.log("변환 점수 구하기 성공!"); // 가산점을 구해보자!
 
     const extraType = majorData.metadata.extraType;
     const extraSubject = majorData.metadata.extraSubject;
@@ -351,6 +335,22 @@ class reportController {
       history: 0,
       foreign: 0
     };
+    const emv = majorData.metadata.emv;
+    const hmv = majorData.metadata.hmv;
+
+    if (emv == "반영x") {} else {
+      if (emv == "x비율") {} else if (emv == "평균등급활용") {} else if (emv == "예외/옵션참고") {} else {
+        extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
+      }
+    }
+
+    if (hmv == "반영x") {} else {
+      if (hmv == "x비율") {} else if (hmv == "평균등급활용") {} else if (hmv == "예외/옵션창고") {} else {
+        extraScore.history = majorData.gradeToScore.history.score[score.history.grade - 1] * hmv;
+      }
+    }
+
+    console.log("변환 점수 구하기 성공!");
 
     if (english_type == "가산") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
