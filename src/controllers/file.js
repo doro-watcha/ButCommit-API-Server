@@ -174,11 +174,14 @@ export default class fileController {
             applicationIndicator : sheetData[i][43], // 백분위 X 비율 
             applicationIndicatorType : sheetData[i][42], // A
             tamguReplace :sheetData[i][45],
+            specialOption : sheetData[i][47],
             extraType : sheetData[i][49], // 특정 영역 가산 ex ) 수가 5%, 과탐 3% 가산
             extraSubject : sheetData[i][50],
             extraValue : sheetData[i][51],
             extraPoint : sheetData[i][53],
+        
             perfectScore : sheetData[i][56], // 총 만점 ex) 700 ,
+            basicScore : sheetData[i][57],
             emv : english_multiple_value,
             hmv : history_multiple_value
           },

@@ -178,7 +178,9 @@ export default class reportController {
      /**
       * 1. 들어온 성적, 이용될 만점 구하기 
       */
-    const major_perfectScore = majorData.metadata.perfectScore
+    var major_perfectScore = majorData.metadata.perfectScore
+    const basicScore = majorData.metadata.basicScore
+    if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
     const major_ratio = majorData.ratio
 
@@ -305,7 +307,7 @@ export default class reportController {
 
       newScore.tamgu1.score = tamguPercentileToScore[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
       newScore.tamgu2.score = tamguPercentileToScore[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-      newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] * perfectScore.tamgu / 200 
+      newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] * perfectScore.tamgu / 100 
 
     }
 
@@ -1295,6 +1297,8 @@ export default class reportController {
 
       totalSum = major_perfectScore
     }
+
+    if ( isNaN(basicScore) == false ) totalSum += basicScore
 
     console.log("순서까지 다 정했어!")
 
