@@ -219,7 +219,7 @@ export default class reportController {
       perfectScore.tamgu = major_perfectScore * ( major_ratio.tamgu.science / 100)
     }
 
-    if ( english_type =="가산") {
+    if ( english_type =="가산" || english_type =="필수") {
       perfectScore.english = 0
     }
 
@@ -451,7 +451,7 @@ export default class reportController {
       }
 
       else if ( majorData.gradeToScore.english.way == "수능비율포함") {
-
+        newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
       }
 
       else {
@@ -482,7 +482,7 @@ export default class reportController {
       }
 
       else if ( majorData.gradeToScore.history.way =="수능비율포함") {
-        
+        newScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv 
       }
 
       else {
@@ -496,11 +496,11 @@ export default class reportController {
   
 
 
-    if ( english_type == "가산") {
+    if ( english_type == "가산"|| english_type == "감산") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
     }
 
-    if ( history_type == "가산") {
+    if ( history_type == "가산" || history_type =="감산") {
       extraScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv 
     }
 

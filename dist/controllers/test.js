@@ -82,7 +82,8 @@ class testController {
       });
       if (scienceScore == null || societyScore == null) throw Error('SCORE_NOT_FOUND');
       let data = [];
-      await _services.testService.deleteAll(); // 파싱을 해보자 
+      await _services.testService.deleteAll();
+      var pass = 0; // 파싱을 해보자 
 
       for (let i = 3; i < 5525; i++) {
         const majorData = await _services.majorDataService.findOne({
@@ -139,6 +140,7 @@ class testController {
           if (scienceValue - scienceAnswer <= 10) scienceDeterminant = 1;else scienceDeterminant = 0;
         }
 
+        if (scienceDeterminant == 1 && societyDeterminant == 1) pass++;
         console.log("이과예측점수");
         console.log(scienceAnswer);
         console.log("문과예측점수");
@@ -242,7 +244,8 @@ class testController {
       }
 
       const response = {
-        success: true
+        success: true,
+        pass
       };
       res.send(response);
     } catch (e) {

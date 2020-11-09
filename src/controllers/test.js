@@ -84,6 +84,7 @@ export default class testController {
 
 
       await testService.deleteAll()
+      var pass = 0
         // 파싱을 해보자 
         for ( let i = 3; i < 5525 ; i++) {
 
@@ -163,6 +164,8 @@ export default class testController {
             if ( scienceValue - scienceAnswer <= 10) scienceDeterminant = 1
             else scienceDeterminant = 0 
           }
+
+          if( scienceDeterminant == 1 && societyDeterminant == 1 ) pass++
             
           console.log("이과예측점수")
           console.log(scienceAnswer)
@@ -170,7 +173,6 @@ export default class testController {
           console.log(societyAnswer)
           
           //if ( (societyDeterminant == 0 && societyAnswer != -1) || ( scienceDeterminant == 0 && scienceAnswer != -1) ) throw Error('SCORE_NOT_FOUND')
-
           if ( isNaN(societyValue) == false && isNaN(scienceValue) ==false ) {
               let obj1 = {
                 id : i-2,
@@ -253,6 +255,7 @@ export default class testController {
               scienceDeterminant
             }
 
+
             await testService.create(obj2)
           }
 
@@ -263,7 +266,8 @@ export default class testController {
 
 
       const response = {
-        success : true
+        success : true,
+        pass
         
       }
 
