@@ -371,11 +371,11 @@ class reportController {
 
     console.log("변환 점수 구하기 성공!");
 
-    if (english_type == "가산" || english_type == "감산" || metadata.gradeToScore.english.way == "감점") {
+    if (english_type == "가산" || english_type == "감산" || majorData.gradeToScore.english.way == "감점") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
     }
 
-    if (history_type == "가산" || history_type == "감산" || metadata.gradeToScore.history.way == "감점") {
+    if (history_type == "가산" || history_type == "감산" || majorData.gradeToScore.history.way == "감점") {
       extraScore.history = majorData.gradeToScore.history.score[score.history.grade - 1] * hmv;
     }
 
