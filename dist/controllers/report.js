@@ -547,10 +547,13 @@ class reportController {
     var tamgu1 = newScore.tamgu1.score + extraScore.tamgu1;
     var tamgu2 = newScore.tamgu2.score + extraScore.tamgu2;
     var foreign = totalScore.foreign;
+    const tamguReplace = majorData.metadata.tamguReplace;
 
-    if (majorData.metadata.tamguReplace == "사과 1과목 대체 가능") {
+    if (tamguReplace == "사과 1과목 대체 가능") {
       tamguList = [tamgu1, tamgu2, foreign];
-    } else if (majorData.metadata.tamguReplace == "사 1과목 대체 가능" && score.line == "인문") {
+    } else if (tamguReplace == "과 1과목 대체 가능" && score.line == "자연") {
+      tamguList = [tamgu1, tamgu2, foreign];
+    } else if (tamguReplace == "사 1과목 대체 가능" && score.line == "인문") {
       tamguList = [tamgu1, tamgu2, foreign];
     } else tamguList = [tamgu1, tamgu2];
 
@@ -804,15 +807,23 @@ class reportController {
 
 
     if (majorData.gradeToScore.history.way == "가산점") {
+      console.log("한국사 가산점 되지롱");
       totalSum += totalScore.history;
     }
 
     if (majorData.gradeToScore.english.way == "가산점") {
+      console.log("영어 가산점 되지롱");
       totalSum += totalScore.english;
     }
 
-    if (majorData.metadata.extraPoint.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0 && major_perfectScore < totalSum) {
-      totalSum = major_perfectScore;
+    if (major_perfectScore < totalSum) {
+      if (specialOption.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0) {
+        totalSum = major_perfectScore;
+      }
+
+      if (specialOption.indexOf("가산점수 포함 전형총점 초과 불가") >= 0) {
+        totalSum = major_perfectScore;
+      }
     }
 
     if (isNaN(basicScore) == false) totalSum += basicScore;
