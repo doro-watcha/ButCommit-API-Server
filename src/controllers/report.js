@@ -180,6 +180,8 @@ export default class reportController {
       */
     var major_perfectScore = majorData.metadata.perfectScore
     const basicScore = majorData.metadata.basicScore
+    const specialOption = majorData.metadata.specialOption
+
     if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
     const major_ratio = majorData.ratio
@@ -191,6 +193,8 @@ export default class reportController {
       tamgu : 0,
       history : major_perfectScore * (major_ratio.history / 100)
     }
+
+    
 
     console.log(majorData.major.univName)
     console.log(majorData.major.majorName)
@@ -227,6 +231,14 @@ export default class reportController {
 
     if ( history_type == "가산" || history_type =="필수") {
       perfectScore.history = 0 
+    }
+
+    if ( specialOption.indexOf("영역별 점수 : 국(200) / 수(200) / 탐(200) ") >= 0) {
+
+      perfectScore.korean = 200
+      perfectScore.math = 200
+      perfectScore.tamgu = 200
+      perfectScore.english = 135
     }
 
     /**

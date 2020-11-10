@@ -148,6 +148,7 @@ class reportController {
 
     var major_perfectScore = majorData.metadata.perfectScore;
     const basicScore = majorData.metadata.basicScore;
+    const specialOption = majorData.metadata.specialOption;
     if (isNaN(basicScore) == false) major_perfectScore = major_perfectScore - basicScore;
     const major_ratio = majorData.ratio;
     let perfectScore = {
@@ -188,6 +189,13 @@ class reportController {
 
     if (history_type == "가산" || history_type == "필수") {
       perfectScore.history = 0;
+    }
+
+    if (specialOption.indexOf("영역별 점수 : 국(200) / 수(200) / 탐(200) ") >= 0) {
+      perfectScore.korean = 200;
+      perfectScore.math = 200;
+      perfectScore.tamgu = 200;
+      perfectScore.english = 135;
     }
     /**
      * 2. 활용 지표와 반영 비율 가지고 각 과목의 변환 점수 구하기 
