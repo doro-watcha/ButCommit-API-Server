@@ -190,6 +190,7 @@ class fileController {
             // 백분위 X 비율 
             applicationIndicatorType: sheetData[i][42],
             // A
+            tamguTranslation: sheetData[i][44],
             tamguReplace: sheetData[i][45],
             specialOption: sheetData[i][47],
             extraType: sheetData[i][49],

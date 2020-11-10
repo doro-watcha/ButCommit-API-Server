@@ -173,6 +173,7 @@ export default class fileController {
             tamguNumber : sheetData[i][40], // 1 
             applicationIndicator : sheetData[i][43], // 백분위 X 비율 
             applicationIndicatorType : sheetData[i][42], // A
+            tamguTranslation :sheetData[i][44],
             tamguReplace :sheetData[i][45],
             specialOption : sheetData[i][47],
             extraType : sheetData[i][49], // 특정 영역 가산 ex ) 수가 5%, 과탐 3% 가산

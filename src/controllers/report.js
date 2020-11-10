@@ -181,6 +181,7 @@ export default class reportController {
     var major_perfectScore = majorData.metadata.perfectScore
     const basicScore = majorData.metadata.basicScore
     const specialOption = majorData.metadata.specialOption
+    const tamguTranslation = majorData.metadata.tamguTranslation
 
     if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
@@ -290,6 +291,7 @@ export default class reportController {
     /**
      * 점수를 구해보자 
      */
+  
 
     //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
     if ( majorData.major.univName == "가야대") {
@@ -317,9 +319,25 @@ export default class reportController {
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
       newScore.math = score.math.score * ( perfectScore.math  ) / 200
 
-      newScore.tamgu1.score = tamguPercentileToScore[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
-      newScore.tamgu2.score = tamguPercentileToScore[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-      newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+      if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
+
+        newScore.tamgu1.score = tamguPercentileToScore[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
+        newScore.tamgu2.score = tamguPercentileToScore[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
+        newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+      }
+      else {
+
+        newScore.tamgu1.score = score.tamgu1.score * (perfectScore.tamgu) / 100
+        newScore.tamgu2.score = score.tamgu2.score * (perfectScore.tamgu) / 100
+        newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu) / 100 
+      }
+
+      if ( specialOption == "탐구 본교 백분위변환표준점수+100 한 후 계산") {
+
+        newScore.tamgu1.score += 100
+        newScore.tamgu2.score += 100
+        newScore.foreign.score += 100 
+      }
 
     }
 
@@ -331,48 +349,35 @@ export default class reportController {
 
       console.log("백분위 = " + score.tamgu1.percentile)
 
-      const tempTamgu1 = tamguPercentileToScore[100-score.tamgu1.percentile]
-      const tempTamgu2 = tamguPercentileToScore[100-score.tamgu2.percentile]
-      const tempForeign = tamguPercentileToScore[100-score.foreign.percentile]
+      var tempTamgu1 = score.tamgu1.score
+      var tempTamgu2 = score.tamgu2.score
+      var tempForeign = score.foreign.score
+
+      if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
+
+          
+        tempTamgu1 = tamguPercentileToScore[100-score.tamgu1.percentile]
+        tempTamgu2 = tamguPercentileToScore[100-score.tamgu2.percentile]
+        tempForeign = tamguPercentileToScore[100-score.foreign.percentile]
+      }
+
 
       var highest_tamgu_type = ""
       if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
       else highest_tamgu_type = "사회탐구"
 
-      console.log(score.tamgu1.name)
-      console.log(score.tamgu2.name)
+    
 
       const highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       const highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
       const highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
 
-      
-
-
-
-      console.log("-------------------------")
-
       newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean.score
-
-      console.log("zxcv")
       newScore.math = score.math.score * (perfectScore.math ) / highestMath.score
-      console.log("zxcvzxvzxv")
       newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
-      console.log("zxcvzxcvxvxcvx")
       newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
-      console.log("zxcvxzcvxzcvz")
       if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
-      console.log("zxcvzxcvzxv")
 
-      console.log(tempTamgu1)
-      console.log(tempTamgu2)
-
-      console.log(perfectScore.tamgu)
-      console.log(highestTamgu1.score)
-      console.log(highestTamgu2.score)
-      console.log("탐구맨~")
-      console.log(newScore.tamgu1.score)
-      console.log(newScore.tamgu2.score)
     }
 
     // ( 표준점수 / 160 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -510,11 +515,11 @@ export default class reportController {
   
 
 
-    if ( english_type == "가산"|| english_type == "감산") {
+    if ( english_type == "가산"|| english_type == "감산" || metadata.gradeToScore.english.way == "감점") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
     }
 
-    if ( history_type == "가산" || history_type =="감산") {
+    if ( history_type == "가산" || history_type =="감산" || metadata.gradeToScore.history.way =="감점") {
       extraScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv 
     }
 
@@ -1300,6 +1305,8 @@ export default class reportController {
       totalSum = -1
     }
 
+    console.log("special option = " + specialOption)
+
 
     // 마지막으로 totalSum을 조정해보장
     if ( majorData.gradeToScore.history.way == "가산점") {
@@ -1318,9 +1325,16 @@ export default class reportController {
         totalSum = major_perfectScore
       }
   
-      if ( specialOption.indexOf("가산점수 포함 전형총점 초과 불가") >= 0 ) {
+      if ( specialOption.indexOf("전형총점 초과 불가") >= 0 ) {
         totalSum = major_perfectScore 
       }
+
+  
+
+      if ( extraPoint.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >=0 ) {
+        totalSum = major_perfectScore
+      }
+    
     }
 
 
