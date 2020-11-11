@@ -121,11 +121,11 @@ class testController {
          */
 
         if (societyValue - societyAnswer <= 0) {
-          if (societyValue - societyAnswer >= -5) societyDeterminant = 1;else societyDeterminant = 0;
+          if (societyValue - societyAnswer >= -6) societyDeterminant = 1;else societyDeterminant = 0;
         }
 
         if (societyValue - societyAnswer > 0) {
-          if (societyValue - societyAnswer <= 5) societyDeterminant = 1;else societyDeterminant = 0;
+          if (societyValue - societyAnswer <= 6) societyDeterminant = 1;else societyDeterminant = 0;
         }
         /**
          * 이과 점수 판단하기
@@ -133,11 +133,11 @@ class testController {
 
 
         if (scienceValue - scienceAnswer <= 0) {
-          if (scienceValue - scienceAnswer >= -5) scienceDeterminant = 1;else scienceDeterminant = 0;
+          if (scienceValue - scienceAnswer >= -6) scienceDeterminant = 1;else scienceDeterminant = 0;
         }
 
         if (scienceValue - scienceAnswer > 0) {
-          if (scienceValue - scienceAnswer <= 5) scienceDeterminant = 1;else scienceDeterminant = 0;
+          if (scienceValue - scienceAnswer <= 6) scienceDeterminant = 1;else scienceDeterminant = 0;
         }
 
         if (scienceDeterminant == 1 && societyDeterminant == 1) pass++;
