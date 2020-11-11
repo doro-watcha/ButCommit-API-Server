@@ -779,7 +779,6 @@ export default class reportController {
         }
 
       }
-
     }
   }
     
