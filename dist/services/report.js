@@ -68,7 +68,6 @@ class ReportService {
       where: {
         userId
       },
-      attributes: ['id', 'score'],
       include: [{
         model: _models.MajorData,
         as: 'majorData',

@@ -67,7 +67,6 @@ class ReportService {
 
 		let options = {
             where : { userId },
-            attributes : ['id','score'],
 			include: [
 				{
                     model: MajorData,
