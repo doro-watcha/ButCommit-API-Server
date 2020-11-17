@@ -113,6 +113,7 @@ export default class reportController {
           reports
         }
       }
+
       res.send(response)
 
     } catch ( e ) {
@@ -152,10 +153,9 @@ export default class reportController {
       res.send(response)
 
 
-  } catch ( e) {
+  } catch ( e ) {
       res.send(createErrorResponse(e))
   }
-
 
   }
 
