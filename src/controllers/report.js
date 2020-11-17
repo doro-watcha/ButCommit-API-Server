@@ -725,8 +725,11 @@ export default class reportController {
 
 
         if ( extraPoint == "수가 백분위 20% , 과탐 백분위 10 %총점에 가산") {
-          extraScore.math = score.math.percentile * 0.2
-          extraScore.tamgu = ( score.tamgu1.percentile + score.tamgu2.percentile) * 0.05
+          if ( score.math.type == "가") extraScore.math = score.math.percentile * 0.2
+          if ( score.line == "자연") {
+            extraScore.tamgu1 = score.tamgu1.percentile * 0.1
+            extraScore.tamgu2 = score.tamgu2.percentile * 0.1
+          }
         } else { 
 
           if ( score.math.type == "가") extraScore.math = ( newScore.math * extra1) / 100 
