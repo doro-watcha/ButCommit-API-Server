@@ -298,6 +298,74 @@ export default class reportController {
       newScore = await reportController.gayaScore(score,majorData)
 
     }
+    
+    else if ( majorData.major.univName.indexOf("가천대")>= 0 ){
+
+      if ( majorData.ratio.korean == "45/40/15") {
+
+        const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
+        const tamguScore = (score.tamgu1.percentile + score.tamgu2.percentile) / 2
+
+
+        const scoreList = [score.korean.percentile, englishScore, score.math.percentile, tamguScore]
+        
+        scoreList.sort(function(a, b) { 
+          return b - a
+        })
+
+        for ( let i = 0 ; i < 3 ; i++){
+
+          var reflectionScore = [4.5,4,1.5]
+
+          if ( scoreList[i] == score.korean.percentile){
+            newScore.korean = score.korean.percentile * reflectionScore[i]
+            perfectScore.korean = reflectionScore[i] * 100
+          }
+          else if ( scoreList[i] == englishScore) {
+            newScore.english = englishScore * reflectionScore[i]
+            perfectScore.english = reflectionScore[i] * 100
+          }
+          else if ( scoreList[i] == score.math.percentile) {
+            newScore.math = score.math.percentile * reflectionScore[i]
+            perfectScore.math = reflectionScore[i] * 100 
+          }
+          else if ( scoreList[i] == tamguScore) {
+            newScore.tamgu1.scroe = score.tamgu1.percentile * reflectionScore[i]
+            newScore.tamgu2.score = score.tamgu2.percentile * reflectionScore[i]
+
+            perfectScore.tamgu = reflectionScore[i] * 100 
+          }
+        }
+      }
+      else if ( majorData.ratio.korean == "35/25") {
+
+        const scoreList = [ score.korean.percentile , score.math.percentile]
+
+        scoreList.sort(function(a,b) {
+          return b - a 
+        })
+
+        for ( let i = 0 ; i < 2 ; i++ ) {
+
+          var reflectionScore = [3.5 ,2.5]
+
+          if ( scoreList[i] == score.korean.percentile) {
+            newScore.korean = score.korean.percentile * reflectionScore[i]
+            perfectScore.korean = reflectionScore[i] * 100 
+          }
+          else if ( scoreList[i] == score.math.percentile) {
+            newScore.math = score.math.percentile * reflectionScore[i]
+            perfectScore.math = reflectionScore[i] * 100
+          }
+        }
+
+        newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * 2
+        newScore.tamgu1.score = score.tamgu1.percentile * 2
+        newScore.tamgu2.score = score.tamgu2.percentile * 2
+      }
+      
+    }
+
     else if ( applicationIndicatorType == "A") {
       newScore.korean = (score.korean.percentile * perfectScore.korean ) / 100 
       newScore.math = ( score.math.percentile * perfectScore.math ) / 100 
