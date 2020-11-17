@@ -336,7 +336,7 @@ export default class reportController {
             perfectScore.math = reflectionScore[i] * 100 
           }
           else if ( scoreList[i] == tamguScore) {
-            newScore.tamgu1.scroe = score.tamgu1.percentile * reflectionScore[i]
+            newScore.tamgu1.score = score.tamgu1.percentile * reflectionScore[i]
             newScore.tamgu2.score = score.tamgu2.percentile * reflectionScore[i]
 
             perfectScore.tamgu = reflectionScore[i] * 100 
