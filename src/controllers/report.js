@@ -313,9 +313,9 @@ export default class reportController {
           return b - a
         })
 
-        for ( let i = 0 ; i < 3 ; i++){
+        for ( let i = 0 ; i < 4 ; i++){
 
-          var reflectionScore = [4.5,4,1.5]
+          var reflectionScore = [4.5,4,1.5,0]
 
           if ( scoreList[i] == score.korean.percentile){
             newScore.korean = score.korean.percentile * reflectionScore[i]
@@ -335,7 +335,10 @@ export default class reportController {
 
             perfectScore.tamgu = reflectionScore[i] * 100 
           }
+      
         }
+
+
       }
       else if ( majorData.ratio.korean == "35/25") {
 
@@ -359,9 +362,12 @@ export default class reportController {
           }
         }
 
+      
         newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * 2
         newScore.tamgu1.score = score.tamgu1.percentile * 2
         newScore.tamgu2.score = score.tamgu2.percentile * 2
+
+      
       }
       
     }

@@ -251,8 +251,8 @@ class reportController {
           return b - a;
         });
 
-        for (let i = 0; i < 3; i++) {
-          var reflectionScore = [4.5, 4, 1.5];
+        for (let i = 0; i < 4; i++) {
+          var reflectionScore = [4.5, 4, 1.5, 0];
 
           if (scoreList[i] == score.korean.percentile) {
             newScore.korean = score.korean.percentile * reflectionScore[i];
