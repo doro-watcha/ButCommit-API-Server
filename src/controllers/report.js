@@ -305,7 +305,7 @@ export default class reportController {
 
         var mathScore = score.math.percentile
         var englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
-        var tamguScore = (score.tamgu1.percentile + score.tamgu2.percentile) / 2
+        var tamguScore = Math.max(score.tamgu1.percentile , score.tamgu2.percentile)
 
         if ( majorData.metadata.extraPoint.length > 3 ) {
           if ( score.math.type == "가") mathScore *= 1.05
