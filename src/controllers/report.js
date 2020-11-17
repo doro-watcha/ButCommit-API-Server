@@ -730,7 +730,20 @@ export default class reportController {
             extraScore.tamgu1 = score.tamgu1.percentile * 0.1
             extraScore.tamgu2 = score.tamgu2.percentile * 0.1
           }
-        } else { 
+        }
+        else if ( extraPoint == "수가 표준점수 15% , 과탐 표준점수 6% 총점에 가산") {
+          if ( score.math.type == "가") extraScore.math = score.math.score * 0.15
+          if ( score.line == "자연") {
+            extraScore.tamgu1 = score.tamgu1.score * 0.06
+            extraScore.tamgu2 = score.tamgu2.score * 0.06
+          }
+
+        }
+        else if ( extraPoint == "수가 표준점수 20% , 과탐 표준점수 6% 총점에 가산") {
+
+
+        }
+        else { 
 
           if ( score.math.type == "가") extraScore.math = ( newScore.math * extra1) / 100 
 
