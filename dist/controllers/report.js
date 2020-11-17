@@ -244,9 +244,16 @@ class reportController {
       newScore = await reportController.gayaScore(score, majorData);
     } else if (majorData.major.univName.indexOf("가천대") >= 0) {
       if (majorData.ratio.korean == "45/40/15") {
-        const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
-        const tamguScore = (score.tamgu1.percentile + score.tamgu2.percentile) / 2;
-        const scoreList = [score.korean.percentile, englishScore, score.math.percentile, tamguScore];
+        var mathScore = score.math.percentile;
+        var englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
+        var tamguScore = (score.tamgu1.percentile + score.tamgu2.percentile) / 2;
+
+        if (majorData.metadata.extraPoint.length > 3) {
+          if (score.math.type == "가") mathScore *= 1.05;
+          if (score.line == "자연") tamguScore *= 1.03;
+        }
+
+        const scoreList = [score.korean.percentile, englishScore, mathScore, tamguScore];
         scoreList.sort(function (a, b) {
           return b - a;
         });
@@ -270,7 +277,13 @@ class reportController {
           }
         }
       } else if (majorData.ratio.korean == "35/25") {
-        const scoreList = [score.korean.percentile, score.math.percentile];
+        var mathScore = score.math.percentile;
+
+        if (majorData.metadata.extraPoint.length > 3) {
+          if (score.math.type == "가") mathScore *= 1.05;
+        }
+
+        const scoreList = [score.korean.percentile, mathScore];
         scoreList.sort(function (a, b) {
           return b - a;
         });
