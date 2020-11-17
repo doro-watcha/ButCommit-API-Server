@@ -369,7 +369,7 @@ export default class reportController {
             newScore.korean = score.korean.percentile * reflectionScore[i]
             perfectScore.korean = reflectionScore[i] * 100 
           }
-          else if ( scoreList[i] == score.math.percentile) {
+          else if ( scoreList[i] == mathScore) {
             newScore.math = score.math.percentile * reflectionScore[i]
             perfectScore.math = reflectionScore[i] * 100
           }
