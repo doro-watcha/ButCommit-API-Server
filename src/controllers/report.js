@@ -299,7 +299,7 @@ export default class reportController {
 
     }
     
-    else if ( majorData.major.univName.indexOf("가천대")>= 0 ){
+    else if ( majorData.major.univName.indexOf("가천대")>= 0 && majorData.id != 61 && majorData.id != 65 ) {
 
       if ( majorData.ratio.korean == "45/40/15") {
 

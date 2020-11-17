@@ -242,7 +242,7 @@ class reportController {
 
     if (majorData.major.univName == "가야대") {
       newScore = await reportController.gayaScore(score, majorData);
-    } else if (majorData.major.univName.indexOf("가천대") >= 0) {
+    } else if (majorData.major.univName.indexOf("가천대") >= 0 && majorData.id != 61 && majorData.id != 65) {
       if (majorData.ratio.korean == "45/40/15") {
         var mathScore = score.math.percentile;
         var englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
