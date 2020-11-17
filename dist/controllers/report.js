@@ -459,6 +459,8 @@ class reportController {
         if (score.math.type == "가") {
           if (extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.2;
+          } else if (extraPoint == "수가 표준점수 10% 총점에 가산") {
+            extraScore.math = score.math.score * 0.1;
           } else {
             extraScore.math = newScore.math * extraValue / 100;
           }
@@ -521,7 +523,14 @@ class reportController {
             extraScore.tamgu1 = score.tamgu1.score * 0.06;
             extraScore.tamgu2 = score.tamgu2.score * 0.06;
           }
-        } else if (extraPoint == "수가 표준점수 20% , 과탐 표준점수 6% 총점에 가산") {} else {
+        } else if (extraPoint == "수가 표준점수 20% , 과탐 표준점수 6% 총점에 가산") {
+          if (score.math.type == "가") extraScore.math = score.math.score * 0.2;
+
+          if (score.line == "자연") {
+            extraScore.tamgu1 = score.tamgu1.score * 0.06;
+            extraScore.tamgu2 = score.tamgu2.score * 0.06;
+          }
+        } else {
           if (score.math.type == "가") extraScore.math = newScore.math * extra1 / 100;
 
           if (score.line == "자연") {
