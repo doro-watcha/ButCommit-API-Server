@@ -855,6 +855,7 @@ export default class reportController {
         if ( score.line == "자연") {
           extraScore.tamgu1 = extraValue
           extraScore.tamgu2 = extraValue 
+        }
       }
 
       else if ( extraSubject == "수가 / 과탐") {
@@ -872,6 +873,7 @@ export default class reportController {
 
     else if ( extraType == "% + 점수 가산") {
 
+      console.log("% + 로 들어오긴해~")
       if ( extraSubject == "수가 / 과탐") {
 
         if ( score.math.type == "가") {
@@ -885,7 +887,7 @@ export default class reportController {
 
       }
     }
-  }
+  
     
     else {
 

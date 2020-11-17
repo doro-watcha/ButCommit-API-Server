@@ -569,26 +569,28 @@ class reportController {
         if (score.line == "자연") {
           extraScore.tamgu1 = extraValue;
           extraScore.tamgu2 = extraValue;
-        } else if (extraSubject == "수가 / 과탐") {
-          if (score.math.type == "가") {
-            extraScore.math = extra1;
-          }
-
-          if (score.line == "자연") {
-            extraScore.tamgu1 = extra2;
-            extraScore.tamgu2 = extra2;
-          }
         }
-      } else if (extraType == "% + 점수 가산") {
-        if (extraSubject == "수가 / 과탐") {
-          if (score.math.type == "가") {
-            extraScore.math = newScore.math * extra1 / 100;
-          }
+      } else if (extraSubject == "수가 / 과탐") {
+        if (score.math.type == "가") {
+          extraScore.math = extra1;
+        }
 
-          if (score.line == "자연") {
-            extraScore.tamgu1 = extra2;
-            extraScore.tamgu2 = extra2;
-          }
+        if (score.line == "자연") {
+          extraScore.tamgu1 = extra2;
+          extraScore.tamgu2 = extra2;
+        }
+      }
+    } else if (extraType == "% + 점수 가산") {
+      console.log("% + 로 들어오긴해~");
+
+      if (extraSubject == "수가 / 과탐") {
+        if (score.math.type == "가") {
+          extraScore.math = newScore.math * extra1 / 100;
+        }
+
+        if (score.line == "자연") {
+          extraScore.tamgu1 = extra2;
+          extraScore.tamgu2 = extra2;
         }
       }
     } else {
