@@ -85,7 +85,7 @@ class testController {
       await _services.testService.deleteAll();
       var pass = 0; // 파싱을 해보자 
 
-      for (let i = 15; i < 100; i++) {
+      for (let i = 3; i < 5520; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
