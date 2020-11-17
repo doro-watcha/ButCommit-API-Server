@@ -457,7 +457,11 @@ class reportController {
     if (extraType == "% 가산") {
       if (extraSubject == "수가") {
         if (score.math.type == "가") {
-          extraScore.math = newScore.math * extraValue / 100;
+          if (extraPoint == "수가 백분위 20% 총점에 가산") {
+            extraScore.math = score.math.percentile * 0.2;
+          } else {
+            extraScore.math = newScore.math * extraValue / 100;
+          }
         }
       } else if (extraSubject == "과탐") {
         if (score.line == "자연") {
@@ -502,11 +506,17 @@ class reportController {
       } else if (extraSubject == "수가 / 과탐") {
         console.log("수가 /가탐 으로 들어오긴해!");
         console.log(score.math.type);
-        if (score.math.type == "가") extraScore.math = newScore.math * extra1 / 100;
 
-        if (score.line == "자연") {
-          extraScore.tamgu1 = newScore.tamgu1.score * extra2 / 100;
-          extraScore.tamgu2 = newScore.tamgu2.score * extra2 / 100;
+        if (extraPoint == "수가 백분위 20% , 과탐 백분위 10 %총점에 가산") {
+          extraScore.math = score.math.percentile * 0.2;
+          extraScore.tamgu = (score.tamgu1.percentile + score.tamgu2.percentile) * 0.05;
+        } else {
+          if (score.math.type == "가") extraScore.math = newScore.math * extra1 / 100;
+
+          if (score.line == "자연") {
+            extraScore.tamgu1 = newScore.tamgu1.score * extra2 / 100;
+            extraScore.tamgu2 = newScore.tamgu2.score * extra2 / 100;
+          }
         }
       } else if (extraSubject == "수가 / 수나") {
         if (score.math.type == "가") {
