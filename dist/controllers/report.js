@@ -310,8 +310,8 @@ class reportController {
       console.log("서강대지롱");
       newScore.korean = score.korean.score * 1.1;
       newScore.math = score.math.score * 1.4;
-      newScore.tamgu1.score = score.tamgu1.score * 0.6;
-      newScore.tamgu2.score = score.tamgu2.score * 0.6;
+      newScore.tamgu1.score = score.tamgu1.score * 1.2;
+      newScore.tamgu2.score = score.tamgu2.score * 1.2;
     } else if (applicationIndicatorType == "A") {
       newScore.korean = score.korean.percentile * perfectScore.korean / 100;
       newScore.math = score.math.percentile * perfectScore.math / 100;
@@ -922,17 +922,17 @@ class reportController {
       totalSum = -1;
     }
 
+    console.log(totalSum);
     console.log("special option = " + specialOption); // 마지막으로 totalSum을 조정해보장
 
     if (majorData.gradeToScore.history.way == "가산점") {
       console.log("한국사 가산점 되지롱");
       totalSum += totalScore.history;
-    }
+    } // if ( majorData.gradeToScore.english.way == "가산점") {
+    //   console.log("영어 가산점 되지롱")
+    //   totalSum += totalScore.english
+    // }
 
-    if (majorData.gradeToScore.english.way == "가산점") {
-      console.log("영어 가산점 되지롱");
-      totalSum += totalScore.english;
-    }
 
     if (major_perfectScore < totalSum) {
       if (specialOption.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0) {
@@ -948,7 +948,15 @@ class reportController {
       }
     }
 
-    if (isNaN(basicScore) == false) totalSum += basicScore;
+    console.log(totalSum);
+
+    if (isNaN(basicScore) == false) {
+      console.log(basicScore);
+      console.log("기본점이 들억자ㅏㄴㅎ앙");
+      totalSum += basicScore;
+      console.log(totalSum);
+    }
+
     console.log("순서까지 다 정했어!");
     console.log("newScore");
     console.log(newScore);
