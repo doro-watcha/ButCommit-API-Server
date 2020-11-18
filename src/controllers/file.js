@@ -171,6 +171,7 @@ export default class fileController {
             competitionRate : sheetData[i][18], // 2.33
 
             reflectionSubject : sheetData[i][38], // 탐,한+국,수,영중 택2
+            calculationSpecial : sheetData[i][39],
             tamguNumber : sheetData[i][40], // 1 
             applicationIndicator : sheetData[i][43], // 백분위 X 비율 
             applicationIndicatorType : sheetData[i][42], // A
