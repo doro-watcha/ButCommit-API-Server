@@ -578,6 +578,7 @@ export default class reportController {
 
       }
 
+
       else if ( majorData.gradeToScore.english.way == "수능비율포함") {
         newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
       }
@@ -588,6 +589,8 @@ export default class reportController {
 
       }
     }
+
+    
 
     
 
@@ -1467,10 +1470,10 @@ export default class reportController {
     
     }
 
-    // if ( majorData.gradeToScore.english.way == "가산점") {
-    //   console.log("영어 가산점 되지롱")
-    //   totalSum += totalScore.english
-    // }
+    if ( majorData.gradeToScore.english.way == "가산점") {
+      console.log("영어 가산점 되지롱")
+      totalSum += totalScore.english
+    }
 
     if ( major_perfectScore < totalSum ) {
       if ( specialOption.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0 ) {
