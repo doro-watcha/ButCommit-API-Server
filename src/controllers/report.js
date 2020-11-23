@@ -556,6 +556,7 @@ export default class reportController {
       newScore.math = score.math.score * (perfectScore.math ) / highestMath.score
       newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
       newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
+      console.log(highestForeign)
       if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
       

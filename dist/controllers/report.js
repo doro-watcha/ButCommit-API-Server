@@ -444,6 +444,7 @@ class reportController {
             newScore.math = score.math.score * perfectScore.math / highestMath.score;
             newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
             newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
+            console.log(highestForeign);
             if (highestForeign != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
 
             if (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") {
