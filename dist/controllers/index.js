@@ -26,6 +26,8 @@ var _test = _interopRequireDefault(require("./test"));
 
 var _highestScore = _interopRequireDefault(require("./highestScore"));
 
+var _scoreTransition = _interopRequireDefault(require("./scoreTransition"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -41,5 +43,6 @@ module.exports = {
   fileController: _file.default,
   majorDataController: _majorData.default,
   testController: _test.default,
-  highestScoreController: _highestScore.default
+  highestScoreController: _highestScore.default,
+  scoreTransitionController: _scoreTransition.default
 };

@@ -12,6 +12,7 @@ import AcademyModel from './Academy'
 import MajorDataModel from './MajorData'
 import TestModel from './Test'
 import HighestScoreModel from './HighestScore'
+import ScoreTransitionModel from './ScoreTransition'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -29,7 +30,8 @@ const models = {
   Academy : AcademyModel.init(sequelize, Sequelize),
   MajorData : MajorDataModel.init(sequelize, Sequelize),
   Test : TestModel.init(sequelize, Sequelize),
-  HighestScore : HighestScoreModel.init(sequelize , Sequelize)
+  HighestScore : HighestScoreModel.init(sequelize , Sequelize),
+  ScoreTransition : ScoreTransitionModel.init(sequelize, Sequelize)
 }
 
 Object.values(models)

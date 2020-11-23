@@ -14,6 +14,7 @@ import fileRouter from './file'
 import majorDataRouter from './majorData'
 import testRouter from './test'
 import highestScoreRouter from './highestScore'
+import scoreTransitionRouter from './scoreTransition'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,6 +34,7 @@ router.use('/file' , fileRouter)
 router.use('/majorData', majorDataRouter)
 router.use('/test', testRouter)
 router.use('/highestScore', highestScoreRouter)
+router.use('/scoreTransition', scoreTransitionRouter)
 
 
 module.exports = router

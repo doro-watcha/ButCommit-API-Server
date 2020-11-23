@@ -1,7 +1,8 @@
-import { reportService , majorDataService, scoreService, highestScoreService } from '../services'
+import { reportService , majorDataService, scoreService, highestScoreService, scoreTransitionService } from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
+import highestScore from '../services/highestScore'
 
 export default class reportController {
 
@@ -171,9 +172,6 @@ export default class reportController {
      * 4. 반영 과목으로 넣을과목은 넣고 뺄 과목은 빼기 
      * 5. 싸그리 더해서 점수 구하기
      */
-    const tamguPercentileToScore = [66.22,	66,	65.56,	65.26,	64.92,	64.58,	64.24,	63.95,	63.64,	63.32,	63,	62.75,	62.49,	62.25,	62.01,	61.75,	61.49,	61.22,	60.96,	60.7,	60.44,	60.2,	59.96,	59.7,	59.46,	59.12,	58.86,	58.56,	58.21,	57.89,	57.56,	57.25,	56.95,	56.65,	56.36,	56.05,	55.72,	55.37,	54.99,	54.59,	54.2,	53.83,	53.46,	53.06,	52.57,	52.2,	51.82,	51.43,	50.97,	50.56,	50.16,	49.76,	49.37,	48.94,	48.51,	48.12,	47.62,	47.18,	46.77,	46.41,	46.08,	45.76,	45.41,	45.05,	44.74,	44.38,	44.02,	43.69,	43.37,	43.07,	42.74,	42.4,	42.1,	41.79,	41.5,	41.13	,40.73,	40.45,	40.18,	39.93,	39.68,	39.42,	39.14,	38.86,	38.53,	38.19,	37.9,	37.58,	37.28,	36.9,	36.58,	36.26,	35.83,	35.42,	34.96,	34.51,	34.05,	33.55,	32.92,	32.11,	30.33]
-    const mathScoreToScoreType1 = [150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,149,144,142.33,140.66,139,137,135,132.5,131.25	,130,127.5,127.25,127,124,121.5,121,118,117,115.5,113,112,111.5,109,107.5,106.5,105.5,104,103,101,99.5,99,97.5,97,95,93.5,93,92.5,92,91,90,89,88.5,88,86.5,86,85.75,85.5,84.5,84,83,82.5,82,81,80.5,80,79,78.66,78.33,78,77.66,77.33,77,75.5,75.25,75,74,73,72.5,72,71.5,71,70.5,70,69,68,66.66,65.33]
-    const mathScoreToScoreType2 = [134,134,	133.8,	133.6,	133.4,	133.2,	133,	132.4,	131.8,	131.2,	130.6,	130,	129.5,	129,	128.5,	128,	127.5,	127,	126.5,	126,	125,	124.66,	124.33,	122,	121.83,	121.66,	121,	120.66,	120.33,	119,	118.66,	118.33,	118,	117,	116.5,	115.75,	115.25,	115,	114,	112.66,	112.33	,112	,111.5,	110.5,	109.5,	108.5,	108,	107,	106.66,	106,	105.5,	104,	103.5,	102,	101.5,	101,	100.5,	99,	97,	96,	95,	94,	92,	91.5,	90,	87.5,	86,	85,	83,	82,	80,	79,	76,	73,	72.5,	70,	69,	68,	66,	64,	62,	61,	60,	59.25,	58.5,	57.75,	57,	57,	57,	57,	57,	57,	57,	57]
 
      /**
       * 1. 들어온 성적, 이용될 만점 구하기 
@@ -182,6 +180,7 @@ export default class reportController {
     const basicScore = majorData.metadata.basicScore
     const specialOption = majorData.metadata.specialOption
     const tamguTranslation = majorData.metadata.tamguTranslation
+    const calculationSpecial = majorData.metadata.calculationSpecial
 
     if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
@@ -242,6 +241,12 @@ export default class reportController {
       perfectScore.english = 135
     }
 
+    if ( majorData.major.univName.indexOf("전남대") >= 0 ) {
+
+      perfectScore.korean = 240
+      perfectScore.math = 320
+      perfectScore.tamgu = 240
+    }
     /**
      * 2. 활용 지표와 반영 비율 가지고 각 과목의 변환 점수 구하기 
      */
@@ -291,12 +296,61 @@ export default class reportController {
     /**
      * 점수를 구해보자 
      */
+    var tamgu1TransitionScore = ""
+    var tamgu2TransitionScore = ""
+    var foreignTransitionScore = ""
+    var mathTransitionScore = ""
+
+    if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
+      tamgu1TransitionScore = await scoreTransitionService.findOne({ 
+        univName : majorData.major.univName, 
+        line : score.line,
+        major : majorData.major.majorName,
+        subject : "과탐"
+      })
+
+      tamgu2TransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName, 
+        line : score.line,
+        major : majorData.major.majorName,
+        subject : "과탐"
+      })
+
+      foreignTransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName, 
+        line : score.line,
+        major : majorData.major.majorName,
+        subject : "제2외/한"
+      })
+
   
+    }
+
+    if ( calculationSpecial == "수가 지원시 변표사용" && score.math.type =="가") {
+      mathTransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName,
+        line : score.line,
+        major : majorData.major.majorName,
+        subject : "수가"
+      })
+    }
+
+    else if ( calculationSpecial == "수나 지원시 변표사용" && score.maty.type == "나") {
+      mathTransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName,
+        line : score.line,
+        major : majorData.major.majorName,
+        subject : "수나"
+      })
+
+    }
+    
 
     //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
     if ( majorData.major.univName == "가야대") {
       newScore = await reportController.gayaScore(score,majorData)
 
+  
     }
     
     else if ( majorData.major.univName.indexOf("가천대")>= 0 && majorData.id != 61 && majorData.id != 65 ) {
@@ -379,14 +433,11 @@ export default class reportController {
         newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * 2
         newScore.tamgu1.score = score.tamgu1.percentile * 2
         newScore.tamgu2.score = score.tamgu2.percentile * 2
-
-      
       }
       
     }
 
     else if ( majorData.major.univName == "서강대") {
-      console.log("서강대지롱")
       newScore.korean = score.korean.score * 1.1
       newScore.math = score.math.score * 1.4
       newScore.tamgu1.score = score.tamgu1.score * 1.2
@@ -404,20 +455,25 @@ export default class reportController {
       newScore.korean = score.korean.score * ( perfectScore.korean  ) / 100
       newScore.math = score.math.score * ( perfectScore.math  ) / 100
 
-      newScore.tamgu1.score = tamguPercentileToScore[100-score.tamgu1.percentile]  * ( perfectScore.tamgu) / 100
-      newScore.tamgu2.score = tamguPercentileToScore[100-score.tamgu2.percentile] * ( perfectScore.tamgu) / 100
-      newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] * ( perfectScore.tamgu ) / 100
+      newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]  * ( perfectScore.tamgu) / 100
+      newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * ( perfectScore.tamgu) / 100
+      newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * ( perfectScore.tamgu ) / 100
     }
     // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "C") {
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
-      newScore.math = score.math.score * ( perfectScore.math  ) / 200
+
+      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
+      } else newScore.math = score.math.score * ( perfectScore.math  ) / 200
+
+      
 
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
 
-        newScore.tamgu1.score = tamguPercentileToScore[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
-        newScore.tamgu2.score = tamguPercentileToScore[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-        newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
+        newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
       }
       else {
 
@@ -450,9 +506,9 @@ export default class reportController {
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
           
-        tempTamgu1 = tamguPercentileToScore[100-score.tamgu1.percentile]
-        tempTamgu2 = tamguPercentileToScore[100-score.tamgu2.percentile]
-        tempForeign = tamguPercentileToScore[100-score.foreign.percentile]
+        tempTamgu1 = tagmu1TransitionScore.score.value[100-score.tamgu1.percentile]
+        tempTamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+        tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
       }
 
 
@@ -472,6 +528,12 @@ export default class reportController {
       newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
       if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
+      
+      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath.score 
+      } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath.score
+
+    
     }
 
     // ( 표준점수 / 160 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -479,9 +541,14 @@ export default class reportController {
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 160
       newScore.math = score.math.score * ( perfectScore.math  ) / 160
-      newScore.tamgu1.score = tamguPercentileToScore[100-score.tamgu1.percentile] / 160
-      newScore.tamgu2.score = tamguPercentileToScore[100-score.tamgu2.percentile] / 160
-      newScore.foreign.score = tamguPercentileToScore[100-score.foreign.percentile] / 160
+      newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 160
+      newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 160
+      newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
+
+
+      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 160 
+      }
 
     }
     
@@ -494,8 +561,11 @@ export default class reportController {
       newScore.tamgu2.score = score.tamgu2.score
       newScore.foreign.score = score.foreign.score   
 
-      console.log(newScore.tamgu1)
-      console.log(newScore.tamgu2)
+
+
+      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] 
+      }
     }
     
     // 등급: 4과목 평균 등급 환산점수
@@ -504,11 +574,7 @@ export default class reportController {
       console.log(majorData.major.univName)
 
       if ( majorData.major.univName.indexOf("경동대") >= 0) {
-        console.log("경동대로 가즈아!")
         const gyungDongScore = await reportController.getScoreByGrade(score, majorData)
-
-        console.log("GyungDong Score" + gyungDongScore)
-
         return gyungDongScore
       }
       else { 
@@ -526,20 +592,6 @@ export default class reportController {
       newScore = await reportController.getScoreByGrade(score,majorData)
     }
 
-    if ( majorData.metadata.calculationSpecial == "수가 선택시 변표사용") {
-
-      if ( majorData.major.univName == "서울대") {
-        
-      }
-      else {
-        if ( score.math.score > 57) {
-          newScore.math = mathScoreToScoreType1[150-score.math.score]
-        } else {
-          newScore.math = 64
-        }
-      }
-    }
-  
 
     // 가산점을 구해보자!
 
@@ -1063,7 +1115,7 @@ export default class reportController {
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu + totalScore.history 
     }
     else if ( reflectionSubject == "국+수+영+탐") {
-      console.log("반영비율도 에러가 나냐..")
+
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu
     }
 

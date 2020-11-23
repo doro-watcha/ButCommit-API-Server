@@ -26,6 +26,8 @@ var _test = _interopRequireDefault(require("./test"));
 
 var _highestScore = _interopRequireDefault(require("./highestScore"));
 
+var _scoreTransition = _interopRequireDefault(require("./scoreTransition"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -51,4 +53,5 @@ router.use('/file', _file.default);
 router.use('/majorData', _majorData.default);
 router.use('/test', _test.default);
 router.use('/highestScore', _highestScore.default);
+router.use('/scoreTransition', _scoreTransition.default);
 module.exports = router;

@@ -4,7 +4,7 @@ import mime from 'mime'
 import path from 'path'
 import fs from 'fs'
 import xlsx from 'xlsx'
-import { majorService, universityService , majorDataService} from '../services'
+import { majorService, universityService , majorDataService, scoreTransitionService} from '../services'
 
 import { createErrorResponse } from '../utils/functions'
 
@@ -50,8 +50,9 @@ export default class fileController {
 
     try { 
 
-      await majorService.deleteAll()
-      await majorDataService.deleteAll()
+      // await majorService.deleteAll()
+      // await majorDataService.deleteAll()
+      await scoreTransitionService.deleteAll()
 
 
       
@@ -87,7 +88,7 @@ export default class fileController {
 
 
 
-        await majorService.create(obj1)
+        //await majorService.create(obj1)
       }
 
       // 2021년 
@@ -223,31 +224,55 @@ export default class fileController {
         }
 
         
-        await majorDataService.create(obj2)
+        //await majorDataService.create(obj2)
       }
 
-      // for ( let i = 3; i < 5650 ; i++) { 
+      let sheetData2 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
+           header: 1,
+           defval: '',
+           blankrows: true
+      })
+    
+      var line = sheetData2[0][0]
+      var univName = sheetData2[0][1]
+      var major = sheetData2[0][2]
+
+      for ( let i = 1; i < 2112; i++) {
+
+        let data = {}
+
+        if ( sheetData2[i][5] == "백분위") {
+          data = {
+            value : sheetData2[i].slice(56,157)
+          }
+        } else {
+          data = {
+            value : sheetData2[i].slice(6,157)
+          }
+        }
+
+        if ( sheetData2[i][0].length > 1 ) line = sheetData2[i][0]
+
+        if ( sheetData2[i][0].length > 1 ) univName = sheetData2[i][1]
+
+        if ( sheetData2[i][0].length > 1 ) major = sheetData2[i][2]
 
 
-      //   let obj3 = {
-      //     id : 2 * i - 4,
-      //     year : 2021,
-      //     majorId : i-2,
-      //     metadata : {
-      //       initialMember : sheetData[i][11],
-      //       additionalMember : sheetData[i][12],
-      //       competitionRate : sheetData[i][16],
-      //       reflectionSubject : sheetData[i][28],
-      //       tamguNumber : sheetData[i][30],
-      //       applicationIndicator : sheetData[i][32],
-      //       extraPoint : sheetData[i][68],
-      //       perfectScore : sheetData[i][74]
-      //     }
-      //   }
+        let obj = {
+          id : i,
+          line,
+          univName,
+          major,
+          subject : sheetData2[i][3],
+          applicationIndicator : sheetData2[i][5],
+          score : data 
 
-      //   await majorDataService.create(obj3)
-        
-      // }
+        }
+
+        await scoreTransitionService.create(obj)
+
+      }
+
 
       const response = {
         success : true

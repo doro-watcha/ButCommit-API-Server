@@ -52,8 +52,9 @@ class fileController {
 
   static async parseMajor(req, res) {
     try {
-      await _services.majorService.deleteAll();
-      await _services.majorDataService.deleteAll();
+      // await majorService.deleteAll()
+      // await majorDataService.deleteAll()
+      await _services.scoreTransitionService.deleteAll();
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -93,8 +94,7 @@ class fileController {
           // 경찰행정학과 
           majorName: sheetData[i][7] // 경찰행정학과 
 
-        };
-        await _services.majorService.create(obj1);
+        }; //await majorService.create(obj1)
       } // 2021년 
 
 
@@ -244,27 +244,46 @@ class fileController {
               score: sheetData[i].slice(78, 87)
             }
           }
-        };
-        await _services.majorDataService.create(obj2);
-      } // for ( let i = 3; i < 5650 ; i++) { 
-      //   let obj3 = {
-      //     id : 2 * i - 4,
-      //     year : 2021,
-      //     majorId : i-2,
-      //     metadata : {
-      //       initialMember : sheetData[i][11],
-      //       additionalMember : sheetData[i][12],
-      //       competitionRate : sheetData[i][16],
-      //       reflectionSubject : sheetData[i][28],
-      //       tamguNumber : sheetData[i][30],
-      //       applicationIndicator : sheetData[i][32],
-      //       extraPoint : sheetData[i][68],
-      //       perfectScore : sheetData[i][74]
-      //     }
-      //   }
-      //   await majorDataService.create(obj3)
-      // }
+        }; //await majorDataService.create(obj2)
+      }
 
+      let sheetData2 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
+        header: 1,
+        defval: '',
+        blankrows: true
+      });
+
+      var line = sheetData2[0][0];
+      var univName = sheetData2[0][1];
+      var major = sheetData2[0][2];
+
+      for (let i = 1; i < 2112; i++) {
+        let data = {};
+
+        if (sheetData2[i][5] == "백분위") {
+          data = {
+            value: sheetData2[i].slice(56, 157)
+          };
+        } else {
+          data = {
+            value: sheetData2[i].slice(6, 157)
+          };
+        }
+
+        if (sheetData2[i][0].length > 1) line = sheetData2[i][0];
+        if (sheetData2[i][0].length > 1) univName = sheetData2[i][1];
+        if (sheetData2[i][0].length > 1) major = sheetData2[i][2];
+        let obj = {
+          id: i,
+          line,
+          univName,
+          major,
+          subject: sheetData2[i][3],
+          applicationIndicator: sheetData2[i][5],
+          score: data
+        };
+        await _services.scoreTransitionService.create(obj);
+      }
 
       const response = {
         success: true

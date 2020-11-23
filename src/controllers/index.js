@@ -11,6 +11,7 @@ import fileController from './file'
 import majorDataController from './majorData'
 import testController from './test'
 import highestScoreController from './highestScore'
+import scoreTransitionController from './scoreTransition'
 
 module.exports = {
 
@@ -26,5 +27,6 @@ module.exports = {
     fileController,
     majorDataController,
     testController,
-    highestScoreController
+    highestScoreController,
+    scoreTransitionController
 }
