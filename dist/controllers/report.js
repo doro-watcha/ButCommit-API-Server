@@ -440,9 +440,13 @@ class reportController {
             const highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
             const highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
             const highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name);
+            console.log("zxcv1");
             newScore.korean = score.korean.score * perfectScore.korean / highestKorean.score;
+            console.log("zxcv2");
             newScore.math = score.math.score * perfectScore.math / highestMath.score;
+            console.log("zxcv3");
             newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
+            console.log("zxcv4");
             newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
             console.log(highestForeign);
             if (highestForeign != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
