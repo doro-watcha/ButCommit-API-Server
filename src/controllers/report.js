@@ -532,9 +532,13 @@ export default class reportController {
       console.log("백분위 = " + score.tamgu1.percentile)
 
       var tempTamgu1 = score.tamgu1.score
+
+      console.log(tempTamgu1)
       var tempTamgu2 = score.tamgu2.score
+      console.log(tempTamgu2)
       var tempForeign = score.foreign.score
 
+      console.log(tempForeign)
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
           
