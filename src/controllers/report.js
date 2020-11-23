@@ -181,6 +181,7 @@ export default class reportController {
     const specialOption = majorData.metadata.specialOption
     const tamguTranslation = majorData.metadata.tamguTranslation
     const calculationSpecial = majorData.metadata.calculationSpecial
+    const tamguReplace = majorData.metadata.tamguReplace
 
     if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
@@ -300,45 +301,61 @@ export default class reportController {
     var tamgu2TransitionScore = ""
     var foreignTransitionScore = ""
     var mathTransitionScore = ""
+    var subject1 = ""
+    var subject2 = ""
 
     if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
+
+      if ( score.line == "인문") {
+        subject1 = "사탐"
+        subject2 = "사탐"
+      }
+      else if ( score.line == "자연") {
+        subject1 = "과탐"
+        subject2 = "과탐"
+      }
+
+      if ( majorData.major.univName.indexOf("과학기술원") >= 0 ) {
+        subject1 = score.tamgu1.name
+        subject2 = score.tamgu2.name
+      }
+      
       tamgu1TransitionScore = await scoreTransitionService.findOne({ 
         univName : majorData.major.univName, 
-        line : score.line,
         major : majorData.major.majorName,
-        subject : "과탐"
+        subject : subject1
       })
 
       tamgu2TransitionScore = await scoreTransitionService.findOne({
         univName : majorData.major.univName, 
-        line : score.line,
         major : majorData.major.majorName,
-        subject : "과탐"
+        subject : subject2
       })
 
-      foreignTransitionScore = await scoreTransitionService.findOne({
-        univName : majorData.major.univName, 
-        line : score.line,
-        major : majorData.major.majorName,
-        subject : "제2외/한"
-      })
+      if ( tamguReplace.length > 1 ) {
+        foreignTransitionScore = await scoreTransitionService.findOne({
+          univName : majorData.major.univName, 
+          major : majorData.major.majorName,
+          subject : "제2외/한"
+        })
+      }
 
   
     }
 
-    if ( calculationSpecial == "수가 지원시 변표사용" && score.math.type =="가") {
+    if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") {
+      console.log("zxcvzxcv")
       mathTransitionScore = await scoreTransitionService.findOne({
         univName : majorData.major.univName,
-        line : score.line,
         major : majorData.major.majorName,
         subject : "수가"
       })
     }
 
-    else if ( calculationSpecial == "수나 지원시 변표사용" && score.maty.type == "나") {
+    else if ( calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
       mathTransitionScore = await scoreTransitionService.findOne({
         univName : majorData.major.univName,
-        line : score.line,
+
         major : majorData.major.majorName,
         subject : "수나"
       })
@@ -455,17 +472,32 @@ export default class reportController {
       newScore.korean = score.korean.score * ( perfectScore.korean  ) / 100
       newScore.math = score.math.score * ( perfectScore.math  ) / 100
 
-      newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]  * ( perfectScore.tamgu) / 100
-      newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * ( perfectScore.tamgu) / 100
-      newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * ( perfectScore.tamgu ) / 100
+      newScore.tamgu1.score = score.tamgu1.score  * ( perfectScore.tamgu) / 100
+      newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu) / 100
+      newScore.foreign.score = score.foreign.score * (perfectScore.foreign) / 100 
+  
+      if ( tamguReplace.length > 0 )  newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu ) / 100
+
+      if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
+
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
+        if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+      }
+
+      
     }
     // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "C") {
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
 
-      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+      if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
+        console.log("fuckman")
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
-      } else newScore.math = score.math.score * ( perfectScore.math  ) / 200
+      } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "니") {
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
+      } 
+      else newScore.math = score.math.score * ( perfectScore.math  ) / 200
 
       
 
@@ -473,7 +505,7 @@ export default class reportController {
 
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-        newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+        if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
       }
       else {
 
@@ -506,17 +538,15 @@ export default class reportController {
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
           
-        tempTamgu1 = tagmu1TransitionScore.score.value[100-score.tamgu1.percentile]
+        tempTamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
         tempTamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
-        tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
+        if ( tamguReplace.length > 0 ) tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
       }
 
 
       var highest_tamgu_type = ""
       if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
       else highest_tamgu_type = "사회탐구"
-
-    
 
       const highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       const highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
@@ -529,7 +559,7 @@ export default class reportController {
       if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
       
-      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+      if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) || ( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용")) {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath.score 
       } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath.score
 
@@ -541,12 +571,20 @@ export default class reportController {
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 160
       newScore.math = score.math.score * ( perfectScore.math  ) / 160
-      newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 160
-      newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 160
-      newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
+
+      newScore.tamgu1.score = score.tamgu1.score * perfectScore.tamgu / 160
+      newScore.tamgu2.score = score.tamgu2.score * perfectScore.tamgu / 160
+      newScore.foreign.score = score.foreign.score * perfectScore.tamgu / 160 
 
 
-      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
+      if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 160
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 160
+        if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
+
+      }
+
+      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 160 
       }
 
@@ -561,10 +599,18 @@ export default class reportController {
       newScore.tamgu2.score = score.tamgu2.score
       newScore.foreign.score = score.foreign.score   
 
+      
+
+      if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 160
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 160
+        if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
+
+      }
 
 
-      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용") {
-        newScore.math = mathTransitionScore.score.value[150-score.math.score] 
+      if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 160 
       }
     }
     
@@ -1062,7 +1108,7 @@ export default class reportController {
     var tamgu2 = newScore.tamgu2.score + extraScore.tamgu2
     var foreign = totalScore.foreign
 
-    const tamguReplace = majorData.metadata.tamguReplace
+
 
     if ( tamguReplace == "사과 1과목 대체 가능" ) {
       tamguList = [tamgu1, tamgu2, foreign]

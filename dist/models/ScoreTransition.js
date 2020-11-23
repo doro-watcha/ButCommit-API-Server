@@ -24,6 +24,10 @@ class ScoreTransition extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allowNull: true
       },
+      line: {
+        type: _sequelize.default.STRING,
+        allowNull: true
+      },
       applicationIndicator: {
         type: _sequelize.default.STRING,
         allowNull: true
