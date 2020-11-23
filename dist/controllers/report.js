@@ -433,6 +433,7 @@ class reportController {
             console.log(tempForeign);
 
             if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
+              console.log("goman");
               tempTamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
               tempTamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
               if (tamguReplace.length > 0) tempForeign = foreignTransitionScore.score.value[100 - score.foreign.percentile];
