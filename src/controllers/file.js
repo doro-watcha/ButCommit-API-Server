@@ -50,8 +50,8 @@ export default class fileController {
 
     try { 
 
-      // await majorService.deleteAll()
-      // await majorDataService.deleteAll()
+       await majorService.deleteAll()
+       await majorDataService.deleteAll()
       await scoreTransitionService.deleteAll()
 
 
@@ -88,7 +88,7 @@ export default class fileController {
 
 
 
-        //await majorService.create(obj1)
+        await majorService.create(obj1)
       }
 
       // 2021년 
@@ -224,7 +224,7 @@ export default class fileController {
         }
 
         
-        //await majorDataService.create(obj2)
+        await majorDataService.create(obj2)
       }
 
       let sheetData2 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {

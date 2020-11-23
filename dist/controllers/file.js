@@ -52,8 +52,8 @@ class fileController {
 
   static async parseMajor(req, res) {
     try {
-      // await majorService.deleteAll()
-      // await majorDataService.deleteAll()
+      await _services.majorService.deleteAll();
+      await _services.majorDataService.deleteAll();
       await _services.scoreTransitionService.deleteAll();
       const path = '../excelfile/major.xlsx';
 
@@ -94,7 +94,8 @@ class fileController {
           // 경찰행정학과 
           majorName: sheetData[i][7] // 경찰행정학과 
 
-        }; //await majorService.create(obj1)
+        };
+        await _services.majorService.create(obj1);
       } // 2021년 
 
 
@@ -244,7 +245,8 @@ class fileController {
               score: sheetData[i].slice(78, 87)
             }
           }
-        }; //await majorDataService.create(obj2)
+        };
+        await _services.majorDataService.create(obj2);
       }
 
       let sheetData2 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
