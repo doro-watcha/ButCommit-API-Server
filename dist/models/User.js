@@ -96,12 +96,10 @@ class User extends _sequelize.default.Model {
     }), this.hasMany(models.Consulting, {
       foreignKey: 'userId',
       as: 'consulting'
-    });
-    this.hasMany(models.PaymentRecord, {
+    }), this.hasMany(models.PaymentRecord, {
       foreignKey: 'userId',
       as: 'paymenetRecord'
-    });
-    this.hasMany(models.Score, {
+    }), this.hasMany(models.Score, {
       foreignKey: 'userId',
       as: 'score'
     });

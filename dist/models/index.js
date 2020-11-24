@@ -28,6 +28,12 @@ var _HighestScore = _interopRequireDefault(require("./HighestScore"));
 
 var _ScoreTransition = _interopRequireDefault(require("./ScoreTransition"));
 
+var _Community = _interopRequireDefault(require("./Community"));
+
+var _Notification = _interopRequireDefault(require("./Notification"));
+
+var _FinalReport = _interopRequireDefault(require("./FinalReport"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const env = process.env.NODE_ENV || 'development';
@@ -45,7 +51,10 @@ const models = {
   MajorData: _MajorData.default.init(sequelize, _sequelize.default),
   Test: _Test.default.init(sequelize, _sequelize.default),
   HighestScore: _HighestScore.default.init(sequelize, _sequelize.default),
-  ScoreTransition: _ScoreTransition.default.init(sequelize, _sequelize.default)
+  ScoreTransition: _ScoreTransition.default.init(sequelize, _sequelize.default),
+  Community: _Community.default.init(sequelize, _sequelize.default),
+  Notification: _Notification.default.init(sequelize, _sequelize.default),
+  FinalReport: _FinalReport.default.init(sequelize, _sequelize.default)
 };
 Object.values(models).filter(model => typeof model.associate === 'function').forEach(model => model.associate(models));
 module.exports = { ...models,

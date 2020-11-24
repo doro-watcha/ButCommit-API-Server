@@ -11,6 +11,9 @@ import majorDataService from './majorData'
 import testService from './test'
 import highestScoreService from './highestScore'
 import scoreTransitionService from './scoreTransition'
+import communityService from './community'
+import finalReportService from './finalReport'
+import notificationService from './notification'
 
 module.exports = {
     universityService,
@@ -25,5 +28,8 @@ module.exports = {
     majorDataService,
     testService,
     highestScoreService,
-    scoreTransitionService
+    scoreTransitionService,
+    communityService,
+    finalReportService,
+    notificationService
 }

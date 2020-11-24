@@ -26,6 +26,12 @@ var _highestScore = _interopRequireDefault(require("./highestScore"));
 
 var _scoreTransition = _interopRequireDefault(require("./scoreTransition"));
 
+var _community = _interopRequireDefault(require("./community"));
+
+var _finalReport = _interopRequireDefault(require("./finalReport"));
+
+var _notification = _interopRequireDefault(require("./notification"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -41,5 +47,8 @@ module.exports = {
   majorDataService: _majorData.default,
   testService: _test.default,
   highestScoreService: _highestScore.default,
-  scoreTransitionService: _scoreTransition.default
+  scoreTransitionService: _scoreTransition.default,
+  communityService: _community.default,
+  finalReportService: _finalReport.default,
+  notificationService: _notification.default
 };

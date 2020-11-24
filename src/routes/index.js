@@ -15,6 +15,9 @@ import majorDataRouter from './majorData'
 import testRouter from './test'
 import highestScoreRouter from './highestScore'
 import scoreTransitionRouter from './scoreTransition'
+import finalReportRouter from './finalReport'
+import communityRouter from './community'
+import notificationRouter from './notification'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,6 +38,9 @@ router.use('/majorData', majorDataRouter)
 router.use('/test', testRouter)
 router.use('/highestScore', highestScoreRouter)
 router.use('/scoreTransition', scoreTransitionRouter)
+router.use('/notification', notificationRouter)
+router.use('/community', communityRouter)
+router.use('/finalReport', finalReportRouter)
 
 
 module.exports = router

@@ -189,6 +189,7 @@ class fileController {
             calculationSpecial: sheetData[i][39],
             tamguNumber: sheetData[i][40],
             // 1 
+            utilizationIndicator: sheetData[i][41],
             applicationIndicator: sheetData[i][43],
             // 백분위 X 비율 
             applicationIndicatorType: sheetData[i][42],

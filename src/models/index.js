@@ -13,6 +13,9 @@ import MajorDataModel from './MajorData'
 import TestModel from './Test'
 import HighestScoreModel from './HighestScore'
 import ScoreTransitionModel from './ScoreTransition'
+import CommunityModel from './Community'
+import NotificationModel from './Notification'
+import FinalReportModel from './FinalReport'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -31,7 +34,10 @@ const models = {
   MajorData : MajorDataModel.init(sequelize, Sequelize),
   Test : TestModel.init(sequelize, Sequelize),
   HighestScore : HighestScoreModel.init(sequelize , Sequelize),
-  ScoreTransition : ScoreTransitionModel.init(sequelize, Sequelize)
+  ScoreTransition : ScoreTransitionModel.init(sequelize, Sequelize),
+  Community : CommunityModel.init(sequelize,Sequelize),
+  Notification : NotificationModel.init(sequelize,Sequelize),
+  FinalReport : FinalReportModel.init(sequelize, Sequelize)
 }
 
 Object.values(models)

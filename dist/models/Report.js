@@ -59,6 +59,9 @@ class Report extends _sequelize.default.Model {
     }), this.belongsTo(models.MajorData, {
       foreignKey: 'majorDataId',
       as: 'majorData'
+    }), this.hasMany(models.FinalReport, {
+      foreignKey: 'reportId',
+      as: 'finalReport'
     });
   }
 

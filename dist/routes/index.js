@@ -28,6 +28,12 @@ var _highestScore = _interopRequireDefault(require("./highestScore"));
 
 var _scoreTransition = _interopRequireDefault(require("./scoreTransition"));
 
+var _finalReport = _interopRequireDefault(require("./finalReport"));
+
+var _community = _interopRequireDefault(require("./community"));
+
+var _notification = _interopRequireDefault(require("./notification"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -54,4 +60,7 @@ router.use('/majorData', _majorData.default);
 router.use('/test', _test.default);
 router.use('/highestScore', _highestScore.default);
 router.use('/scoreTransition', _scoreTransition.default);
+router.use('/notification', _notification.default);
+router.use('/community', _community.default);
+router.use('/finalReport', _finalReport.default);
 module.exports = router;

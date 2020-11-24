@@ -145,6 +145,18 @@ module.exports = {
       status: 424,
       ko: '사탐 성적 없음'
     },
+    COMMUNITY_NOT_FOUND: {
+      status: 425,
+      ko: '해당 커뮤니티 글 없음'
+    },
+    NOTIFICATION_NOT_FOUND: {
+      status: 426,
+      ko: '해당 공재사항 없음'
+    },
+    FINAL_REPORT_NOT_FOUND: {
+      status: 427,
+      ko: '해당 최종 예측 리포트 없음'
+    },
     // 409
     USER_ALREADY_EXISTS: {
       status: 500,
@@ -192,6 +204,18 @@ module.exports = {
     ACADEMY_ALREADY_EXISTS: {
       status: 510,
       ko: '이미 존재하는 학원입니다'
+    },
+    FINAL_REPORT_ALEADY_EXISTS: {
+      status: 511,
+      ko: '이미 최종 예측 보고서가 존재하니다'
+    },
+    COMMUNITY_ALREADY_EXISTS: {
+      status: 512,
+      ko: '이미 게시글이 존재합니다'
+    },
+    NOTIFICATION_ALREADY_EXISTS: {
+      status: 513,
+      ko: '이미 존재하는 공지사항입니다'
     },
     // 410
     USER_DELETED: {

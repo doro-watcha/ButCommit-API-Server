@@ -12,6 +12,9 @@ import majorDataController from './majorData'
 import testController from './test'
 import highestScoreController from './highestScore'
 import scoreTransitionController from './scoreTransition'
+import finalReportController from './finalReport'
+import notificationController from './notification'
+import communityController from './community'
 
 module.exports = {
 
@@ -28,5 +31,8 @@ module.exports = {
     majorDataController,
     testController,
     highestScoreController,
-    scoreTransitionController
+    scoreTransitionController,
+    finalReportController,
+    notificationController,
+    communityController
 }
