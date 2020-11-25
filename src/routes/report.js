@@ -20,6 +20,10 @@ router.get('/', authenticate, (req,res) => {
   reportController.findList(req,res)
 })
 
+router.get('/internal', (req,res) => {
+  reportController.findInternalList(req,res)
+})
+
 
 router.patch('/:id', authenticate, (req, res) => {
   reportController.update(req,res)

@@ -93,7 +93,19 @@ class ReportService {
     async findAll ( majorDataId) {
 
         return await Report.findAll ( {
-            where : { majorDataId }
+            where : { majorDataId },
+            include :[
+                {
+                    model: MajorData,
+                    as : 'majorData',
+                    include : [
+                        {
+                            model : Major,
+                            as : 'major'
+                        }
+                    ]
+                }
+            ]
         })
     }
 

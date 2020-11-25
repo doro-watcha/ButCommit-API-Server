@@ -340,6 +340,13 @@ export default class reportController {
         })
       }
 
+
+      if ( majorData.major.uniName =="서울대") {
+
+        
+      }
+
+
   
     }
 
@@ -361,6 +368,8 @@ export default class reportController {
       })
 
     }
+
+
     
 
     //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
