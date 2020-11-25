@@ -37,6 +37,9 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   _controllers.majorController.findOne(req, res);
 });
+router.get('/list/internal', authenticate, (req, res) => {
+  _controllers.majorController.findInternalMajorList(req, res);
+});
 router.post('/', (req, res) => {
   _controllers.majorController.create(req, res);
 });

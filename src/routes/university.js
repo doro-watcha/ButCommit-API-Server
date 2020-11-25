@@ -20,6 +20,9 @@ router.get('/:id' , function (req,res) {
     universityController.findOne(req,res)
 })
 
+router.get('/list/grade', function ( req, res )  {
+    universityController.findGradeApplicationList(req,res)
+})
 
 router.patch('/:id', (req,res) => {
     universityController.update(req,res)
@@ -28,6 +31,7 @@ router.patch('/:id', (req,res) => {
 router.delete('/:id', (req,res) => {
     universityController.delete(req,res)
 })
+
 
 
 

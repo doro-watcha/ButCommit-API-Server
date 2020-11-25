@@ -7,6 +7,8 @@ exports.default = void 0;
 
 var _services = require("../services");
 
+var _report = _interopRequireDefault(require("./report"));
+
 var _joi = _interopRequireDefault(require("@hapi/joi"));
 
 var _mime = _interopRequireDefault(require("mime"));
@@ -114,6 +116,62 @@ class majorController {
         success: true,
         data: {
           major
+        }
+      };
+      res.send(response);
+    } catch (e) {
+      res.send((0, _functions.createErrorResponse)(e));
+    }
+  }
+
+  static async findInternalMajorList(req, res) {
+    try {
+      const result = await _joi.default.validate(req.query, {
+        univName: _joi.default.string().required()
+      });
+      const {
+        user
+      } = req;
+      const {
+        univName
+      } = result;
+      const score = await _services.scoreService.findOne({
+        userId: user.id
+      });
+      console.log(univName);
+      const majors = await _services.majorService.findList({
+        univName
+      });
+      const majorDataList = [];
+
+      for (let i = 0; i < majors.length; i++) {
+        let majorData = await _services.majorDataService.findOne({
+          majorId: majors[i].id
+        });
+        majorDataList.push(majorData);
+      }
+
+      majorDataList.sort(function (a, b) {
+        return b.prediction.safe - a.prediction.safe;
+      });
+      let maxGap = 0;
+      let pickedMajor = null;
+
+      for (let i = 0; i < majorDataList.length; i++) {
+        let myScore = await _report.default.getScore(score, majorDataList[i], false);
+        console.log(myScore);
+        console.log(majorDataList[i].prediction.safe);
+
+        if (myScore - majorDataList[i].prediction.safe > maxGap) {
+          pickedMajor = majorDataList[i].major;
+        }
+      }
+
+      const response = {
+        success: true,
+        data: {
+          majors,
+          pickedMajor
         }
       };
       res.send(response);

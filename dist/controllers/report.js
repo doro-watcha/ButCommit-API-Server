@@ -287,6 +287,8 @@ class reportController {
           subject: "제2외/한"
         });
       }
+
+      if (majorData.major.uniName == "서울대") {}
     }
 
     if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && score.math.type == "가") {

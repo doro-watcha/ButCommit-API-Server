@@ -127,6 +127,7 @@ export default class UniversityController {
     }
 
 
+
     static async update ( req, res ) {
 
         try { 

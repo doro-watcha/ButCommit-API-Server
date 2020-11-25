@@ -22,7 +22,6 @@ export default class notificationController {
         title
       }
 
-			// create user
 			await notificationService.create(modelObj)
 
 			// create response

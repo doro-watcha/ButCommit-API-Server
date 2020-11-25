@@ -1,4 +1,4 @@
-import { reportService , majorDataService, scoreService, highestScoreService, scoreTransitionService } from '../services'
+import { reportService , majorDataService, majorService, scoreService, highestScoreService, scoreTransitionService } from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
@@ -124,6 +124,7 @@ export default class reportController {
 
   }
 
+  
   static async update ( req, res) {
 
     try {
@@ -343,7 +344,7 @@ export default class reportController {
 
       if ( majorData.major.uniName =="서울대") {
 
-        
+
       }
 
 

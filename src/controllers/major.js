@@ -1,4 +1,5 @@
-import { majorService, universityService } from '../services'
+import { majorService, universityService, majorDataService, scoreService, } from '../services'
+import reportController from './report'
 import Joi from '@hapi/joi'
 import mime from 'mime'
 import path from 'path'
@@ -118,6 +119,75 @@ export default class majorController {
       res.send(createErrorResponse(e))
     }
   }
+
+  static async findInternalMajorList ( req, res ) {
+
+    try { 
+
+      const result = await Joi.validate ( req.query , {
+        univName : Joi.string().required(),
+      })
+
+      const { user } = req 
+
+      const { univName } = result 
+
+      const score = await scoreService.findOne({userId : user.id})
+
+      console.log(univName)
+
+      const majors = await majorService.findList({ univName })
+
+      const majorDataList = []
+
+      for ( let i = 0; i < majors.length ; i++) {
+
+
+        let majorData = await majorDataService.findOne({majorId : majors[i].id})
+
+        majorDataList.push(majorData)
+
+      }
+      majorDataList.sort( function(a,b) {
+
+        return b.prediction.safe - a.prediction.safe
+      })
+
+    
+
+      let minGap = 0
+      let pickedMajor = null
+
+      for ( let i = 0 ; i < majorDataList.length ; i++) {
+
+        let myScore = await reportController.getScore(score,majorDataList[i], false)
+        let difference = myScore - majorDataList[i].prediction.safe
+
+        if ( difference > 0 && difference < minGap) {
+          pickedMajor = majorDataList[i].major
+        }
+        
+      }
+
+      const response = {
+
+        success : true ,
+        data : {
+          majors,
+          pickedMajor
+        }
+      }
+
+      res.send(response)
+
+
+
+
+    } catch ( e ) {
+      res.send(createErrorResponse(e))
+    }
+  }
+
 
   static async update ( req, res ) {
 

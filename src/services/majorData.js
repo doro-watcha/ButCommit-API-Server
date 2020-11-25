@@ -36,6 +36,7 @@ class MajorDataService {
       }
 		})
   }
+
   
   async findRecommendations ( score ) {
 

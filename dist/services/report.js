@@ -87,7 +87,15 @@ class ReportService {
     return await _models.Report.findAll({
       where: {
         majorDataId
-      }
+      },
+      include: [{
+        model: _models.MajorData,
+        as: 'majorData',
+        include: [{
+          model: _models.Major,
+          as: 'major'
+        }]
+      }]
     });
   }
 

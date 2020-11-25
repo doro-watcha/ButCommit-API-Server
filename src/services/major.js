@@ -26,7 +26,9 @@ class MajorService {
 		return await Major.findOne({
 			where: JSON.parse(JSON.stringify(where))
 		})
-	}
+  }
+  
+
 
   async update ( id, modelObj ) {
 
