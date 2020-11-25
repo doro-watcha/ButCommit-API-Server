@@ -103,6 +103,10 @@ class User extends _sequelize.default.Model {
       foreignKey: 'userId',
       as: 'score'
     });
+    this.hasMany(models.FinalReport, {
+      foreignKey: 'userId',
+      as: 'finalReport'
+    });
   }
 
   toJSON() {

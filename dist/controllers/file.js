@@ -260,7 +260,7 @@ class fileController {
       var univName = sheetData2[0][1];
       var major = sheetData2[0][2];
 
-      for (let i = 1; i < 2112; i++) {
+      for (let i = 1; i < 2249; i++) {
         let data = {};
 
         if (sheetData2[i][5] == "백분위") {

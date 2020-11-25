@@ -12,15 +12,15 @@ router.post('/', authenticate,  (req,res) => {
 })
 
 
-router.get('/' , ( req,res) => {
+router.get('/' , authenticate, ( req,res) => {
   finalReportController.findList(req,res)
 })
 
-router.get('/:id', (req,res) => {
+router.get('/:id', authenticate,  (req,res) => {
   finalReportController.findOne(req,res)
 })
 
-router.delete('/:id', (req,res)=> {
+router.delete('/:id', authenticate, (req,res)=> {
   finalReportController.delete(req,res)
 })
 

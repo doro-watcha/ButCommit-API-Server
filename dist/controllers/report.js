@@ -264,7 +264,8 @@ class reportController {
         subject2 = "과탐";
       }
 
-      if (majorData.major.univName.indexOf("과학기술원") >= 0) {
+      if (majorData.major.univName.indexOf("과학기술원") >= 0 || majorData.major.univName.indexOf("서울대") >= 0) {
+        console.log("카이스트랑 서울대 말고 못들어왕");
         subject1 = score.tamgu1.name;
         subject2 = score.tamgu2.name;
       }
@@ -288,7 +289,16 @@ class reportController {
         });
       }
 
-      if (majorData.major.uniName == "서울대") {}
+      if (majorData.major.univName.indexOf("서울대") >= 0) {
+        tamgu1TransitionScore = await _services.scoreTransitionService.findOne({
+          univName: majorData.major.univName,
+          subject: subject1
+        });
+        tamgu2TransitionScore = await _services.scoreTransitionService.findOne({
+          univName: majorData.major.univName,
+          subject: subject2
+        });
+      }
     }
 
     if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && score.math.type == "가") {

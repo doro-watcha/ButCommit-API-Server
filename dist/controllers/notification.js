@@ -27,8 +27,7 @@ class notificationController {
       const modelObj = {
         body,
         title
-      }; // create user
-
+      };
       await _services.notificationService.create(modelObj); // create response
 
       const response = {

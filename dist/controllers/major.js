@@ -154,15 +154,14 @@ class majorController {
       majorDataList.sort(function (a, b) {
         return b.prediction.safe - a.prediction.safe;
       });
-      let maxGap = 0;
+      let minGap = 0;
       let pickedMajor = null;
 
       for (let i = 0; i < majorDataList.length; i++) {
         let myScore = await _report.default.getScore(score, majorDataList[i], false);
-        console.log(myScore);
-        console.log(majorDataList[i].prediction.safe);
+        let difference = myScore - majorDataList[i].prediction.safe;
 
-        if (myScore - majorDataList[i].prediction.safe > maxGap) {
+        if (difference > 0 && difference < minGap) {
           pickedMajor = majorDataList[i].major;
         }
       }

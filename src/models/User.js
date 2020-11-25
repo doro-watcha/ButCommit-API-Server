@@ -104,6 +104,10 @@ export default class User extends Sequelize.Model {
 				foreignKey : 'userId',
 				as : 'score'
 			})
+			this.hasMany (models.FinalReport, {
+				foreignKey : 'userId',
+				as : 'finalReport'
+			})
 	
 		}
 

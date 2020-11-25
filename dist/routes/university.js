@@ -14,6 +14,9 @@ router.get('/', function (req, res) {
 router.get('/:id', function (req, res) {
   _controllers.universityController.findOne(req, res);
 });
+router.get('/list/grade', function (req, res) {
+  _controllers.universityController.findGradeApplicationList(req, res);
+});
 router.patch('/:id', (req, res) => {
   _controllers.universityController.update(req, res);
 });

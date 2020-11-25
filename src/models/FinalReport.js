@@ -24,6 +24,10 @@ export default class FinalReport extends Sequelize.Model {
       this.belongsTo(models.Report, {
         foreignKey : 'reportId',
         as : 'report'
+      }),
+      this.belongsTo(models.Report, {
+        foreignKey : 'userId',
+        as : 'user'
       })
 
     }

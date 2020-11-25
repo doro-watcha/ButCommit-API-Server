@@ -14,6 +14,7 @@ export default class finalReportController {
         group : Joi.string().required()
       })
 
+      const { user } = req
 
       const { reportId , group } = result 
 
@@ -21,7 +22,7 @@ export default class finalReportController {
 
       if ( report == null) throw Error('REPORT_NOT_FOUND')
 
-      const alreadyFinalReport = await finalReportService.findOne({reportId,group})
+      const alreadyFinalReport = await finalReportService.findOne({reportId,group, userId : user.id})
 
       if ( alreadyFinalReport != null) throw Error('FINAL_REPORT_ALREADY_EXISTS')
 
@@ -48,8 +49,9 @@ export default class finalReportController {
 
   static async findList ( req, res) {
     try { 
+      const { user } = req 
 
-      const finalReports = await finalReportService.findList({})
+      const finalReports = await finalReportService.findList({userId : user.id })
 
       const response = {
         success : true ,

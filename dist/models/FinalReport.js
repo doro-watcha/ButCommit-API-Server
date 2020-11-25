@@ -25,6 +25,9 @@ class FinalReport extends _sequelize.default.Model {
     this.belongsTo(models.Report, {
       foreignKey: 'reportId',
       as: 'report'
+    }), this.belongsTo(models.Report, {
+      foreignKey: 'userId',
+      as: 'user'
     });
   }
 

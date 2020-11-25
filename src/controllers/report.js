@@ -316,7 +316,9 @@ export default class reportController {
         subject2 = "과탐"
       }
 
-      if ( majorData.major.univName.indexOf("과학기술원") >= 0 ) {
+      if ( majorData.major.univName.indexOf("과학기술원") >= 0  || majorData.major.univName.indexOf("서울대") >= 0) {
+
+        console.log("카이스트랑 서울대 말고 못들어왕")
         subject1 = score.tamgu1.name
         subject2 = score.tamgu2.name
       }
@@ -342,12 +344,19 @@ export default class reportController {
       }
 
 
-      if ( majorData.major.uniName =="서울대") {
+      if ( majorData.major.univName.indexOf("서울대") >= 0 ) {
 
+        tamgu1TransitionScore = await scoreTransitionService.findOne({
+          univName : majorData.major.univName,
+          subject : subject1
+        })
+
+        tamgu2TransitionScore = await scoreTransitionService.findOne({
+          univName : majorData.major.univName,
+          subject : subject2
+        })
 
       }
-
-
   
     }
 

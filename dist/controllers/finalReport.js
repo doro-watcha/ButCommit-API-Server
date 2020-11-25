@@ -21,6 +21,9 @@ class finalReportController {
         group: _joi.default.string().required()
       });
       const {
+        user
+      } = req;
+      const {
         reportId,
         group
       } = result;
@@ -30,7 +33,8 @@ class finalReportController {
       if (report == null) throw Error('REPORT_NOT_FOUND');
       const alreadyFinalReport = await _services.finalReportService.findOne({
         reportId,
-        group
+        group,
+        userId: user.id
       });
       if (alreadyFinalReport != null) throw Error('FINAL_REPORT_ALREADY_EXISTS');
       const modelObj = {
@@ -51,7 +55,12 @@ class finalReportController {
 
   static async findList(req, res) {
     try {
-      const finalReports = await _services.finalReportService.findList({});
+      const {
+        user
+      } = req;
+      const finalReports = await _services.finalReportService.findList({
+        userId: user.id
+      });
       const response = {
         success: true,
         data: {
