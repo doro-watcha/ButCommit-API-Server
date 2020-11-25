@@ -307,13 +307,22 @@ export default class reportController {
 
     if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
-      if ( score.line == "인문") {
+      if ( majorData.major.line == "인문") {
         subject1 = "사탐"
         subject2 = "사탐"
       }
-      else if ( score.line == "자연") {
+      else if ( majorData.major.line == "자연") {
         subject1 = "과탐"
         subject2 = "과탐"
+      }
+      else if ( majorData.major.line == "공통" || majorData.major.line == "예체능") {
+        if ( score.line == "인문") {
+          subject1 = "사탐"
+          subject2 = "사탐"
+        } else {
+          subject1 = "과탐"
+          subject2 = "과탐"
+        }
       }
 
       if ( majorData.major.univName.indexOf("과학기술원") >= 0  || majorData.major.univName.indexOf("서울대") >= 0) {
@@ -590,7 +599,7 @@ export default class reportController {
       if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
       
-      if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) || ( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용")) {
+      if ( ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") || (( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용") && score.math.type =="나")) {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath.score 
       } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath.score
 

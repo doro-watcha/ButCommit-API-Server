@@ -58,7 +58,7 @@ class fileController {
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5523
+        sheetRows: 5521
       });
 
       let sheetsList = workbook.SheetNames;
@@ -72,7 +72,7 @@ class fileController {
 
       let data = [];
 
-      for (let i = 3; i < 5523; i++) {
+      for (let i = 3; i < 5521; i++) {
         /*
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
          */
@@ -99,7 +99,7 @@ class fileController {
       } // 2021년 
 
 
-      for (let i = 3; i < 5523; i++) {
+      for (let i = 3; i < 5521; i++) {
         let korean_ratio = sheetData[i][58];
         let math_ratio = sheetData[i][59];
         let english_ratio = sheetData[i][60];
@@ -257,7 +257,7 @@ class fileController {
       var univName = sheetData2[0][1];
       var major = sheetData2[0][2];
 
-      for (let i = 1; i < 2249; i++) {
+      for (let i = 1; i < 2250; i++) {
         let data = {};
 
         if (sheetData2[i][5] == "백분위") {

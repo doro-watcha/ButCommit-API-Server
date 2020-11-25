@@ -63,7 +63,7 @@ export default class testController {
  
 
       const path = ('../excelfile/test.xlsx')
-      let workbook = xlsx.readFile(path, {sheetRows: 5520})
+      let workbook = xlsx.readFile(path, {sheetRows: 5521})
       let sheetsList = workbook.SheetNames
 
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
@@ -86,7 +86,7 @@ export default class testController {
       await testService.deleteAll()
       var pass = 0
         // 파싱을 해보자 
-        for ( let i = 5216 ; i < 5520 ; i++) {
+        for ( let i = 3 ; i < 5521 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
