@@ -18,6 +18,7 @@ import scoreTransitionRouter from './scoreTransition'
 import finalReportRouter from './finalReport'
 import communityRouter from './community'
 import notificationRouter from './notification'
+import gradeUniversityRouter from './gradeUniversity'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -41,6 +42,7 @@ router.use('/scoreTransition', scoreTransitionRouter)
 router.use('/notification', notificationRouter)
 router.use('/community', communityRouter)
 router.use('/finalReport', finalReportRouter)
+router.use('/gradeUniversity', gradeUniversityRouter)
 
 
 module.exports = router

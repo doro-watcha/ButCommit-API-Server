@@ -1,6 +1,8 @@
-import { majorDataService , majorService } from '../services'
+import { majorDataService , majorService, scoreService } from '../services'
 import Joi from '@hapi/joi'
 import { createErrorResponse } from '../utils/functions'
+
+import reportController from './report'
 
 export default class majorDataController {
 
@@ -80,7 +82,6 @@ export default class majorDataController {
         majorId : Joi.number()
       })
 
-      // metadata = initialMember , additionalMember , competitionRate, reflectionSubject, tamguNumber , applicationIndicator, extraPoint, somethingSpecial
       const { year, majorId} = result
 
       const modelObj = {
@@ -88,12 +89,44 @@ export default class majorDataController {
         majorId
       }
 
-      const majorData = await majorDataService.findList(modelObj)
+      const { user } = req 
+
+      const score = await scoreService.findOne({userId : user.id})
+
+      const majorDataList = await majorDataService.findList(modelObj)
+
+      let majorDatas = []
+      for ( let i = 0 ; i < majorDataList.length ; i++){
+
+        let majorData = majorDataList[i]
+
+        let transitionScore = await reportController.getScore(score, majorData,false)
+        let prediction = "유력"
+
+        if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
+          prediction = "적정"
+        } 
+        else if ( majorData.prediction.dangerous > transitionScore && transitionScore >= majorData.prediction.sniping ) {
+          prediction = "추합"
+        }
+        else if ( majorData.prediction.sniping > transitionScore) {
+          prediction = "위험"
+        } else {
+          prediction = null
+        }
+        let obj = {
+          majorData : majorDataList[i],
+          prediction,
+          myScore : transitionScore,
+          majorScore : majorData.prediction.safe
+        }
+        majorDatas.push(obj)
+      }
 
       const response = {
         success : true,
         data : {
-          majorData
+          majorDatas
         }
       }
 

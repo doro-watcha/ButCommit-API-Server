@@ -34,6 +34,8 @@ var _community = _interopRequireDefault(require("./community"));
 
 var _notification = _interopRequireDefault(require("./notification"));
 
+var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -63,4 +65,5 @@ router.use('/scoreTransition', _scoreTransition.default);
 router.use('/notification', _notification.default);
 router.use('/community', _community.default);
 router.use('/finalReport', _finalReport.default);
+router.use('/gradeUniversity', _gradeUniversity.default);
 module.exports = router;

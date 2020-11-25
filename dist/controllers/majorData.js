@@ -11,6 +11,8 @@ var _joi = _interopRequireDefault(require("@hapi/joi"));
 
 var _functions = require("../utils/functions");
 
+var _report = _interopRequireDefault(require("./report"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class majorDataController {
@@ -81,8 +83,7 @@ class majorDataController {
       const result = await _joi.default.validate(req.query, {
         year: _joi.default.number(),
         majorId: _joi.default.number()
-      }); // metadata = initialMember , additionalMember , competitionRate, reflectionSubject, tamguNumber , applicationIndicator, extraPoint, somethingSpecial
-
+      });
       const {
         year,
         majorId
@@ -91,11 +92,43 @@ class majorDataController {
         year,
         majorId
       };
-      const majorData = await _services.majorDataService.findList(modelObj);
+      const {
+        user
+      } = req;
+      const score = await _services.scoreService.findOne({
+        userId: user.id
+      });
+      const majorDataList = await _services.majorDataService.findList(modelObj);
+      let majorDatas = [];
+
+      for (let i = 0; i < majorDataList.length; i++) {
+        let majorData = majorDataList[i];
+        let transitionScore = await _report.default.getScore(score, majorData, false);
+        let prediction = "유력";
+
+        if (majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous) {
+          prediction = "적정";
+        } else if (majorData.prediction.dangerous > transitionScore && transitionScore >= majorData.prediction.sniping) {
+          prediction = "추합";
+        } else if (majorData.prediction.sniping > transitionScore) {
+          prediction = "위험";
+        } else {
+          prediction = null;
+        }
+
+        let obj = {
+          majorData: majorDataList[i],
+          prediction,
+          myScore: transitionScore,
+          majorScore: majorData.prediction.safe
+        };
+        majorDatas.push(obj);
+      }
+
       const response = {
         success: true,
         data: {
-          majorData
+          majorDatas
         }
       };
       res.send(response);

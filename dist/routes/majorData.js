@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   _controllers.majorDataController.findOne(req, res);
 });
-router.get('/', (req, res) => {
+router.get('/', authenticate, (req, res) => {
   _controllers.majorDataController.findList(req, res);
 });
 router.patch('/:id', (req, res) => {

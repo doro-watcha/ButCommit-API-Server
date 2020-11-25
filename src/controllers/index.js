@@ -15,6 +15,7 @@ import scoreTransitionController from './scoreTransition'
 import finalReportController from './finalReport'
 import notificationController from './notification'
 import communityController from './community'
+import gradeUniversityController from './gradeUniversity'
 
 module.exports = {
 
@@ -34,5 +35,6 @@ module.exports = {
     scoreTransitionController,
     finalReportController,
     notificationController,
-    communityController
+    communityController,
+    gradeUniversityController
 }

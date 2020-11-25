@@ -34,6 +34,8 @@ var _notification = _interopRequireDefault(require("./notification"));
 
 var _community = _interopRequireDefault(require("./community"));
 
+var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -53,5 +55,6 @@ module.exports = {
   scoreTransitionController: _scoreTransition.default,
   finalReportController: _finalReport.default,
   notificationController: _notification.default,
-  communityController: _community.default
+  communityController: _community.default,
+  gradeUniversityController: _gradeUniversity.default
 };

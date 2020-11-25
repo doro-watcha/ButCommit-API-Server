@@ -32,6 +32,8 @@ var _finalReport = _interopRequireDefault(require("./finalReport"));
 
 var _notification = _interopRequireDefault(require("./notification"));
 
+var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -50,5 +52,6 @@ module.exports = {
   scoreTransitionService: _scoreTransition.default,
   communityService: _community.default,
   finalReportService: _finalReport.default,
-  notificationService: _notification.default
+  notificationService: _notification.default,
+  gradeUniversityService: _gradeUniversity.default
 };

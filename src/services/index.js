@@ -14,6 +14,7 @@ import scoreTransitionService from './scoreTransition'
 import communityService from './community'
 import finalReportService from './finalReport'
 import notificationService from './notification'
+import gradeUniversityService from './gradeUniversity'
 
 module.exports = {
     universityService,
@@ -31,5 +32,6 @@ module.exports = {
     scoreTransitionService,
     communityService,
     finalReportService,
-    notificationService
+    notificationService,
+    gradeUniversityService
 }

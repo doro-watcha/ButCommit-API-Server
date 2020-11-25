@@ -34,6 +34,8 @@ var _Notification = _interopRequireDefault(require("./Notification"));
 
 var _FinalReport = _interopRequireDefault(require("./FinalReport"));
 
+var _GradeUniversity = _interopRequireDefault(require("./GradeUniversity"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const env = process.env.NODE_ENV || 'development';
@@ -54,7 +56,8 @@ const models = {
   ScoreTransition: _ScoreTransition.default.init(sequelize, _sequelize.default),
   Community: _Community.default.init(sequelize, _sequelize.default),
   Notification: _Notification.default.init(sequelize, _sequelize.default),
-  FinalReport: _FinalReport.default.init(sequelize, _sequelize.default)
+  FinalReport: _FinalReport.default.init(sequelize, _sequelize.default),
+  GradeUniversity: _GradeUniversity.default.init(sequelize, _sequelize.default)
 };
 Object.values(models).filter(model => typeof model.associate === 'function').forEach(model => model.associate(models));
 module.exports = { ...models,

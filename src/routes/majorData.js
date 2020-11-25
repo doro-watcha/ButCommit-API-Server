@@ -16,7 +16,7 @@ router.get('/:id' , (req,res) => {
   majorDataController.findOne(req,res)
 })
 
-router.get('/', (req,res) => {
+router.get('/',authenticate, (req,res) => {
   majorDataController.findList(req,res)
 })
 
