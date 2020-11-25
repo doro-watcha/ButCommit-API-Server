@@ -103,7 +103,7 @@ class majorDataController {
 
       for (let i = 0; i < majorDataList.length; i++) {
         let majorData = majorDataList[i];
-        let transitionScore = await _report.default.getScore(score, majorData, false);
+        let transitionScore = 500;
         let prediction = "유력";
 
         if (majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous) {

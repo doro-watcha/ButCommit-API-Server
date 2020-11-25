@@ -100,7 +100,7 @@ export default class majorDataController {
 
         let majorData = majorDataList[i]
 
-        let transitionScore = await reportController.getScore(score, majorData,false)
+        let transitionScore = 500
         let prediction = "유력"
 
         if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
