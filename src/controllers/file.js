@@ -152,10 +152,8 @@ export default class fileController {
 
 
         var recommendationScore = 0
-
-        if ( sheetData[i][24].length > 2 && sheetData[i][26].length > 2 ) {
-          recommendationScore = (sheetData[i][24] + sheetData[i][25] ) / 2
-        }
+        if ( sheetData[i][30] != ""  ) recommendationScore = (parseFloat(sheetData[i][30]) + parseFloat(sheetData[i][31] ) )/ 2
+        
         if ( value >= 0 ) {
           parsed_data.korean = 35
           parsed_data.math_ga = 25
@@ -196,7 +194,7 @@ export default class fileController {
             dangerous : sheetData[i][32],
             sniping : sheetData[i][33]
           },
-          recommendationScore : recommendationScore,
+          recommendationScore,
 
           ratio : {
             korean : parsed_data.korean, // (40)

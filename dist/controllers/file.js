@@ -162,10 +162,7 @@ class fileController {
         while (parsed_data.history > 100) parsed_data.history = parsed_data.history / 10;
 
         var recommendationScore = 0;
-
-        if (sheetData[i][24].length > 2 && sheetData[i][26].length > 2) {
-          recommendationScore = (sheetData[i][24] + sheetData[i][25]) / 2;
-        }
+        if (sheetData[i][30] != "") recommendationScore = (parseFloat(sheetData[i][30]) + parseFloat(sheetData[i][31])) / 2;
 
         if (value >= 0) {
           parsed_data.korean = 35;
@@ -214,7 +211,7 @@ class fileController {
             dangerous: sheetData[i][32],
             sniping: sheetData[i][33]
           },
-          recommendationScore: recommendationScore,
+          recommendationScore,
           ratio: {
             korean: parsed_data.korean,
             // (40)
