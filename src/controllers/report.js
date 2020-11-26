@@ -1020,7 +1020,7 @@ export default class reportController {
 
       if ( majorData.major.univName == "부산대") {
         if ( extraSubject == score.foreign.name ) {
-          extraScore.foreign = scroe.foreign.score * 0.05
+          extraScore.foreign = score.foreign.score * 0.05
         }
       }
     }
