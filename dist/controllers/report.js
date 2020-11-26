@@ -565,11 +565,11 @@ class reportController {
 
     console.log("변환 점수 구하기 성공!");
 
-    if (english_type == "가산" || english_type == "감산" || majorData.gradeToScore.english.way == "감점") {
+    if (english_type == "가산" || english_type == "감산" || majorData.gradeToScore.english.way == "감점" || majorData.gradeToScore.english.wah == "가산점") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
     }
 
-    if (history_type == "가산" || history_type == "감산" || majorData.gradeToScore.history.way == "감점") {
+    if (history_type == "가산" || history_type == "감산" || majorData.gradeToScore.history.way == "감점" || majorData.gradeToScore.history.way == "가산점") {
       extraScore.history = majorData.gradeToScore.history.score[score.history.grade - 1] * hmv;
     }
 
@@ -593,6 +593,9 @@ class reportController {
             extraScore.math = score.math.percentile * 0.2;
           } else if (extraPoint == "수가 표준점수 10% 총점에 가산") {
             extraScore.math = score.math.score * 0.1;
+          } else if (extraPoint == "수가 백분위 10% 총점에 가산") {
+            console.log("여기로 들어오면 되지");
+            extraScore.math = score.math.percentile * 0.1;
           } else {
             extraScore.math = newScore.math * extraValue / 100;
           }
@@ -703,6 +706,12 @@ class reportController {
           extraScore.english = newScore.english * extra1 / 100;
         } else if (score.english.grade == 2) {
           extraScore.english = newScore.english * extra2 / 100;
+        }
+      }
+
+      if (majorData.major.univName == "부산대") {
+        if (extraSubject == score.foreign.name) {
+          extraScore.foreign = scroe.foreign.score * 0.05;
         }
       }
     } else if (extraType == "% 감산") {

@@ -765,11 +765,11 @@ export default class reportController {
   
 
 
-    if ( english_type == "가산"|| english_type == "감산" || majorData.gradeToScore.english.way == "감점") {
+    if ( english_type == "가산"|| english_type == "감산" || majorData.gradeToScore.english.way == "감점" || majorData.gradeToScore.english.wah =="가산점") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
     }
 
-    if ( history_type == "가산" || history_type =="감산" || majorData.gradeToScore.history.way =="감점") {
+    if ( history_type == "가산" || history_type =="감산" || majorData.gradeToScore.history.way =="감점" || majorData.gradeToScore.history.way == "가산점") {
       extraScore.history = majorData.gradeToScore.history.score[score.history.grade-1] * hmv 
     }
 
@@ -799,6 +799,10 @@ export default class reportController {
           } 
           else if ( extraPoint == "수가 표준점수 10% 총점에 가산") {
             extraScore.math = score.math.score * 0.1
+          }
+          else if ( extraPoint == "수가 백분위 10% 총점에 가산") {
+            console.log("여기로 들어오면 되지")
+            extraScore.math = score.math.percentile * 0.1 
           }
           else {
             extraScore.math = ( newScore.math * extraValue ) / 100 
@@ -1011,6 +1015,13 @@ export default class reportController {
         }
 
 
+      }
+
+
+      if ( majorData.major.univName == "부산대") {
+        if ( extraSubject == score.foreign.name ) {
+          extraScore.foreign = scroe.foreign.score * 0.05
+        }
       }
     }
 
