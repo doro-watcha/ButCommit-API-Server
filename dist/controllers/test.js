@@ -85,7 +85,7 @@ class testController {
       await _services.testService.deleteAll();
       var pass = 0; // 파싱을 해보자 
 
-      for (let i = 2986; i < 5521; i++) {
+      for (let i = 3; i < 5521; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
@@ -144,8 +144,7 @@ class testController {
         console.log("이과예측점수");
         console.log(scienceAnswer);
         console.log("문과예측점수");
-        console.log(societyAnswer);
-        if (societyDeterminant == 0 && societyAnswer != -1 || scienceDeterminant == 0 && scienceAnswer != -1) throw Error('SCORE_NOT_FOUND');
+        console.log(societyAnswer); //if ( (societyDeterminant == 0 && societyAnswer != -1) || ( scienceDeterminant == 0 && scienceAnswer != -1) ) throw Error('SCORE_NOT_FOUND')
 
         if (isNaN(societyValue) == false && isNaN(scienceValue) == false) {
           let obj1 = {
