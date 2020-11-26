@@ -1016,7 +1016,7 @@ export default class reportController {
 
     else if ( extraType == "% 감산") {
       
-      if ( extraSubject == "수나") {
+      if ( extraSubject == "수나" && score.math.type == "나") {
         console.log("여기맞잖아!@!@)$(#*$)#($*#)(*")
         extraScore.math = -1 * ( newScore.math * extraValue) / 100 
       }
