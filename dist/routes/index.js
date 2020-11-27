@@ -36,6 +36,8 @@ var _notification = _interopRequireDefault(require("./notification"));
 
 var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
 
+var _naesin = _interopRequireDefault(require("./naesin"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -66,4 +68,5 @@ router.use('/notification', _notification.default);
 router.use('/community', _community.default);
 router.use('/finalReport', _finalReport.default);
 router.use('/gradeUniversity', _gradeUniversity.default);
+router.use('/naesin', _naesin.default);
 module.exports = router;

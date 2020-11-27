@@ -17,6 +17,7 @@ import CommunityModel from './Community'
 import NotificationModel from './Notification'
 import FinalReportModel from './FinalReport'
 import GradeUniversityModel from './GradeUniversity'
+import NaesinModel from './Naesin'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -39,7 +40,8 @@ const models = {
   Community : CommunityModel.init(sequelize,Sequelize),
   Notification : NotificationModel.init(sequelize,Sequelize),
   FinalReport : FinalReportModel.init(sequelize, Sequelize),
-  GradeUniversity : GradeUniversityModel.init(sequelize, Sequelize)
+  GradeUniversity : GradeUniversityModel.init(sequelize, Sequelize),
+  Naesin : NaesinModel.init(sequelize, Sequelize)
 }
 
 Object.values(models)
