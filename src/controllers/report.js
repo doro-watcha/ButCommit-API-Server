@@ -513,6 +513,21 @@ export default class reportController {
         if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
       }
 
+      // 대구가톨릭의예 예외처리
+      if ( tamguTranslation == "탐구: D타입") {
+
+        var highest_tamgu_type = ""
+        if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
+        else highest_tamgu_type = "사회탐구"
+
+        var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
+        var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
+
+        newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
+        newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
+        
+      }
+
       
     }
     // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -542,11 +557,12 @@ export default class reportController {
         newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu) / 100 
       }
 
+      // 경희대 국제 예외처리
       if ( specialOption == "탐구 본교 백분위변환표준점수+100 한 후 계산") {
-
-        newScore.tamgu1.score += 100
-        newScore.tamgu2.score += 100
-        newScore.foreign.score += 100 
+        console.log("+100")
+        newScore.tamgu1.score = ( tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200
+        newScore.tamgu2.score = ( tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200
+        if ( tamguReplace.length > 0 ) newScore.foreign.score = ( foreignTransitionScore.score.value[100-score.foreign.percentile] + 100) * perfectScore.tamgu / 200
       }
 
     }
@@ -557,45 +573,37 @@ export default class reportController {
       const highestKorean = await highestScoreService.findOne("국어","국어")
       const highestMath = await highestScoreService.findOne("수학",math_type)
 
-      console.log("백분위 = " + score.tamgu1.percentile)
-
       var tempTamgu1 = score.tamgu1.score
-
-      console.log(tempTamgu1)
       var tempTamgu2 = score.tamgu2.score
-      console.log(tempTamgu2)
       var tempForeign = score.foreign.score
 
       console.log(tempForeign)
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
-        console.log("goman")
-          
+
         tempTamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
         tempTamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
         if ( tamguReplace.length > 0 ) tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
       }
 
-
       var highest_tamgu_type = ""
       if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
       else highest_tamgu_type = "사회탐구"
 
-      const highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
-      const highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
-      const highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
+      var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
+      var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
+      var highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
+
+      // GIST 예외처리
+      if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
+        highestTamgu1 = tamgu1TransitionScore.score.value[0]
+        highestTamgu2 = tamgu2TransitionScore.score.value[0]
+      }
       
-
-      console.log("zxcv1")
-
       newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean.score
-      console.log("zxcv2")
       newScore.math = score.math.score * (perfectScore.math ) / highestMath.score
-      console.log("zxcv3")
       newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
-      console.log("zxcv4")
       newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
-    
-      console.log(highestForeign)
+  
       if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
       
@@ -604,6 +612,11 @@ export default class reportController {
       } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath.score
 
     
+      // 단국데 의치 예외처리
+      if ( specialOption == "백분위 x 비율 ( 탐 )") {
+        newScore.tamgu1.score = ( score.tamgu1.percentile * perfectScore.tamgu) / 100
+        newScore.tamgu2.score = ( score.tamgu2.percentile * perfectScore.tamgu) / 100 
+      }
     }
 
     // ( 표준점수 / 160 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -642,9 +655,9 @@ export default class reportController {
       
 
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
-        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 160
-        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 160
-        if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+        if ( tamguReplace.length > 0 ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile]
 
       }
 
@@ -801,8 +814,25 @@ export default class reportController {
             extraScore.math = score.math.score * 0.1
           }
           else if ( extraPoint == "수가 백분위 10% 총점에 가산") {
-            console.log("여기로 들어오면 되지")
             extraScore.math = score.math.percentile * 0.1 
+          }
+          else if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
+            extraScore.foreign = score.foreign.score * 0.05
+          }
+          else if( extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name =="일본어") {
+            extraScore.foreign = score.foreign.score * 0.05
+          }
+          else if ( extraPoint == "프랑스어 표준점수 5% 총점에 가산" && score.foreign.name =="프랑스어") {
+            extraScore.foreign = score.foreign.score * 0.05
+          }
+          else if ( extraPoint == "독일어 표준점수 5% 총점에 가산" && score.foreign.name == "독일어") {
+            extraScore.foreign = score.foreign.score * 0.05
+          }
+          else if ( extraPoint == "러시아어 표준점수 5% 총점에 가산" && score.foreign.name =="러시아어") {
+            extraScore.foreign = score.foreign.score * 0.05
+          }
+          else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
+            extraScore.foreign = score.foreign.score * 0.05
           }
           else {
             extraScore.math = ( newScore.math * extraValue ) / 100 
