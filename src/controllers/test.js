@@ -172,7 +172,9 @@ export default class testController {
           console.log("문과예측점수")
           console.log(societyAnswer)
           
-          //if ( (societyDeterminant == 0 && societyAnswer != -1) || ( scienceDeterminant == 0 && scienceAnswer != -1) ) throw Error('SCORE_NOT_FOUND')
+          // if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
+
+          // if ( societyDeterminant == -1 && scienceDetermiant == -1) throw Error('SCORE_ALREADY_EXISTS')
           
           if ( isNaN(societyValue) == false && isNaN(scienceValue) ==false ) {
               let obj1 = {
