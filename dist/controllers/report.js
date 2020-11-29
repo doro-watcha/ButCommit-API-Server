@@ -289,12 +289,14 @@ class reportController {
         subject: subject2
       });
 
-      if (tamguReplace.length > 1) {
+      if (tamguReplace.length > 1 && score.foreign.name != null) {
+        console.log("제2외/한 이다잉");
         foreignTransitionScore = await _services.scoreTransitionService.findOne({
           univName: majorData.major.univName,
           major: majorData.major.majorName,
           subject: "제2외/한"
         });
+        console.log(foreignTransitionScore);
       }
 
       if (majorData.major.univName.indexOf("서울대") >= 0) {
@@ -407,12 +409,12 @@ class reportController {
         newScore.tamgu1.score = score.tamgu1.score * perfectScore.tamgu / 100;
         newScore.tamgu2.score = score.tamgu2.score * perfectScore.tamgu / 100;
         newScore.foreign.score = score.foreign.score * perfectScore.foreign / 100;
-        if (tamguReplace.length > 0) newScore.foreign.score = score.foreign.score * perfectScore.tamgu / 100;
+        if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = score.foreign.score * perfectScore.tamgu / 100;
 
         if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
           newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
           newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
-          if (tamguReplace.length > 0) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
+          if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
         } // 대구가톨릭의예 예외처리
 
 
@@ -436,9 +438,11 @@ class reportController {
           } else newScore.math = score.math.score * perfectScore.math / 200;
 
           if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
+            console.log("fuck이다잉");
             newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
             newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
-            if (tamguReplace.length > 0) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
+            if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
+            console.log('나가리아딩');
           } else {
             newScore.tamgu1.score = score.tamgu1.score * perfectScore.tamgu / 100;
             newScore.tamgu2.score = score.tamgu2.score * perfectScore.tamgu / 100;
@@ -450,7 +454,7 @@ class reportController {
             console.log("+100");
             newScore.tamgu1.score = (tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200;
             newScore.tamgu2.score = (tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200;
-            if (tamguReplace.length > 0) newScore.foreign.score = (foreignTransitionScore.score.value[100 - score.foreign.percentile] + 100) * perfectScore.tamgu / 200;
+            if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = (foreignTransitionScore.score.value[100 - score.foreign.percentile] + 100) * perfectScore.tamgu / 200;
           }
         } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
         else if (applicationIndicatorType == "D") {
@@ -464,21 +468,24 @@ class reportController {
             if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
               tempTamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
               tempTamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
-              if (tamguReplace.length > 0) tempForeign = foreignTransitionScore.score.value[100 - score.foreign.percentile];
+              if (tamguReplace.length > 0 && score.foreign.name != null) tempForeign = foreignTransitionScore.score.value[100 - score.foreign.percentile];
             }
 
             var highest_tamgu_type = "";
             if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
             var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
             var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
+            console.log(score.foreign.name);
             var highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
             if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
               console.log(tamgu1TransitionScore.score.value[0]);
               console.log(tamgu2TransitionScore.score.value[0]);
+              console.log(foreignTransitionScore.score);
               highestTamgu1.score = tamgu1TransitionScore.score.value[0];
               highestTamgu2.score = tamgu2TransitionScore.score.value[0];
-              if (tamguReplace.length > 0) highestForeign.score = foreignTransitionScore.score.value[0];
+              console.log(highestForeign);
+              if (tamguReplace.length > 0 && score.foreign.name != null) highestForeign.score = foreignTransitionScore.score.value[0];
             }
 
             newScore.korean = score.korean.score * perfectScore.korean / highestKorean.score;
@@ -509,7 +516,7 @@ class reportController {
               if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] / 160;
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] / 160;
-                if (tamguReplace.length > 0) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] / 160;
+                if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] / 160;
               }
 
               if (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
@@ -526,7 +533,7 @@ class reportController {
                 if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
                   newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
                   newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
-                  if (tamguReplace.length > 0) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile];
+                  if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile];
                 }
 
                 if (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
@@ -534,8 +541,6 @@ class reportController {
                 }
               } // 등급: 4과목 평균 등급 환산점수
               else if (applicationIndicatorType == "G") {
-                  console.log(majorData.major.univName);
-
                   if (majorData.major.univName.indexOf("경동대") >= 0) {
                     const gyungDongScore = await reportController.getScoreByGrade(score, majorData);
                     return gyungDongScore;
@@ -877,11 +882,11 @@ class reportController {
     var tamgu2 = newScore.tamgu2.score + extraScore.tamgu2;
     var foreign = totalScore.foreign;
 
-    if (tamguReplace == "사과 1과목 대체 가능") {
+    if (tamguReplace == "사과 1과목 대체 가능" && score.foreign.name != null) {
       tamguList = [tamgu1, tamgu2, foreign];
-    } else if (tamguReplace == "과 1과목 대체 가능" && score.line == "자연") {
+    } else if (tamguReplace == "과 1과목 대체 가능" && score.line == "자연" && score.foreign.name != null) {
       tamguList = [tamgu1, tamgu2, foreign];
-    } else if (tamguReplace == "사 1과목 대체 가능" && score.line == "인문") {
+    } else if (tamguReplace == "사 1과목 대체 가능" && score.line == "인문" && score.foreign.name != null) {
       tamguList = [tamgu1, tamgu2, foreign];
     } else tamguList = [tamgu1, tamgu2];
 
