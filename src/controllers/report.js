@@ -826,6 +826,36 @@ export default class reportController {
 
     if ( extraType == "% 가산") {
 
+      if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
+        extraScore.foreign = score.foreign.score * 0.05
+      }
+      else if( extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name =="일본어") {
+        extraScore.foreign = score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "프랑스어 표준점수 5% 총점에 가산" && score.foreign.name =="프랑스어") {
+        extraScore.foreign = score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "독일어 표준점수 5% 총점에 가산" && score.foreign.name == "독일어") {
+        extraScore.foreign = score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "러시아어 표준점수 5% 총점에 가산" && score.foreign.name =="러시아어") {
+        extraScore.foreign = score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
+        extraScore.foreign = score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "수가 백분위 10% , 과탐 1과목 백분위 10% 총점에 가산") {
+        console.log("zkcjvdkvjdspfovigmdpovidfmopgivjdsfmoigj sdmfopjg sdmpfojg sjd")
+        if ( score.math.type =="가") extraScore.math = score.math.percentile * 0.1
+        if ( score.line == "자연") {
+          if ( newScore.tamgu1.score > newScore.tamgu2.score) {
+            extraScore.tamgu1 = newScore.tamgu1.score * 0.1
+          } else {
+            extraScore.tamgu2 = newScore.tamgu2.score * 0.1
+          }
+        }
+      }
+
       if ( extraSubject == "수가") {
         if ( score.math.type =="가") {
 
@@ -841,34 +871,7 @@ export default class reportController {
           else if ( extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.1
           }
-          else if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
-            extraScore.foreign = score.foreign.score * 0.05
-          }
-          else if( extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name =="일본어") {
-            extraScore.foreign = score.foreign.score * 0.05
-          }
-          else if ( extraPoint == "프랑스어 표준점수 5% 총점에 가산" && score.foreign.name =="프랑스어") {
-            extraScore.foreign = score.foreign.score * 0.05
-          }
-          else if ( extraPoint == "독일어 표준점수 5% 총점에 가산" && score.foreign.name == "독일어") {
-            extraScore.foreign = score.foreign.score * 0.05
-          }
-          else if ( extraPoint == "러시아어 표준점수 5% 총점에 가산" && score.foreign.name =="러시아어") {
-            extraScore.foreign = score.foreign.score * 0.05
-          }
-          else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
-            extraScore.foreign = score.foreign.score * 0.05
-          }
-          else if ( extraPoint == "수가 백분위 10% , 과탐 1과목 백분위 10% 총점에 가산") {
-            extraScore.math = score.foreign.percentile * 0.1
-            if ( score.line == "자연") {
-              if ( newScore.tamgu1.score > newScore.tamgu2.score) {
-                extraScore.tamgu1 = newScore.tamgu1.score * 0.1
-              } else {
-                extraScore.tamgu2 = newScore.tamgu2.score * 0.1
-              }
-            }
-          }
+ 
     
           else {
             extraScore.math = ( newScore.math * extraValue ) / 100 
