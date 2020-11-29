@@ -147,8 +147,10 @@ class testController {
         console.log(societyAnswer); // if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
         // if ( societyDeterminant == -1 && scienceDetermiant == -1) throw Error('SCORE_ALREADY_EXISTS')
 
+        let obj = {};
+
         if (isNaN(societyValue) == false && isNaN(scienceValue) == false) {
-          let obj1 = {
+          obj = {
             id: i - 2,
             line: sheetData[i][0],
             // 인문 
@@ -170,9 +172,8 @@ class testController {
             scienceValue,
             scienceDeterminant
           };
-          await _services.testService.create(obj1);
         } else if (isNaN(societyValue) == true && isNaN(scienceValue) == true) {
-          let obj3 = {
+          obj = {
             id: i - 2,
             line: sheetData[i][0],
             // 인문 
@@ -190,10 +191,9 @@ class testController {
             societyDeterminant,
             scienceDeterminant
           };
-          await _services.testService.create(obj3);
         } // 문과만됨
         else if (isNaN(scienceValue) == true) {
-            let obj3 = {
+            obj = {
               id: i - 2,
               line: sheetData[i][0],
               // 인문 
@@ -215,10 +215,9 @@ class testController {
               scienceValue: -1,
               scienceDeterminant: -1
             };
-            await _services.testService.create(obj3);
           } // 문과만됨
           else if (isNaN(societyValue) == true) {
-              let obj2 = {
+              obj = {
                 id: i - 2,
                 line: sheetData[i][0],
                 // 인문 
@@ -240,8 +239,9 @@ class testController {
                 scienceValue,
                 scienceDeterminant
               };
-              await _services.testService.create(obj2);
             }
+
+        if (societyDeterminant != 1 || scienceDeterminant != 1) await _services.testService.create(obj);
       }
 
       const response = {
