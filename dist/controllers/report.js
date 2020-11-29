@@ -618,6 +618,8 @@ class reportController {
             extraScore.math = score.math.score * 0.1;
           } else if (extraPoint == "수가 백분위 10% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.1;
+          } else if (extraPoint == "수가 백분위 20% 총점에 가산") {
+            extraScore.math = score.math.percentile * 0.1;
           } else if (extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name == "중국어") {
             extraScore.foreign = score.foreign.score * 0.05;
           } else if (extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name == "일본어") {
@@ -630,6 +632,16 @@ class reportController {
             extraScore.foreign = score.foreign.score * 0.05;
           } else if (extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name == "한문") {
             extraScore.foreign = score.foreign.score * 0.05;
+          } else if (extraPoint == "수가 백분위 10% , 과탐 1과목 백분위 10% 총점에 가산") {
+            extraScore.math = score.foreign.percentile * 0.1;
+
+            if (score.line == "자연") {
+              if (newScore.tamgu1.score > newScore.tamgu2.score) {
+                extraScore.tamgu1 = newScore.tamgu1.score * 0.1;
+              } else {
+                extraScore.tamgu2 = newScore.tamgu2.score * 0.1;
+              }
+            }
           } else {
             extraScore.math = newScore.math * extraValue / 100;
           }
@@ -845,6 +857,27 @@ class reportController {
         extraScore.math = score.math.score / highestMath.score * 10;
       } else if (extraPoint == "수가 10% / 과탐(상위 3개영역에 포함될 경우) 10점 가산" && score.math.type == "가" && score.line == "자연") {
         extraScore.math = newScore.math * 0.1;
+      } else if (extraPoint == "수가 백분위 10%, 물Ⅱ, 화Ⅱ, 생Ⅱ 중 최상위 한 과목 백분위 5% 총점에 가산") {
+        const tamgu1Name = score.tamgu1.name;
+        const tamgu2Name = score.tamgu2.name;
+        var tamgu1Score = 0;
+        var tamgu2Score = 0;
+
+        if (score.math.type == "가") {
+          extraScore.math = newScore.math * 0.1;
+        }
+
+        if (score.line == "자연") {
+          if (tamgu1Name == "물리2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
+            tamgu1Score = score.tamgu1.percentile;
+          }
+
+          if (tamgu2Name == "물리2" || tamgu2Name == "화학2" || tamgu2Name == "생명과학2") {
+            tamgu2Score = score.tamgu2.percentile;
+          }
+
+          extraScore.tamgu = Math.max(tamgu1Score, tamgu2Score) * 0.05;
+        }
       } else if (extraPoint == "수가 선택시 1등급 상향") {// 먼저 처리 해줌 
       } else if (extraPoint == "제2외/한문 3등급 이하부터 차등 감점(0.5, 1, 1.5, 2, 2.5, 3, 3.5)") {
         if (score.foreign.grade >= 3) {
@@ -859,7 +892,7 @@ class reportController {
           extraScore.math = newScore.math * 0.1;
         }
 
-        if (score.tamgu1.name == "물리2" || score.tamgu1.name == "화학2" || score.tamgu1.name == "생물2") {}
+        if (score.tamgu1.name == "물리2" || score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") {}
       }
     }
 
@@ -912,6 +945,17 @@ class reportController {
         if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign = foreignTransitionScore.score.value[100 - score.foreign.percentile];
         totalScore.tamgu = ((newScore.tamgu1.score + newScore.tamgu2.score) / 2 + 100) / (transitionHighestScore + 100) * perfectScore.tamgu;
       }
+    } // 울산대 예외
+
+
+    if (specialOption == "국,수,탐 각각  x 0.918") {
+      totalScore.korean *= 0.918;
+      totalScore.math *= 0.918;
+      totalScore.tamgu *= 0.918;
+    } else if (specialOption == "국,수,탐 각각  x 0.944") {
+      totalScore.korean *= 0.944;
+      totalScore.math *= 0.944;
+      totalScore.tamgu *= 0.944;
     }
 
     console.log("반영비율별로해서 구해보자");
@@ -937,6 +981,8 @@ class reportController {
       totalSum = totalScore.korean + totalScore.math + totalScore.tamgu;
     } else if (reflectionSubject == "국+영+탐") {
       totalSum = totalScore.korean + totalScore.english + totalScore.tamgu;
+    } else if (reflectionSubject == "국+영") {
+      totalSum = totalScore.korean + totalScore.english;
     } else if (reflectionSubject == "국+탐") {
       totalSum = totalScore.korean + totalScore.tamgu;
     } else if (reflectionSubject == "수") {
