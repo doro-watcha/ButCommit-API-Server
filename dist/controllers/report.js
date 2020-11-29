@@ -842,7 +842,7 @@ class reportController {
     } else {
       if (extraPoint == "+ [ 수가 ( 개인 취득 표준점수 / 전국최고 표준점수 ) x 10 ]" && score.math.type == "가") {
         const highestMath = await _services.highestScoreService.findOne("수학", "가");
-        extraScore.math = score.math.score / highestMath * 10;
+        extraScore.math = score.math.score / highestMath.score * 10;
       } else if (extraPoint == "수가 10% / 과탐(상위 3개영역에 포함될 경우) 10점 가산" && score.math.type == "가" && score.line == "자연") {
         extraScore.math = newScore.math * 0.1;
       } else if (extraPoint == "수가 선택시 1등급 상향") {// 먼저 처리 해줌 
@@ -900,7 +900,18 @@ class reportController {
       totalScore.tamgu = tamguList[0];
     } else if (majorData.metadata.tamguNumber == 2) {
       totalScore.tamgu = (tamguList[0] + tamguList[1]) / 2;
-      if (applicationIndicatorType == "F") totalScore.tamgu *= 2;
+      if (applicationIndicatorType == "F") totalScore.tamgu *= 2; // 인하대 예외처리
+
+      if (specialOption == "{ (탐구 변표 평균 +100) / (탐구변표최고점 +100) } X 비율") {
+        console.log("1");
+        const transitionHighestScore = tamgu1TransitionScore.score.value[0];
+        console.log("2");
+        if (tamguReplace.length > 0 && score.foreign.name != null) highestForeign.score = foreignTransitionScore.score.value[0];
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
+        if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign = foreignTransitionScore.score.value[100 - score.foreign.percentile];
+        totalScore.tamgu = ((newScore.tamgu1.score + newScore.tamgu2.score) / 2 + 100) / (transitionHighestScore + 100) * perfectScore.tamgu;
+      }
     }
 
     console.log("반영비율별로해서 구해보자");

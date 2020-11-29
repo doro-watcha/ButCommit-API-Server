@@ -145,7 +145,7 @@ class testController {
         console.log(scienceAnswer);
         console.log("문과예측점수");
         console.log(societyAnswer); // if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
-        // if ( societyDeterminant == -1 && scienceDetermiant == -1) throw Error('SCORE_ALREADY_EXISTS')
+        // if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
 
         let obj = {};
 

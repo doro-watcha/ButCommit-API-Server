@@ -174,7 +174,7 @@ export default class testController {
           
           // if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
 
-          // if ( societyDeterminant == -1 && scienceDetermiant == -1) throw Error('SCORE_ALREADY_EXISTS')
+          // if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
           
           let obj = {}
           if ( isNaN(societyValue) == false && isNaN(scienceValue) ==false ) {
