@@ -16,6 +16,7 @@ import finalReportController from './finalReport'
 import notificationController from './notification'
 import communityController from './community'
 import gradeUniversityController from './gradeUniversity'
+import commentController from './comment'
 
 module.exports = {
 
@@ -36,5 +37,6 @@ module.exports = {
     finalReportController,
     notificationController,
     communityController,
-    gradeUniversityController
+    gradeUniversityController,
+    commentController
 }

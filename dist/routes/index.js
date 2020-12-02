@@ -38,6 +38,8 @@ var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
 
 var _naesin = _interopRequireDefault(require("./naesin"));
 
+var _comment = _interopRequireDefault(require("./comment"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -69,4 +71,5 @@ router.use('/community', _community.default);
 router.use('/finalReport', _finalReport.default);
 router.use('/gradeUniversity', _gradeUniversity.default);
 router.use('/naesin', _naesin.default);
+router.use('/comment', _comment.default);
 module.exports = router;

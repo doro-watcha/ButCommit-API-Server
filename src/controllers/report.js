@@ -183,6 +183,7 @@ export default class reportController {
     const tamguTranslation = majorData.metadata.tamguTranslation
     const calculationSpecial = majorData.metadata.calculationSpecial
     const tamguReplace = majorData.metadata.tamguReplace
+    const reflectionOption = majorData.metadata.reflectionOption
 
     if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
@@ -401,6 +402,67 @@ export default class reportController {
 
   
     }
+
+    else if ( reflectionOption == "우수영역 순서대로 80% ( 국,수,영 중 택1 ) + 20% ( 나머지 영역,탐 중 택1 )") {
+
+      const koreanScore = score.korean.percentile
+      const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
+      const mathScore = score.math.percentile
+      const tamguScore = ( score.tamgu1.percentile + score.tamgu2.percentile ) / 2
+
+      const scoreList1 = [ koreanScore, englishScore, mathScore ]
+
+      scoreList1.sort(function(a, b) { 
+        return b - a
+      })
+
+      if ( scoreList[0] == koreanScore ) {
+        newScore.korean = koreanScore
+      }
+      else if ( scoreList[0] == englishScore) {
+        newScore.english = englishScore
+      }
+      else if ( scoreList[0] == mathScore ) {
+        newScore.math = mathScore
+      }
+
+      const scoreList2 = [ scoreList1[1], scoreList[2]]
+
+
+      scoreList2.sort(function(a, b) { 
+        return b - a
+      })
+
+      totalSum = scoreList1[0] * 0.8 + scoreList2[0] * 0.2 
+
+
+
+
+    }
+
+    else if ( reflectionOption == "( 국, 수가나 우수영역 순서대로 40% + 20% ) + 영 25% + 탐 15%") {
+
+      const scoreList = [ score.korean.percentile, score.math.percentile]
+
+      scoreList.sort ( function ( a,b ) {
+        return b - a
+      })
+
+      if ( scoreList[0] == score.korean.percentile )  {
+        newScore.korean = score.korean.percentile * 4
+        newScore.math = score.math.percentile * 2
+      } else {
+        newScore.math = score.math.percentile * 4
+        newScore.korean = score.korean.percentile * 2
+
+      }
+
+      newScore.tamgu1.score = score.tamgu1.percentile * 1.5
+      newScore.tamgu2.score = score.tamgu2.percentile * 1.5
+
+      newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * 2.5
+    }
+
     
     else if ( majorData.major.univName.indexOf("가천대")>= 0 && majorData.major.majorName != "한의예과" && majorData.major.majorName != "의예과" ) {
 
@@ -846,7 +908,7 @@ export default class reportController {
       }
       else if ( extraPoint == "수가 백분위 10% , 과탐 1과목 백분위 10% 총점에 가산") {
         console.log("zkcjvdkvjdspfovigmdpovidfmopgivjdsfmoigj sdmfopjg sdmpfojg sjd")
-        if ( score.math.type =="가") extraScore.math = score.math.percentile * 0.1
+        if ( score.math.type =="가")extraScore.math = score.math.percentile * 0.1
         if ( score.line == "자연") {
           if ( newScore.tamgu1.score > newScore.tamgu2.score) {
             extraScore.tamgu1 = newScore.tamgu1.score * 0.1
@@ -1784,23 +1846,6 @@ export default class reportController {
 
       totalSum = scoreList[0] * 0.45 + scoreList[1] * 0.4 + scoreList[2] * 0.15
 
-
-    }
-
-    else if ( reflectionSubject == "우수영역 순서대로 80% ( 국,수,영 중 택1 ) + 20% ( 나머지 영역,탐 중 택1 )") {
-
-      const scoreList1 = [totalScore.korean, totalScore.math, totalScore.english]
-      const scoreList2 = [totalScore.history, totalScore.tamgu]
-
-      scoreList1.sort(function(a, b) { 
-        return b - a
-      })
-
-      scoreList2.sort(function(a, b) { 
-        return b - a
-      })
-
-      totalSum = scoreList1[0] * 0.8 + scoreList2[0] * 0.2 
 
     }
 

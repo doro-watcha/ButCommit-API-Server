@@ -12,11 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class Community extends _sequelize.default.Model {
   static init(sequelize) {
     return super.init({
-      title: {
-        type: _sequelize.default.STRING,
-        allowNull: true
-      },
-      body: {
+      content: {
         type: _sequelize.default.STRING,
         allowNull: true
       },

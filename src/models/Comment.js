@@ -6,11 +6,7 @@ export default class Community extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-              title : {
-                type : Sequelize.STRING,
-                allowNull : true
-              },
-              body: {
+              content : {
                 type : Sequelize.STRING,
                 allowNull : true
               },
@@ -24,7 +20,7 @@ export default class Community extends Sequelize.Model {
                   allowNull: true,
                   defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
                   onUpdate: Sequelize.literal('CURRENT_TIMESTAMP'),
-              },
+              }
 
             },{
               sequelize
@@ -32,17 +28,14 @@ export default class Community extends Sequelize.Model {
         )
       }
 
+      static associate(models) {
 
-
-    static associate(models) {
-
-      this.belongsTo(models.User, {
-        foreignKey : 'userId',
-        as : 'user'
-      })
-
-    }
-
-
+        this.belongsTo(models.User, {
+          foreignKey : 'userId',
+          as : 'user'
+        })
+  
+      }
+  
+    
 }
-

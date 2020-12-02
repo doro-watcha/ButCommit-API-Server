@@ -181,6 +181,7 @@ class fileController {
             // 14
             competitionRate: sheetData[i][18],
             // 2.33
+            reflectionOption: sheetData[i][37],
             reflectionSubject: sheetData[i][38],
             // 탐,한+국,수,영중 택2
             calculationSpecial: sheetData[i][39],

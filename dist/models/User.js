@@ -107,6 +107,10 @@ class User extends _sequelize.default.Model {
       foreignKey: 'userId',
       as: 'finalReport'
     });
+    this.hasMany(models.Comment, {
+      foreignKey: 'userId',
+      as: 'comment'
+    });
   }
 
   toJSON() {

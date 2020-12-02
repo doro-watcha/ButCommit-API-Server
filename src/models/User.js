@@ -108,6 +108,10 @@ export default class User extends Sequelize.Model {
 				foreignKey : 'userId',
 				as : 'finalReport'
 			})
+			this.hasMany (models.Comment, {
+				foreignKey : 'userId',
+				as : 'comment'
+			})
 	
 		}
 

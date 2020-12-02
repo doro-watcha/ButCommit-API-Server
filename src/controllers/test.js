@@ -86,7 +86,7 @@ export default class testController {
       await testService.deleteAll()
       var pass = 0
         // 파싱을 해보자 
-        for ( let i = 3 ; i < 3458 ; i++) {
+        for ( let i = 3 ; i < 3395 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
@@ -255,7 +255,7 @@ export default class testController {
             }
           }
 
-          if ( societyDeterminant != 1 || scienceDeterminant != 1 ) await testService.create(obj)
+          await testService.create(obj)
 
         }
           

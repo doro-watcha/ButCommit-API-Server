@@ -20,6 +20,7 @@ import communityRouter from './community'
 import notificationRouter from './notification'
 import gradeUniversityRouter from './gradeUniversity'
 import naesinRouter from './naesin'
+import commentRouter from './comment'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -45,6 +46,7 @@ router.use('/community', communityRouter)
 router.use('/finalReport', finalReportRouter)
 router.use('/gradeUniversity', gradeUniversityRouter)
 router.use('/naesin', naesinRouter)
+router.use('/comment', commentRouter)
 
 
 module.exports = router

@@ -36,6 +36,8 @@ var _community = _interopRequireDefault(require("./community"));
 
 var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
 
+var _comment = _interopRequireDefault(require("./comment"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -56,5 +58,6 @@ module.exports = {
   finalReportController: _finalReport.default,
   notificationController: _notification.default,
   communityController: _community.default,
-  gradeUniversityController: _gradeUniversity.default
+  gradeUniversityController: _gradeUniversity.default,
+  commentController: _comment.default
 };
