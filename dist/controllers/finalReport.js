@@ -32,11 +32,10 @@ class finalReportController {
       });
       if (report == null) throw Error('REPORT_NOT_FOUND');
       const alreadyFinalReport = await _services.finalReportService.findOne({
-        reportId,
         group,
         userId: user.id
       });
-      if (alreadyFinalReport != null) throw Error('FINAL_REPORT_ALREADY_EXISTS');
+      if (alreadyFinalReport != null && group != "군외") throw Error('FINAL_REPORT_ALREADY_EXISTS');
       const modelObj = {
         group,
         reportId,
