@@ -28,7 +28,8 @@ export default class finalReportController {
 
       const modelObj = {
         group,
-        reportId
+        reportId,
+        userId : user.id
       }
 
 			// create user

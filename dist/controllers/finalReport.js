@@ -39,7 +39,8 @@ class finalReportController {
       if (alreadyFinalReport != null) throw Error('FINAL_REPORT_ALREADY_EXISTS');
       const modelObj = {
         group,
-        reportId
+        reportId,
+        userId: user.id
       }; // create user
 
       await _services.finalReportService.create(modelObj); // create response
