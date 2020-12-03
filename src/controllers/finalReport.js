@@ -22,7 +22,7 @@ export default class finalReportController {
 
       if ( report == null) throw Error('REPORT_NOT_FOUND')
 
-      const alreadyFinalReport = await finalReportService.findOne({reportId,group, userId : user.id})
+      const alreadyFinalReport = await finalReportService.findOne({group, userId : user.id})
 
       if ( alreadyFinalReport != null) throw Error('FINAL_REPORT_ALREADY_EXISTS')
 
