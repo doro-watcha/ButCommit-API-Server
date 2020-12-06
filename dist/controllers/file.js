@@ -184,18 +184,18 @@ class fileController {
           year: 2021,
           majorId: i - 2,
           metadata: {
-            initialMember2020: sheetData[i][11],
+            initialMember: sheetData[i][11],
             // 1
-            additionalMember2020: sheetData[i][12],
+            additionalMember: sheetData[i][12],
             // 14
-            competitionRate2020: sheetData[i][18],
-            group2020: sheetData[i][21],
+            competitionRate: sheetData[i][18],
+            group: sheetData[i][21],
+            chooHap: sheetData[i][24],
             initialMember2019: sheetData[i][14],
             additionalMember2019: sheetData[i][15],
             competitionRate2019: sheetData[i][19],
             group2019: sheetData[i][22],
-            competitionRate: sheetData[i][18],
-            // 2.33
+            chooHap2019: sheetData[i][25],
             reflectionOption: sheetData[i][37],
             reflectionSubject: sheetData[i][38],
             // 탐,한+국,수,영중 택2
