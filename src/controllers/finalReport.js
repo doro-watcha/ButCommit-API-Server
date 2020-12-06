@@ -55,11 +55,15 @@ export default class finalReportController {
 
       var finalReports = await finalReportService.findList({userId : user.id })
 
+      console.log(finalReports.length)
+
       var data = []
 
       for ( let i = 0; i < finalReports.length ; i++ ) {
 
         var report = await reportService.findOne({id : finalReports[i].reportId})
+
+        console.log(report)
 
         var majorDataId = report.majorData.id
 
