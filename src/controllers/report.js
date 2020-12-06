@@ -410,6 +410,11 @@ export default class reportController {
       const mathScore = score.math.percentile
       const tamguScore = ( score.tamgu1.percentile + score.tamgu2.percentile ) / 2
 
+      perfectScore.korean = 0
+      perfectScore.english = 0
+      perfectScore.math = 0 
+      perfectScore.tamgu = 0
+
       const scoreList1 = [ koreanScore, englishScore, mathScore ]
 
       scoreList1.sort(function(a, b) { 
@@ -417,27 +422,86 @@ export default class reportController {
       })
 
       if ( scoreList1[0] == koreanScore ) {
-        newScore.korean = koreanScore
+        newScore.korean = koreanScore * 8
+        perfectScore.korean = 800
+
+        const scoreList2 = [tamguScore, englishScore, mathScore]
+
+        scoreList2.sort(function ( a, b) {
+          return b - a
+        })
+
+        if ( scoreList2[0] == tamguScore ) {
+          newScore.tamgu1.score = tamguScore * 2
+          newScore.tamgu2.score = tamguScore * 2
+          perfectScore.tamgu = 200
+        }
+
+        else if ( scoreList2[0] == englishScore) {
+          newScore.english = englishScore * 2
+          perfectScore.english = 200 
+
+        }
+
+        else if ( scoreList2[0] == mathScore ) {
+          newScore.math = mathScore * 2
+          perfectScore.math = 200 
+        }
       }
       else if ( scoreList1[0] == englishScore) {
-        newScore.english = englishScore
+        newScore.english = englishScore * 8
+        perfectScore.english = 800
+
+        const scoreList2 = [tamguScore, koreanScore, mathScore]
+
+        scoreList2.sort(function ( a, b) {
+          return b - a
+        })
+
+        if ( scoreList2[0] == tamguScore ) {
+          newScore.tamgu1.score = tamguScore * 2
+          newScore.tamgu2.score = tamguScore * 2
+          perfectScore.tamgu = 200
+        }
+
+        else if ( scoreList2[0] == koreanScore) {
+          newScore.korean = koreanScore * 2
+          perfectScore.korean = 200 
+
+        }
+
+        else if ( scoreList2[0] == mathScore ) {
+          newScore.math = mathScore * 2
+          perfectScore.math = 200 
+        }
       }
       else if ( scoreList1[0] == mathScore ) {
-        newScore.math = mathScore
+        newScore.math = mathScore * 8
+        perfectScore.math = 800
+
+        const scoreList2 = [tamguScore, koreanScore, englishScore]
+
+        scoreList2.sort(function ( a, b) {
+          return b - a
+        })
+
+        if ( scoreList2[0] == tamguScore ) {
+          newScore.tamgu1.score = tamguScore * 2
+          newScore.tamgu2.score = tamguScore * 2
+          perfectScore.tamgu = 200
+        }
+
+        else if ( scoreList2[0] == koreanScore) {
+          newScore.korean = koreanScore * 2
+          perfectScore.korean = 200 
+
+        }
+
+        else if ( scoreList2[0] == englishScore ) {
+          newScore.english = englishScore * 2
+          perfectScore.english = 200 
+        }
       }
-
-      const scoreList2 = [ tamguScore, scoreList1[1], scoreList1[2]]
-
-
-      scoreList2.sort(function(a, b) { 
-        return b - a
-      })
-
-      totalSum = scoreList1[0] * 0.8 + scoreList2[0] * 0.2 
-
-
-
-
     }
 
     else if ( reflectionOption == "( 국, 수가나 우수영역 순서대로 40% + 20% ) + 영 25% + 탐 15%") {
@@ -1519,12 +1583,14 @@ export default class reportController {
     else if ( reflectionSubject == "( 국,수,영 중 택1 ) + ( 나머지 영역,탐 중 택1 )") {
 
       const scoreList1 = [totalScore.korean, totalScore.math, totalScore.english]
-      const scoreList2 = [totalScore.history , totalScore.tamgu]
+
 
       
       scoreList1.sort(function(a, b) { 
         return b - a
       })
+
+      const scoreList2 = [scoreList1[1],scoreList1[2] , totalScore.tamgu]
       scoreList2.sort(function(a, b) { 
         return b - a
       })
