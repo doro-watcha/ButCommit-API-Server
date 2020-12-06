@@ -987,6 +987,7 @@ export default class reportController {
       else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
         extraScore.foreign = score.foreign.score * 0.05
       }
+
       else if ( extraPoint == "수가 백분위 10% , 과탐 1과목 백분위 10% 총점에 가산") {
         console.log("zkcjvdkvjdspfovigmdpovidfmopgivjdsfmoigj sdmfopjg sdmpfojg sjd")
         if ( score.math.type =="가")extraScore.math = score.math.percentile * 0.1
@@ -1127,6 +1128,16 @@ export default class reportController {
           }
 
         }
+
+
+      else if ( extraPoint == "수가 표준점수 10% , 과탐 백분위 5% 총점에 가산"){
+        console.log("시발왜안돼")
+        if ( score.math.type == "가") extraScore.math = score.math.score * 0.1
+        if ( score.line =="자연") {
+          extraScore.tamgu1 = score.tamgu1.percentile * 0.05
+          extraScore.tamgu2 = score.tamgu2.percentile * 0.05
+        }
+      }
         else { 
 
           if ( score.math.type == "가") extraScore.math = ( newScore.math * extra1) / 100 

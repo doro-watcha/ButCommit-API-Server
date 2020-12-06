@@ -813,6 +813,14 @@ class reportController {
             extraScore.tamgu1 = score.tamgu1.score * 0.06;
             extraScore.tamgu2 = score.tamgu2.score * 0.06;
           }
+        } else if (extraPoint == "수가 표준점수 10% , 과탐 백분위 5% 총점에 가산") {
+          console.log("시발왜안돼");
+          if (score.math.type == "가") extraScore.math = score.math.score * 0.1;
+
+          if (score.line == "자연") {
+            extraScore.tamgu1 = score.tamgu1.percentile * 0.05;
+            extraScore.tamgu2 = score.tamgu2.percentile * 0.05;
+          }
         } else {
           if (score.math.type == "가") extraScore.math = newScore.math * extra1 / 100;
 
