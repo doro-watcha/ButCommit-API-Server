@@ -129,6 +129,9 @@ class scoreController {
         naesin_type,
         gumjeong
       } = result;
+      const editTimes = user.editTimes;
+      user.editTimes = editTimes - 1;
+      await _services.userService.update(user.id, user);
       const modelObj = {
         userId: user.id,
         korean,

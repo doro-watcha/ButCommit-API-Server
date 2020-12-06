@@ -112,6 +112,11 @@ export default class scoreController {
             
             const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesin, naesin_type, gumjeong } = result 
 
+            const editTimes = user.editTimes
+
+            user.editTimes = editTimes - 1
+            await userService.update (user.id , user)
+
             const modelObj = {
                 userId : user.id,
                 korean,
