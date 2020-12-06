@@ -29,6 +29,21 @@ class ScoreTransitionService {
     });
   }
 
+  async update(id, modelObj) {
+    await _models.ScoreTransition.update(modelObj, {
+      where: {
+        id
+      }
+    });
+    const updatedScoreTransition = await _models.ScoreTransition.findOne({
+      where: {
+        id
+      }
+    });
+    if (updatedScoreTransition === null) throw Error('SCORE_NOT_FOUND');
+    return updatedScoreTransition;
+  }
+
   async deleteAll() {
     return await _models.ScoreTransition.destroy({
       where: {}

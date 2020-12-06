@@ -50,9 +50,9 @@ export default class fileController {
 
     try { 
 
-       await majorService.deleteAll()
-       await majorDataService.deleteAll()
-      await scoreTransitionService.deleteAll()
+      //  await majorService.deleteAll()
+      //  await majorDataService.deleteAll()
+      // await scoreTransitionService.deleteAll()
 
 
       
@@ -88,7 +88,7 @@ export default class fileController {
 
 
 
-        await majorService.create(obj1)
+        await majorService.update(i-2,obj1)
       }
 
       // 2021년 
@@ -175,8 +175,6 @@ export default class fileController {
             competitionRate2019 : sheetData[i][19],
             group2019 : sheetData[i][22],
 
-
-
             competitionRate : sheetData[i][18], // 2.33
 
             reflectionOption : sheetData[i][37],
@@ -234,7 +232,7 @@ export default class fileController {
         }
 
         
-        await majorDataService.create(obj2)
+        await majorDataService.update(i-2,obj2)
       }
 
       let sheetData2 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
@@ -279,7 +277,7 @@ export default class fileController {
 
         }
 
-        await scoreTransitionService.create(obj)
+        await scoreTransitionService.update(i, obj)
 
       }
 

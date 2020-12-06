@@ -22,6 +22,22 @@ class ScoreTransitionService {
       })
     }
 
+        
+    async update ( id , modelObj) {
+
+      await ScoreTransition.update(modelObj, {
+          where: { id },
+      })
+
+      const updatedScoreTransition = await ScoreTransition.findOne({
+          where: { id },
+      })
+      if (updatedScoreTransition === null) throw Error('SCORE_NOT_FOUND')
+
+      return updatedScoreTransition
+
+  }
+
     async deleteAll() {
 
       return await ScoreTransition.destroy({
