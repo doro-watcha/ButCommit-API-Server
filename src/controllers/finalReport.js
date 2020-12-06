@@ -72,7 +72,7 @@ export default class finalReportController {
         const applicantsNumber = Object.keys(reports).length
         const myRank = reports.findIndex( function ( item , index) {
   
-          return item.reportId == finalReports[i].reportId
+          return item.id == finalReports[i].id
         }) + 1
 
         finalReports[i].applicants = applicantsNumber
