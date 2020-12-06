@@ -1,4 +1,4 @@
-import { FinalReport  } from  '../models'
+import { FinalReport, Report  } from  '../models'
 
 let instance = null
 

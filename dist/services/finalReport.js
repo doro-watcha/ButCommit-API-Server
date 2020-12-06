@@ -28,7 +28,7 @@ class FinalReportService {
       where: JSON.parse(JSON.stringify(where)),
       attributes: ['id', 'group', 'userId', 'reportId', 'majorDataId', 'myRank', 'applicants'],
       include: {
-        model: Report,
+        model: _models.Report,
         as: 'report'
       }
     });
