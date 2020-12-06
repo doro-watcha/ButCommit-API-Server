@@ -340,15 +340,15 @@ class reportController {
         return b - a;
       });
 
-      if (scoreList[0] == koreanScore) {
+      if (scoreList1[0] == koreanScore) {
         newScore.korean = koreanScore;
-      } else if (scoreList[0] == englishScore) {
+      } else if (scoreList1[0] == englishScore) {
         newScore.english = englishScore;
-      } else if (scoreList[0] == mathScore) {
+      } else if (scoreList1[0] == mathScore) {
         newScore.math = mathScore;
       }
 
-      const scoreList2 = [scoreList1[1], scoreList[2]];
+      const scoreList2 = [tamguScore, scoreList1[1], scoreList1[2]];
       scoreList2.sort(function (a, b) {
         return b - a;
       });
@@ -482,6 +482,7 @@ class reportController {
             console.log("fuck이다잉");
             newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
             newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
+            console.log("이거는 됐다잉~");
             if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
             console.log('나가리아딩');
           } else {
