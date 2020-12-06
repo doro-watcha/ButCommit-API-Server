@@ -12,7 +12,7 @@ const {
   authenticate
 } = _Authenticator.default;
 const router = new _express.Router();
-router.post('/', authenticate, (req, res) => {
+router.post('/', (req, res) => {
   _controllers.consultingController.create(req, res);
 });
 router.get('/', authenticate, (req, res) => {

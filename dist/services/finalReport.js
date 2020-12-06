@@ -26,7 +26,11 @@ class FinalReportService {
   async findList(where) {
     return _models.FinalReport.findAll({
       where: JSON.parse(JSON.stringify(where)),
-      attributes: ['id', 'group', 'userId', 'reportId', 'majorDataId', 'myRank', 'applicants']
+      attributes: ['id', 'group', 'userId', 'reportId', 'majorDataId', 'myRank', 'applicants'],
+      include: {
+        model: Report,
+        as: 'report'
+      }
     });
   }
 

@@ -16,23 +16,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class consultingController {
   static async create(req, res) {
     try {
-      const {
-        user
-      } = req;
       const result = await _joi.default.validate(req.body, {
         title: _joi.default.string().required(),
         description: _joi.default.string().required(),
-        isAdmin: _joi.default.number()
+        isAdmin: _joi.default.number(),
+        userId: _joi.default.number().required()
       });
       const {
         title,
         description,
-        isAdmin
+        isAdmin,
+        userId
       } = result;
       const modelObj = {
         title,
         description,
-        userId: user.id,
+        userId,
         isAdmin
       };
       const consulting = await _services.consultingService.create(modelObj);
