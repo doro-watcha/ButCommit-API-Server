@@ -50,9 +50,13 @@ class User extends _sequelize.default.Model {
         type: _sequelize.default.INTEGER,
         defaultValue: -1
       },
-      predictTimes: {
+      editTimes: {
         type: _sequelize.default.INTEGER,
         defaultValue: 0
+      },
+      isMoneyPaid: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 1
       },
       adminLevel: {
         type: _sequelize.default.INTEGER,

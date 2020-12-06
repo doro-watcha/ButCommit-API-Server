@@ -9,20 +9,21 @@ export default class consultingController {
 
     try {
 
-      const { user } = req
-
       const result = await Joi.validate (req.body , {
         title : Joi.string().required(),
-        description : Joi.string().required()
+        description : Joi.string().required(),
+        isAdmin : Joi.number(),
+        userId : Joi.number().required()
     
       })
 
-      const { title , description } = result 
+      const { title , description , isAdmin, userId } = result 
 
       const modelObj = {
         title,
         description,
-        userId : user.id
+        userId,
+        isAdmin 
       }
 
       const consulting = await consultingService.create(modelObj)
@@ -46,12 +47,14 @@ export default class consultingController {
   static async findList (req, res ) {
 
     try { 
-      const consulting = await consultingService.findList()
+
+      const { user } = req 
+      const consultings = await consultingService.findList({userId : user.id})
 
       const response = {
         success : true ,
         data : {
-          consulting
+          consultings
         }
       }
 
@@ -67,9 +70,7 @@ export default class consultingController {
 
       const id = req.params.id
 
-
       const consulting = await consultingService.findOne({
-        
         id
       })
 

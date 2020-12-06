@@ -7,17 +7,17 @@ const { authenticate } = Authenticator
 const router = new Router()
 
 
-router.post('/', authenticate,  (req,res) => {
+router.post('/',  (req,res) => {
   consultingController.create(req,res)
 })
 
 
-router.get('/' , (req, res) =>{
+router.get('/' , authenticate,  (req, res) =>{
   consultingController.findList(req,res)
 })
 
 
-router.get('/:id' ,  (req,res) => {
+router.get('/:id' , authenticate,  (req,res) => {
   consultingController.findOne(req,res)
 })
 

@@ -15,6 +15,10 @@ import communityService from './community'
 import finalReportService from './finalReport'
 import notificationService from './notification'
 import gradeUniversityService from './gradeUniversity'
+import naesinService from './naesin'
+import autoTransitionService from './autoTransition'
+
+
 
 module.exports = {
     universityService,
@@ -33,5 +37,7 @@ module.exports = {
     communityService,
     finalReportService,
     notificationService,
-    gradeUniversityService
+    gradeUniversityService,
+    naesinService,
+    autoTransitionService
 }

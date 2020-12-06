@@ -20,6 +20,10 @@ class Consulting extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allwoNull: true
       },
+      isAdmin: {
+        type: _sequelize.default.INTEGER,
+        allowNull: true
+      },
       createdAt: {
         type: _sequelize.default.DATE,
         allowNull: true,

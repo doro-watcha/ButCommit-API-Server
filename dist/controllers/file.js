@@ -175,10 +175,16 @@ class fileController {
           year: 2021,
           majorId: i - 2,
           metadata: {
-            initialMember: sheetData[i][11],
+            initialMember2020: sheetData[i][11],
             // 1
-            additionalMember: sheetData[i][12],
+            additionalMember2020: sheetData[i][12],
             // 14
+            competitionRate2020: sheetData[i][18],
+            group2020: sheetData[i][21],
+            initialMember2019: sheetData[i][14],
+            additionalMember2019: sheetData[i][15],
+            competitionRate2019: sheetData[i][19],
+            group2019: sheetData[i][22],
             competitionRate: sheetData[i][18],
             // 2.33
             reflectionOption: sheetData[i][37],

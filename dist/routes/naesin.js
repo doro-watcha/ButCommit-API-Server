@@ -17,9 +17,6 @@ router.post('/', (req, res) => {
   _controllers.naesinController.create(req, res);
 });
 router.get('/', (req, res) => {
-  _controllers.naesinController.findList(req, res);
-});
-router.get('/:id', (req, res) => {
   _controllers.naesinController.findOne(req, res);
 });
 module.exports = router;

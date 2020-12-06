@@ -38,6 +38,10 @@ var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
 
 var _comment = _interopRequireDefault(require("./comment"));
 
+var _naesin = _interopRequireDefault(require("./naesin"));
+
+var _autoTransition = _interopRequireDefault(require("./autoTransition"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -59,5 +63,7 @@ module.exports = {
   notificationController: _notification.default,
   communityController: _community.default,
   gradeUniversityController: _gradeUniversity.default,
-  commentController: _comment.default
+  commentController: _comment.default,
+  naesinController: _naesin.default,
+  autoTransitionController: _autoTransition.default
 };

@@ -65,12 +65,13 @@ class userController {
         highSchool: _joi.default.string(),
         line: _joi.default.string(),
         graduateYear: _joi.default.number(),
-        predictTimes: _joi.default.number(),
+        editTimes: _joi.default.number(),
         gender: _joi.default.string(),
         haknyeon: _joi.default.string(),
         academyId: _joi.default.number(),
         adminLevel: _joi.default.number(),
-        telephone: _joi.default.string()
+        telephone: _joi.default.string(),
+        isMoneyPaid: _joi.default.number()
       });
       const {
         name,
@@ -81,7 +82,8 @@ class userController {
         haknyeon,
         academyId,
         adminLevel,
-        telephone
+        telephone,
+        isMoneyPaid
       } = result;
       const modelObj = {
         name,
@@ -92,7 +94,8 @@ class userController {
         haknyeon,
         academyId,
         adminLevel,
-        telephone
+        telephone,
+        isMoneyPaid
       };
       const user = await _services.userService.update(id, modelObj);
       const response = {

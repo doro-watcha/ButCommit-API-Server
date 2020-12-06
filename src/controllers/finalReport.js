@@ -29,10 +29,11 @@ export default class finalReportController {
       const modelObj = {
         group,
         reportId,
-        userId : user.id
+        userId : user.id,
+        majorDataId : report.majorData.id
       }
 
-			// create user
+			// create final report
 			await finalReportService.create(modelObj)
 
 			// create response
@@ -52,12 +53,32 @@ export default class finalReportController {
     try { 
       const { user } = req 
 
-      const finalReports = await finalReportService.findList({userId : user.id })
+      var finalReports = await finalReportService.findList({userId : user.id })
+
+      var data = []
+
+      for ( let i = 0; i < finalReports.length ; i++ ) {
+
+        var report = await reportService.findOne({id : finalReports[i].reportId})
+
+        var majorDataId = report.majorData.id
+
+        var reports = await finalReportService.findList({majorDataId})
+
+        const applicantsNumber = Object.keys(reports).length
+        const myRank = reports.findIndex( function ( item , index) {
+  
+          return item.id == finalReports[i].id
+        }) + 1
+
+        finalReports[i].applicants = applicantsNumber
+        finalReports[i].myRank = myRank
+      }
 
       const response = {
         success : true ,
         data : {
-          finalReports 
+          finalReports
         }
       }
 

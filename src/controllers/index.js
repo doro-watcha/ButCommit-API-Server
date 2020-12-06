@@ -17,6 +17,8 @@ import notificationController from './notification'
 import communityController from './community'
 import gradeUniversityController from './gradeUniversity'
 import commentController from './comment'
+import naesinController from './naesin'
+import autoTransitionController from './autoTransition'
 
 module.exports = {
 
@@ -38,5 +40,7 @@ module.exports = {
     notificationController,
     communityController,
     gradeUniversityController,
-    commentController
+    commentController,
+    naesinController,
+    autoTransitionController
 }

@@ -15,6 +15,14 @@ class FinalReport extends _sequelize.default.Model {
       group: {
         type: _sequelize.default.STRING,
         allowNull: true
+      },
+      myRank: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 0
+      },
+      applicants: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 0
       }
     }, {
       sequelize
@@ -25,9 +33,12 @@ class FinalReport extends _sequelize.default.Model {
     this.belongsTo(models.Report, {
       foreignKey: 'reportId',
       as: 'report'
-    }), this.belongsTo(models.Report, {
+    }), this.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'user'
+    }), this.belongsTo(models.MajorData, {
+      foreignKey: 'majorDataId',
+      as: 'majorData'
     });
   }
 

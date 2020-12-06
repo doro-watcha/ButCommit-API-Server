@@ -40,6 +40,8 @@ var _naesin = _interopRequireDefault(require("./naesin"));
 
 var _comment = _interopRequireDefault(require("./comment"));
 
+var _autoTransition = _interopRequireDefault(require("./autoTransition"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -72,4 +74,5 @@ router.use('/finalReport', _finalReport.default);
 router.use('/gradeUniversity', _gradeUniversity.default);
 router.use('/naesin', _naesin.default);
 router.use('/comment', _comment.default);
+router.use('/autoTransition', _autoTransition.default);
 module.exports = router;

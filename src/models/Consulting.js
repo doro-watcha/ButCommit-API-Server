@@ -15,6 +15,10 @@ export default class Consulting extends Sequelize.Model {
                 type : Sequelize.STRING,
                 allwoNull : true
               },
+              isAdmin : {
+                type : Sequelize.INTEGER,
+                allowNull : true 
+              },
               createdAt: {
                   type: Sequelize.DATE,
                   allowNull: true,

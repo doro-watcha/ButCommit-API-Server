@@ -39,8 +39,9 @@ class finalReportController {
       const modelObj = {
         group,
         reportId,
-        userId: user.id
-      }; // create user
+        userId: user.id,
+        majorDataId: report.majorData.id
+      }; // create final report
 
       await _services.finalReportService.create(modelObj); // create response
 
@@ -58,9 +59,27 @@ class finalReportController {
       const {
         user
       } = req;
-      const finalReports = await _services.finalReportService.findList({
+      var finalReports = await _services.finalReportService.findList({
         userId: user.id
       });
+      var data = [];
+
+      for (let i = 0; i < finalReports.length; i++) {
+        var report = await _services.reportService.findOne({
+          id: finalReports[i].reportId
+        });
+        var majorDataId = report.majorData.id;
+        var reports = await _services.finalReportService.findList({
+          majorDataId
+        });
+        const applicantsNumber = Object.keys(reports).length;
+        const myRank = reports.findIndex(function (item, index) {
+          return item.id == finalReports[i].id;
+        }) + 1;
+        finalReports[i].applicants = applicantsNumber;
+        finalReports[i].myRank = myRank;
+      }
+
       const response = {
         success: true,
         data: {

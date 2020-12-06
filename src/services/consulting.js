@@ -16,8 +16,9 @@ class ConsultingService {
     return await Consulting.create(modelObj)
   }
 
-  async findList () {
+  async findList (where ) {
     return Consulting.findAll({
+      where : JSON.parse(JSON.stringify(where)),
       include: [
         {
 					model: User,

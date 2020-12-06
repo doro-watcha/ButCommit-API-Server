@@ -21,16 +21,19 @@ class consultingController {
       } = req;
       const result = await _joi.default.validate(req.body, {
         title: _joi.default.string().required(),
-        description: _joi.default.string().required()
+        description: _joi.default.string().required(),
+        isAdmin: _joi.default.number()
       });
       const {
         title,
-        description
+        description,
+        isAdmin
       } = result;
       const modelObj = {
         title,
         description,
-        userId: user.id
+        userId: user.id,
+        isAdmin
       };
       const consulting = await _services.consultingService.create(modelObj);
       const response = {
@@ -47,11 +50,16 @@ class consultingController {
 
   static async findList(req, res) {
     try {
-      const consulting = await _services.consultingService.findList();
+      const {
+        user
+      } = req;
+      const consultings = await _services.consultingService.findList({
+        userId: user.id
+      });
       const response = {
         success: true,
         data: {
-          consulting
+          consultings
         }
       };
       res.send(response);

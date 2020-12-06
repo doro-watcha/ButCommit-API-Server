@@ -12,11 +12,7 @@ router.post('/', (req,res) => {
   naesinController.create(req,res)
 })
 
-router.get('/', (req,res)=> {
-  naesinController.findList(req,res)
-})
-
-router.get('/:id', (req,res) => {
+router.get('/', (req,res) => {
   naesinController.findOne(req,res)
 })
 

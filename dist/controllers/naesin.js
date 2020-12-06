@@ -17,9 +17,59 @@ class notificationController {
   static async create(req, res) {
     try {
       const result = await _joi.default.validate(req.body, {
-        body: _joi.default.string().required(),
-        title: _joi.default.string().required()
+        startScore: _joi.default.number().required(),
+        endScore: _joi.default.number().required(),
+        value: _joi.default.number().required(),
+        univName: _joi.default.string().required(),
+        type: _joi.default.string().required(),
+        major: _joi.default.string().required()
       });
+      const {
+        startScore,
+        endScore,
+        value,
+        univName,
+        type,
+        major
+      } = result;
+      const obj = {
+        startScore,
+        endScore,
+        value,
+        univName,
+        type,
+        major
+      };
+      await _services.naesinService.create(obj);
+      const response = {
+        success: true
+      };
+      res.send(response);
+    } catch (e) {
+      res.send((0, _functions.createErrorResponse)(e));
+    }
+  }
+
+  static async findOne(req, res) {
+    try {
+      const result = await _joi.default.validate(req.body, {
+        score: _joi.default.number().required(),
+        univName: _joi.default.string().required(),
+        type: _joi.default.string().required()
+      });
+      const {
+        score,
+        univName,
+        type
+      } = result;
+      const naesinScore = await _services.naesinService.findOne(score, type, univName);
+      const response = {
+        success: true,
+        data: {
+          value: naesinScore.value
+        }
+      };
+      res.send(response);
     } catch (e) {
       res.send((0, _functions.createErrorResponse)(e));
     }

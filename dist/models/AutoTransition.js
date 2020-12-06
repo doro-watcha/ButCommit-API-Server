@@ -9,32 +9,28 @@ var _sequelize = _interopRequireDefault(require("sequelize"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class Naesin extends _sequelize.default.Model {
+class AutoTransition extends _sequelize.default.Model {
   static init(sequelize) {
     return super.init({
-      startScore: {
-        type: _sequelize.default.FLOAT,
-        defaultValue: 0.0
-      },
-      endScore: {
-        type: _sequelize.default.FLOAT,
-        defaultValue: 0.0
-      },
-      value: {
-        type: _sequelize.default.FLOAT,
-        defaultValue: 0.0
-      },
-      univName: {
+      subject: {
         type: _sequelize.default.STRING,
         allowNull: true
       },
-      type: {
-        type: _sequelize.default.STRING,
-        allowNull: true
+      originalScore: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 0
       },
-      major: {
-        type: _sequelize.default.STRING,
-        allowNull: true
+      score: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 0
+      },
+      percentile: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 0
+      },
+      grade: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 0
       }
     }, {
       sequelize
@@ -51,4 +47,4 @@ class Naesin extends _sequelize.default.Model {
 
 }
 
-exports.default = Naesin;
+exports.default = AutoTransition;
