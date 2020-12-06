@@ -246,9 +246,21 @@ export default class reportController {
 
     if ( majorData.major.univName.indexOf("전남대") >= 0 ) {
 
-      perfectScore.korean = 240
-      perfectScore.math = 320
-      perfectScore.tamgu = 240
+      if ( specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)") {
+        perfectScore.korean = 320
+        perfectScore.math = 240
+        perfectScore.tamgu = 240
+      }
+      else if ( specialOption == "영역별 점수: 국(240) / 수(320) / 탐(240)"){
+
+        perfectScore.korean = 240
+        perfectScore.math = 320
+        perfectScore.tamgu = 240
+      }
+      else if (specialOption == "영역별 점수: 국(400) / 탐(400)") {
+        perfectScore.korean = 400
+        perfectScore.tamgu = 400
+      }
     }
 
     
@@ -619,6 +631,10 @@ export default class reportController {
       newScore.tamgu2.score = score.tamgu2.score * 1.2
     }
 
+    // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
+
+
+    // }
     
     else if ( applicationIndicatorType == "A") {
       newScore.korean = (score.korean.percentile * perfectScore.korean ) / 100 
