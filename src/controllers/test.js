@@ -255,7 +255,11 @@ export default class testController {
             }
           }
 
-          await testService.create(obj)
+          if ( societyDeterminant == 1 && scienceDeterminant == 1 ) {
+
+          }
+
+          else await testService.create(obj)
 
         }
           
