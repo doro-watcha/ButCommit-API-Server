@@ -49,11 +49,14 @@ class consultingController {
 
   static async findList(req, res) {
     try {
+      const result = await _joi.default.validate(req.query, {
+        userId: _joi.default.number().required()
+      });
       const {
-        user
-      } = req;
+        userId
+      } = result;
       const consultings = await _services.consultingService.findList({
-        userId: user.id
+        userId
       });
       const response = {
         success: true,

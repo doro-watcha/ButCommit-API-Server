@@ -29,6 +29,9 @@ class ConsultingService {
       include: [{
         model: _models.User,
         as: 'user'
+      }, {
+        model: _models.Redop,
+        as: 'redop'
       }]
     });
   }
@@ -39,6 +42,9 @@ class ConsultingService {
       include: [{
         model: _models.User,
         as: 'user'
+      }, {
+        model: _models.Redop,
+        as: 'redop'
       }]
     });
   }

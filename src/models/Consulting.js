@@ -44,6 +44,10 @@ export default class Consulting extends Sequelize.Model {
         foreignKey: 'userId',
         as: 'user',
       })
+      this.hasMany(models.Redop, {
+        foreignKey : 'consultingId',
+        as : 'redop'
+      })
 
     }
 

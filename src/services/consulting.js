@@ -1,4 +1,4 @@
-import { Consulting , User } from  '../models'
+import { Consulting , User, Redop } from  '../models'
 
 let instance = null
 
@@ -23,7 +23,10 @@ class ConsultingService {
         {
 					model: User,
 					as: 'user',
-				},
+				},{
+          model : Redop,
+          as : 'redop'
+        }
 			]
     })
   }
@@ -34,7 +37,10 @@ class ConsultingService {
         {
 					model: User,
 					as: 'user',
-				},
+				},{
+          model : Redop,
+          as : 'redop'
+        }
 			]
 		})
 	}

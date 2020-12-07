@@ -22,6 +22,7 @@ import gradeUniversityRouter from './gradeUniversity'
 import naesinRouter from './naesin'
 import commentRouter from './comment'
 import autoTransitionRouter from './autoTransition'
+import redopRouter from './redop'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -49,6 +50,7 @@ router.use('/gradeUniversity', gradeUniversityRouter)
 router.use('/naesin', naesinRouter)
 router.use('/comment', commentRouter)
 router.use('/autoTransition', autoTransitionRouter)
+router.use('/redop', redopRouter)
 
 
 module.exports = router

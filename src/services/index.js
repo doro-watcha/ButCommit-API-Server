@@ -17,6 +17,7 @@ import notificationService from './notification'
 import gradeUniversityService from './gradeUniversity'
 import naesinService from './naesin'
 import autoTransitionService from './autoTransition'
+import redopService from './redop'
 
 
 
@@ -39,5 +40,6 @@ module.exports = {
     notificationService,
     gradeUniversityService,
     naesinService,
-    autoTransitionService
+    autoTransitionService,
+    redopService
 }

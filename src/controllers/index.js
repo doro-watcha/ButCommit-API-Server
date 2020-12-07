@@ -19,6 +19,7 @@ import gradeUniversityController from './gradeUniversity'
 import commentController from './comment'
 import naesinController from './naesin'
 import autoTransitionController from './autoTransition'
+import redopController from './redop'
 
 module.exports = {
 
@@ -42,5 +43,6 @@ module.exports = {
     gradeUniversityController,
     commentController,
     naesinController,
-    autoTransitionController
+    autoTransitionController,
+    redopController
 }

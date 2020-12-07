@@ -20,6 +20,7 @@ import GradeUniversityModel from './GradeUniversity'
 import NaesinModel from './Naesin'
 import CommentModel from './Comment'
 import AutoTransitionModel from './AutoTransition'
+import RedopModel from './Redop'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -45,7 +46,9 @@ const models = {
   GradeUniversity : GradeUniversityModel.init(sequelize, Sequelize),
   Naesin : NaesinModel.init(sequelize, Sequelize),
   Comment : CommentModel.init( sequelize, Sequelize),
-  AutoTransition : AutoTransitionModel.init(sequelize, Sequelize)
+  AutoTransition : AutoTransitionModel.init(sequelize, Sequelize),
+  Redop : RedopModel.init(sequelize, Sequelize)
+
 }
 
 Object.values(models)

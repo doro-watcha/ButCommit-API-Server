@@ -48,8 +48,13 @@ export default class consultingController {
 
     try { 
 
-      const { user } = req 
-      const consultings = await consultingService.findList({userId : user.id})
+      const result = await Joi.validate ( req.query ,{
+        userId : Joi.number().required()
+      })
+
+      const { userId } = result 
+
+      const consultings = await consultingService.findList({userId})
 
       const response = {
         success : true ,

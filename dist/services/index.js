@@ -38,6 +38,8 @@ var _naesin = _interopRequireDefault(require("./naesin"));
 
 var _autoTransition = _interopRequireDefault(require("./autoTransition"));
 
+var _redop = _interopRequireDefault(require("./redop"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -59,5 +61,6 @@ module.exports = {
   notificationService: _notification.default,
   gradeUniversityService: _gradeUniversity.default,
   naesinService: _naesin.default,
-  autoTransitionService: _autoTransition.default
+  autoTransitionService: _autoTransition.default,
+  redopService: _redop.default
 };

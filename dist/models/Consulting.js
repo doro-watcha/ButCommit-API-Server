@@ -45,6 +45,10 @@ class Consulting extends _sequelize.default.Model {
       foreignKey: 'userId',
       as: 'user'
     });
+    this.hasMany(models.Redop, {
+      foreignKey: 'consultingId',
+      as: 'redop'
+    });
   }
 
   toJSON() {

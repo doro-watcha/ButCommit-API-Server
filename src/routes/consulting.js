@@ -12,12 +12,12 @@ router.post('/',  (req,res) => {
 })
 
 
-router.get('/' , authenticate,  (req, res) =>{
+router.get('/' ,  (req, res) =>{
   consultingController.findList(req,res)
 })
 
 
-router.get('/:id' , authenticate,  (req,res) => {
+router.get('/:id' ,  (req,res) => {
   consultingController.findOne(req,res)
 })
 

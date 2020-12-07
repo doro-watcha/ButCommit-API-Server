@@ -15,10 +15,10 @@ const router = new _express.Router();
 router.post('/', (req, res) => {
   _controllers.consultingController.create(req, res);
 });
-router.get('/', authenticate, (req, res) => {
+router.get('/', (req, res) => {
   _controllers.consultingController.findList(req, res);
 });
-router.get('/:id', authenticate, (req, res) => {
+router.get('/:id', (req, res) => {
   _controllers.consultingController.findOne(req, res);
 });
 router.patch('/:id', authenticate, (req, res) => {

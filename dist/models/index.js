@@ -42,6 +42,8 @@ var _Comment = _interopRequireDefault(require("./Comment"));
 
 var _AutoTransition = _interopRequireDefault(require("./AutoTransition"));
 
+var _Redop = _interopRequireDefault(require("./Redop"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const env = process.env.NODE_ENV || 'development';
@@ -66,7 +68,8 @@ const models = {
   GradeUniversity: _GradeUniversity.default.init(sequelize, _sequelize.default),
   Naesin: _Naesin.default.init(sequelize, _sequelize.default),
   Comment: _Comment.default.init(sequelize, _sequelize.default),
-  AutoTransition: _AutoTransition.default.init(sequelize, _sequelize.default)
+  AutoTransition: _AutoTransition.default.init(sequelize, _sequelize.default),
+  Redop: _Redop.default.init(sequelize, _sequelize.default)
 };
 Object.values(models).filter(model => typeof model.associate === 'function').forEach(model => model.associate(models));
 module.exports = { ...models,
