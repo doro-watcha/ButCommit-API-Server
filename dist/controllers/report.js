@@ -223,6 +223,7 @@ class reportController {
 
 
     const applicationIndicatorType = majorData.metadata.applicationIndicatorType;
+    const applicationIndicator = majorData.metadata.applicationIndicator;
     let newScore = {
       korean: 0,
       english: 0,
@@ -495,6 +496,29 @@ class reportController {
       newScore.math = score.math.score * 1.4;
       newScore.tamgu1.score = score.tamgu1.score * 1.2;
       newScore.tamgu2.score = score.tamgu2.score * 1.2;
+    } else if (majorData.major.univName == "고려대(세종)") {
+      const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
+      console.log(englishScore);
+      const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
+      const highestMath = await _services.highestScoreService.findOne("수학", math_type);
+      const highestTamgu = tamgu1TransitionScore.score.value[0];
+      const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
+      const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
+      console.log(highestKorean.score);
+      console.log(highestMath.score);
+      console.log(perfectScore.korean);
+      console.log(perfectScore.math);
+      console.log(perfectScore.english);
+      console.log(perfectScore.tamgu);
+      console.log(highestTamgu);
+      const value = (highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000;
+      console.log("value" + value);
+      newScore.korean = score.korean.score * perfectScore.korean / value;
+      newScore.english = englishScore * perfectScore.english / value;
+      newScore.math = score.math.score * perfectScore.math / value;
+      newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value;
+      newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value;
+      console.log(newScore.english);
     } // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
     // }
     else if (applicationIndicatorType == "A") {
@@ -623,6 +647,14 @@ class reportController {
 
                 if (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
                   newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 160;
+                } // 서울교대 예외처리 
+
+
+                if (applicationIndicator == "( 표준점수/160 ) x 266.7") {
+                  newScore.korean = score.korean.score * 266.7 / 160;
+                  newScore.math = score.math.score * 266.7 / 160;
+                  newScore.tamgu1.score = score.tamgu1.score * 266.7 / 160;
+                  newScore.tamgu2.score = score.tamgu2.score * 266.7 / 160;
                 }
               } // 표준점수의 합
               else if (applicationIndicatorType == "F") {
@@ -675,10 +707,10 @@ class reportController {
     const hmv = majorData.metadata.hmv;
 
     if (emv == "반영x") {} else {
-      if (emv == "x비율") {} else if (emv == "평균등급활용") {} else if (emv == "예외/옵션참고") {} else if (majorData.gradeToScore.english.way == "수능비율포함") {
+      if (emv == "x비율") {} else if (emv == "평균등급활용") {} else if (emv == "예외/옵션참고") {} else if (majorData.gradeToScore.english.way == "수능비율포함" && applicationIndicatorType != "K") {
         newScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
       } else {
-        extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
+        if (applicationIndicatorType != "K") extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
       }
     }
 
@@ -1058,6 +1090,10 @@ class reportController {
         if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign = foreignTransitionScore.score.value[100 - score.foreign.percentile];
         totalScore.tamgu = ((newScore.tamgu1.score + newScore.tamgu2.score) / 2 + 100) / (transitionHighestScore + 100) * perfectScore.tamgu;
       }
+    }
+
+    if (majorData.major.univName == "고려대(세종)") {
+      totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score;
     } // 울산대 예외
 
 

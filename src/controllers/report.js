@@ -268,6 +268,7 @@ export default class reportController {
      * 2. 활용 지표와 반영 비율 가지고 각 과목의 변환 점수 구하기 
      */
     const applicationIndicatorType = majorData.metadata.applicationIndicatorType
+    const applicationIndicator = majorData.metadata.applicationIndicator
 
     let newScore = {
 
@@ -630,6 +631,45 @@ export default class reportController {
       newScore.tamgu1.score = score.tamgu1.score * 1.2
       newScore.tamgu2.score = score.tamgu2.score * 1.2
     }
+    
+    else if ( majorData.major.univName == "고려대(세종)") {
+
+      const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
+
+      console.log(englishScore)
+      const highestKorean = await highestScoreService.findOne("국어","국어")
+      const highestMath = await highestScoreService.findOne("수학",math_type)
+
+      const highestTamgu = tamgu1TransitionScore.score.value[0]
+      
+      const tamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
+      const tamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+
+      console.log(highestKorean.score)
+      console.log(highestMath.score)
+      console.log(perfectScore.korean)
+      console.log(perfectScore.math)
+      console.log(perfectScore.english)
+      console.log(perfectScore.tamgu)
+      console.log(highestTamgu)
+
+      const value = ( highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000
+
+      console.log("value" + value)
+
+      newScore.korean = score.korean.score * perfectScore.korean / value
+      newScore.english = englishScore * perfectScore.english / value
+      newScore.math = score.math.score * perfectScore.math / value 
+      newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value
+      newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value 
+
+
+      console.log(newScore.english)
+
+
+
+
+    }
 
     // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
 
@@ -809,6 +849,15 @@ export default class reportController {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 160 
       }
 
+      // 서울교대 예외처리 
+      if ( applicationIndicator == "( 표준점수/160 ) x 266.7") {
+
+        newScore.korean = score.korean.score * 266.7 / 160
+        newScore.math = score.math.score * 266.7 / 160
+        newScore.tamgu1.score = score.tamgu1.score * 266.7 / 160
+        newScore.tamgu2.score = score.tamgu2.score * 266.7 / 160
+      }
+
     }
     
     // 표준점수의 합
@@ -896,12 +945,13 @@ export default class reportController {
       }
 
 
-      else if ( majorData.gradeToScore.english.way == "수능비율포함") {
+      else if ( majorData.gradeToScore.english.way == "수능비율포함" && applicationIndicatorType != "K") {
         newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
       }
 
       else {
       
+        if ( applicationIndicatorType != "K")
         extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
 
       }
@@ -1526,6 +1576,10 @@ export default class reportController {
 
 
       }
+    }
+
+    if ( majorData.major.univName == "고려대(세종)") {
+      totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score
     }
 
     // 울산대 예외
