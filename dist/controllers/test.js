@@ -63,7 +63,7 @@ class testController {
       const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 3458
+        sheetRows: 3524
       });
 
       let sheetsList = workbook.SheetNames;
@@ -85,18 +85,18 @@ class testController {
       await _services.testService.deleteAll();
       var pass = 0; // 파싱을 해보자 
 
-      for (let i = 3; i < 3458; i++) {
+      for (let i = 3; i < 3524; i++) {
         const majorData = await _services.majorDataService.findOne({
           id: i - 2
         });
         if (majorData == null) throw Error('MAJOR_DATA_NOT_FOUND');
         console.log("majorDataId야 " + majorData.id);
-        let societyAnswer = parseFloat(sheetData[i][10]);
-        let scienceAnswer = parseFloat(sheetData[i][12]);
+        let societyAnswer = parseFloat(sheetData[i][19]);
+        let scienceAnswer = parseFloat(sheetData[i][20]);
         console.log(majorData.major.univName);
         console.log(majorData.major.majorName);
-        console.log(sheetData[i][10]);
-        console.log(sheetData[i][12]);
+        console.log(sheetData[i][19]);
+        console.log(sheetData[i][20]);
         let societyValue = -1;
         let scienceValue = -1;
         /**
