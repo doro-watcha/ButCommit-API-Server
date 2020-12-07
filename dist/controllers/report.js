@@ -503,7 +503,21 @@ class reportController {
       const highestTamgu = tamgu1TransitionScore.score.value[0];
       const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
       const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
-      const value = (highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000;
+      var value = 0;
+
+      if (specialOption == "특정값: { ( 국어 표점 최고점 + 수학 표점 최고점 + 100 ) x 0.286 } + ( 탐구 변표 최고점 x 2 x 0.142 )") {
+        value = (highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000;
+      } else if (specialOption == "특정값: { ( 수학 표점 최고점 + 100 ) x 0.333 } + [ { 국어 표점 최고점 + ( 탐구 변표 최고점 x 2 ) } x 0.167 ] ") {
+        value = (highestMath.score + 100) * 0.333 + (highestKorean.score + highestTamgu * 2) * 0.167;
+      } else if (specialOption == "특정값: { ( 국어 표점 최고점 + 100 ) x 0.4 } + { ( 수학 표점 최고점 x 0.2 ) or ( 탐구 변표 최고점 x 2 x 0.2 ) }") {
+        console.log(highestMath.score * 0.2);
+        console.log(highestTamgu * 2 * 0.2);
+        var pickedScore = 0;
+        if ((score.tamgu1.percentile + score.tamgu2.percentile) / 2 > score.math.percentile) pickedScore = highestTamgu * 2 * 0.2;else pickedScore = highestMath.score * 0.2;
+        value = (highestKorean.score + 100) * 0.4 + pickedScore;
+      }
+
+      console.log("특정값 " + value);
       newScore.korean = score.korean.score * perfectScore.korean / value;
       newScore.english = englishScore * perfectScore.english / value;
       newScore.math = score.math.score * perfectScore.math / value;
