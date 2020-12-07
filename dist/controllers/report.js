@@ -521,11 +521,12 @@ class reportController {
       console.log("zxcvzxcv");
       const value = highestKorean.score * 0.3 + (highestTamgu1 + highestTamgu2 + highestMath.score) * 0.25;
       console.log("123");
-      newScore.korean = score.korean.score * perfectScore.korean / value;
-      newScore.english = englishScore * perfectScore.english / value;
-      newScore.math = score.math.score * perfectScore.math / value;
-      newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value;
-      newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value;
+      newScore.korean = score.korean.score * perfectScore.korean / value * 0.8;
+      newScore.english = englishScore * perfectScore.english / 100;
+      newScore.math = score.math.score * perfectScore.math / value * 0.8;
+      newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value * 0.8;
+      newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value * 0.8;
+      if (majorData.metadata.tamguReplace == "사과 1과목 대체 가능") newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / value * 0.8;
       console.log("zxcv");
     } // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
     // }
@@ -636,6 +637,13 @@ class reportController {
 
 
               if (specialOption == "백분위 x 비율 ( 탐 )") {
+                newScore.tamgu1.score = score.tamgu1.percentile * perfectScore.tamgu / 100;
+                newScore.tamgu2.score = score.tamgu2.percentile * perfectScore.tamgu / 100;
+              } // 전주교대 에외처리
+
+
+              if (calculationSpecial == "국: D타입 / 수,탐: A 타입 ") {
+                newScore.math = score.math.percentile * perfectScore.math / 100;
                 newScore.tamgu1.score = score.tamgu1.percentile * perfectScore.tamgu / 100;
                 newScore.tamgu2.score = score.tamgu2.percentile * perfectScore.tamgu / 100;
               }
@@ -1099,6 +1107,8 @@ class reportController {
       tamguList = [tamgu1, tamgu2, foreign];
     } else if (tamguReplace == "사과 1과목 프랑스어/독일어 대체 가능" && (score.foreign.name == "프랑스어" || score.foreign.name == "독일어")) {
       tamguList = [tamgu1, tamgu2, foreign];
+    } else if (tamguReplace == "사 1과목 프랑스어 대체 가능" && score.foreign.name == "프랑스어") {
+      tamguList = [tamgu1, tamgu2, foreign];
     } else if (tamguReplace == "사과 1과목 일본어 대체 가능" && score.foreign.name == "일본어") {
       tamgList = [tamgu1, tamgu2, foreign];
     } else if (tamguReplace == "사과 1과목 한문/중국어 대체 가능" && (score.foreign.name == "한문" || score.foreign.name == "중국어")) {
@@ -1129,8 +1139,16 @@ class reportController {
       }
     }
 
-    if (majorData.major.univName == "고려대(세종)" || majorData.major.univName == "이화여대") {
+    if (majorData.major.univName == "고려대(세종)") {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score;
+    }
+
+    if (majorData.major.univName == "이화여대") {
+      const scoreList = [newScore.tamgu1.score, newScore.tamgu2.score, newScore.foreign.score];
+      scoreList.sort(function (a, b) {
+        return b - a;
+      });
+      totalScore.tamgu = scoreList[0] + scoreList[1];
     } // 울산대 예외
 
 
@@ -1332,6 +1350,12 @@ class reportController {
         return b - a;
       });
       totalSum = totalScore.english + totalScore.tamgu + totalScore.history + scoreList[0];
+    } else if (reflectionSubject == "영+( 국,수,탐 중 택1 )") {
+      const scoreList = [totalScore.korean, totalScore.math, totalScore.tamgu];
+      scoreList.sort(function (a, b) {
+        return b - a;
+      });
+      totalSum = totalScore.english + scoreList[0];
     } else if (reflectionSubject == "탐+( 국,수,영 중 택1 )") {
       const scoreList = [totalScore.korean, totalScore.math, totalScore.english];
       scoreList.sort(function (a, b) {
