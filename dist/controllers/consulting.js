@@ -50,7 +50,7 @@ class consultingController {
   static async findList(req, res) {
     try {
       const result = await _joi.default.validate(req.query, {
-        userId: _joi.default.number().required()
+        userId: _joi.default.number()
       });
       const {
         userId

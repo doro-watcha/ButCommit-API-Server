@@ -49,7 +49,7 @@ export default class consultingController {
     try { 
 
       const result = await Joi.validate ( req.query ,{
-        userId : Joi.number().required()
+        userId : Joi.number()
       })
 
       const { userId } = result 
