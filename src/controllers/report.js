@@ -753,11 +753,7 @@ export default class reportController {
         newScore.tamgu1.score = score.tamgu1.score * ( perfectScore.tamgu ) / highestTamgu1.score
         newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu ) / highestTamgu2.score
         
-
-        console.log("퍼킹 뉴스코어! " + newScore.tamgu1.score)
-        console.log(newScore.tamgu2.score)
       }
-
       
     }
     // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -1698,8 +1694,33 @@ export default class reportController {
       totalScore.math *= 0.944
       totalScore.tamgu *= 0.944
     }
+
+    // 홍익대 예외 
+
+    if ( majorData.major.univName.indexOf("홍익대") >= 0) {
+
+      console.log( "홍대 가즈아")
+
+      console.log(major_ratio.korean)
+      console.log(major_ratio.english)
+      console.log(major_ratio.tamgu.science)
+      console.log(major_ratio.math.ga)
+
+      newScore.korean = score.korean.score * major_ratio.korean / 100
+      newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * major_ratio.english / 100
+      newScore.tamgu1.score = score.tamgu1.score * major_ratio.tamgu.science / 100
+      newScore.tamgu2.score = score.tamgu2.score * major_ratio.tamgu.science / 100
+      newScore.math = score.math.score * major_ratio.math.ga / 100
+
+      totalScore.korean = newScore.korean
+      totalScore.math = newScore.math
+      totalScore.tamgu = ( newScore.tamgu1.score + newScore.tamgu2.score  ) 
+      totalScore.english = newScore.english
+    }
     
     console.log("반영비율별로해서 구해보자")
+
+    
 
     /**
      * 반영비율별로 해서 구해보자!
