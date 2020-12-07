@@ -498,27 +498,35 @@ class reportController {
       newScore.tamgu2.score = score.tamgu2.score * 1.2;
     } else if (majorData.major.univName == "고려대(세종)") {
       const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
-      console.log(englishScore);
       const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
       const highestMath = await _services.highestScoreService.findOne("수학", math_type);
       const highestTamgu = tamgu1TransitionScore.score.value[0];
       const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
       const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
-      console.log(highestKorean.score);
-      console.log(highestMath.score);
-      console.log(perfectScore.korean);
-      console.log(perfectScore.math);
-      console.log(perfectScore.english);
-      console.log(perfectScore.tamgu);
-      console.log(highestTamgu);
       const value = (highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000;
-      console.log("value" + value);
       newScore.korean = score.korean.score * perfectScore.korean / value;
       newScore.english = englishScore * perfectScore.english / value;
       newScore.math = score.math.score * perfectScore.math / value;
       newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value;
       newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value;
-      console.log(newScore.english);
+    } else if (majorData.major.univName == "이화여대") {
+      const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
+      const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
+      const highestMath = await _services.highestScoreService.findOne("수학", math_type);
+      const highestTamgu1 = tamgu1TransitionScore.score.value[0];
+      const highestTamgu2 = tamgu2TransitionScore.score.value[0];
+      console.log("fuck" + highestTamgu1);
+      const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
+      const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
+      console.log("zxcvzxcv");
+      const value = highestKorean.score * 0.3 + (highestTamgu1 + highestTamgu2 + highestMath.score) * 0.25;
+      console.log("123");
+      newScore.korean = score.korean.score * perfectScore.korean / value;
+      newScore.english = englishScore * perfectScore.english / value;
+      newScore.math = score.math.score * perfectScore.math / value;
+      newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value;
+      newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value;
+      console.log("zxcv");
     } // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
     // }
     else if (applicationIndicatorType == "A") {
@@ -548,8 +556,10 @@ class reportController {
             if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
             var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
             var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
-            newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
-            newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
+            newScore.tamgu1.score = score.tamgu1.score * perfectScore.tamgu / highestTamgu1.score;
+            newScore.tamgu2.score = score.tamgu2.score * perfectScore.tamgu / highestTamgu2.score;
+            console.log("퍼킹 뉴스코어! " + newScore.tamgu1.score);
+            console.log(newScore.tamgu2.score);
           }
         } // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
         else if (applicationIndicatorType == "C") {
@@ -791,9 +801,9 @@ class reportController {
       } else if (extraSubject == "과탐Ⅱ") {
         if (score.tamgu1.name.indexOf("2") >= 0) extraScore.tamgu1 = newScore.tamgu1.score * extraValue / 100;
         if (score.tamgu2.name.indexOf("2") >= 0) extraScore.tamgu2 = newScore.tamgu2.score * extraValue / 100;
-      } else if (extraSubject == "물리") {
-        if (score.tamgu1.name.indexOf("물리") >= 0) extraScore.tamgu1 = newScore.tamgu1.score * extraValue / 100;
-        if (score.tamgu2.name.indexOf("물리") >= 0) extraScore.tamgu2 = newScore.tamgu2.score * extraValue / 100;
+      } else if (extraSubject == "물리학") {
+        if (score.tamgu1.name.indexOf("물리학") >= 0) extraScore.tamgu1 = newScore.tamgu1.score * extraValue / 100;
+        if (score.tamgu2.name.indexOf("물리학") >= 0) extraScore.tamgu2 = newScore.tamgu2.score * extraValue / 100;
       } else if (extraSubject == "사탐") {
         if (score.line == "인문") {
           extraScore.tamgu1 = newScore.tamgu1.score * extraValue / 100;
@@ -931,15 +941,15 @@ class reportController {
         }
 
         if (score.tamgu1.grade == 1) {
-          extraScore.tamgu1 = newScore.tamgu1 * extra1 / 100;
+          extraScore.tamgu1 = newScore.tamgu1.score * extra1 / 100;
         } else if (score.tamgu1.grade == 1) {
-          extraScore.tamgu1 = newScore.tamgu1 * extra2 / 100;
+          extraScore.tamgu1 = newScore.tamgu1.score * extra2 / 100;
         }
 
         if (score.tamgu2.grade == 1) {
-          extraScore.tamgu2 = newScore.tamgu2 * extra1 / 100;
+          extraScore.tamgu2 = newScore.tamgu2.score * extra1 / 100;
         } else if (score.tamgu2.grade == 2) {
-          extraScore.tamgu2 = newScore.tamgu2 * extra2 / 100;
+          extraScore.tamgu2 = newScore.tamgu2.score * extra2 / 100;
         }
 
         if (score.english.grade == 1) {
@@ -949,9 +959,9 @@ class reportController {
         }
 
         if (score.foreign.grade == 1) {
-          extraScore.foreign = newScore.foreign * extra1 / 100;
+          extraScore.foreign = newScore.foreign.score * extra1 / 100;
         } else if (score.foreign.grade == 2) {
-          extraScore.foreign = newScore.foreign * extra1 / 100;
+          extraScore.foreign = newScore.foreign.score * extra1 / 100;
         }
 
         if (score.history.grade == 1) {
@@ -1000,6 +1010,27 @@ class reportController {
       if (extraPoint == "+ [ 수가 ( 개인 취득 표준점수 / 전국최고 표준점수 ) x 10 ]" && score.math.type == "가") {
         const highestMath = await _services.highestScoreService.findOne("수학", "가");
         extraScore.math = score.math.score / highestMath.score * 10;
+      } else if (extraPoint == "수가 백분위 10%, 물리학Ⅱ, 화학Ⅱ, 생명과학Ⅱ 중 최상위 한 과목 백분위 5% 총점에 가산") {
+        const tamgu1Name = score.tamgu1.name;
+        const tamgu2Name = score.tamgu2.name;
+        var tamgu1Score = 0;
+        var tamgu2Score = 0;
+
+        if (score.math.type == "가") {
+          extraScore.math = newScore.math * 0.1;
+        }
+
+        if (score.line == "자연") {
+          if (tamgu1Name == "물리학2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
+            tamgu1Score = score.tamgu1.percentile;
+          }
+
+          if (tamgu2Name == "물리학2" || tamgu2Name == "화학2" || tamgu2Name == "생명과학2") {
+            tamgu2Score = score.tamgu2.percentile;
+          }
+
+          extraScore.tamgu = Math.max(tamgu1Score, tamgu2Score) * 0.05;
+        }
       } else if (extraPoint == "수가 10% / 과탐(상위 3개영역에 포함될 경우) 10점 가산" && score.math.type == "가" && score.line == "자연") {
         extraScore.math = newScore.math * 0.1;
       } else if (extraPoint == "수가 백분위 10%, 물Ⅱ, 화Ⅱ, 생Ⅱ 중 최상위 한 과목 백분위 5% 총점에 가산") {
@@ -1013,11 +1044,11 @@ class reportController {
         }
 
         if (score.line == "자연") {
-          if (tamgu1Name == "물리2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
+          if (tamgu1Name == "물리학2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
             tamgu1Score = score.tamgu1.percentile;
           }
 
-          if (tamgu2Name == "물리2" || tamgu2Name == "화학2" || tamgu2Name == "생명과학2") {
+          if (tamgu2Name == "물리학2" || tamgu2Name == "화학2" || tamgu2Name == "생명과학2") {
             tamgu2Score = score.tamgu2.percentile;
           }
 
@@ -1037,7 +1068,7 @@ class reportController {
           extraScore.math = newScore.math * 0.1;
         }
 
-        if (score.tamgu1.name == "물리2" || score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") {}
+        if (score.tamgu1.name == "물리학2" || score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") {}
       }
     }
 
@@ -1066,6 +1097,12 @@ class reportController {
       tamguList = [tamgu1, tamgu2, foreign];
     } else if (tamguReplace == "사 1과목 대체 가능" && score.line == "인문" && score.foreign.name != null) {
       tamguList = [tamgu1, tamgu2, foreign];
+    } else if (tamguReplace == "사과 1과목 프랑스어/독일어 대체 가능" && (score.foreign.name == "프랑스어" || score.foreign.name == "독일어")) {
+      tamguList = [tamgu1, tamgu2, foreign];
+    } else if (tamguReplace == "사과 1과목 일본어 대체 가능" && score.foreign.name == "일본어") {
+      tamgList = [tamgu1, tamgu2, foreign];
+    } else if (tamguReplace == "사과 1과목 한문/중국어 대체 가능" && (score.foreign.name == "한문" || score.foreign.name == "중국어")) {
+      tamguList = [tamgu1, tamgu2, foreign];
     } else tamguList = [tamgu1, tamgu2];
 
     console.log("tamguLisr함보자");
@@ -1092,7 +1129,7 @@ class reportController {
       }
     }
 
-    if (majorData.major.univName == "고려대(세종)") {
+    if (majorData.major.univName == "고려대(세종)" || majorData.major.univName == "이화여대") {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score;
     } // 울산대 예외
 
@@ -1264,6 +1301,14 @@ class reportController {
       });
       totalSum = totalScore.math + totalScore.tamgu + scoreList[0];
     } else if (reflectionSubject == "영+( 국,수,탐 중 택2 )") {
+      if (majorData.metadata.sooneungSpecial == "각 과목 별로 가산점 반영 시 과목 영역별 점수 초과 불가능 , 과목이 순위에 포함x 일 경우도 가산은 적용") {
+        if (totalScore.korean > perfectScore.korean) totalScore.korean = perfectScore.korean;
+        if (totalScore.english > perfectScore.english) totalScore.english = perfectScore.english;
+        if (totalScore.math > perfectScore.math) totalScore.math = perfectScore.math;
+        if (totalScore.tamgu > perfectScore.tamgu) totalScore.tamgu = perfectScore.tamgu;
+        totalSum = totalScore.korean + totalScore.english + totalScore.math + totalScore.tamgu;
+      }
+
       const scoreList = [totalScore.korean, totalScore.math, totalScore.tamgu];
       scoreList.sort(function (a, b) {
         return b - a;

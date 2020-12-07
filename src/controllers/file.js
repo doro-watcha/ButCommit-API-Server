@@ -207,6 +207,7 @@ export default class fileController {
             extraSubject : sheetData[i][50],
             extraValue : sheetData[i][51],
             extraPoint : sheetData[i][53],
+            sooneungSpecial : sheetData[i][54],
         
             perfectScore : sheetData[i][56], // 총 만점 ex) 700 ,
             basicScore : sheetData[i][57],
