@@ -177,7 +177,7 @@ export default class testController {
           // if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
           
           let obj = {}
-          if ( isNaN(societyValue) == false && isNaN(scienceValue) ==false ) {
+          if ( isNaN(societyValue) == false && isNaN(scienceValue) == false ) {
               obj = {
                 id : i-2,
                 line : sheetData[i][0], // 인문 

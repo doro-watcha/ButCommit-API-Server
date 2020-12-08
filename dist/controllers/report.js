@@ -683,8 +683,8 @@ class reportController {
                 if (applicationIndicator == "( 표준점수/160 ) x 266.7") {
                   newScore.korean = score.korean.score * 266.7 / 160;
                   newScore.math = score.math.score * 266.7 / 160;
-                  newScore.tamgu1.score = score.tamgu1.score * 266.7 / 160;
-                  newScore.tamgu2.score = score.tamgu2.score * 266.7 / 160;
+                  newScore.tamgu1.score = score.tamgu1.score * 266.7 / 160 * 2;
+                  newScore.tamgu2.score = score.tamgu2.score * 266.7 / 160 * 2;
                 }
               } // 표준점수의 합
               else if (applicationIndicatorType == "F") {
