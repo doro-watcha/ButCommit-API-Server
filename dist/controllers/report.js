@@ -1416,22 +1416,29 @@ class reportController {
         return b - a;
       });
       totalSum = scoreList[0] * 0.35 + scoreList[1] * 0.25 + totalScore.english * 0.2 + totalScore.tamgu * 0.2;
-    } else if (reflectionSubject == "( 국, 수가나 우수영역 순서대로 40% + 20% ) + 영 25% + 탐 15%") {
-      const scoreList = [totalScore.korean, totalScore.math];
-      scoreList.sort(function (a, b) {
-        return b - a;
-      });
-      totalSum = scoreList[0] * 0.4 + scoreList[1] * 0.2 + totalScore.english * 0.25 + totalScore.tamgu * 0.15;
-    } else if (reflectionSubject == "우수영역 순서대로 45% + 40% + 15%") {
-      const scoreList = [totalScore.korean, totalScore.english, totalScore.math, totalScore.tamgu, totalScore.history];
-      scoreList.sort(function (a, b) {
-        return b - a;
-      });
-      totalSum = scoreList[0] * 0.45 + scoreList[1] * 0.4 + scoreList[2] * 0.15;
-    } else {
-      console.log("에러야 에러 순서에서 에러");
-      totalSum = -1;
-    }
+    } // 한성대 
+    else if (reflectionSubject == "( 국, 수가나 우수영역 순서대로 40% + 20% ) + 영 25% + 탐 15%") {
+        const scoreList = [totalScore.korean, totalScore.math];
+        scoreList.sort(function (a, b) {
+          return b - a;
+        });
+
+        if (majorData.major.univName == "한성대" && score.math.type == "가") {
+          console.log("fuckman!");
+          if (scoreList[0] == totalScore.korean) scoreList[1] += 10;else if (scoreList[0] == totalScore.math) scoreList[0] += 30;
+        }
+
+        totalSum = scoreList[0] * 0.4 + scoreList[1] * 0.2 + totalScore.english * 0.25 + totalScore.tamgu * 0.15;
+      } else if (reflectionSubject == "우수영역 순서대로 45% + 40% + 15%") {
+        const scoreList = [totalScore.korean, totalScore.english, totalScore.math, totalScore.tamgu, totalScore.history];
+        scoreList.sort(function (a, b) {
+          return b - a;
+        });
+        totalSum = scoreList[0] * 0.45 + scoreList[1] * 0.4 + scoreList[2] * 0.15;
+      } else {
+        console.log("에러야 에러 순서에서 에러");
+        totalSum = -1;
+      }
 
     console.log(totalSum);
     console.log("special option = " + specialOption); // 마지막으로 totalSum을 조정해보장

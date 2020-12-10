@@ -1427,6 +1427,7 @@ export default class reportController {
 
       else if ( extraSubject == "수가") {
 
+ 
         if ( score.math.type == "가") extraScore.math = extraValue
 
       }
@@ -2117,6 +2118,7 @@ export default class reportController {
 
     }
 
+    // 한성대 
     else if ( reflectionSubject == "( 국, 수가나 우수영역 순서대로 40% + 20% ) + 영 25% + 탐 15%") {
 
       const scoreList = [ totalScore.korean, totalScore.math]
@@ -2124,6 +2126,12 @@ export default class reportController {
       scoreList.sort(function(a, b) { 
         return b - a
       })
+
+      if ( majorData.major.univName == "한성대" && score.math.type == "가") {
+        console.log("fuckman!")
+        if ( scoreList[0] == totalScore.korean ) scoreList[1] += 10
+        else if ( scoreList[0] == totalScore.math ) scoreList[0] += 30
+      }
 
       totalSum = scoreList[0] * 0.4 + scoreList[1] * 0.2 + totalScore.english * 0.25 + totalScore.tamgu * 0.15
 
