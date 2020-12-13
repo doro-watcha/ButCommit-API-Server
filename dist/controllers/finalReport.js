@@ -59,6 +59,7 @@ class finalReportController {
       const {
         user
       } = req;
+      console.log(user.id);
       var finalReports = await _services.finalReportService.findList({
         userId: user.id
       });
@@ -66,10 +67,12 @@ class finalReportController {
       var data = [];
 
       for (let i = 0; i < finalReports.length; i++) {
-        var report = await _services.reportService.findOne({
+        console.log("zxcv");
+        console.log(finalReports[i].reportId);
+        const report = await _services.reportService.findOne({
           id: finalReports[i].reportId
         });
-        console.log(report);
+        console.log(report.majorData);
         var majorDataId = report.majorData.id;
         var reports = await _services.finalReportService.findList({
           majorDataId
@@ -79,6 +82,8 @@ class finalReportController {
         });
         const applicantsNumber = Object.keys(reports).length;
         const myRank = reports.findIndex(function (item, index) {
+          console.log(item.id);
+          console.log(finalReports[i].id);
           return item.id == finalReports[i].id;
         }) + 1;
         finalReports[i].applicants = applicantsNumber;

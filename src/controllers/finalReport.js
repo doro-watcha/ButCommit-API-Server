@@ -53,6 +53,8 @@ export default class finalReportController {
     try { 
       const { user } = req 
 
+      console.log(user.id)
+
       var finalReports = await finalReportService.findList({userId : user.id })
 
       console.log(finalReports.length)
@@ -61,9 +63,13 @@ export default class finalReportController {
 
       for ( let i = 0; i < finalReports.length ; i++ ) {
 
-        var report = await reportService.findOne({id : finalReports[i].reportId})
+        console.log("zxcv")
 
-        console.log(report)
+        console.log(finalReports[i].reportId)
+
+        const report = await reportService.findOne({id : finalReports[i].reportId})
+
+        console.log(report.majorData)
 
         var majorDataId = report.majorData.id
 
@@ -75,6 +81,9 @@ export default class finalReportController {
 
         const applicantsNumber = Object.keys(reports).length
         const myRank = reports.findIndex( function ( item , index) {
+
+          console.log(item.id)
+          console.log(finalReports[i].id)
   
           return item.id == finalReports[i].id
         }) + 1
