@@ -155,7 +155,7 @@ export default class majorController {
 
     
 
-      let minGap = 0
+      let minGap = 10000
       let pickedMajor = null
 
       for ( let i = 0 ; i < majorDataList.length ; i++) {
@@ -163,8 +163,11 @@ export default class majorController {
         let myScore = await reportController.getScore(score,majorDataList[i], false)
         let difference = myScore - majorDataList[i].prediction.safe
 
+        
+
         if ( difference > 0 && difference < minGap) {
           pickedMajor = majorDataList[i].major
+          minGap = difference
         }
         
       }

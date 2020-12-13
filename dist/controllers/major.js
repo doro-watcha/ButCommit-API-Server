@@ -154,7 +154,7 @@ class majorController {
       majorDataList.sort(function (a, b) {
         return b.prediction.safe - a.prediction.safe;
       });
-      let minGap = 0;
+      let minGap = 10000;
       let pickedMajor = null;
 
       for (let i = 0; i < majorDataList.length; i++) {
@@ -163,6 +163,7 @@ class majorController {
 
         if (difference > 0 && difference < minGap) {
           pickedMajor = majorDataList[i].major;
+          minGap = difference;
         }
       }
 
