@@ -148,7 +148,7 @@ export default class majorDataController {
           prediction = "위험 불합격"
         }
         let obj = {
-          majorData : majorDataList[i],
+          majorData,
           prediction,
           myScore : transitionScore,
           majorScore : majorData.prediction.safe

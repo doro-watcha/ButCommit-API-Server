@@ -149,7 +149,7 @@ class majorDataController {
         }
 
         let obj = {
-          majorData: majorDataList[i],
+          majorData,
           prediction,
           myScore: transitionScore,
           majorScore: majorData.prediction.safe
