@@ -184,6 +184,7 @@ export default class fileController {
 
             initialMember2021 : sheetData[i][8],
             group2021 : sheetData[i][20],
+            additionalMember2021 : sheetData[i][21],
             
 
             initialMember : sheetData[i][11], // 1

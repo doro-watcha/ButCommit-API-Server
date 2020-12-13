@@ -186,6 +186,7 @@ class fileController {
           metadata: {
             initialMember2021: sheetData[i][8],
             group2021: sheetData[i][20],
+            additionalMember2021: sheetData[i][21],
             initialMember: sheetData[i][11],
             // 1
             additionalMember: sheetData[i][12],
