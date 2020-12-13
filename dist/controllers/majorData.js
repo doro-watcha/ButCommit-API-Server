@@ -9,6 +9,12 @@ var _services = require("../services");
 
 var _joi = _interopRequireDefault(require("@hapi/joi"));
 
+var _xlsx = _interopRequireDefault(require("xlsx"));
+
+var _mime = _interopRequireDefault(require("mime"));
+
+var _path = _interopRequireDefault(require("path"));
+
 var _functions = require("../utils/functions");
 
 var _report = _interopRequireDefault(require("./report"));
@@ -80,6 +86,20 @@ class majorDataController {
 
   static async findList(req, res) {
     try {
+      const path = '../excelfile/test.xlsx';
+
+      let workbook = _xlsx.default.readFile(path, {
+        sheetRows: 3524
+      });
+
+      let sheetsList = workbook.SheetNames;
+
+      let sheetData = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
+        header: 1,
+        defval: '',
+        blankrows: true
+      });
+
       const result = await _joi.default.validate(req.query, {
         year: _joi.default.number(),
         majorId: _joi.default.number()
@@ -102,8 +122,17 @@ class majorDataController {
       let majorDatas = [];
 
       for (let i = 0; i < majorDataList.length; i++) {
+        let societyAnswer = parseFloat(sheetData[i][19]);
+        let scienceAnswer = parseFloat(sheetData[i][20]);
         let majorData = majorDataList[i];
-        let transitionScore = 500;
+        let transitionScore = 0;
+
+        if (isNaN(societyAnswer) && score.line != "인문") {
+          transitionScore = await _report.default.getScore(score, majorData, false);
+        } else if (isNaN(scienceAnswer && score.line != "자연")) {
+          transitionScore = await _report.default.getScore(score, majorData, false);
+        }
+
         let prediction = "유력";
 
         if (majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous) {

@@ -123,7 +123,7 @@ export default class testController {
            */
           if ( isNaN(scienceAnswer)) scienceAnswer = -1
           else scienceValue = await reportController.getScore(scienceScore, majorData, false)
-  
+          
           
           
           var societyDeterminant = -1

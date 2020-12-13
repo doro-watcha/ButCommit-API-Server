@@ -1,5 +1,9 @@
 import { majorDataService , majorService, scoreService } from '../services'
 import Joi from '@hapi/joi'
+import xlsx from 'xlsx'
+import mime from 'mime'
+import path from 'path'
+
 import { createErrorResponse } from '../utils/functions'
 
 import reportController from './report'
@@ -77,6 +81,18 @@ export default class majorDataController {
   static async findList(req,res) {
 
     try {
+
+      const path = ('../excelfile/test.xlsx')
+      let workbook = xlsx.readFile(path, {sheetRows: 3524})
+      let sheetsList = workbook.SheetNames
+
+      let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
+           header: 1,
+           defval: '',
+           blankrows: true
+      })
+
+
       const result = await Joi.validate ( req.query , {
         year : Joi.number(),
         majorId : Joi.number()
@@ -98,9 +114,21 @@ export default class majorDataController {
       let majorDatas = []
       for ( let i = 0 ; i < majorDataList.length ; i++){
 
+
+        let societyAnswer = parseFloat(sheetData[i][19])
+        let scienceAnswer = parseFloat(sheetData[i][20])
+
         let majorData = majorDataList[i]
 
-        let transitionScore = 500
+
+        let transitionScore = 0
+        
+        if ( isNaN(societyAnswer) && score.line != "인문" ) {
+          transitionScore = await reportController.getScore(score,majorData,false)
+        }
+        else if ( isNaN(scienceAnswer && score.line != "자연")) {
+          transitionScore = await reportController.getScore(score,majorData,false)
+        }
         let prediction = "유력"
 
         if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
