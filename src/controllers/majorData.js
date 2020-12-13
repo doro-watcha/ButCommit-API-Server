@@ -112,35 +112,40 @@ export default class majorDataController {
       const majorDataList = await majorDataService.findList(modelObj)
 
       let majorDatas = []
-      for ( let i = 0 ; i < majorDataList.length ; i++){
+      for ( let i = 3 ; i < 3524 ; i++){
 
 
         let societyAnswer = parseFloat(sheetData[i][19])
         let scienceAnswer = parseFloat(sheetData[i][20])
 
-        let majorData = majorDataList[i]
+        let majorData = majorDataList[i-3]
+
+        console.log("SocietyAnswer == " + societyAnswer)
+        console.log("scienceAnswer = " + scienceAnswer)
+        console.log(score.line)
+        console.log(majorData.major.majorName)
+        console.log(majorData.major.univName)
 
 
         let transitionScore = 0
         
-        if ( isNaN(societyAnswer) && score.line != "인문" ) {
+        if ( isNaN(societyAnswer) == false && score.line == "인문" ) {
           transitionScore = await reportController.getScore(score,majorData,false)
         }
-        else if ( isNaN(scienceAnswer && score.line != "자연")) {
+        else if ( isNaN(scienceAnswer) == false && score.line == "자연"){
           transitionScore = await reportController.getScore(score,majorData,false)
         }
-        let prediction = "유력"
 
-        if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
-          prediction = "적정"
+        let prediction = "최초합유력"
+
+        if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.strong ) {
+          prediction = "지원 적정"
         } 
-        else if ( majorData.prediction.dangerous > transitionScore && transitionScore >= majorData.prediction.sniping ) {
-          prediction = "추합"
+        else if ( majorData.prediction.strong > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
+          prediction = "추합 스나이핑"
         }
-        else if ( majorData.prediction.sniping > transitionScore) {
-          prediction = "위험"
-        } else {
-          prediction = null
+        else if ( majorData.prediction.dangerous > transitionScore) {
+          prediction = "위험 불합격"
         }
         let obj = {
           majorData : majorDataList[i],
