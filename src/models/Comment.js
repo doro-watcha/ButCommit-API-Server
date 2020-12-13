@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize'
 
-export default class Community extends Sequelize.Model {
+export default class Comment extends Sequelize.Model {
 
 
     static init(sequelize) {

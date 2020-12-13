@@ -43,8 +43,10 @@ export default class communityController {
   static async findList ( req, res) {
     try { 
 
+      console.log("fuck")
       const communities = await communityService.findList({})
 
+      console.log("zxcvzxcv")
       const response = {
         success : true ,
         data : {

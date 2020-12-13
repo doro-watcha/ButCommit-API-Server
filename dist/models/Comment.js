@@ -9,7 +9,7 @@ var _sequelize = _interopRequireDefault(require("sequelize"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class Community extends _sequelize.default.Model {
+class Comment extends _sequelize.default.Model {
   static init(sequelize) {
     return super.init({
       content: {
@@ -41,4 +41,4 @@ class Community extends _sequelize.default.Model {
 
 }
 
-exports.default = Community;
+exports.default = Comment;
