@@ -181,6 +181,11 @@ export default class fileController {
           year : 2021,
           majorId : i-2,
           metadata : {
+
+            initialMember2021 : sheetData[i][8],
+            group2021 : sheetData[i][20],
+            
+
             initialMember : sheetData[i][11], // 1
             additionalMember : sheetData[i][12], // 14
             competitionRate : sheetData[i][18],
@@ -192,6 +197,8 @@ export default class fileController {
             competitionRate2019 : sheetData[i][19],
             group2019 : sheetData[i][22],
             chooHap2019 : sheetData[i][25],
+
+   
 
             reflectionOption : sheetData[i][37],
             reflectionSubject : sheetData[i][38], // 탐,한+국,수,영중 택2
@@ -212,13 +219,14 @@ export default class fileController {
             perfectScore : sheetData[i][56], // 총 만점 ex) 700 ,
             basicScore : sheetData[i][57],
             emv : english_multiple_value,
-            hmv : history_multiple_value
+            hmv : history_multiple_value,
+
+            balloon : sheetData[i][117]
           },
           prediction : {
-            strong : sheetData[i][30], 
-            safe : sheetData[i][31],
-            dangerous : sheetData[i][32],
-            sniping : sheetData[i][33]
+            strong : sheetData[i][26], 
+            safe : sheetData[i][27],
+            dangerous : sheetData[i][28]
           },
           recommendationScore,
 
@@ -260,6 +268,36 @@ export default class fileController {
 
         if ( check_majorData == null) await majorDataService.create(obj2)
         else await majorDataService.update(i-2,obj2)
+      }
+
+      let sheetData1 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
+        header: 1,
+        defval: '',
+        blankrows: true
+      })
+
+      for ( let i = 1; i < 114 ; i++){
+
+        let obj = {
+          id : i,
+          name : sheetData1[i][0],
+          group : sheetData1[i][1],
+          location : sheetData1[i][2],
+          min : sheetData1[i][3],
+          max : sheetData1[i][4]
+        }
+
+        const check_university = await universityService.findOne({
+          id : i,
+          name : sheetData1[i][0],
+          group : sheetData1[i][1],
+          location : sheetData1[i][2],
+          min : sheetData1[i][3],
+          max : sheetData1[i][4]
+        })
+
+        if ( check_university == null) await universityService.create(obj)
+        else await universityService.update(i,obj)
       }
 
       let sheetData2 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {

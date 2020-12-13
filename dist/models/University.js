@@ -32,15 +32,7 @@ class University extends _sequelize.default.Model {
         type: _sequelize.default.STRING,
         allowNull: true
       },
-      line: {
-        type: _sequelize.default.STRING,
-        allowNull: true
-      },
       location: {
-        type: _sequelize.default.STRING,
-        allowNull: true
-      },
-      type: {
         type: _sequelize.default.STRING,
         allowNull: true
       },

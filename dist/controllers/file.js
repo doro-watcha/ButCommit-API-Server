@@ -184,6 +184,8 @@ class fileController {
           year: 2021,
           majorId: i - 2,
           metadata: {
+            initialMember2021: sheetData[i][8],
+            group2021: sheetData[i][20],
             initialMember: sheetData[i][11],
             // 1
             additionalMember: sheetData[i][12],
@@ -220,13 +222,13 @@ class fileController {
             // 총 만점 ex) 700 ,
             basicScore: sheetData[i][57],
             emv: english_multiple_value,
-            hmv: history_multiple_value
+            hmv: history_multiple_value,
+            balloon: sheetData[i][117]
           },
           prediction: {
-            strong: sheetData[i][30],
-            safe: sheetData[i][31],
-            dangerous: sheetData[i][32],
-            sniping: sheetData[i][33]
+            strong: sheetData[i][26],
+            safe: sheetData[i][27],
+            dangerous: sheetData[i][28]
           },
           recommendationScore,
           ratio: {
@@ -273,6 +275,32 @@ class fileController {
           majorId: check_major.id
         });
         if (check_majorData == null) await _services.majorDataService.create(obj2);else await _services.majorDataService.update(i - 2, obj2);
+      }
+
+      let sheetData1 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
+        header: 1,
+        defval: '',
+        blankrows: true
+      });
+
+      for (let i = 1; i < 114; i++) {
+        let obj = {
+          id: i,
+          name: sheetData1[i][0],
+          group: sheetData1[i][1],
+          location: sheetData1[i][2],
+          min: sheetData1[i][3],
+          max: sheetData1[i][4]
+        };
+        const check_university = await _services.universityService.findOne({
+          id: i,
+          name: sheetData1[i][0],
+          group: sheetData1[i][1],
+          location: sheetData1[i][2],
+          min: sheetData1[i][3],
+          max: sheetData1[i][4]
+        });
+        if (check_university == null) await _services.universityService.create(obj);else await _services.universityService.update(i, obj);
       }
 
       let sheetData2 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {

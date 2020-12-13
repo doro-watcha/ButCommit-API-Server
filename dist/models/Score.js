@@ -46,7 +46,7 @@ class Score extends _sequelize.default.Model {
       },
       naesin: {
         type: _sequelize.default.FLOAT,
-        defaultValue: 0.0
+        defaultValue: 3.0
       },
       gumjeong: {
         type: _sequelize.default.FLOAT,

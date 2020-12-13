@@ -27,17 +27,9 @@ export default class University extends Sequelize.Model {
 							type : Sequelize.STRING,
 							allowNull : true 
 						},
-						line : {
-							type :Sequelize.STRING,
-							allowNull : true
-						},
 						location : {
 							type : Sequelize.STRING,
 							allowNull : true 
-						},
-						type : {
-							type : Sequelize.STRING,
-							allowNull : true
 						},
 						createdAt: {
 							type: Sequelize.DATE,

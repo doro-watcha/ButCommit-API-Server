@@ -2128,7 +2128,7 @@ export default class reportController {
       })
 
       if ( majorData.major.univName == "한성대" && score.math.type == "가") {
-        console.log("fuckman!")
+        console.log
         if ( scoreList[0] == totalScore.korean ) scoreList[1] += 10
         else if ( scoreList[0] == totalScore.math ) scoreList[0] += 30
       }
