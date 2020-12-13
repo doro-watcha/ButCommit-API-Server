@@ -184,7 +184,7 @@ export default class majorController {
 
         success : true ,
         data : {
-          majors : majorDataList,
+          majorDataList,
           pickedMajor
         }
       }

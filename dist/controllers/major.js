@@ -175,7 +175,7 @@ class majorController {
       const response = {
         success: true,
         data: {
-          majors: majorDataList,
+          majorDataList,
           pickedMajor
         }
       };
