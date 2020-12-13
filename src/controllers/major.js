@@ -148,7 +148,15 @@ export default class majorController {
         majorDataList.push(majorData)
 
       }
+
+      // scoreList1.sort(function(a, b) { 
+      //   return b - a
+      // })
+
       majorDataList.sort( function(a,b) {
+
+        // console.log(b.prediction.safe - a.prediction.safe)
+        // console.log(b.prediction.safe)
 
         return b.prediction.safe - a.prediction.safe
       })
@@ -176,7 +184,7 @@ export default class majorController {
 
         success : true ,
         data : {
-          majors,
+          majors : majorDataList,
           pickedMajor
         }
       }
