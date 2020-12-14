@@ -59,12 +59,11 @@ export default class AuthController {
 				graduateYear : Joi.number(),
 				telephone : Joi.string(),
 				gender : Joi.string(),
-				academyId : Joi.number(),
 				adminLevel : Joi.number()
 
 			})
 		
-			const { email , password , name , haknyeon , highSchool , line, graduateYear , telephone, gender, academyId , adminLevel} = result 
+			const { email , password , name , haknyeon , highSchool , line, graduateYear , telephone, gender , adminLevel} = result 
 			// check if user already exists
 			const user = await userService.findOne({
 				email
@@ -84,7 +83,6 @@ export default class AuthController {
 				graduateYear,
 				telephone ,
 				gender,
-				academyId,
 				adminLevel
 			})
 

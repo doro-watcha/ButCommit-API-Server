@@ -69,7 +69,6 @@ class AuthController {
         graduateYear: _joi.default.number(),
         telephone: _joi.default.string(),
         gender: _joi.default.string(),
-        academyId: _joi.default.number(),
         adminLevel: _joi.default.number()
       });
       const {
@@ -82,7 +81,6 @@ class AuthController {
         graduateYear,
         telephone,
         gender,
-        academyId,
         adminLevel
       } = result; // check if user already exists
 
@@ -102,7 +100,6 @@ class AuthController {
         graduateYear,
         telephone,
         gender,
-        academyId,
         adminLevel
       }); // create response
 
