@@ -69,7 +69,8 @@ class AuthController {
         graduateYear: _joi.default.number(),
         telephone: _joi.default.string(),
         gender: _joi.default.string(),
-        adminLevel: _joi.default.number()
+        adminLevel: _joi.default.number(),
+        academyId: _joi.default.number().optional()
       });
       const {
         email,
@@ -81,13 +82,13 @@ class AuthController {
         graduateYear,
         telephone,
         gender,
+        academyId,
         adminLevel
       } = result; // check if user already exists
 
       const user = await _services.userService.findOne({
         email
-      });
-      const academyId = req.body.academyId; // [ERROR] USER_ALREADY_EXISTS
+      }); // [ERROR] USER_ALREADY_EXISTS
 
       if (user) throw Error('USER_ALREADY_EXISTS'); // create user
 

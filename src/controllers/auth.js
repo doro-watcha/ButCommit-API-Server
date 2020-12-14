@@ -59,17 +59,15 @@ export default class AuthController {
 				graduateYear : Joi.number(),
 				telephone : Joi.string(),
 				gender : Joi.string(),
-				adminLevel : Joi.number()
-
+				adminLevel : Joi.number(),
+				academyId : Joi.number().optional()
 			})
 		
-			const { email , password , name , haknyeon , highSchool , line, graduateYear , telephone, gender , adminLevel} = result 
+			const { email , password , name , haknyeon , highSchool , line, graduateYear , telephone, gender ,academyId, adminLevel} = result 
 			// check if user already exists
 			const user = await userService.findOne({
 				email
 			})
-
-			const academyId = req.body.academyId
 
 			// [ERROR] USER_ALREADY_EXISTS
 			if (user) throw Error('USER_ALREADY_EXISTS')
