@@ -86,7 +86,8 @@ class AuthController {
 
       const user = await _services.userService.findOne({
         email
-      }); // [ERROR] USER_ALREADY_EXISTS
+      });
+      const academyId = req.body.academyId; // [ERROR] USER_ALREADY_EXISTS
 
       if (user) throw Error('USER_ALREADY_EXISTS'); // create user
 
@@ -100,6 +101,7 @@ class AuthController {
         graduateYear,
         telephone,
         gender,
+        academyId,
         adminLevel
       }); // create response
 

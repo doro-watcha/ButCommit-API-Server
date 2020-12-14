@@ -69,6 +69,8 @@ export default class AuthController {
 				email
 			})
 
+			const academyId = req.body.academyId
+
 			// [ERROR] USER_ALREADY_EXISTS
 			if (user) throw Error('USER_ALREADY_EXISTS')
 
@@ -83,6 +85,7 @@ export default class AuthController {
 				graduateYear,
 				telephone ,
 				gender,
+				academyId,
 				adminLevel
 			})
 
