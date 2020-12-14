@@ -70,7 +70,7 @@ class AuthController {
         telephone: _joi.default.string(),
         gender: _joi.default.string(),
         adminLevel: _joi.default.number(),
-        academyId: _joi.default.number().optional()
+        academyId: _joi.default.optional()
       });
       const {
         email,

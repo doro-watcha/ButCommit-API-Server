@@ -60,7 +60,7 @@ export default class AuthController {
 				telephone : Joi.string(),
 				gender : Joi.string(),
 				adminLevel : Joi.number(),
-				academyId : Joi.number().optional()
+				academyId : Joi.optional()
 			})
 		
 			const { email , password , name , haknyeon , highSchool , line, graduateYear , telephone, gender ,academyId, adminLevel} = result 
