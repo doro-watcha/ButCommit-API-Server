@@ -53,23 +53,25 @@ export default class finalReportController {
     try { 
       const { user } = req 
 
+      const result = await Joi.validate ( req.query, {
+        userId : Joi.optional()
+      })
+
+      const { userId } = result 
+
+      var id = 0
+
+      if ( userId != null) id = userId
+      else if (user.id != null ) id = user.id
+
+      console.log( userId)
       console.log(user.id)
+      console.log(id)
 
-      var finalReports = await finalReportService.findList({userId : user.id })
-
-      console.log(finalReports.length)
-
-      var data = []
+      var finalReports = await finalReportService.findList({userId : id})
 
       for ( let i = 0; i < finalReports.length ; i++ ) {
-
-        console.log("zxcv")
-
-        console.log(finalReports[i].reportId)
-
         const report = await reportService.findOne({id : finalReports[i].reportId})
-
-        console.log(report.majorData)
 
         var majorDataId = report.majorData.id
 
@@ -81,10 +83,6 @@ export default class finalReportController {
 
         const applicantsNumber = Object.keys(reports).length
         const myRank = reports.findIndex( function ( item , index) {
-
-          console.log(item.id)
-          console.log(finalReports[i].id)
-  
           return item.id == finalReports[i].id
         }) + 1
 
