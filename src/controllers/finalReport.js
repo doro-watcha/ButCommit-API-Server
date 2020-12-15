@@ -77,9 +77,11 @@ export default class finalReportController {
 
         var reports = await finalReportService.findList({majorDataId})
 
-        reports.sort(function(a, b){
-          return b.report.totalScore - a.report.totalScore
-        })
+        if ( reports.length > 1 ) {
+          reports.sort(function(a, b){
+            return b.report.totalScore - a.report.totalScore
+          })
+        }
 
         const applicantsNumber = Object.keys(reports).length
         const myRank = reports.findIndex( function ( item , index) {
