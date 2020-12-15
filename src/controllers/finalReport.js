@@ -80,6 +80,8 @@ export default class finalReportController {
         console.log(reports.length)
         if ( reports.length > 1 ) {
           reports.sort(function(a, b){
+            console.log(a.report.id)
+            console.log(b.report.id)
             return b.report.totalScore - a.report.totalScore
           })
         }
