@@ -158,6 +158,14 @@ module.exports = {
 			status : 427,
 			ko : '해당 최종 예측 리포트 없음'
 		},
+		EDIT_TIMES_NOT_FOUND : {
+			status : 428,
+			ko : '성적 변환 횟수 없음'
+		},
+		FINAL_EDIT_TIMES_NOT_FOUND : {
+			status : 429,
+			ko : '최종 예측 지원 횟수 없음'
+		},
 
 
 
@@ -212,7 +220,7 @@ module.exports = {
 		},
 		FINAL_REPORT_ALREADY_EXISTS: {
 			status : 511,
-			ko : '이미 최종 예측 보고서가 존재하니다'
+			ko : '이미 최종 예측 보고서가 존재합니다'
 		},
 		COMMUNITY_ALREADY_EXISTS : {
 			status : 512,

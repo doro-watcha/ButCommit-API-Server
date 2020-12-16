@@ -58,6 +58,7 @@ class UserService {
 	}
 	
 	async update(id, user) {
+		console.log(user.editTimes)
 	
 		await User.update(user, {
 			where: { id },

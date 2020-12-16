@@ -23,7 +23,7 @@ class scoreController {
         tamgu1: _joi.default.object().required(),
         tamgu2: _joi.default.object().required(),
         history: _joi.default.object().required(),
-        foreign: _joi.default.object().required(),
+        foreign: _joi.default.object().optional(),
         line: _joi.default.string().required(),
         naesin: _joi.default.number(),
         naesin_type: _joi.default.string(),
@@ -59,8 +59,11 @@ class scoreController {
         naesin_type,
         gumjeong
       };
-      user.searchScore = (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile) / 4;
-      await _services.userService.update(user.id, user);
+      const newUser = {
+        editTimes: user.editTimes - 1,
+        searchScore: (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile) / 4
+      };
+      if (user.editTimes <= 0) throw Error('EDIT_TIMES_NOT_FOUND');else await _services.userService.update(user.id, newUser);
       const exist_score = await _services.scoreService.findOne({
         userId: user.id
       });
@@ -110,7 +113,7 @@ class scoreController {
         tamgu1: _joi.default.object().required(),
         tamgu2: _joi.default.object().required(),
         history: _joi.default.object().required(),
-        foreign: _joi.default.object().required(),
+        foreign: _joi.default.object().optional(),
         line: _joi.default.string().required(),
         naesin: _joi.default.number(),
         naesin_type: _joi.default.string(),
@@ -129,9 +132,6 @@ class scoreController {
         naesin_type,
         gumjeong
       } = result;
-      const editTimes = user.editTimes;
-      user.editTimes = editTimes - 1;
-      await _services.userService.update(user.id, user);
       const modelObj = {
         userId: user.id,
         korean,
@@ -146,8 +146,12 @@ class scoreController {
         naesin_type,
         gumjeong
       };
-      user.searchScore = (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile) / 4;
-      await _services.userService.update(user.id, user);
+      console.log(user.editTimes);
+      const newUser = {
+        editTimes: user.editTimes - 1,
+        searchScore: (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile) / 4
+      };
+      if (user.editTimes <= 0) throw Error('EDIT_TIMES_NOT_FOUND');else await _services.userService.update(user.id, newUser);
       const score = await _services.scoreService.update(user.id, modelObj);
       if (score == null) throw Error('SCORE_NOT_FOUND');
       const response = {

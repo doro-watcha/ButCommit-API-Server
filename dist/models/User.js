@@ -52,7 +52,11 @@ class User extends _sequelize.default.Model {
       },
       editTimes: {
         type: _sequelize.default.INTEGER,
-        defaultValue: 5
+        defaultValue: 2
+      },
+      finalEditTimes: {
+        type: _sequelize.default.INTEGER,
+        defaultValue: 4
       },
       isMoneyPaid: {
         type: _sequelize.default.INTEGER,

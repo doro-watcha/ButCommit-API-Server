@@ -66,6 +66,7 @@ class UserService {
   }
 
   async update(id, user) {
+    console.log(user.editTimes);
     await _models.User.update(user, {
       where: {
         id

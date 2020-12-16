@@ -1,4 +1,4 @@
-import { finalReportService, reportService } from '../services'
+import { finalReportService, reportService, userService } from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
@@ -25,6 +25,13 @@ export default class finalReportController {
       const alreadyFinalReport = await finalReportService.findOne({group, userId : user.id})
 
       if ( alreadyFinalReport != null && group != "군외") throw Error('FINAL_REPORT_ALREADY_EXISTS')
+      
+    
+      const newUser = {
+        finalEditTimes : user.finalEditTimes - 1
+      }
+      if ( user.editTimes <= 0 ) throw Error('FINAL_EDIT_TIMES_NOT_FOUND')
+      else await userService.update(user.id, newUser)
 
       const modelObj = {
         group,
@@ -74,7 +81,7 @@ export default class finalReportController {
 
 
         var otherFinalReports = await finalReportService.findList({majorDataId : finalReports[i].majorDataId})
-        
+
         if ( otherFinalReports.length > 1 ) {
           otherFinalReports.sort(function(a, b){
             return b.report.totalScore - a.report.totalScore

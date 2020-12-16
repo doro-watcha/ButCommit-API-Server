@@ -16,7 +16,7 @@ export default class scoreController {
                 tamgu1 : Joi.object().required(),
                 tamgu2 : Joi.object().required(),
                 history : Joi.object().required(),
-                foreign : Joi.object().required(),
+                foreign : Joi.object().optional(),
                 line : Joi.string().required(),
                 naesin : Joi.number(),
                 naesin_type : Joi.string(),
@@ -42,9 +42,12 @@ export default class scoreController {
                 gumjeong
             }
 
-            user.searchScore = (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile ) / 4
-
-            await userService.update(user.id, user)
+            const newUser = {
+                editTimes : user.editTimes - 1,
+                searchScore : (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile ) / 4
+            }
+            if ( user.editTimes <= 0 ) throw Error('EDIT_TIMES_NOT_FOUND')
+            else await userService.update(user.id, newUser)
 
             const exist_score = await scoreService.findOne({userId : user.id})
 
@@ -103,7 +106,7 @@ export default class scoreController {
                 tamgu1 : Joi.object().required(),
                 tamgu2 : Joi.object().required(),
                 history : Joi.object().required(),
-                foreign : Joi.object().required(),
+                foreign : Joi.object().optional(),
                 line : Joi.string().required(),
                 naesin : Joi.number(),
                 naesin_type : Joi.string(),
@@ -111,11 +114,6 @@ export default class scoreController {
             })
             
             const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesin, naesin_type, gumjeong } = result 
-
-            const editTimes = user.editTimes
-
-            user.editTimes = editTimes - 1
-            await userService.update (user.id , user)
 
             const modelObj = {
                 userId : user.id,
@@ -132,9 +130,14 @@ export default class scoreController {
                 gumjeong
             }
 
-            user.searchScore = (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile ) / 4
+            console.log(user.editTimes)
+            const newUser = {
+                editTimes : user.editTimes - 1,
+                searchScore : (korean.percentile + math.percentile + tamgu1.percentile + tamgu2.percentile ) / 4
+            }
 
-            await userService.update(user.id, user)
+            if ( user.editTimes <= 0 ) throw Error('EDIT_TIMES_NOT_FOUND')
+            else await userService.update(user.id, newUser)
 
             const score = await scoreService.update(user.id, modelObj)
 
