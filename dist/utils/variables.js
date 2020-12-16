@@ -165,6 +165,10 @@ module.exports = {
       status: 429,
       ko: '최종 예측 지원 횟수 없음'
     },
+    AUTO_TRANSITION_NOT_FOUND: {
+      status: 430,
+      ko: '성적 변환 점수 없음'
+    },
     // 409
     USER_ALREADY_EXISTS: {
       status: 500,

@@ -100,6 +100,7 @@ class fileController {
         subject,
         originalScore
       });
+      if (autoTransition == null) throw Error('AUTO_TRANSITION_NOT_FOUND');
       const response = {
         success: true,
         data: {

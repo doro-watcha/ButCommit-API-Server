@@ -99,6 +99,8 @@ export default class fileController {
 
       const autoTransition = await autoTransitionService.findOne({subject, originalScore})
 
+      if ( autoTransition == null ) throw Error('AUTO_TRANSITION_NOT_FOUND')
+
       const response = {
 
         success : true ,
