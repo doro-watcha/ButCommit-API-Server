@@ -79,9 +79,9 @@ class finalReportController {
           majorDataId: finalReports[i].majorDataId
         });
         console.log(otherFinalReports.length);
-        console.log(otherFinalReports[0].id);
-        console.log(otherFinalReports[1].id);
-        console.log(otherFinalReports[2].id);
+        console.log(otherFinalReports[0].report);
+        console.log(otherFinalReports[1].report);
+        console.log(otherFinalReports[2].report);
 
         if (otherFinalReports.length > 1) {
           otherFinalReports.sort(function (a, b) {
