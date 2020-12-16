@@ -1,5 +1,5 @@
-import { Report , MajorData , User, Major ,Score} from '../models'
-import { majorDataService } from './majorData'
+import { Report , MajorData , User, Major ,Score, FinalReport} from '../models'
+import { majorDataService , finalReportService } from './majorData'
 
 let instance = null
 
@@ -133,7 +133,10 @@ class ReportService {
 				id
 			}
         })
-        
+        await FinalReport.destroy({
+            where : { reportId : report.id}
+          })
+
         if ( report == null ) {
             throw Error ('REPORT_NOT_FOUND')
         } else {

@@ -50,16 +50,16 @@ class FinalReportService {
     const finalReport = await FinalReport.findOne({
 			where: {
 				id
-			}
-        })
-        
-        if ( finalReport == null ) {
-            throw Error ('FINAL_REPORT_NOT_FOUND')
+      }})
+      
+      
+      if ( finalReport == null ) {
+          throw Error ('FINAL_REPORT_NOT_FOUND')
 
-        } else {
+      } else {
 
-            await finalReport.destroy()
-        }
+          await finalReport.destroy()
+      }
     }
 }
 

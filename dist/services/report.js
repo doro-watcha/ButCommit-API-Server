@@ -120,6 +120,11 @@ class ReportService {
         id
       }
     });
+    await _models.FinalReport.destroy({
+      where: {
+        reportId: report.id
+      }
+    });
 
     if (report == null) {
       throw Error('REPORT_NOT_FOUND');
