@@ -71,26 +71,24 @@ export default class finalReportController {
       var finalReports = await finalReportService.findList({userId : id})
 
       for ( let i = 0; i < finalReports.length ; i++ ) {
-        const report = await reportService.findOne({id : finalReports[i].reportId})
 
-        var majorDataId = report.majorData.id
 
-        var reports = await finalReportService.findList({majorDataId})
+        var otherFinalReports = await finalReportService.findList({majorDataId : finalReports[i].majorDataId})
 
-        console.log(reports.length)
-        console.log(reports[0].id)
-        console.log(reports[1].id)
-        console.log(reports[2].id)
-        if ( reports.length > 1 ) {
-          reports.sort(function(a, b){
+        console.log(otherFinalReports.length)
+        console.log(otherFinalReports[0].id)
+        console.log(otherFinalReports[1].id)
+        console.log(otherFinalReports[2].id)
+        if ( otherFinalReports.length > 1 ) {
+          otherFinalReports.sort(function(a, b){
             console.log(a.report.id)
             console.log(b.report.id)
             return b.report.totalScore - a.report.totalScore
           })
         }
 
-        const applicantsNumber = Object.keys(reports).length
-        const myRank = reports.findIndex( function ( item , index) {
+        const applicantsNumber = Object.keys(otherFinalReports).length
+        const myRank = otherFinalReports.findIndex( function ( item , index) {
           return item.id == finalReports[i].id
         }) + 1
 
