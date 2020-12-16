@@ -81,8 +81,6 @@ export default class finalReportController {
         console.log(otherFinalReports[2].id)
         if ( otherFinalReports.length > 1 ) {
           otherFinalReports.sort(function(a, b){
-            console.log(a.report.id)
-            console.log(b.report.id)
             return b.report.totalScore - a.report.totalScore
           })
         }
