@@ -83,6 +83,9 @@ class finalReportController {
           majorDataId
         });
         console.log(reports.length);
+        console.log(reports[0].id);
+        console.log(reports[1].id);
+        console.log(reports[2].id);
 
         if (reports.length > 1) {
           reports.sort(function (a, b) {
