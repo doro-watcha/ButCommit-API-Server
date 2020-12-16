@@ -74,10 +74,7 @@ export default class finalReportController {
 
 
         var otherFinalReports = await finalReportService.findList({majorDataId : finalReports[i].majorDataId})
-
-        console.log(otherFinalReports.length)
-        console.log(otherFinalReports[0].report.totalScore)
-        console.log(otherFinalReports[1].report.totalScore)
+        
         if ( otherFinalReports.length > 1 ) {
           otherFinalReports.sort(function(a, b){
             return b.report.totalScore - a.report.totalScore

@@ -205,7 +205,7 @@ module.exports = {
       status: 510,
       ko: '이미 존재하는 학원입니다'
     },
-    FINAL_REPORT_ALEADY_EXISTS: {
+    FINAL_REPORT_ALREADY_EXISTS: {
       status: 511,
       ko: '이미 최종 예측 보고서가 존재하니다'
     },
