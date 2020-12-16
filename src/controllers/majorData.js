@@ -138,10 +138,10 @@ export default class majorDataController {
 
         let prediction = "최초합유력"
 
-        if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.strong ) {
+        if ( majorData.prediction.strong > transitionScore && transitionScore >= majorData.prediction.safe ) {
           prediction = "지원 적정"
         } 
-        else if ( majorData.prediction.strong > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
+        else if ( majorData.prediction.safe > transitionScore && transitionScore >= majorData.prediction.dangerous ) {
           prediction = "추합 스나이핑"
         }
         else if ( majorData.prediction.dangerous > transitionScore) {
