@@ -21,6 +21,9 @@ router.post('/signup', (req, res) => {
 router.post('/signin', (req, res) => {
   _controllers.authController.signIn(req, res);
 });
+router.get('/admin', authenticate, (req, res) => {
+  _controllers.authController.getAdminLevel(req, res);
+});
 /**
  * @swagger
  *

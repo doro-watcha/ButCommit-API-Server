@@ -21,6 +21,10 @@ router.post('/signin', (req, res) => {
 	authController.signIn(req, res)
 })
 
+router.get('/admin', authenticate, (req,res) => {
+	authController.getAdminLevel(req,res)
+})
+
 
 
 /**

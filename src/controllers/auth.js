@@ -186,5 +186,29 @@ export default class AuthController {
 	}
 
 
+	static async getAdminLevel ( req, res ) {
+
+		try {
+
+			const { user } = req 
+
+			const adminLevel = user.adminLevel
+
+			const response = {
+				success : true,
+				data : {
+					adminLevel
+				}
+			}
+
+			res.send(response)
+
+
+		} catch ( e ) {
+			res.send(createErrorResponse(e))
+		}
+	}
+
+
 
 }

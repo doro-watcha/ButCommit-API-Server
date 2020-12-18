@@ -127,6 +127,7 @@ class User extends _sequelize.default.Model {
     delete object.createdAt;
     delete object.updatedAt;
     delete object.password;
+    delete object.adminlevel;
     delete object.academyId;
     return object;
   }
