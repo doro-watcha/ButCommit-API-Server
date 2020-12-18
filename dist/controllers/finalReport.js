@@ -60,22 +60,14 @@ class finalReportController {
 
   static async findList(req, res) {
     try {
-      const {
-        user
-      } = req;
       const result = await _joi.default.validate(req.query, {
-        userId: _joi.default.optional()
+        userId: _joi.default.number().required()
       });
       const {
         userId
       } = result;
-      var id = 0;
-      if (userId != null) id = userId;else if (user.id != null) id = user.id;
-      console.log(userId);
-      console.log(user.id);
-      console.log(id);
       var finalReports = await _services.finalReportService.findList({
-        userId: id
+        userId
       });
 
       for (let i = 0; i < finalReports.length; i++) {

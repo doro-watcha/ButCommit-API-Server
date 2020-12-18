@@ -58,29 +58,18 @@ export default class finalReportController {
 
   static async findList ( req, res) {
     try { 
-      const { user } = req 
 
       const result = await Joi.validate ( req.query, {
-        userId : Joi.optional()
+        userId : Joi.number().required()
       })
 
       const { userId } = result 
 
-      var id = 0
-
-      if ( userId != null) id = userId
-      else if (user.id != null ) id = user.id
-
-      console.log( userId)
-      console.log(user.id)
-      console.log(id)
-
-      var finalReports = await finalReportService.findList({userId : id})
+      var finalReports = await finalReportService.findList({userId})
 
       for ( let i = 0; i < finalReports.length ; i++ ) {
 
         const majorDataId = finalReports[i].majorDataId
-
 
         var otherFinalReports = await finalReportService.findList({majorDataId})
 
