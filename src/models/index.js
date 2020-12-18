@@ -21,6 +21,8 @@ import NaesinModel from './Naesin'
 import CommentModel from './Comment'
 import AutoTransitionModel from './AutoTransition'
 import RedopModel from './Redop'
+import ReportDataModel from './ReportData'
+import FinalReportDataModel from './FinalReportData'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -47,7 +49,9 @@ const models = {
   Naesin : NaesinModel.init(sequelize, Sequelize),
   Comment : CommentModel.init( sequelize, Sequelize),
   AutoTransition : AutoTransitionModel.init(sequelize, Sequelize),
-  Redop : RedopModel.init(sequelize, Sequelize)
+  Redop : RedopModel.init(sequelize, Sequelize),
+  ReportData : ReportDataModel.init(sequelize, Sequelize),
+  FinalReportData : FinalReportDataModel.init(sequelize, Sequelize)
 
 }
 

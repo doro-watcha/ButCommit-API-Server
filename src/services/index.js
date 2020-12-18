@@ -18,7 +18,8 @@ import gradeUniversityService from './gradeUniversity'
 import naesinService from './naesin'
 import autoTransitionService from './autoTransition'
 import redopService from './redop'
-
+import reportDataService from './reportData'
+import finalReportDataService from './finalReportData'
 
 
 module.exports = {
@@ -41,5 +42,7 @@ module.exports = {
     gradeUniversityService,
     naesinService,
     autoTransitionService,
-    redopService
+    redopService,
+    reportDataService,
+    finalReportDataService
 }

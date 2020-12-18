@@ -1,4 +1,4 @@
-import { reportService , majorDataService, majorService, scoreService, highestScoreService, scoreTransitionService } from '../services'
+import { reportService , majorDataService, majorService, scoreService, highestScoreService, scoreTransitionService , reportDataService} from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
@@ -76,7 +76,8 @@ export default class reportController {
         return b.totalScore - a.totalScore
       })
 
-      const applicantsNumber = Object.keys(reports).length
+      const reportData = await reportDataService.findOne({majorDataId})
+      const applicantsNumber = reportData.applicants
       const myRank = reports.findIndex( function ( item , index) {
 
         return item.id == id

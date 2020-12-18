@@ -69,7 +69,10 @@ class reportController {
       reports.sort(function (a, b) {
         return b.totalScore - a.totalScore;
       });
-      const applicantsNumber = Object.keys(reports).length;
+      const reportData = await _services.reportDataService.findOne({
+        majorDataId
+      });
+      const applicantsNumber = reportData.applicants;
       const myRank = reports.findIndex(function (item, index) {
         return item.id == id;
       }) + 1;

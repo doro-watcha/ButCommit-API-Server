@@ -44,6 +44,10 @@ var _autoTransition = _interopRequireDefault(require("./autoTransition"));
 
 var _redop = _interopRequireDefault(require("./redop"));
 
+var _reportData = _interopRequireDefault(require("./reportData"));
+
+var _finalReportData = _interopRequireDefault(require("./finalReportData"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -68,5 +72,7 @@ module.exports = {
   commentController: _comment.default,
   naesinController: _naesin.default,
   autoTransitionController: _autoTransition.default,
-  redopController: _redop.default
+  redopController: _redop.default,
+  reportDataController: _reportData.default,
+  finalReportDataController: _finalReportData.default
 };

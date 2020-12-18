@@ -20,6 +20,8 @@ import commentController from './comment'
 import naesinController from './naesin'
 import autoTransitionController from './autoTransition'
 import redopController from './redop'
+import reportDataController from './reportData'
+import finalReportDataController from './finalReportData'
 
 module.exports = {
 
@@ -44,5 +46,7 @@ module.exports = {
     commentController,
     naesinController,
     autoTransitionController,
-    redopController
+    redopController,
+    reportDataController,
+    finalReportDataController
 }

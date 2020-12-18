@@ -23,6 +23,8 @@ import naesinRouter from './naesin'
 import commentRouter from './comment'
 import autoTransitionRouter from './autoTransition'
 import redopRouter from './redop'
+import reportDataRouter from './reportData'
+import finalReportDataRouter from './finalReportData'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -51,6 +53,8 @@ router.use('/naesin', naesinRouter)
 router.use('/comment', commentRouter)
 router.use('/autoTransition', autoTransitionRouter)
 router.use('/redop', redopRouter)
+router.use('/reportData', reportDataRouter)
+router.use('/finalReportData', finalReportDataRouter)
 
 
 module.exports = router

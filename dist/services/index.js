@@ -40,6 +40,10 @@ var _autoTransition = _interopRequireDefault(require("./autoTransition"));
 
 var _redop = _interopRequireDefault(require("./redop"));
 
+var _reportData = _interopRequireDefault(require("./reportData"));
+
+var _finalReportData = _interopRequireDefault(require("./finalReportData"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -62,5 +66,7 @@ module.exports = {
   gradeUniversityService: _gradeUniversity.default,
   naesinService: _naesin.default,
   autoTransitionService: _autoTransition.default,
-  redopService: _redop.default
+  redopService: _redop.default,
+  reportDataService: _reportData.default,
+  finalReportDataService: _finalReportData.default
 };

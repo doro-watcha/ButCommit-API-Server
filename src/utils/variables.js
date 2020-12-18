@@ -170,6 +170,14 @@ module.exports = {
 			status : 430,
 			ko : '성적 변환 점수 없음'
 		},
+		REPORT_DATA_NOT_FOUND : {
+			status : 431,
+			ko : '레포트 데이터 없음'
+		},
+		FINAL_REPORT_DATA_NOT_FOUND : {
+			status : 432,
+			ko : '최종 레포트 데이터 없음'
+		},
 
 
 

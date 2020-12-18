@@ -75,6 +75,13 @@ class MajorData extends _sequelize.default.Model {
     }), this.hasMany(models.FinalReport, {
       foreignKey: 'majorDataId',
       as: 'finalReport'
+    }), this.hasMany(models.ReportData, {
+      foreignKey: 'majorDataId',
+      as: 'ReportData'
+    });
+    this.hasMany(models.FinalReportData, {
+      foreignKey: 'majorDataId',
+      as: 'FinalReportData'
     });
   }
 

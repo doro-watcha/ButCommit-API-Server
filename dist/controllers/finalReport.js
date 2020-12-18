@@ -79,8 +79,9 @@ class finalReportController {
       });
 
       for (let i = 0; i < finalReports.length; i++) {
+        const majorDataId = finalReports[i].majorDataId;
         var otherFinalReports = await _services.finalReportService.findList({
-          majorDataId: finalReports[i].majorDataId
+          majorDataId
         });
 
         if (otherFinalReports.length > 1) {
@@ -89,7 +90,10 @@ class finalReportController {
           });
         }
 
-        const applicantsNumber = Object.keys(otherFinalReports).length;
+        const finalReportData = await finalReportDataService.findOne({
+          majorDataId
+        });
+        const applicantsNumber = finalReportData.applicants;
         const myRank = otherFinalReports.findIndex(function (item, index) {
           return item.id == finalReports[i].id;
         }) + 1;

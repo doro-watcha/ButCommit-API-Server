@@ -44,6 +44,10 @@ var _autoTransition = _interopRequireDefault(require("./autoTransition"));
 
 var _redop = _interopRequireDefault(require("./redop"));
 
+var _reportData = _interopRequireDefault(require("./reportData"));
+
+var _finalReportData = _interopRequireDefault(require("./finalReportData"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -78,4 +82,6 @@ router.use('/naesin', _naesin.default);
 router.use('/comment', _comment.default);
 router.use('/autoTransition', _autoTransition.default);
 router.use('/redop', _redop.default);
+router.use('/reportData', _reportData.default);
+router.use('/finalReportData', _finalReportData.default);
 module.exports = router;
