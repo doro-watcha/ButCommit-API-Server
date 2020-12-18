@@ -82,7 +82,7 @@ class finalReportController {
           });
         }
 
-        const finalReportData = await finalReportDataService.findOne({
+        const finalReportData = await _services.finalReportDataService.findOne({
           majorDataId
         });
         const applicantsNumber = finalReportData.applicants;
