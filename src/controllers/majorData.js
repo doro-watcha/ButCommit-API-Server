@@ -163,7 +163,7 @@ export default class majorDataController {
         }
       }
 
-      res.set('Cache-Control', 'private, max-age=3600')
+      res.set('Cache-Control', 'private, max-age=36000')
 
       res.send(response)
 
