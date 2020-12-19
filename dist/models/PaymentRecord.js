@@ -10,15 +10,24 @@ var _sequelize = _interopRequireDefault(require("sequelize"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class PaymentRecord extends _sequelize.default.Model {
+  // 금액, 날짜랑, 상품명 
   static init(sequelize) {
     return super.init({
+      orderNunber: {
+        type: _sequelize.default.STRING,
+        allowNull: false
+      },
       amount: {
         type: _sequelize.default.INTEGER,
         defaultValue: 0
       },
-      predictTimes: {
-        type: _sequelize.default.INTEGER,
-        defaultValue: 0
+      product: {
+        type: _sequelize.default.STRING,
+        allowNUll: false
+      },
+      status: {
+        type: _sequelize.default.STRING,
+        allowNull: false
       },
       createdAt: {
         type: _sequelize.default.DATE,

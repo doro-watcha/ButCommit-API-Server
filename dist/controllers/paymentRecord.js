@@ -21,7 +21,7 @@ class majorController {
       } = req;
       const result = await _joi.default.validate(req.body, {
         amount: _joi.default.number().required(),
-        predictTimes: _joi.default.number().required()
+        orderNumber: _joi.default.string().required()
       });
       const {
         amount,

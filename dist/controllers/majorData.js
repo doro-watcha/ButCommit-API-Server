@@ -163,6 +163,7 @@ class majorDataController {
           majorDatas
         }
       };
+      res.set('Cache-Control', 'private, max-age=3600');
       res.send(response);
     } catch (e) {
       res.send((0, _functions.createErrorResponse)(e));

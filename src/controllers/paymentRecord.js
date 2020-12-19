@@ -13,7 +13,7 @@ export default class majorController {
 
       const result = await Joi.validate(req.body, {
         amount : Joi.number().required(),
-        predictTimes : Joi.number().required()
+        orderNumber : Joi.string().required()
       })
 
       const { amount , predictTimes } = result

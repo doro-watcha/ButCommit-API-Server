@@ -2,17 +2,25 @@ import Sequelize from 'sequelize'
 
 export default class PaymentRecord extends Sequelize.Model {
 
-
+// 금액, 날짜랑, 상품명 
     static init(sequelize) {
         return super.init(
             {
+              orderNunber : {
+                type : Sequelize.STRING,
+                allowNull : false
+              },
               amount : {
                 type : Sequelize.INTEGER,
                 defaultValue : 0
               },
-              predictTimes : {
-                type : Sequelize.INTEGER,
-                defaultValue : 0
+              product : {
+                type : Sequelize.STRING,
+                allowNUll : false
+              },
+              status : {
+                type : Sequelize.STRING,
+                allowNull : false
               },
               createdAt: {
                   type: Sequelize.DATE,
