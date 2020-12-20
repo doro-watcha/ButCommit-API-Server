@@ -122,7 +122,7 @@ class majorDataController {
       });
       const if_none_match = req.headers['if-none-match'];
 
-      if (_bcrypt.default.compareSync(score.updatedAt + user.email, if_none_match)) {
+      if (if_none_match !== undefined && _bcrypt.default.compareSync(score.updatedAt + user.email, if_none_match)) {
         res.sendStatus(304);
       }
 

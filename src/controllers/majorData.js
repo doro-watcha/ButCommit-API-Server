@@ -117,11 +117,11 @@ export default class majorDataController {
 
       const if_none_match = req.headers['if-none-match'] 
 
-      if ( bycrypt.compareSync(score.updatedAt + user.email , if_none_match) ) {
+      if ( if_none_match !== undefined && bycrypt.compareSync(score.updatedAt + user.email , if_none_match) ) {
         
         res.sendStatus(304)
 
-        
+
       }
 
       const majorDataList = await majorDataService.findList(modelObj)
