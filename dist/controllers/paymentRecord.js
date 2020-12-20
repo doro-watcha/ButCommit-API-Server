@@ -187,7 +187,7 @@ class majorController {
       });
       const paymentData = getPaymentData.data.response; // DB에서 결제되어야 하는 금액 조회
 
-      const order = await productService.findOne({
+      const order = await _services.productService.findOne({
         name
       });
       const amountToBePaid = order.amount; // 결제 되어야 하는 금액
@@ -210,7 +210,7 @@ class majorController {
           editTimes: user.editTimes + 2,
           finalEditTimes: user.finalEditTimes + 4
         };
-        await userService.update(user.id, userObj);
+        await _services.userService.update(user.id, userObj);
         await _services.paymentRecordService.create(modelObj);
         const response = {
           success: true
