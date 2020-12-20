@@ -3,6 +3,7 @@ import Joi from '@hapi/joi'
 import xlsx from 'xlsx'
 import mime from 'mime'
 import path from 'path'
+import bcrypt from 'bcrypt'
 
 import { createErrorResponse } from '../utils/functions'
 
@@ -163,7 +164,8 @@ export default class majorDataController {
         }
       }
 
-      res.set('Cache-Control', 'no-cache,private, max-age=36000')
+      const eTag = bycrypt.hashSync(score.id, 8)
+      res.set('Cache-Control', `no-cache, private, max-age=36000, ETag=${eTag} , If-None_Match =${eTag}`)
 
 
       res.send(response)

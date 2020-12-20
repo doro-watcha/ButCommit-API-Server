@@ -15,6 +15,8 @@ var _mime = _interopRequireDefault(require("mime"));
 
 var _path = _interopRequireDefault(require("path"));
 
+var _bcrypt = _interopRequireDefault(require("bcrypt"));
+
 var _functions = require("../utils/functions");
 
 var _report = _interopRequireDefault(require("./report"));
@@ -163,7 +165,8 @@ class majorDataController {
           majorDatas
         }
       };
-      res.set('Cache-Control', 'no-cache,private, max-age=36000');
+      const eTag = bycrypt.hashSync(score.id, 8);
+      res.set('Cache-Control', `no-cache, private, max-age=36000, ETag=${eTag} , If-None_Match =${eTag}`);
       res.send(response);
     } catch (e) {
       res.send((0, _functions.createErrorResponse)(e));
