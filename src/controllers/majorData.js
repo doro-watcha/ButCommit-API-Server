@@ -3,7 +3,7 @@ import Joi from '@hapi/joi'
 import xlsx from 'xlsx'
 import mime from 'mime'
 import path from 'path'
-import bcrypt from 'bcrypt'
+import bycrypt from 'bcrypt'
 
 import { createErrorResponse } from '../utils/functions'
 

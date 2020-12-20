@@ -165,7 +165,9 @@ class majorDataController {
           majorDatas
         }
       };
-      const eTag = bycrypt.hashSync(score.id, 8);
+
+      const eTag = _bcrypt.default.hashSync(score.id, 8);
+
       res.set('Cache-Control', `no-cache, private, max-age=36000, ETag=${eTag} , If-None_Match =${eTag}`);
       res.send(response);
     } catch (e) {
