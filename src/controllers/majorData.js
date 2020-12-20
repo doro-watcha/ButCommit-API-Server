@@ -83,7 +83,7 @@ export default class majorDataController {
 
     try {
 
-      const if_none_match = req.if_none_match
+      // const if_none_match = req.if_none_match
 
 
 
@@ -169,7 +169,7 @@ export default class majorDataController {
       }
 
       const eTag = bycrypt.hashSync(score.updatedAt + user.email,8)
-      res.set('Cache-Control', `private, max-age=36000`)
+      res.set('Cache-Control', `no-cache, private, max-age=36000`)
       res.set('etag',eTag)
 
 
