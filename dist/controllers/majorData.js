@@ -166,7 +166,7 @@ class majorDataController {
         }
       };
       const eTag = user.email;
-      res.set('Cache-Control', `no-cache, private, max-age=36000`);
+      res.set('Cache-Control', `private, max-age=36000`);
       res.set('etag', eTag);
       res.send(response);
     } catch (e) {
