@@ -88,6 +88,7 @@ class majorDataController {
 
   static async findList(req, res) {
     try {
+      const if_none_match = req.if_none_match;
       const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -165,7 +166,9 @@ class majorDataController {
           majorDatas
         }
       };
-      const eTag = user.email;
+
+      const eTag = _bcrypt.default.hashSync(score.updatedAt + user.email, 8);
+
       res.set('Cache-Control', `private, max-age=36000`);
       res.set('etag', eTag);
       res.send(response);

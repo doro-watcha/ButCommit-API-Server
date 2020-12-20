@@ -83,6 +83,10 @@ export default class majorDataController {
 
     try {
 
+      const if_none_match = req.if_none_match
+
+
+
       const path = ('../excelfile/test.xlsx')
       let workbook = xlsx.readFile(path, {sheetRows: 3524})
       let sheetsList = workbook.SheetNames
@@ -164,7 +168,7 @@ export default class majorDataController {
         }
       }
 
-      const eTag = user.email
+      const eTag = bycrypt.hashSync(score.updatedAt + user.email,8)
       res.set('Cache-Control', `private, max-age=36000`)
       res.set('etag',eTag)
 
