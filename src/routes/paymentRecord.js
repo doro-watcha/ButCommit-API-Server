@@ -7,8 +7,8 @@ const { authenticate, getUserInfo } = Authenticator
 
 const router  = Router()
 
-const IMP = window.IMP
-IMP.init()
+// const IMP = window.IMP
+// IMP.init()
 
 
 
