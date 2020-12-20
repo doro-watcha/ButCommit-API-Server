@@ -165,7 +165,7 @@ class majorDataController {
           majorDatas
         }
       };
-      console.log(req.header);
+      console.log(req);
 
       const eTag = _bcrypt.default.hashSync(score.updatedAt + user.email, 8);
 

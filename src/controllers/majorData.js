@@ -167,7 +167,7 @@ export default class majorDataController {
       }
 
 
-      console.log(req.header)
+      console.log(req)
 
 
       const eTag = bycrypt.hashSync(score.updatedAt + user.email,8)
