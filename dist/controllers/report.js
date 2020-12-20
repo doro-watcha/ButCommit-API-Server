@@ -543,7 +543,7 @@ class reportController {
       newScore.math = score.math.score * perfectScore.math / value * 0.8;
       newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value * 0.8;
       newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value * 0.8;
-      if (majorData.metadata.tamguReplace == "사과 1과목 대체 가능") newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / value * 0.8;
+      if (majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / value * 0.8;
       console.log("zxcv");
     } // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
     // }
