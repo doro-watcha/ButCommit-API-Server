@@ -83,8 +83,6 @@ export default class majorDataController {
 
     try {
 
-      console.log(req.header)
-
 
 
       const path = ('../excelfile/test.xlsx')
@@ -167,6 +165,10 @@ export default class majorDataController {
           majorDatas
         }
       }
+
+
+      console.log(req.header)
+
 
       const eTag = bycrypt.hashSync(score.updatedAt + user.email,8)
       res.set('Cache-Control', `no-cache, private, max-age=36000`)

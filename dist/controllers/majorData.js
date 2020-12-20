@@ -88,7 +88,6 @@ class majorDataController {
 
   static async findList(req, res) {
     try {
-      console.log(req.header);
       const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -166,6 +165,7 @@ class majorDataController {
           majorDatas
         }
       };
+      console.log(req.header);
 
       const eTag = _bcrypt.default.hashSync(score.updatedAt + user.email, 8);
 
