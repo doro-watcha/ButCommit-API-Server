@@ -26,7 +26,7 @@ export default class consultingController {
         isAdmin 
       }
 
-      const user = await userService.findOne({id : user.id })
+      const user = await userService.findOne({id : userId })
 
       const newUser = {
         consultingTimes : user.consultingTImes - 1
