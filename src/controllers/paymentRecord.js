@@ -209,7 +209,7 @@ export default class majorController {
         const userObj = {
           isMoneyPaid : 1,
           editTimes : user.editTimes + 2,
-          finalEditTimes : user.finalEditTimes + 4
+          consultingTimes : user.consultingTimes + 4
         }
         await userService.update( user.id, userObj)
         await paymentRecordService.create(modelObj)
