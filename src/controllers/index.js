@@ -22,6 +22,7 @@ import autoTransitionController from './autoTransition'
 import redopController from './redop'
 import reportDataController from './reportData'
 import finalReportDataController from './finalReportData'
+import productController from './product'
 
 module.exports = {
 
@@ -48,5 +49,6 @@ module.exports = {
     autoTransitionController,
     redopController,
     reportDataController,
-    finalReportDataController
+    finalReportDataController,
+    productController
 }

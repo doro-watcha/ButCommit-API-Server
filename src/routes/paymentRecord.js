@@ -7,9 +7,11 @@ const { authenticate, getUserInfo } = Authenticator
 
 const router  = Router()
 
-// const IMP = window.IMP
-// IMP.init()
 
+
+router.post('/complete', authenticate, (req, res) => {
+  paymentRecordController.authenticate(req,res)
+})
 
 
 router.post('/', authenticate, ( req, res) => {

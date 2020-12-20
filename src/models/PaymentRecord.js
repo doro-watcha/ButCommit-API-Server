@@ -6,7 +6,7 @@ export default class PaymentRecord extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-              orderNunber : {
+              merchant_uid : {
                 type : Sequelize.STRING,
                 allowNull : false
               },
@@ -14,25 +14,14 @@ export default class PaymentRecord extends Sequelize.Model {
                 type : Sequelize.INTEGER,
                 defaultValue : 0
               },
-              product : {
+              name : {
                 type : Sequelize.STRING,
                 allowNUll : false
               },
-              status : {
+              imp_uid : {
                 type : Sequelize.STRING,
                 allowNull : false
-              },
-              createdAt: {
-                  type: Sequelize.DATE,
-                  allowNull: true,
-                  defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-              },
-              updatedAt: {
-                  type: Sequelize.DATE,
-                  allowNull: true,
-                  defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-                  onUpdate: Sequelize.literal('CURRENT_TIMESTAMP'),
-              },
+              }
             },
             {
 
@@ -58,6 +47,7 @@ export default class PaymentRecord extends Sequelize.Model {
       delete object.updatedAt
       
       delete object.userId
+      delete object.imp_uid
 	
 			
 			return object

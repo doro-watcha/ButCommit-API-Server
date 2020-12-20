@@ -23,6 +23,7 @@ import AutoTransitionModel from './AutoTransition'
 import RedopModel from './Redop'
 import ReportDataModel from './ReportData'
 import FinalReportDataModel from './FinalReportData'
+import ProductModel from './Product'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -51,7 +52,8 @@ const models = {
   AutoTransition : AutoTransitionModel.init(sequelize, Sequelize),
   Redop : RedopModel.init(sequelize, Sequelize),
   ReportData : ReportDataModel.init(sequelize, Sequelize),
-  FinalReportData : FinalReportDataModel.init(sequelize, Sequelize)
+  FinalReportData : FinalReportDataModel.init(sequelize, Sequelize),
+  Product : ProductModel.init(sequelize,Sequelize)
 
 }
 

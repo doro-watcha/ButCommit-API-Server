@@ -61,6 +61,10 @@ module.exports = {
 			ko: '법적 고지에 대한 동의가 필요함',
 			en: 'Consent required',
 		},
+		PAYMENT_AMOUNT_DIFFERENT : {
+			status : 500,
+			ko : '결제 금액이 위조되었음'
+		},
 		// 403 Forbidden
 		NO_ACCESS: {
 			status: 300,

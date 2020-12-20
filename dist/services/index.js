@@ -44,6 +44,8 @@ var _reportData = _interopRequireDefault(require("./reportData"));
 
 var _finalReportData = _interopRequireDefault(require("./finalReportData"));
 
+var _product = _interopRequireDefault(require("./product"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -68,5 +70,6 @@ module.exports = {
   autoTransitionService: _autoTransition.default,
   redopService: _redop.default,
   reportDataService: _reportData.default,
-  finalReportDataService: _finalReportData.default
+  finalReportDataService: _finalReportData.default,
+  productService: _product.default
 };

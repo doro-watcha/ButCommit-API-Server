@@ -20,6 +20,7 @@ import autoTransitionService from './autoTransition'
 import redopService from './redop'
 import reportDataService from './reportData'
 import finalReportDataService from './finalReportData'
+import productService from './product'
 
 
 module.exports = {
@@ -44,5 +45,6 @@ module.exports = {
     autoTransitionService,
     redopService,
     reportDataService,
-    finalReportDataService
+    finalReportDataService,
+    productService
 }

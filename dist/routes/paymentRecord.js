@@ -12,9 +12,10 @@ const {
   authenticate,
   getUserInfo
 } = _Authenticator.default;
-const router = (0, _express.Router)(); // const IMP = window.IMP
-// IMP.init()
-
+const router = (0, _express.Router)();
+router.post('/complete', authenticate, (req, res) => {
+  _controllers.paymentRecordController.authenticate(req, res);
+});
 router.post('/', authenticate, (req, res) => {
   _controllers.paymentRecordController.create(req, res);
 });

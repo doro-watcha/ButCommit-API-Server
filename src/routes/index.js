@@ -25,6 +25,7 @@ import autoTransitionRouter from './autoTransition'
 import redopRouter from './redop'
 import reportDataRouter from './reportData'
 import finalReportDataRouter from './finalReportData'
+import productRouter from './product'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -55,6 +56,7 @@ router.use('/autoTransition', autoTransitionRouter)
 router.use('/redop', redopRouter)
 router.use('/reportData', reportDataRouter)
 router.use('/finalReportData', finalReportDataRouter)
+router.use('/product', productRouter)
 
 
 module.exports = router
