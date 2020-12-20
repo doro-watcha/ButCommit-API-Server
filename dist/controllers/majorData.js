@@ -169,7 +169,7 @@ class majorDataController {
       const eTag = _bcrypt.default.hashSync(user.email, 8);
 
       res.set('Cache-Control', `no-cache, private, max-age=36000`);
-      res.Etag = eTag;
+      res.set('etag', eTag);
       res.send(response);
     } catch (e) {
       res.send((0, _functions.createErrorResponse)(e));
