@@ -36,10 +36,6 @@ class finalReportController {
         userId: user.id
       });
       if (alreadyFinalReport != null && group != "군외") throw Error('FINAL_REPORT_ALREADY_EXISTS');
-      const newUser = {
-        finalEditTimes: user.finalEditTimes - 1
-      };
-      if (user.editTimes <= 0) throw Error('FINAL_EDIT_TIMES_NOT_FOUND');else await _services.userService.update(user.id, newUser);
       const modelObj = {
         group,
         reportId,
@@ -85,7 +81,7 @@ class finalReportController {
         const finalReportData = await _services.finalReportDataService.findOne({
           majorDataId
         });
-        const applicantsNumber = finalReportData.applicants;
+        const applicantsNumber = finalReportData.applicants + Object.keys(finalReports).length;
         const myRank = otherFinalReports.findIndex(function (item, index) {
           return item.id == finalReports[i].id;
         }) + 1;

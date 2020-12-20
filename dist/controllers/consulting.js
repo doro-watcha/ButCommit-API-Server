@@ -34,6 +34,13 @@ class consultingController {
         userId,
         isAdmin
       };
+      const user = await _services.userService.findOne({
+        userId: user.id
+      });
+      const newUser = {
+        consultingTimes: user.consultingTImes - 1
+      };
+      if (user.consultingTimes <= 0) throw Error('CONSULTING_TIMES_NOT_FOUND');else await _services.userService.update(user.id, newUser);
       const consulting = await _services.consultingService.create(modelObj);
       const response = {
         success: true,

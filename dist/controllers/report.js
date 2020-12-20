@@ -72,7 +72,7 @@ class reportController {
       const reportData = await _services.reportDataService.findOne({
         majorDataId
       });
-      const applicantsNumber = reportData.applicants;
+      const applicantsNumber = reportData.applicants + Object.keys(reports).length;
       const myRank = reports.findIndex(function (item, index) {
         return item.id == id;
       }) + 1;

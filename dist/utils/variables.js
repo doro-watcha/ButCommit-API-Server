@@ -181,6 +181,10 @@ module.exports = {
       status: 432,
       ko: '최종 레포트 데이터 없음'
     },
+    CONSULTING_TIMES_NOT_FOUND: {
+      status: 433,
+      ko: '상담 횟수 없음'
+    },
     // 409
     USER_ALREADY_EXISTS: {
       status: 500,

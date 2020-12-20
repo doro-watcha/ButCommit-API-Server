@@ -1,4 +1,4 @@
-import { consultingService } from '../services'
+import { consultingService ,userService } from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
@@ -25,6 +25,15 @@ export default class consultingController {
         userId,
         isAdmin 
       }
+
+      const user = await userService.findOne({userId : user.id })
+
+      const newUser = {
+        consultingTimes : user.consultingTImes - 1
+      }
+
+      if ( user.consultingTimes <= 0 ) throw Error('CONSULTING_TIMES_NOT_FOUND')
+      else await userService.update(user.id, newUser)
 
       const consulting = await consultingService.create(modelObj)
 
