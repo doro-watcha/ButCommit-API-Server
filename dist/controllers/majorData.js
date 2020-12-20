@@ -88,7 +88,7 @@ class majorDataController {
 
   static async findList(req, res) {
     try {
-      // const if_none_match = req.if_none_match
+      console.log(req.header);
       const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {

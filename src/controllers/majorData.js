@@ -83,7 +83,7 @@ export default class majorDataController {
 
     try {
 
-      // const if_none_match = req.if_none_match
+      console.log(req.header)
 
 
 
