@@ -29,19 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
 
-var options = {
-  dotfiles: 'ignore',
-  etag: true,
-  extensions: ['htm', 'html'],
-  index: false,
-  maxAge: '1d',
-  redirect: false,
-  setHeaders: function (res, path, stat) {
-    res.set('Cache-Control', `no-cache, private, max-age=36000`)
-  }
-}
-
-app.use(express.static('public', options));
 swaggerDoc(app)
 
 models.sequelize

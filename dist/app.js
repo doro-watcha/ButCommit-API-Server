@@ -38,18 +38,6 @@ app.use(_bodyParser.default.urlencoded({
   extended: false
 }));
 app.use('/', _index.default);
-var options = {
-  dotfiles: 'ignore',
-  etag: true,
-  extensions: ['htm', 'html'],
-  index: false,
-  maxAge: '1d',
-  redirect: false,
-  setHeaders: function (res, path, stat) {
-    res.set('Cache-Control', `no-cache, private, max-age=36000`);
-  }
-};
-app.use(_express.default.static('public', options));
 (0, _swaggerDoc.default)(app);
 
 _models.default.sequelize.sync({
