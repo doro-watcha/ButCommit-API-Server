@@ -35,7 +35,7 @@ class consultingController {
         isAdmin
       };
       const user = await _services.userService.findOne({
-        userId: user.id
+        id: user.id
       });
       const newUser = {
         consultingTimes: user.consultingTImes - 1
