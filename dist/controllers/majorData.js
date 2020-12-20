@@ -123,11 +123,8 @@ class majorDataController {
       const if_none_match = req.headers['if-none-match'];
 
       if (_bcrypt.default.compareSync(score.updatedAt + user.email, if_none_match)) {
-        const response = {
-          success: true,
-          status: 304
-        };
-        res.send(response);
+        res.status(304);
+        return;
       }
 
       const majorDataList = await _services.majorDataService.findList(modelObj);
