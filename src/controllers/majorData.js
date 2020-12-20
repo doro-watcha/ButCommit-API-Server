@@ -164,7 +164,7 @@ export default class majorDataController {
         }
       }
 
-      const eTag = bycrypt.hashSync(user.email, 8)
+      const eTag = bycrypt.hashSync(user.email)
       res.set('Cache-Control', `no-cache, private, max-age=36000`)
       res.set('etag',eTag)
 
