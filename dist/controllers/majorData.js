@@ -120,6 +120,16 @@ class majorDataController {
       const score = await _services.scoreService.findOne({
         userId: user.id
       });
+      const if_none_match = req.headers['if-none-match'];
+
+      if (_bcrypt.default.compareSync(score.updatedAt + user.email, if_none_match)) {
+        const response = {
+          success: true,
+          status: 304
+        };
+        res.send(response);
+      }
+
       const majorDataList = await _services.majorDataService.findList(modelObj);
       let majorDatas = [];
 
@@ -165,7 +175,6 @@ class majorDataController {
           majorDatas
         }
       };
-      console.log(req);
 
       const eTag = _bcrypt.default.hashSync(score.updatedAt + user.email, 8);
 

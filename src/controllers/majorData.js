@@ -85,6 +85,8 @@ export default class majorDataController {
 
 
 
+
+
       const path = ('../excelfile/test.xlsx')
       let workbook = xlsx.readFile(path, {sheetRows: 3524})
       let sheetsList = workbook.SheetNames
@@ -111,6 +113,17 @@ export default class majorDataController {
       const { user } = req 
 
       const score = await scoreService.findOne({userId : user.id})
+
+
+      const if_none_match = req.headers['if-none-match'] 
+
+      if ( bycrypt.compareSync(score.updatedAt + user.email , if_none_match) ) {
+        const response = {
+          success : true,
+          status : 304
+        }
+        res.send (response)
+      }
 
       const majorDataList = await majorDataService.findList(modelObj)
 
@@ -165,9 +178,6 @@ export default class majorDataController {
           majorDatas
         }
       }
-
-
-      console.log(req)
 
 
       const eTag = bycrypt.hashSync(score.updatedAt + user.email,8)
