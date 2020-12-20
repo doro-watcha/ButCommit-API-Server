@@ -38,7 +38,7 @@ class consultingController {
         id: userId
       });
       const newUser = {
-        consultingTimes: user.consultingTImes - 1
+        consultingTimes: user.consultingTimes - 1
       };
       if (user.consultingTimes <= 0) throw Error('CONSULTING_TIMES_NOT_FOUND');else await _services.userService.update(user.id, newUser);
       const consulting = await _services.consultingService.create(modelObj);

@@ -29,7 +29,7 @@ export default class consultingController {
       const user = await userService.findOne({id : userId })
 
       const newUser = {
-        consultingTimes : user.consultingTImes - 1
+        consultingTimes : user.consultingTimes - 1
       }
 
       if ( user.consultingTimes <= 0 ) throw Error('CONSULTING_TIMES_NOT_FOUND')
