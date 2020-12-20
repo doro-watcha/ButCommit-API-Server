@@ -7,6 +7,9 @@ const { authenticate, getUserInfo } = Authenticator
 
 const router  = Router()
 
+const IMP = window.IMP
+IMP.init()
+
 
 
 router.post('/', authenticate, ( req, res) => {
