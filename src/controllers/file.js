@@ -53,6 +53,7 @@ export default class fileController {
        await majorService.deleteAll()
        await majorDataService.deleteAll()
        await scoreTransitionService.deleteAll()
+       await universityService.deleteAll()
 
 
       
@@ -279,7 +280,7 @@ export default class fileController {
         blankrows: true
       })
 
-      for ( let i = 1; i < 114 ; i++){
+      for ( let i = 1; i < 183 ; i++){
 
         let obj = {
           id : i,
@@ -290,17 +291,18 @@ export default class fileController {
           max : sheetData1[i][4]
         }
 
-        const check_university = await universityService.findOne({
-          id : i,
-          name : sheetData1[i][0],
-          group : sheetData1[i][1],
-          location : sheetData1[i][2],
-          min : sheetData1[i][3],
-          max : sheetData1[i][4]
-        })
+        // const check_university = await universityService.findOne({
+        //   id : i,
+        //   name : sheetData1[i][0],
+        //   group : sheetData1[i][1],
+        //   location : sheetData1[i][2],
+        //   min : sheetData1[i][3],
+        //   max : sheetData1[i][4]
+        // })
 
-        if ( check_university == null) await universityService.create(obj)
-        else await universityService.update(i,obj)
+        // if ( check_university == null) await universityService.create(obj)
+        // else await universityService.update(i,obj)
+        await universityService.create(obj)
       }
 
       let sheetData2 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {

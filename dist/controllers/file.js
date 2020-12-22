@@ -55,6 +55,7 @@ class fileController {
       await _services.majorService.deleteAll();
       await _services.majorDataService.deleteAll();
       await _services.scoreTransitionService.deleteAll();
+      await _services.universityService.deleteAll();
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -285,7 +286,7 @@ class fileController {
         blankrows: true
       });
 
-      for (let i = 1; i < 114; i++) {
+      for (let i = 1; i < 183; i++) {
         let obj = {
           id: i,
           name: sheetData1[i][0],
@@ -293,16 +294,18 @@ class fileController {
           location: sheetData1[i][2],
           min: sheetData1[i][3],
           max: sheetData1[i][4]
-        };
-        const check_university = await _services.universityService.findOne({
-          id: i,
-          name: sheetData1[i][0],
-          group: sheetData1[i][1],
-          location: sheetData1[i][2],
-          min: sheetData1[i][3],
-          max: sheetData1[i][4]
-        });
-        if (check_university == null) await _services.universityService.create(obj);else await _services.universityService.update(i, obj);
+        }; // const check_university = await universityService.findOne({
+        //   id : i,
+        //   name : sheetData1[i][0],
+        //   group : sheetData1[i][1],
+        //   location : sheetData1[i][2],
+        //   min : sheetData1[i][3],
+        //   max : sheetData1[i][4]
+        // })
+        // if ( check_university == null) await universityService.create(obj)
+        // else await universityService.update(i,obj)
+
+        await _services.universityService.create(obj);
       }
 
       let sheetData2 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
