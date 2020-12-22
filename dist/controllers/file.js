@@ -52,13 +52,13 @@ class fileController {
 
   static async parseMajor(req, res) {
     try {
-      //  await majorService.deleteAll()
-      //  await majorDataService.deleteAll()
-      // await scoreTransitionService.deleteAll()
+      await _services.majorService.deleteAll();
+      await _services.majorDataService.deleteAll(); // await scoreTransitionService.deleteAll()
+
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 3524
+        sheetRows: 5175
       });
 
       let sheetsList = workbook.SheetNames;
@@ -72,7 +72,7 @@ class fileController {
 
       let data = [];
 
-      for (let i = 3; i < 3524; i++) {
+      for (let i = 3; i < 5175; i++) {
         /*
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
          */
@@ -94,21 +94,22 @@ class fileController {
           // 경찰행정학과 
           majorName: sheetData[i][7] // 경찰행정학과 
 
-        };
-        const check_major = await _services.majorService.findOne({
-          univName: sheetData[i][3],
-          line: sheetData[i][0],
-          group: sheetData[i][1],
-          sosokUniversity: sheetData[i][5],
-          recruitmentUnit: sheetData[i][6],
-          majorName: sheetData[i][7]
-        });
-        if (check_major == null) await _services.majorService.create(obj1);else await _services.majorService.update(i - 2, obj1);
-        await _services.majorService.update(i - 2, obj1);
+        }; // const check_major = await majorService.findOne({
+        //   univName : sheetData[i][3],
+        //   line : sheetData[i][0],
+        //   group : sheetData[i][1],
+        //   sosokUniversity : sheetData[i][5],
+        //   recruitmentUnit : sheetData[i][6],
+        //   majorName : sheetData[i][7]
+        // })
+        // if ( check_major == null) await majorService.create(obj1)
+        // else await majorService.update(i-2,obj1)
+
+        await _services.majorService.create(obj1); //  await majorService.update(i-2,obj1)
       } // 2021년 
 
 
-      for (let i = 3; i < 3524; i++) {
+      for (let i = 3; i < 5175; i++) {
         let korean_ratio = sheetData[i][58];
         let math_ratio = sheetData[i][59];
         let english_ratio = sheetData[i][60];
@@ -263,19 +264,19 @@ class fileController {
               score: sheetData[i].slice(78, 87)
             }
           }
-        };
-        const check_major = await _services.majorService.findOne({
-          univName: sheetData[i][3],
-          line: sheetData[i][0],
-          group: sheetData[i][1],
-          sosokUniversity: sheetData[i][5],
-          recruitmentUnit: sheetData[i][6],
-          majorName: sheetData[i][7]
-        });
-        const check_majorData = await _services.majorDataService.findOne({
-          majorId: check_major.id
-        });
-        if (check_majorData == null) await _services.majorDataService.create(obj2);else await _services.majorDataService.update(i - 2, obj2);
+        }; // const check_major = await majorService.findOne({
+        //   univName : sheetData[i][3],
+        //   line : sheetData[i][0],
+        //   group : sheetData[i][1],
+        //   sosokUniversity : sheetData[i][5],
+        //   recruitmentUnit : sheetData[i][6],
+        //   majorName : sheetData[i][7]
+        // })
+        // const check_majorData = await majorDataService.findOne({majorId : check_major.id})
+        // if ( check_majorData == null) await majorDataService.create(obj2)
+        // else await majorDataService.update(i-2,obj2)
+
+        await _services.majorDataService.create(obj2);
       }
 
       let sheetData1 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
