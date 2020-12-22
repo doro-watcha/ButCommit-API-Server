@@ -53,8 +53,8 @@ class fileController {
   static async parseMajor(req, res) {
     try {
       await _services.majorService.deleteAll();
-      await _services.majorDataService.deleteAll(); // await scoreTransitionService.deleteAll()
-
+      await _services.majorDataService.deleteAll();
+      await _services.scoreTransitionService.deleteAll();
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -340,7 +340,7 @@ class fileController {
           applicationIndicator: sheetData2[i][5],
           score: data
         };
-        await _services.scoreTransitionService.update(i, obj);
+        await _services.scoreTransitionService.create(i, obj);
       }
 
       const response = {

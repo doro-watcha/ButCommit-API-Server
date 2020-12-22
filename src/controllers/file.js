@@ -52,7 +52,7 @@ export default class fileController {
 
        await majorService.deleteAll()
        await majorDataService.deleteAll()
-      // await scoreTransitionService.deleteAll()
+       await scoreTransitionService.deleteAll()
 
 
       
@@ -345,7 +345,7 @@ export default class fileController {
 
         }
 
-        await scoreTransitionService.update(i, obj)
+        await scoreTransitionService.create(i, obj)
 
       }
 
