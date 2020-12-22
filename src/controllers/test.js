@@ -95,14 +95,10 @@ export default class testController {
 
           console.log( "majorDataId야 " + majorData.id)
 
-          let societyAnswer = parseFloat(sheetData[i][19])
-          let scienceAnswer = parseFloat(sheetData[i][20])
+          let societyAnswer = parseFloat(sheetData[i][10])
+          let scienceAnswer = parseFloat(sheetData[i][13])
 
-          console.log(majorData.major.univName)
-          console.log(majorData.major.majorName)
-          console.log(sheetData[i][19])
-          console.log(sheetData[i][20])
-
+        
 
           let societyValue = -1
           let scienceValue = -1
