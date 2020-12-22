@@ -347,7 +347,7 @@ export default class fileController {
 
         }
 
-        await scoreTransitionService.create(i, obj)
+        await scoreTransitionService.create( obj)
 
       }
 

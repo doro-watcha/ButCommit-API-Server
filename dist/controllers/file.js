@@ -343,7 +343,7 @@ class fileController {
           applicationIndicator: sheetData2[i][5],
           score: data
         };
-        await _services.scoreTransitionService.create(i, obj);
+        await _services.scoreTransitionService.create(obj);
       }
 
       const response = {
