@@ -21,6 +21,7 @@ import redopService from './redop'
 import reportDataService from './reportData'
 import finalReportDataService from './finalReportData'
 import productService from './product'
+import gradeCutService from './gradeCut'
 
 
 module.exports = {
@@ -46,5 +47,6 @@ module.exports = {
     redopService,
     reportDataService,
     finalReportDataService,
-    productService
+    productService,
+    gradeCutService
 }

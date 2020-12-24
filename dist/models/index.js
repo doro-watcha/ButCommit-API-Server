@@ -50,6 +50,8 @@ var _FinalReportData = _interopRequireDefault(require("./FinalReportData"));
 
 var _Product = _interopRequireDefault(require("./Product"));
 
+var _GradeCut = _interopRequireDefault(require("./GradeCut"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const env = process.env.NODE_ENV || 'development';
@@ -78,7 +80,8 @@ const models = {
   Redop: _Redop.default.init(sequelize, _sequelize.default),
   ReportData: _ReportData.default.init(sequelize, _sequelize.default),
   FinalReportData: _FinalReportData.default.init(sequelize, _sequelize.default),
-  Product: _Product.default.init(sequelize, _sequelize.default)
+  Product: _Product.default.init(sequelize, _sequelize.default),
+  GradeCut: _GradeCut.default.init(sequelize, _sequelize.default)
 };
 Object.values(models).filter(model => typeof model.associate === 'function').forEach(model => model.associate(models));
 module.exports = { ...models,

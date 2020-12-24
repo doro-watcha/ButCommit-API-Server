@@ -24,6 +24,7 @@ import RedopModel from './Redop'
 import ReportDataModel from './ReportData'
 import FinalReportDataModel from './FinalReportData'
 import ProductModel from './Product'
+import GradeCutModel from './GradeCut'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -53,7 +54,8 @@ const models = {
   Redop : RedopModel.init(sequelize, Sequelize),
   ReportData : ReportDataModel.init(sequelize, Sequelize),
   FinalReportData : FinalReportDataModel.init(sequelize, Sequelize),
-  Product : ProductModel.init(sequelize,Sequelize)
+  Product : ProductModel.init(sequelize,Sequelize),
+  GradeCut : GradeCutModel.init(sequelize, Sequelize)
 
 }
 

@@ -50,6 +50,8 @@ var _finalReportData = _interopRequireDefault(require("./finalReportData"));
 
 var _product = _interopRequireDefault(require("./product"));
 
+var _gradeCut = _interopRequireDefault(require("./gradeCut"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var express = require('express');
@@ -87,4 +89,5 @@ router.use('/redop', _redop.default);
 router.use('/reportData', _reportData.default);
 router.use('/finalReportData', _finalReportData.default);
 router.use('/product', _product.default);
+router.use('/gradeCut', _gradeCut.default);
 module.exports = router;

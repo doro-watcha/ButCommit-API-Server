@@ -26,6 +26,7 @@ import redopRouter from './redop'
 import reportDataRouter from './reportData'
 import finalReportDataRouter from './finalReportData'
 import productRouter from './product'
+import gradeCutRouter from './gradeCut'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -57,6 +58,7 @@ router.use('/redop', redopRouter)
 router.use('/reportData', reportDataRouter)
 router.use('/finalReportData', finalReportDataRouter)
 router.use('/product', productRouter)
+router.use('/gradeCut', gradeCutRouter)
 
 
 module.exports = router

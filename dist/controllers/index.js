@@ -50,6 +50,8 @@ var _finalReportData = _interopRequireDefault(require("./finalReportData"));
 
 var _product = _interopRequireDefault(require("./product"));
 
+var _gradeCut = _interopRequireDefault(require("./gradeCut"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -77,5 +79,6 @@ module.exports = {
   redopController: _redop.default,
   reportDataController: _reportData.default,
   finalReportDataController: _finalReportData.default,
-  productController: _product.default
+  productController: _product.default,
+  gradeCutController: _gradeCut.default
 };

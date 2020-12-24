@@ -23,6 +23,7 @@ import redopController from './redop'
 import reportDataController from './reportData'
 import finalReportDataController from './finalReportData'
 import productController from './product'
+import gradeCutController from './gradeCut'
 
 module.exports = {
 
@@ -50,5 +51,6 @@ module.exports = {
     redopController,
     reportDataController,
     finalReportDataController,
-    productController
+    productController,
+    gradeCutController
 }
