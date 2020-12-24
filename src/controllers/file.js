@@ -59,7 +59,7 @@ export default class fileController {
       
       const path = ('../excelfile/major.xlsx')
 
-      let workbook = xlsx.readFile(path, {sheetRows: 5175})
+      let workbook = xlsx.readFile(path, {sheetRows: 5139})
       let sheetsList = workbook.SheetNames
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
            header: 1,
@@ -69,7 +69,7 @@ export default class fileController {
 
       //console.log(sheetData)
       let data = []
-      for ( let i = 3 ; i < 5175 ; i++) {
+      for ( let i = 3 ; i < 5139 ; i++) {
 
         /*
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
@@ -111,7 +111,7 @@ export default class fileController {
       }
 
       // 2021년 
-      for ( let i = 3; i < 5175; i++) {
+      for ( let i = 3; i < 5139; i++) {
 
 
         let korean_ratio = sheetData[i][58]
@@ -280,7 +280,7 @@ export default class fileController {
         blankrows: true
       })
 
-      for ( let i = 1; i < 183 ; i++){
+      for ( let i = 1; i < 182 ; i++){
 
         let obj = {
           id : i,
