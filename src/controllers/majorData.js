@@ -127,11 +127,11 @@ export default class majorDataController {
       const majorDataList = await majorDataService.findList(modelObj)
 
       let majorDatas = []
-      for ( let i = 3 ; i < 3524 ; i++){
+      for ( let i = 3 ; i < 5139 ; i++){
 
 
-        let societyAnswer = parseFloat(sheetData[i][19])
-        let scienceAnswer = parseFloat(sheetData[i][20])
+        let societyAnswer = parseFloat(sheetData[i][10])
+        let scienceAnswer = parseFloat(sheetData[i][13])
 
         let majorData = majorDataList[i-3]
 
