@@ -541,6 +541,49 @@ export default class reportController {
       newScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * 2.5
     }
 
+    else if (reflectionOption =="우수영역 순서대로 50% + 30% + 20%") {
+      const scoreList = [ {
+        subject : "국어",
+        score : score.korean.percentile
+      },{
+        subject : "수학",
+        score : score.math.percentile
+      }, {
+        subject : "영어",
+        score : majorData.gradeToScore.english.score[score.english.grade-1]
+      },{
+        subject : "탐구",
+        score : Math.max(score.tamgu1.percentile, score.tamgu2.percentile)
+      }]
+
+              
+      scoreList.sort(function(a, b) { 
+        return b.score - a.score
+      })
+
+      for ( let i = 0 ; i < 3 ; i++){
+
+        var reflectionScore = [5,3,2]
+
+        if ( scoreList[i].subject == "국어") {
+          newScore.korean = scoreList[i].score * reflectionScore[i]
+        }
+        else if ( scoreList[i].subject == "수학") {
+          newScore.math = scoreList[i].score * reflectionScore[i]
+        } 
+
+        else if (scoreList[i].subject =="영어") {
+          newScore.english = scoreList[i].score * reflectionScore[i]
+        }
+
+        else if ( scoreList[i].subject == "탐구") {
+          newScore.tamgu1.score = scoreList[i].score * reflectionScore[i]
+          newScore.tamgu2.score = scoreList[i].score * reflectionScore[i]
+        }     
+       }
+
+    }
+
     
     else if ( majorData.major.univName.indexOf("가천대")>= 0 && majorData.major.majorName != "한의예과" && majorData.major.majorName != "의예과" ) {
 
@@ -741,11 +784,61 @@ export default class reportController {
     // }
     
     else if ( applicationIndicatorType == "A") {
+
+      var korean = score.korean.percentile
+      var math = score.math.percentile
+      var tamgu1 = score.tamgu1.percentile
+      var tamgu2 = score.tamgu2.percentile
+      var maxTamgu = Math.max(tamgu1,tamgu2)
+
       newScore.korean = (score.korean.percentile * perfectScore.korean ) / 100 
       newScore.math = ( score.math.percentile * perfectScore.math ) / 100 
       newScore.tamgu1.score = ( score.tamgu1.percentile * perfectScore.tamgu) / 100
       newScore.tamgu2.score = ( score.tamgu2.percentile * perfectScore.tamgu) / 100  
       newScore.foreign.score = (score.foreign.percentile * perfectScore.tamgu) / 100 
+
+
+      // 창신대 , 창원대 예외처리 
+      if ( specialOption == "( 국 백분위 x 0.72 + 108 ) + ( 수 백분위 x 0.48 + 72 ) + ( 탐 1과목 백분위 x 0.48 + 72 ) + 영 + 한") {
+        newScore.korean = korean * 0.72 + 108
+        newScore.math = math * 0.48 + 72
+        newScore.tamgu1.score = tamgu1 * 0.48 + 72
+        newScore.tamgu2.score = tamgu2 * 0.48 + 72
+      }
+      else if ( specialOption == "( 국 백분위 x 0.6 + 90 ) + ( 수 백분위 x 0.4 + 60 ) + ( 탐 1과목 백분위 x 0.4 + 60 ) + 영 + 한") {
+        newScore.korean = korean * 0.6 + 90
+        newScore.math = math * 0.4 + 60
+        newScore.tamgu1.score = tamgu1 * 0.4 + 60
+        newScore.tamgu2.score = tamgu2 * 0.4 + 60
+      }
+
+      else if ( specialOption == "( 국 백분위 x 0.84 + 126 ) + ( 수 백분위 x 0.56 + 84 ) + ( 탐구 백분위 평균 x 0.7 + 105 ) + 영") {
+        newScore.korean = korean * 0.84 + 126
+        newScore.math = math * 0.56 + 84
+        newScore.tamgu1.score = tamgu1 * 0.7 + 105
+        newScore.tamgu2.score = tamgu2 * 0.7 + 105
+      }
+
+      else if ( specialOption == "( 국 백분위 x 0.56 + 84 ) + ( 수 백분위 x 0.84 + 126 ) + ( 탐구 백분위 평균 x 0.7 + 105 ) + 영") {
+        newScore.korean = korean * 0.56 + 84
+        newScore.math = math * 0.84 + 126
+        newScore.tamgu1.score = tamgu1 * 0.7 + 105
+        newScore.tamgu2.score = tamgu2 * 0.7 + 105
+      }
+
+      else if  ( specialOption == "( 국 백분위 x 0.7 + 105 ) + ( 수 백분위 x 0.7 + 105 ) + ( 탐구 백분위 평균 x 0.7 + 105 ) + 영") {
+        newScore.korean = korean * 0.7 + 105
+        newScore.math = math * 0.7 + 105
+        newScore.tamgu1.score = tamgu1 * 0.7 + 105
+        newScore.tamgu2.score = tamgu2 * 0.7 + 105
+      }
+
+      else if ( specialOption == "( 국 백분위 x 0.84 + 126 ) + ( 수 백분위 x 0.7 + 105 ) + ( 탐구 백분위 평균 x 0.42 + 63 ) + 영") {
+        newScore.korean = korean * 0.84 + 126
+        newScore.math = math * 0.7 + 105
+        newScore.tamgu1.score = tamgu1 * 0.42 + 63
+        newScore.tamgu2.score = tamgu2 * 0.42 + 63
+      }
     }
     // 표준점수 x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "B") {
@@ -1347,7 +1440,7 @@ export default class reportController {
 
       }
 
-      else if ( extraSubject == "수가 / 과I / 과Ⅱ") {
+      else if ( extraSubject == "수가 / 과I / 과Ⅱ" || extraSubject == "수가 / 과탐I / 과탐Ⅱ") {
 
         if ( score.math.type =="가") extraScore.math = newScore.math * extra1 / 100
 

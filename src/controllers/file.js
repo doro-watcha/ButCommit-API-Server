@@ -52,8 +52,8 @@ export default class fileController {
 
       //  await majorService.deleteAll()
       //  await majorDataService.deleteAll()
-      //  await scoreTransitionService.deleteAll()
-      //  await universityService.deleteAll()
+       await scoreTransitionService.deleteAll()
+       await universityService.deleteAll()
 
 
       

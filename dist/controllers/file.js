@@ -54,8 +54,8 @@ class fileController {
     try {
       //  await majorService.deleteAll()
       //  await majorDataService.deleteAll()
-      //  await scoreTransitionService.deleteAll()
-      //  await universityService.deleteAll()
+      await _services.scoreTransitionService.deleteAll();
+      await _services.universityService.deleteAll();
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
