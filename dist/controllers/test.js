@@ -117,11 +117,11 @@ class testController {
          */
 
         if (societyValue - societyAnswer <= 0) {
-          if (societyValue - societyAnswer >= -5) societyDeterminant = 1;else societyDeterminant = 0;
+          if (societyValue - societyAnswer >= -30) societyDeterminant = 1;else societyDeterminant = 0;
         }
 
         if (societyValue - societyAnswer > 0) {
-          if (societyValue - societyAnswer <= 5) societyDeterminant = 1;else societyDeterminant = 0;
+          if (societyValue - societyAnswer <= 30) societyDeterminant = 1;else societyDeterminant = 0;
         }
         /**
          * 이과 점수 판단하기
@@ -129,19 +129,19 @@ class testController {
 
 
         if (scienceValue - scienceAnswer <= 0) {
-          if (scienceValue - scienceAnswer >= -5) scienceDeterminant = 1;else scienceDeterminant = 0;
+          if (scienceValue - scienceAnswer >= -30) scienceDeterminant = 1;else scienceDeterminant = 0;
         }
 
         if (scienceValue - scienceAnswer > 0) {
-          if (scienceValue - scienceAnswer <= 5) scienceDeterminant = 1;else scienceDeterminant = 0;
+          if (scienceValue - scienceAnswer <= 30) scienceDeterminant = 1;else scienceDeterminant = 0;
         }
 
         if (scienceDeterminant == 1 && societyDeterminant == 1) pass++;
         console.log("이과예측점수");
         console.log(scienceAnswer);
         console.log("문과예측점수");
-        console.log(societyAnswer); // if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
-        // if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
+        console.log(societyAnswer); //  if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
+        //  if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
 
         let obj = {};
 

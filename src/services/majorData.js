@@ -66,7 +66,7 @@ class MajorDataService {
       where : { id }
     })
 
-    const majorData = await MajorData.findOne({id})
+    const majorData = await MajorData.findOne({ where : {id}})
 
     if ( majorData == null ) throw Error('MAJOR_DATA_NOT_FOUND')
 

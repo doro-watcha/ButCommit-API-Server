@@ -434,6 +434,7 @@ class reportController {
       newScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * 2.5;
     } else if (majorData.major.univName.indexOf("가천대") >= 0 && majorData.major.majorName != "한의예과" && majorData.major.majorName != "의예과") {
       if (majorData.ratio.korean == "45/40/15") {
+        console.log("45/40/15");
         var mathScore = score.math.percentile;
         var englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
         var tamguScore = Math.max(score.tamgu1.percentile, score.tamgu2.percentile);
@@ -443,24 +444,37 @@ class reportController {
           if (score.line == "자연") tamguScore *= 1.03;
         }
 
-        const scoreList = [score.korean.percentile, englishScore, mathScore, tamguScore];
+        const scoreList = [{
+          score: score.korean.percentile,
+          subject: "국어"
+        }, {
+          score: englishScore,
+          subject: "영어"
+        }, {
+          score: mathScore,
+          subject: "수학"
+        }, {
+          score: tamguScore,
+          subject: "탐구"
+        }];
         scoreList.sort(function (a, b) {
-          return b - a;
+          return b.score - a.score;
         });
 
         for (let i = 0; i < 4; i++) {
           var reflectionScore = [4.5, 4, 1.5, 0];
+          console.log(scoreList[i]);
 
-          if (scoreList[i] == score.korean.percentile) {
+          if (scoreList[i].subject === "국어") {
             newScore.korean = score.korean.percentile * reflectionScore[i];
             perfectScore.korean = reflectionScore[i] * 100;
-          } else if (scoreList[i] == englishScore) {
+          } else if (scoreList[i].subject === "영어") {
             newScore.english = englishScore * reflectionScore[i];
             perfectScore.english = reflectionScore[i] * 100;
-          } else if (scoreList[i] == score.math.percentile) {
+          } else if (scoreList[i].subject === "수학") {
             newScore.math = score.math.percentile * reflectionScore[i];
             perfectScore.math = reflectionScore[i] * 100;
-          } else if (scoreList[i] == tamguScore) {
+          } else if (scoreList[i].subject === "탐구") {
             newScore.tamgu1.score = score.tamgu1.percentile * reflectionScore[i];
             newScore.tamgu2.score = score.tamgu2.percentile * reflectionScore[i];
             perfectScore.tamgu = reflectionScore[i] * 100;
@@ -473,18 +487,24 @@ class reportController {
           if (score.math.type == "가") mathScore *= 1.05;
         }
 
-        const scoreList = [score.korean.percentile, mathScore];
+        const scoreList = [{
+          score: score.korean.percentile,
+          subject: "국어"
+        }, {
+          score: mathScore,
+          subject: "수학"
+        }];
         scoreList.sort(function (a, b) {
-          return b - a;
+          return b.score - a.score;
         });
 
         for (let i = 0; i < 2; i++) {
           var reflectionScore = [3.5, 2.5];
 
-          if (scoreList[i] == score.korean.percentile) {
+          if (scoreList[i].subject === "국어") {
             newScore.korean = score.korean.percentile * reflectionScore[i];
             perfectScore.korean = reflectionScore[i] * 100;
-          } else if (scoreList[i] == mathScore) {
+          } else if (scoreList[i].subject === "수학") {
             newScore.math = score.math.percentile * reflectionScore[i];
             perfectScore.math = reflectionScore[i] * 100;
           }
@@ -607,6 +627,12 @@ class reportController {
               newScore.tamgu1.score = (tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200;
               newScore.tamgu2.score = (tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200;
               if (tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = (foreignTransitionScore.score.value[100 - score.foreign.percentile] + 100) * perfectScore.tamgu / 200;
+            } //가톨릭대 예외처리
+
+
+            if (specialOption == "탐구:  탐구 상위 1과목 변표 그대로   ") {
+              newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
+              newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
             }
           } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
           else if (applicationIndicatorType == "D") {

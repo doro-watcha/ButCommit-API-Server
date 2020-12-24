@@ -52,10 +52,10 @@ class fileController {
 
   static async parseMajor(req, res) {
     try {
-      await _services.majorService.deleteAll();
-      await _services.majorDataService.deleteAll();
-      await _services.scoreTransitionService.deleteAll();
-      await _services.universityService.deleteAll();
+      //  await majorService.deleteAll()
+      //  await majorDataService.deleteAll()
+      //  await scoreTransitionService.deleteAll()
+      //  await universityService.deleteAll()
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
@@ -266,9 +266,12 @@ class fileController {
         };
         const check_major = await _services.majorService.findOne({
           id: i - 2
+        });
+        const check_majorData = await _services.majorDataService.findOne({
+          id: i - 2
         }); // 이미 존재하는 과가 있고, 그 과가 현재 파싱하려는 대학이름과 과가 같다 -> 고로 그냥 업데이트 해야한다
 
-        if (check_major != null && check_major.majorName == sheetData[i][7] && check_major.univName == sheetData[i][3]) {
+        if (check_major != null && check_majorData != null && check_major.majorName === sheetData[i][7] && check_major.univName === sheetData[i][3]) {
           await _services.majorDataService.update(i - 2, obj2);
         } else {
           await _services.majorDataService.create(obj2);

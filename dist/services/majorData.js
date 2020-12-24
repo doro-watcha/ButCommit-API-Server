@@ -73,7 +73,9 @@ class MajorDataService {
       }
     });
     const majorData = await _models.MajorData.findOne({
-      id
+      where: {
+        id
+      }
     });
     if (majorData == null) throw Error('MAJOR_DATA_NOT_FOUND');
     return majorData;

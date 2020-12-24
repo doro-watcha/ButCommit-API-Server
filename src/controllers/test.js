@@ -136,12 +136,12 @@ export default class testController {
            */
 
           if ( societyValue - societyAnswer <= 0 ) {
-            if ( societyValue - societyAnswer >=-5) societyDeterminant = 1
+            if ( societyValue - societyAnswer >=-30) societyDeterminant = 1
             else societyDeterminant = 0
           } 
           
           if ( societyValue - societyAnswer > 0  ) {
-            if ( societyValue - societyAnswer <= 5) societyDeterminant = 1
+            if ( societyValue - societyAnswer <= 30) societyDeterminant = 1
             else societyDeterminant = 0 
 
           }
@@ -151,13 +151,13 @@ export default class testController {
            */
         
           if ( scienceValue - scienceAnswer <= 0 ) {
-            if ( scienceValue - scienceAnswer >=-5) scienceDeterminant = 1
+            if ( scienceValue - scienceAnswer >=-30) scienceDeterminant = 1
             else scienceDeterminant = 0
           } 
           
 
           if ( scienceValue - scienceAnswer > 0  ) {
-            if ( scienceValue - scienceAnswer <= 5) scienceDeterminant = 1
+            if ( scienceValue - scienceAnswer <= 30) scienceDeterminant = 1
             else scienceDeterminant = 0 
           }
 
@@ -168,9 +168,9 @@ export default class testController {
           console.log("문과예측점수")
           console.log(societyAnswer)
           
-          // if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
+          //  if ( (societyDeterminant == 0 || scienceDeterminant == 0 ) ) throw Error('SCORE_NOT_FOUND')
 
-          // if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
+          //  if ( societyDeterminant == -1 && scienceDeterminant == -1) throw Error('SCORE_ALREADY_EXISTS')
           
           let obj = {}
           if ( isNaN(societyValue) == false && isNaN(scienceValue) == false ) {

@@ -50,10 +50,10 @@ export default class fileController {
 
     try { 
 
-       await majorService.deleteAll()
-       await majorDataService.deleteAll()
-       await scoreTransitionService.deleteAll()
-       await universityService.deleteAll()
+      //  await majorService.deleteAll()
+      //  await majorDataService.deleteAll()
+      //  await scoreTransitionService.deleteAll()
+      //  await universityService.deleteAll()
 
 
       
@@ -253,8 +253,10 @@ export default class fileController {
           id : i-2
         })
 
+        const check_majorData = await majorDataService.findOne({id : i-2})
+
         // 이미 존재하는 과가 있고, 그 과가 현재 파싱하려는 대학이름과 과가 같다 -> 고로 그냥 업데이트 해야한다
-        if ( check_major != null && check_major.majorName == sheetData[i][7] && check_major.univName == sheetData[i][3]) {
+        if ( check_major != null && check_majorData != null  && check_major.majorName === sheetData[i][7] && check_major.univName === sheetData[i][3]) {
           await majorDataService.update(i-2,obj2)
         }
         else {
