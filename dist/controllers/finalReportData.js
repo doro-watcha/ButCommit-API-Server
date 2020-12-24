@@ -18,7 +18,7 @@ class finalReportDataController {
     try {
       await _services.finalReportDataService.deleteAll();
 
-      for (let i = 0; i < 3521; i++) {
+      for (let i = 0; i < 5136; i++) {
         let majorData = await _services.majorDataService.findOne({
           id: i + 1
         });

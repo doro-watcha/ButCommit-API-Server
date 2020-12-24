@@ -11,7 +11,7 @@ export default class finalReportDataController {
 
       await finalReportDataService.deleteAll()
 
-      for ( let i = 0 ; i < 3521 ; i++) {
+      for ( let i = 0 ; i < 5136 ; i++) {
 
         let majorData = await majorDataService.findOne({id : i+1})
 

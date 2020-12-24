@@ -88,26 +88,17 @@ export default class fileController {
         }
 
 
-        // const check_major = await majorService.findOne({
-        //   univName : sheetData[i][3],
-        //   line : sheetData[i][0],
-        //   group : sheetData[i][1],
-        //   sosokUniversity : sheetData[i][5],
-        //   recruitmentUnit : sheetData[i][6],
-        //   majorName : sheetData[i][7]
-        // })
-    
+        const check_major = await majorService.findOne({
+          id : i-2
+        })
 
-        // if ( check_major == null) await majorService.create(obj1)
-        // else await majorService.update(i-2,obj1)
-
-        await majorService.create(obj1)
-
-
-
-
-
-      //  await majorService.update(i-2,obj1)
+        // 이미 존재하는 과가 있고, 그 과가 현재 파싱하려는 대학이름과 과가 같다 -> 고로 그냥 업데이트 해야한다
+        if ( check_major != null && check_major.majorName == sheetData[i][7] && check_major.univName == sheetData[i][3]) {
+          await majorService.update(i-2,obj1)
+        }
+        else {
+          await majorService.create(obj1)
+        }
       }
 
       // 2021년 
@@ -258,20 +249,17 @@ export default class fileController {
           }
         }
 
-        // const check_major = await majorService.findOne({
-        //   univName : sheetData[i][3],
-        //   line : sheetData[i][0],
-        //   group : sheetData[i][1],
-        //   sosokUniversity : sheetData[i][5],
-        //   recruitmentUnit : sheetData[i][6],
-        //   majorName : sheetData[i][7]
-        // })
-        // const check_majorData = await majorDataService.findOne({majorId : check_major.id})
+        const check_major = await majorService.findOne({
+          id : i-2
+        })
 
-        // if ( check_majorData == null) await majorDataService.create(obj2)
-        // else await majorDataService.update(i-2,obj2)
-
-        await majorDataService.create(obj2)
+        // 이미 존재하는 과가 있고, 그 과가 현재 파싱하려는 대학이름과 과가 같다 -> 고로 그냥 업데이트 해야한다
+        if ( check_major != null && check_major.majorName == sheetData[i][7] && check_major.univName == sheetData[i][3]) {
+          await majorDataService.update(i-2,obj2)
+        }
+        else {
+          await majorDataService.create(obj2)
+        }
       }
 
       let sheetData1 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
