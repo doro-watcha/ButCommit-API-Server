@@ -235,12 +235,11 @@ class testController {
                 scienceValue,
                 scienceDeterminant
               };
-            } // if ( societyDeterminant == 1 && scienceDeterminant == 1 ) {
-        // }
-        // else 
+            }
 
-
-        await _services.testService.create(obj);
+        if (societyDeterminant == 1 && scienceDeterminant == 1) {} else {
+          await _services.testService.create(obj);
+        }
       }
 
       const response = {
