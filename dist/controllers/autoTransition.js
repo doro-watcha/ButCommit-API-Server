@@ -42,7 +42,7 @@ class fileController {
       const path = '../excelfile/autoTransition.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 1653
+        sheetRows: 1283
       });
 
       let sheetsList = workbook.SheetNames;
@@ -55,22 +55,20 @@ class fileController {
 
       let obj = {};
 
-      for (let i = 1; i < 1653; i++) {
+      for (let i = 1; i < 1283; i++) {
         if (sheetData[i][0] == "영어" || sheetData[i][0] == "한국사") {
           obj = {
             id: i,
             subject: sheetData[i][0],
-            originalScore: sheetData[i][1],
-            grade: sheetData[i][4]
+            grade: sheetData[i][3]
           };
         } else {
           obj = {
             id: i,
             subject: sheetData[i][0],
-            originalScore: sheetData[i][1],
-            score: sheetData[i][2],
-            percentile: sheetData[i][3],
-            grade: sheetData[i][4]
+            score: sheetData[i][1],
+            percentile: sheetData[i][2],
+            grade: sheetData[i][3]
           };
         }
 
@@ -90,15 +88,15 @@ class fileController {
     try {
       const result = await _joi.default.validate(req.query, {
         subject: _joi.default.string().required(),
-        originalScore: _joi.default.number().required()
+        score: _joi.default.number().required()
       });
       const {
         subject,
-        originalScore
+        score
       } = result;
       const autoTransition = await _services.autoTransitionService.findOne({
         subject,
-        originalScore
+        score
       });
       if (autoTransition == null) throw Error('AUTO_TRANSITION_NOT_FOUND');
       const response = {

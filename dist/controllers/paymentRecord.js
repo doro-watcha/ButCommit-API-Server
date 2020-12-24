@@ -165,9 +165,9 @@ class majorController {
         },
         // "Content-Type": "application/json"
         data: {
-          imp_key: "7836405726138319",
+          imp_key: "2593216387967088",
           // REST API키
-          imp_secret: "J1HkjMT3BeF4jbQAR1UHo3FPwMWHKO7uQPP9BJccXShg47QV9LCxOink5k2P8akYZ97BSkOPc65heWcn" // REST API Secret
+          imp_secret: "CPKbPAv6aqqtz7LnUG1DMQuZ4VBiGmyibju0T074rxx0FjozZpdMfHLjDmBjJaCUt7Vn73ryBYyghWPh" // REST API Secret
 
         }
       });

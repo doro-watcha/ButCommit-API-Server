@@ -2221,8 +2221,6 @@ export default class reportController {
 
       const recommendations = await majorDataService.findRecommendations(totalSum)
 
-      var total_sum = Math.round(totalSum)
-
 
       const modelObj = {
         score : newScore,
@@ -2230,7 +2228,7 @@ export default class reportController {
         userId : score.userId,
         perfectScore,
         extraScore : extraScore,
-        totalScore : total_sum,
+        totalScore,
         recommendations,
         actualPerfectScore : major_perfectScore
       }

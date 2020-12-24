@@ -10,10 +10,6 @@ export default class AutoTransition extends Sequelize.Model {
                 type : Sequelize.STRING,
                 allowNull : true
               },
-              originalScore : {
-                type : Sequelize.INTEGER,
-                defaultValue : 0
-              },
               score : {
                 type : Sequelize.INTEGER,
                 defaultValue : 0

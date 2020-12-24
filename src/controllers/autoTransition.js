@@ -36,7 +36,7 @@ export default class fileController {
       
       const path = ('../excelfile/autoTransition.xlsx')
 
-      let workbook = xlsx.readFile(path, {sheetRows: 1653})
+      let workbook = xlsx.readFile(path, {sheetRows: 1283})
       let sheetsList = workbook.SheetNames
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[0]], {
            header: 1,
@@ -46,14 +46,13 @@ export default class fileController {
 
 
       let obj = {}
-      for ( let i = 1 ; i < 1653 ; i++) {
+      for ( let i = 1 ; i < 1283 ; i++) {
 
         if ( sheetData[i][0] == "영어" || sheetData[i][0] == "한국사") {
           obj = {
             id : i,
             subject : sheetData[i][0],
-            originalScore : sheetData[i][1],
-            grade : sheetData[i][4]
+            grade : sheetData[i][3]
           }
 
         } else {
@@ -61,10 +60,9 @@ export default class fileController {
           obj = {
             id : i,
             subject : sheetData[i][0],
-            originalScore : sheetData[i][1],
-            score : sheetData[i][2],
-            percentile : sheetData[i][3],
-            grade : sheetData[i][4]
+            score : sheetData[i][1],
+            percentile : sheetData[i][2],
+            grade : sheetData[i][3]
           }
         }
 
@@ -92,12 +90,12 @@ export default class fileController {
       const result = await Joi.validate ( req.query , {
 
         subject : Joi.string().required(),
-        originalScore : Joi.number().required()
+        score : Joi.number().required()
       })
 
-      const { subject , originalScore} = result 
+      const { subject , score } = result 
 
-      const autoTransition = await autoTransitionService.findOne({subject, originalScore})
+      const autoTransition = await autoTransitionService.findOne({subject, score})
 
       if ( autoTransition == null ) throw Error('AUTO_TRANSITION_NOT_FOUND')
 
