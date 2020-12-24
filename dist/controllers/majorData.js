@@ -91,7 +91,7 @@ class majorDataController {
       const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 3524
+        sheetRows: 5139
       });
 
       let sheetsList = workbook.SheetNames;

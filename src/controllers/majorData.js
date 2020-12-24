@@ -88,7 +88,7 @@ export default class majorDataController {
 
 
       const path = ('../excelfile/test.xlsx')
-      let workbook = xlsx.readFile(path, {sheetRows: 3524})
+      let workbook = xlsx.readFile(path, {sheetRows: 5139})
       let sheetsList = workbook.SheetNames
 
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
