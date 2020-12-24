@@ -2228,7 +2228,7 @@ export default class reportController {
         userId : score.userId,
         perfectScore,
         extraScore : extraScore,
-        totalScore,
+        totalScore : totalSum,
         recommendations,
         actualPerfectScore : major_perfectScore
       }
