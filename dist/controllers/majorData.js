@@ -117,11 +117,6 @@ class majorDataController {
 
       for (let i = 3; i < 5137; i++) {
         let majorData = majorDataList[i - 3];
-        console.log("SocietyAnswer == " + societyAnswer);
-        console.log("scienceAnswer = " + scienceAnswer);
-        console.log(score.line);
-        console.log(majorData.major.majorName);
-        console.log(majorData.major.univName);
         let transitionScore = 0;
 
         if (score.line == "인문") {

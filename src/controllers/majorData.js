@@ -118,12 +118,6 @@ export default class majorDataController {
 
         let majorData = majorDataList[i-3]
 
-        console.log("SocietyAnswer == " + societyAnswer)
-        console.log("scienceAnswer = " + scienceAnswer)
-        console.log(score.line)
-        console.log(majorData.major.majorName)
-        console.log(majorData.major.univName)
-
 
         let transitionScore = 0
         
