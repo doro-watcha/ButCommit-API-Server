@@ -56,7 +56,7 @@ class User extends _sequelize.default.Model {
       },
       consultingTimes: {
         type: _sequelize.default.INTEGER,
-        defaultValue: 4
+        defaultValue: 0
       },
       isMoneyPaid: {
         type: _sequelize.default.INTEGER,

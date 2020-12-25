@@ -49,7 +49,7 @@ export default class User extends Sequelize.Model {
 						},
 						consultingTimes : {
 							type : Sequelize.INTEGER,
-							defaultValue : 4
+							defaultValue : 0
 						},
 						isMoneyPaid : {
 							type : Sequelize.INTEGER,
