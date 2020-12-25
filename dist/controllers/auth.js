@@ -70,7 +70,8 @@ class AuthController {
         telephone: _joi.default.string(),
         gender: _joi.default.string(),
         adminLevel: _joi.default.number(),
-        academyId: _joi.default.optional()
+        academyId: _joi.default.optional(),
+        isMoneyPaid: _joi.default.number()
       });
       const {
         email,
@@ -83,7 +84,8 @@ class AuthController {
         telephone,
         gender,
         academyId,
-        adminLevel
+        adminLevel,
+        isMoneyPaid
       } = result; // check if user already exists
 
       const user = await _services.userService.findOne({
@@ -103,7 +105,8 @@ class AuthController {
         telephone,
         gender,
         academyId,
-        adminLevel
+        adminLevel,
+        isMoneyPaid
       }); // create response
 
       const response = {
