@@ -389,7 +389,6 @@ export default class reportController {
     }
 
     if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") {
-      console.log("zxcvzxcv")
       mathTransitionScore = await scoreTransitionService.findOne({
         univName : majorData.major.univName,
         major : majorData.major.majorName,
@@ -949,9 +948,6 @@ export default class reportController {
       // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
       if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
 
-        console.log(tamgu1TransitionScore.score.value[0])
-        console.log(tamgu2TransitionScore.score.value[0])
-        console.log(foreignTransitionScore.score)
 
         highestTamgu1.score = tamgu1TransitionScore.score.value[0]
         highestTamgu2.score = tamgu2TransitionScore.score.value[0]
