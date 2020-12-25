@@ -361,7 +361,7 @@ export default class reportController {
         subject : subject2
       })
 
-      if ( tamguReplace.length > 1 && score.foreign.name != null) {
+      if ( tamguReplace.length > 1 && score.foreign.score != null) {
         console.log("제2외/한 이다잉")
         foreignTransitionScore = await scoreTransitionService.findOne({
           univName : majorData.major.univName, 
@@ -400,7 +400,6 @@ export default class reportController {
     else if ( calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
       mathTransitionScore = await scoreTransitionService.findOne({
         univName : majorData.major.univName,
-
         major : majorData.major.majorName,
         subject : "수나"
       })
@@ -773,7 +772,7 @@ export default class reportController {
       newScore.math = score.math.score * perfectScore.math / value * 0.8
       newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value * 0.8
       newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value * 0.8
-      if ( majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.name != null ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / value * 0.8
+      if ( majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.score != null ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / value * 0.8
 
       console.log("zxcv")
     }
@@ -849,13 +848,13 @@ export default class reportController {
       newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu) / 100
       newScore.foreign.score = score.foreign.score * (perfectScore.foreign) / 100 
   
-      if ( tamguReplace.length > 0 && score.foreign.name != null)  newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu ) / 100
+      if ( tamguReplace.length > 0 && score.foreign.score != null)  newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu ) / 100
 
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
 
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-        if ( tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
       }
 
       // 대구가톨릭의예 예외처리
@@ -894,7 +893,7 @@ export default class reportController {
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
         console.log("이거는 됐다잉~")
-        if ( tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
         console.log('나가리아딩')
       }
       else {
@@ -909,7 +908,7 @@ export default class reportController {
         console.log("+100")
         newScore.tamgu1.score = ( tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200
         newScore.tamgu2.score = ( tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200
-        if ( tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = ( foreignTransitionScore.score.value[100-score.foreign.percentile] + 100) * perfectScore.tamgu / 200
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = ( foreignTransitionScore.score.value[100-score.foreign.percentile] + 100) * perfectScore.tamgu / 200
       }
 
       //가톨릭대 예외처리
@@ -935,7 +934,7 @@ export default class reportController {
 
         tempTamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
         tempTamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
-        if ( tamguReplace.length > 0 && score.foreign.name != null) tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
       }
 
       var highest_tamgu_type = ""
@@ -944,8 +943,7 @@ export default class reportController {
 
       var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
-
-      console.log(score.foreign.name)
+      
       var highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
 
       // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
@@ -957,10 +955,8 @@ export default class reportController {
 
         highestTamgu1.score = tamgu1TransitionScore.score.value[0]
         highestTamgu2.score = tamgu2TransitionScore.score.value[0]
-
-        console.log(highestForeign)
         
-        if ( tamguReplace.length > 0 && score.foreign.name != null) highestForeign.score = foreignTransitionScore.score.value[0]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0]
       }
 
 
@@ -1012,7 +1008,7 @@ export default class reportController {
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 160
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 160
-        if ( tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / 160
 
       }
 
@@ -1045,7 +1041,7 @@ export default class reportController {
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
-        if ( tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile]
 
       }
 
@@ -1775,12 +1771,12 @@ export default class reportController {
         const transitionHighestScore = tamgu1TransitionScore.score.value[0]
         console.log("2")
 
-        if ( tamguReplace.length > 0 && score.foreign.name != null) highestForeign.score = foreignTransitionScore.score.value[0]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0]
 
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
 
-        if ( tamguReplace.length > 0 && score.foreign.name != null) newScore.foreign = foreignTransitionScore.score.value[100-score.foreign.percentile]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign = foreignTransitionScore.score.value[100-score.foreign.percentile]
 
         totalScore.tamgu = (( newScore.tamgu1.score + newScore.tamgu2.score ) / 2 + 100 ) / ( transitionHighestScore + 100 ) * perfectScore.tamgu
 
