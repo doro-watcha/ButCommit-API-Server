@@ -207,7 +207,7 @@ class majorController {
         };
         const userObj = {
           isMoneyPaid: 1,
-          editTimes: user.editTimes + 2,
+          editTimes: user.editTimes + 1,
           consultingTimes: user.consultingTimes + 4
         };
         await _services.userService.update(user.id, userObj);

@@ -45,7 +45,7 @@ export default class User extends Sequelize.Model {
 						},
 						editTimes : {
 							type : Sequelize.INTEGER,
-							defaultValue : 2
+							defaultValue : 1
 						},
 						consultingTimes : {
 							type : Sequelize.INTEGER,

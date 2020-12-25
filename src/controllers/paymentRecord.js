@@ -208,7 +208,7 @@ export default class majorController {
 
         const userObj = {
           isMoneyPaid : 1,
-          editTimes : user.editTimes + 2,
+          editTimes : user.editTimes + 1,
           consultingTimes : user.consultingTimes + 4
         }
         await userService.update( user.id, userObj)

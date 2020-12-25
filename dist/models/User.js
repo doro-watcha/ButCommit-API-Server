@@ -52,7 +52,7 @@ class User extends _sequelize.default.Model {
       },
       editTimes: {
         type: _sequelize.default.INTEGER,
-        defaultValue: 2
+        defaultValue: 1
       },
       consultingTimes: {
         type: _sequelize.default.INTEGER,
