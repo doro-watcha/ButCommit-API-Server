@@ -121,10 +121,10 @@ export default class majorDataController {
 
         let transitionScore = 0
         
-        if (  score.line == "인문" ) {
+        if ( score.line == "인문" && majorData.major.line != "자연" ) {
           transitionScore = await reportController.getScore(score,majorData,false)
         }
-        else if (  score.line == "자연"){
+        else if (  score.line == "자연" && majorData.major.line != "인문"){
           transitionScore = await reportController.getScore(score,majorData,false)
         }
 
