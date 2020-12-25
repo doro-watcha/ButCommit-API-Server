@@ -721,7 +721,8 @@ class reportController {
               if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
               var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
               var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
-              var highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
+              var highestForeign = {};
+              if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
               if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
                 highestTamgu1.score = tamgu1TransitionScore.score.value[0];

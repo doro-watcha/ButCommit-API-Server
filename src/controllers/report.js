@@ -943,7 +943,9 @@ export default class reportController {
       var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
       
-      var highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
+      var highestForeign = {}
+
+      if ( score.foreign.score != null) highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
 
       // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
       if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
