@@ -53,7 +53,7 @@ export default class User extends Sequelize.Model {
 						},
 						isMoneyPaid : {
 							type : Sequelize.INTEGER,
-							defaultValue : 1
+							defaultValue : 0
 						},
 						adminLevel : {
 							type : Sequelize.INTEGER,

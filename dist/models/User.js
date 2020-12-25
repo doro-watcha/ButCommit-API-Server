@@ -60,7 +60,7 @@ class User extends _sequelize.default.Model {
       },
       isMoneyPaid: {
         type: _sequelize.default.INTEGER,
-        defaultValue: 1
+        defaultValue: 0
       },
       adminLevel: {
         type: _sequelize.default.INTEGER,
