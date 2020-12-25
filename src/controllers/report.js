@@ -943,7 +943,7 @@ export default class reportController {
       var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
       
-      var highestForeign = {}
+      var highestForeign = null
 
       if ( score.foreign.score != null) highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
 
@@ -964,7 +964,7 @@ export default class reportController {
       newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
       newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
   
-      if ( highestForeign != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
+      if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
       
       if ( ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") || (( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용") && score.math.type =="나")) {

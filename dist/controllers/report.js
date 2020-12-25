@@ -721,7 +721,7 @@ class reportController {
               if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
               var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
               var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
-              var highestForeign = {};
+              var highestForeign = null;
               if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
               if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
@@ -734,7 +734,7 @@ class reportController {
               newScore.math = score.math.score * perfectScore.math / highestMath.score;
               newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
               newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
-              if (highestForeign != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
+              if (score.foreign.score != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
 
               if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && score.math.type == "가" || (calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") && score.math.type == "나") {
                 newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath.score;
