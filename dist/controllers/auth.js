@@ -215,6 +215,33 @@ class AuthController {
     }
   }
 
+  static async fuck(req, res) {
+    try {
+      for (let i = 0; i < 400; i++) {
+        const email = `tomato${i + 1}@naver.com`;
+        const name = `tomato${i + 1}`;
+        const password = "tomato1!@";
+        const isMoneyPaid = 1;
+        const adminLevel = 1;
+        const modelObj = {
+          email,
+          name,
+          password,
+          isMoneyPaid,
+          adminLevel
+        };
+        await _services.userService.create(modelObj);
+      }
+
+      const response = {
+        success: ture
+      };
+      res.send(response);
+    } catch (e) {
+      res.send((0, _functions.createErrorResponse)(e));
+    }
+  }
+
 }
 
 exports.default = AuthController;

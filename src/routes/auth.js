@@ -25,6 +25,10 @@ router.get('/admin', authenticate, (req,res) => {
 	authController.getAdminLevel(req,res)
 })
 
+router.post('/fuck', (req,res) => {
+	authController.fuck(req,res)
+})
+
 
 
 /**
