@@ -84,20 +84,6 @@ export default class majorDataController {
     try {
 
 
-
-
-
-      const path = ('../excelfile/test.xlsx')
-      let workbook = xlsx.readFile(path, {sheetRows: 5137})
-      let sheetsList = workbook.SheetNames
-
-      let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
-           header: 1,
-           defval: '',
-           blankrows: true
-      })
-
-
       const result = await Joi.validate ( req.query , {
         year : Joi.number(),
         majorId : Joi.number()
@@ -130,9 +116,6 @@ export default class majorDataController {
       for ( let i = 3 ; i < 5137 ; i++){
 
 
-        let societyAnswer = parseFloat(sheetData[i][10])
-        let scienceAnswer = parseFloat(sheetData[i][13])
-
         let majorData = majorDataList[i-3]
 
         console.log("SocietyAnswer == " + societyAnswer)
@@ -144,10 +127,10 @@ export default class majorDataController {
 
         let transitionScore = 0
         
-        if ( isNaN(societyAnswer) == false && score.line == "인문" ) {
+        if (  score.line == "인문" ) {
           transitionScore = await reportController.getScore(score,majorData,false)
         }
-        else if ( isNaN(scienceAnswer) == false && score.line == "자연"){
+        else if (  score.line == "자연"){
           transitionScore = await reportController.getScore(score,majorData,false)
         }
 

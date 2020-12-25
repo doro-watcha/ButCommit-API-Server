@@ -88,20 +88,6 @@ class majorDataController {
 
   static async findList(req, res) {
     try {
-      const path = '../excelfile/test.xlsx';
-
-      let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5137
-      });
-
-      let sheetsList = workbook.SheetNames;
-
-      let sheetData = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
-        header: 1,
-        defval: '',
-        blankrows: true
-      });
-
       const result = await _joi.default.validate(req.query, {
         year: _joi.default.number(),
         majorId: _joi.default.number()
@@ -130,8 +116,6 @@ class majorDataController {
       let majorDatas = [];
 
       for (let i = 3; i < 5137; i++) {
-        let societyAnswer = parseFloat(sheetData[i][10]);
-        let scienceAnswer = parseFloat(sheetData[i][13]);
         let majorData = majorDataList[i - 3];
         console.log("SocietyAnswer == " + societyAnswer);
         console.log("scienceAnswer = " + scienceAnswer);
@@ -140,9 +124,9 @@ class majorDataController {
         console.log(majorData.major.univName);
         let transitionScore = 0;
 
-        if (isNaN(societyAnswer) == false && score.line == "인문") {
+        if (score.line == "인문") {
           transitionScore = await _report.default.getScore(score, majorData, false);
-        } else if (isNaN(scienceAnswer) == false && score.line == "자연") {
+        } else if (score.line == "자연") {
           transitionScore = await _report.default.getScore(score, majorData, false);
         }
 
