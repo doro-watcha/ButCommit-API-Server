@@ -86,7 +86,7 @@ export default class testController {
       await testService.deleteAll()
       var pass = 0
         // 파싱을 해보자 
-        for ( let i = 3 ; i < 5139 ; i++) {
+        for ( let i = 3 ; i < 5137 ; i++) {
 
       
           const majorData = await majorDataService.findOne({id: i-2})
@@ -146,7 +146,7 @@ export default class testController {
 
           }
 
-          
+
           /**
            * 이과 점수 판단하기
            */

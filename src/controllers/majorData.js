@@ -88,7 +88,7 @@ export default class majorDataController {
 
 
       const path = ('../excelfile/test.xlsx')
-      let workbook = xlsx.readFile(path, {sheetRows: 5139})
+      let workbook = xlsx.readFile(path, {sheetRows: 5137})
       let sheetsList = workbook.SheetNames
 
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
@@ -127,7 +127,7 @@ export default class majorDataController {
       const majorDataList = await majorDataService.findList(modelObj)
 
       let majorDatas = []
-      for ( let i = 3 ; i < 5139 ; i++){
+      for ( let i = 3 ; i < 5137 ; i++){
 
 
         let societyAnswer = parseFloat(sheetData[i][10])

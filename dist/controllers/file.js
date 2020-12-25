@@ -59,7 +59,7 @@ class fileController {
       const path = '../excelfile/major.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5139
+        sheetRows: 5137
       });
 
       let sheetsList = workbook.SheetNames;
@@ -73,7 +73,7 @@ class fileController {
 
       let data = [];
 
-      for (let i = 3; i < 5139; i++) {
+      for (let i = 3; i < 5137; i++) {
         /*
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
          */
@@ -100,7 +100,7 @@ class fileController {
           id: i - 2
         }); // 이미 존재하는 과가 있고, 그 과가 현재 파싱하려는 대학이름과 과가 같다 -> 고로 그냥 업데이트 해야한다
 
-        if (check_major != null && check_major.majorName == sheetData[i][7] && check_major.univName == sheetData[i][3]) {
+        if (check_major !== null) {
           await _services.majorService.update(i - 2, obj1);
         } else {
           await _services.majorService.create(obj1);
@@ -108,7 +108,7 @@ class fileController {
       } // 2021년 
 
 
-      for (let i = 3; i < 5139; i++) {
+      for (let i = 3; i < 5137; i++) {
         let korean_ratio = sheetData[i][58];
         let math_ratio = sheetData[i][59];
         let english_ratio = sheetData[i][60];
@@ -271,9 +271,11 @@ class fileController {
           id: i - 2
         }); // 이미 존재하는 과가 있고, 그 과가 현재 파싱하려는 대학이름과 과가 같다 -> 고로 그냥 업데이트 해야한다
 
-        if (check_major != null && check_majorData != null && check_major.majorName === sheetData[i][7] && check_major.univName === sheetData[i][3]) {
+        if (check_major !== null && check_majorData !== null) {
+          console.log("Major Data Update");
           await _services.majorDataService.update(i - 2, obj2);
         } else {
+          console.log("Major Data Create");
           await _services.majorDataService.create(obj2);
         }
       }

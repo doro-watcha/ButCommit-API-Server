@@ -91,7 +91,7 @@ class majorDataController {
       const path = '../excelfile/test.xlsx';
 
       let workbook = _xlsx.default.readFile(path, {
-        sheetRows: 5139
+        sheetRows: 5137
       });
 
       let sheetsList = workbook.SheetNames;
@@ -129,7 +129,7 @@ class majorDataController {
       const majorDataList = await _services.majorDataService.findList(modelObj);
       let majorDatas = [];
 
-      for (let i = 3; i < 5139; i++) {
+      for (let i = 3; i < 5137; i++) {
         let societyAnswer = parseFloat(sheetData[i][10]);
         let scienceAnswer = parseFloat(sheetData[i][13]);
         let majorData = majorDataList[i - 3];
