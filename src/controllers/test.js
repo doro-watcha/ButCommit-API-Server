@@ -146,6 +146,7 @@ export default class testController {
 
           }
 
+          
           /**
            * 이과 점수 판단하기
            */
