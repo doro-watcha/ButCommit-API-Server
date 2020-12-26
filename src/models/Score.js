@@ -38,17 +38,13 @@ export default class Score extends Sequelize.Model {
                     type : Sequelize.JSON,
                     allowNull : true
                 },
-                naesin: {
+                naesinScore: {
                     type : Sequelize.FLOAT,
                     defaultValue : 3.0
                 },
-                gumjeong : {
-                    type : Sequelize.FLOAT,
-                    defaultValue : 0.0
-                }, 
-                naesin_type : {
+                naesinType : {
                     type : Sequelize.STRING,
-                    allowNull : true 
+                    defaultValue : "naesin" 
                 },
                 userId : {
                     type : Sequelize.INTEGER,
