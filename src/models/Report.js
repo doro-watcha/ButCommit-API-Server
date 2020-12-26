@@ -6,6 +6,10 @@ export default class Report extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
+              score : {
+                type : Sequelize.JSON,
+                allowNull : true
+              },
               extraScore : {
                 type : Sequelize.JSON,
                 allowNull : true 
@@ -21,6 +25,10 @@ export default class Report extends Sequelize.Model {
               recommendations : {
                 type : Sequelize.JSON,
                 allowNull : true
+              },
+              naesinScore : {
+                type : Sequelize.FLOAT,
+                defaultValue : 0.0
               },
               totalScore : {
                 type : Sequelize.FLOAT,
@@ -56,10 +64,6 @@ export default class Report extends Sequelize.Model {
         this.belongsTo(models.MajorData, {
           foreignKey: 'majorDataId',
           as : 'majorData'
-        }),
-        this.belongsTo(models.Score,{
-          foreignKey : 'scoreId',
-          as : 'score'
         }),
         this.hasMany(models.FinalReport, {
           foreignKey : 'reportId',

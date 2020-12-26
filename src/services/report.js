@@ -14,7 +14,7 @@ class ReportService {
     }
     
     async create ( modelObj) {
-        const { userId , majorDataId } = modelObj
+        const { userId , majorDataId, totalScore } = modelObj
 
         const user = await User.findOne({
             where : { id : userId}
@@ -40,22 +40,23 @@ class ReportService {
 				{
 					model: MajorData,
                     as: 'majorData',
-                    include : 
+                    include : [
                         {
                             model : Major,
                             as : 'major'
-                        },
-                        
-                },
-                    
-                {
-                    model : Score,
-                    as : 'score'
+                        }
+                    ]
                 },
                 
 				{
 					model: User,
-                    as: 'user'
+                    as: 'user',
+                    include : [
+                        {
+                            model : Score,
+                            as : 'score'
+                        }
+                    ]
 				},
 			],
 		})

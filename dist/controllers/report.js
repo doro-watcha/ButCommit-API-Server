@@ -1560,6 +1560,8 @@ class reportController {
       }
     }
 
+    var naesinScore = 0;
+    var naesinType = "naesin";
     console.log(totalSum);
 
     if (isNaN(basicScore) == false) {
@@ -1583,14 +1585,15 @@ class reportController {
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
       const modelObj = {
-        scoreId: score.id,
+        score: newScore,
         majorDataId: majorData.id,
         userId: score.userId,
         perfectScore,
         extraScore: extraScore,
         totalScore: totalSum,
         recommendations,
-        actualPerfectScore: major_perfectScore
+        actualPerfectScore: major_perfectScore,
+        naesinScore
       };
       console.log("계산결과값!");
       console.log(modelObj);

@@ -12,6 +12,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class Report extends _sequelize.default.Model {
   static init(sequelize) {
     return super.init({
+      score: {
+        type: _sequelize.default.JSON,
+        allowNull: true
+      },
       extraScore: {
         type: _sequelize.default.JSON,
         allowNull: true
@@ -27,6 +31,10 @@ class Report extends _sequelize.default.Model {
       recommendations: {
         type: _sequelize.default.JSON,
         allowNull: true
+      },
+      naesinScore: {
+        type: _sequelize.default.FLOAT,
+        defaultValue: 0.0
       },
       totalScore: {
         type: _sequelize.default.FLOAT,
@@ -55,9 +63,6 @@ class Report extends _sequelize.default.Model {
     }), this.belongsTo(models.MajorData, {
       foreignKey: 'majorDataId',
       as: 'majorData'
-    }), this.belongsTo(models.Score, {
-      foreignKey: 'scoreId',
-      as: 'score'
     }), this.hasMany(models.FinalReport, {
       foreignKey: 'reportId',
       as: 'finalReport'

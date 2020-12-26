@@ -76,9 +76,6 @@ class Score extends _sequelize.default.Model {
     this.belongsTo(models.User, {
       foreginKey: 'userId',
       as: 'user'
-    }), this.hasMany(models.Report, {
-      foreignKey: 'scoreId',
-      as: 'report'
     });
   }
 
