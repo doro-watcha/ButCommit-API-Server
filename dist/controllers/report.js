@@ -1583,7 +1583,7 @@ class reportController {
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
       const modelObj = {
-        score: newScore,
+        scoreId: score.id,
         majorDataId: majorData.id,
         userId: score.userId,
         perfectScore,

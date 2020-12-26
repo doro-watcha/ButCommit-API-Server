@@ -2340,7 +2340,7 @@ export default class reportController {
 
 
       const modelObj = {
-        score : newScore,
+        scoreId : score.id,
         majorDataId : majorData.id,
         userId : score.userId,
         perfectScore,
