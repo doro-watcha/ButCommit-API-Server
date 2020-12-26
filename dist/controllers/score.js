@@ -25,9 +25,8 @@ class scoreController {
         history: _joi.default.object().required(),
         foreign: _joi.default.object().optional(),
         line: _joi.default.string().required(),
-        naesin: _joi.default.number(),
-        naesin_type: _joi.default.string(),
-        gumjeong: _joi.default.number()
+        naesinScore: _joi.default.number(),
+        naesinType: _joi.default.string()
       });
       const {
         korean,
@@ -38,9 +37,8 @@ class scoreController {
         history,
         foreign,
         line,
-        naesin,
-        naesin_type,
-        gumjeong
+        naesinScore,
+        naesinType
       } = result;
       const {
         user
@@ -55,8 +53,8 @@ class scoreController {
         history,
         foreign,
         line,
-        naesin,
-        naesin_type,
+        naesinScore,
+        naesinType,
         gumjeong
       };
       const newUser = {
@@ -115,9 +113,8 @@ class scoreController {
         history: _joi.default.object().required(),
         foreign: _joi.default.object().optional(),
         line: _joi.default.string().required(),
-        naesin: _joi.default.number(),
-        naesin_type: _joi.default.string(),
-        gumjeong: _joi.default.number()
+        naesinScore: _joi.default.number(),
+        naesinType: _joi.default.string()
       });
       const {
         korean,
@@ -128,9 +125,8 @@ class scoreController {
         history,
         foreign,
         line,
-        naesin,
-        naesin_type,
-        gumjeong
+        naesinScore,
+        naesinType
       } = result;
       const modelObj = {
         userId: user.id,
@@ -142,9 +138,8 @@ class scoreController {
         history,
         foreign,
         line,
-        naesin,
-        naesin_type,
-        gumjeong
+        naesinScore,
+        naesinType
       };
       console.log(user.editTimes);
       const newUser = {

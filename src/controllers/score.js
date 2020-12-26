@@ -18,12 +18,11 @@ export default class scoreController {
                 history : Joi.object().required(),
                 foreign : Joi.object().optional(),
                 line : Joi.string().required(),
-                naesin : Joi.number(),
-                naesin_type : Joi.string(),
-                gumjeong : Joi.number()
+                naesinScore : Joi.number(),
+                naesinType : Joi.string()
             })
             
-            const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesin, naesin_type, gumjeong } = result 
+            const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesinScore, naesinType } = result 
 
             const { user } = req
 
@@ -37,8 +36,8 @@ export default class scoreController {
                 history,
                 foreign,
                 line,
-                naesin,
-                naesin_type,
+                naesinScore,
+                naesinType,
                 gumjeong
             }
 
@@ -108,12 +107,11 @@ export default class scoreController {
                 history : Joi.object().required(),
                 foreign : Joi.object().optional(),
                 line : Joi.string().required(),
-                naesin : Joi.number(),
-                naesin_type : Joi.string(),
-                gumjeong : Joi.number()
+                naesinScore : Joi.number(),
+                naesinType : Joi.string()
             })
             
-            const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesin, naesin_type, gumjeong } = result 
+            const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesinScore, naesinType } = result 
 
             const modelObj = {
                 userId : user.id,
@@ -125,9 +123,8 @@ export default class scoreController {
                 history,
                 foreign,
                 line,
-                naesin,
-                naesin_type,
-                gumjeong
+                naesinScore,
+                naesinType
             }
 
             console.log(user.editTimes)
