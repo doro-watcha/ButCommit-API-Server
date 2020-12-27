@@ -46,11 +46,13 @@ class Score extends _sequelize.default.Model {
       },
       naesinScore: {
         type: _sequelize.default.FLOAT,
-        defaultValue: 3.0
+        defaultValue: 3.0,
+        allowNull: true
       },
       naesinType: {
         type: _sequelize.default.STRING,
-        defaultValue: "naesin"
+        defaultValue: "naesin",
+        allowNull: true
       },
       userId: {
         type: _sequelize.default.INTEGER,

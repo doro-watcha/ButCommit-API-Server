@@ -40,11 +40,13 @@ export default class Score extends Sequelize.Model {
                 },
                 naesinScore: {
                     type : Sequelize.FLOAT,
-                    defaultValue : 3.0
+                    defaultValue : 3.0,
+                    allowNull : true
                 },
                 naesinType : {
                     type : Sequelize.STRING,
-                    defaultValue : "naesin" 
+                    defaultValue : "naesin" ,
+                    allowNull : true
                 },
                 userId : {
                     type : Sequelize.INTEGER,
