@@ -106,13 +106,13 @@ class majorDataController {
       const score = await _services.scoreService.findOne({
         userId: user.id
       });
+      const majorDataList = await _services.majorDataService.findList(modelObj);
       const if_none_match = req.headers['if-none-match'];
 
-      if (if_none_match !== undefined && _bcrypt.default.compareSync(score.updatedAt + user.email, if_none_match)) {
+      if (if_none_match !== undefined && _bcrypt.default.compareSync(score.updatedAt + user.email + majorDataList[0].updatedAt, if_none_match)) {
         res.sendStatus(304);
       }
 
-      const majorDataList = await _services.majorDataService.findList(modelObj);
       let majorDatas = [];
 
       for (let i = 3; i < 5137; i++) {
@@ -151,7 +151,7 @@ class majorDataController {
         }
       };
 
-      const eTag = _bcrypt.default.hashSync(score.updatedAt + user.email, 8);
+      const eTag = _bcrypt.default.hashSync(score.updatedAt + user.email + majorDataList[0].updatedAt, 8);
 
       res.set('Cache-Control', `no-cache, private, max-age=36000`);
       res.set('etag', eTag);

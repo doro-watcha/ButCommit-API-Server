@@ -33,6 +33,13 @@ class NaesinService {
       }
 		})
   }
+
+  async deleteAll ( ) {
+
+    return await Naesin.destroy({
+      where : {}
+    })
+  }
 }
 
 

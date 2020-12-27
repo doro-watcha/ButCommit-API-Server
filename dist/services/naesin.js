@@ -43,6 +43,12 @@ class NaesinService {
     });
   }
 
+  async deleteAll() {
+    return await _models.Naesin.destroy({
+      where: {}
+    });
+  }
+
 }
 
 var _default = new NaesinService();

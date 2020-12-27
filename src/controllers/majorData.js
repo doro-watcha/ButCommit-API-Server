@@ -100,17 +100,16 @@ export default class majorDataController {
 
       const score = await scoreService.findOne({userId : user.id})
 
+      const majorDataList = await majorDataService.findList(modelObj)
 
       const if_none_match = req.headers['if-none-match'] 
 
-      if ( if_none_match !== undefined && bycrypt.compareSync(score.updatedAt + user.email , if_none_match) ) {
+      if ( if_none_match !== undefined && bycrypt.compareSync(score.updatedAt + user.email + majorDataList[0].updatedAt , if_none_match) ) {
         
         res.sendStatus(304)
 
 
       }
-
-      const majorDataList = await majorDataService.findList(modelObj)
 
       let majorDatas = []
       for ( let i = 3 ; i < 5137 ; i++){
@@ -156,7 +155,7 @@ export default class majorDataController {
       }
 
 
-      const eTag = bycrypt.hashSync(score.updatedAt + user.email,8)
+      const eTag = bycrypt.hashSync(score.updatedAt + user.email + majorDataList[0].updatedAt,8)
       res.set('Cache-Control', `no-cache, private, max-age=36000`)
       res.set('etag',eTag)
 
