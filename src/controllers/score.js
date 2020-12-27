@@ -18,8 +18,8 @@ export default class scoreController {
                 history : Joi.object().required(),
                 foreign : Joi.object().optional(),
                 line : Joi.string().required(),
-                naesinScore : Joi.number(),
-                naesinType : Joi.string()
+                naesinScore : Joi.number().optional(),
+                naesinType : Joi.string().optional()
             })
             
             const { korean , math , english , tamgu1, tamgu2 , history ,foreign, line, naesinScore, naesinType } = result 

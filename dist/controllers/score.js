@@ -25,8 +25,8 @@ class scoreController {
         history: _joi.default.object().required(),
         foreign: _joi.default.object().optional(),
         line: _joi.default.string().required(),
-        naesinScore: _joi.default.number(),
-        naesinType: _joi.default.string()
+        naesinScore: _joi.default.number().optional(),
+        naesinType: _joi.default.string().optional()
       });
       const {
         korean,
