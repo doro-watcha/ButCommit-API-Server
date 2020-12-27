@@ -37,8 +37,7 @@ export default class scoreController {
                 foreign,
                 line,
                 naesinScore,
-                naesinType,
-                gumjeong
+                naesinType
             }
 
             const newUser = {

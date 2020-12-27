@@ -54,8 +54,7 @@ class scoreController {
         foreign,
         line,
         naesinScore,
-        naesinType,
-        gumjeong
+        naesinType
       };
       const newUser = {
         editTimes: user.editTimes - 1,
