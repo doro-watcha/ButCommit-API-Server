@@ -32,6 +32,12 @@ class HighestScoreService {
     return await _models.HighestScore.create(modelObj);
   }
 
+  async deleteAll() {
+    return await _models.HighestScore.destroy({
+      where: {}
+    });
+  }
+
 }
 
 var _default = new HighestScoreService();

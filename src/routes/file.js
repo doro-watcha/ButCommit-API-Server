@@ -16,7 +16,7 @@ const upload_major = multer({
     },
     // convert a file nameww
     filename: (req, file, cb) => {
-      cb(null, "major" + path.extname(file.originalname))
+      cb(null, "tomato" + path.extname(file.originalname))
     },
   }),
 })
@@ -35,8 +35,8 @@ const upload_university = multer({
 /**
  * 학과 정보 관련 File Upload / Download / Delete / Parsing
  */
-router.post('/major' , upload_major.fields([{ name: 'excel', maxCount: 1 }]), (req,res) => {
-  fileController.uploadMajor(req,res)
+router.post('/upload' , upload_major.fields([{ name: 'excel', maxCount: 1 }]), (req,res) => {
+  fileController.upload(req,res)
 })
 
 router.get('/major', (req,res) => {
@@ -47,8 +47,8 @@ router.delete('/major', (req,res) => {
   fileController.deleteMajor(req,res)
 })
 
-router.get('/major/parse' , (req,res) => {
-  fileController.parseMajor(req,res)
+router.get('/parse' , (req,res) => {
+  fileController.parse(req,res)
 })
 
 /**

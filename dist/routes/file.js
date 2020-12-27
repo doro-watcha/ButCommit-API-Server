@@ -24,7 +24,7 @@ const upload_major = (0, _multer.default)({
     },
     // convert a file nameww
     filename: (req, file, cb) => {
-      cb(null, "major" + _path.default.extname(file.originalname));
+      cb(null, "tomato" + _path.default.extname(file.originalname));
     }
   })
 });
@@ -42,11 +42,11 @@ const upload_university = (0, _multer.default)({
  * 학과 정보 관련 File Upload / Download / Delete / Parsing
  */
 
-router.post('/major', upload_major.fields([{
+router.post('/upload', upload_major.fields([{
   name: 'excel',
   maxCount: 1
 }]), (req, res) => {
-  _controllers.fileController.uploadMajor(req, res);
+  _controllers.fileController.upload(req, res);
 });
 router.get('/major', (req, res) => {
   _controllers.fileController.downloadMajor(req, res);
@@ -54,8 +54,8 @@ router.get('/major', (req, res) => {
 router.delete('/major', (req, res) => {
   _controllers.fileController.deleteMajor(req, res);
 });
-router.get('/major/parse', (req, res) => {
-  _controllers.fileController.parseMajor(req, res);
+router.get('/parse', (req, res) => {
+  _controllers.fileController.parse(req, res);
 });
 /**
  * 대학 정보 관련 File Upload / Download/ Delete / Parsing

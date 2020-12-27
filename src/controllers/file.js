@@ -4,13 +4,13 @@ import mime from 'mime'
 import path from 'path'
 import fs from 'fs'
 import xlsx from 'xlsx'
-import { majorService, universityService , majorDataService, scoreTransitionService} from '../services'
+import { majorService, universityService , majorDataService, scoreTransitionService, highestScoreService} from '../services'
 
 import { createErrorResponse } from '../utils/functions'
 
 export default class fileController {
 
-  static async uploadMajor ( req, res ) {
+  static async upload ( req, res ) {
     try {
       const files = await Joi.validate(req.files, {
         excel: Joi.array()
@@ -46,7 +46,7 @@ export default class fileController {
   }
 
 
-  static async parseMajor(req,res) {
+  static async parse(req,res) {
 
     try { 
 
@@ -54,22 +54,26 @@ export default class fileController {
       //  await majorDataService.deleteAll()
        await scoreTransitionService.deleteAll()
        await universityService.deleteAll()
+       await highestScoreService.deleteAll()
 
+
+       /**
+        * MajorData를 Parse 해보자....!
+        */
 
       
-      const path = ('../excelfile/major.xlsx')
+      const path = ('../excelfile/tomato.xlsx')
 
-      let workbook = xlsx.readFile(path, {sheetRows: 5137})
+      let workbook = xlsx.readFile(path, {sheetRows: 10000})
+
       let sheetsList = workbook.SheetNames
+
       let sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[1]], {
            header: 1,
            defval: '',
            blankrows: true
       })
-
-      //console.log(sheetData)
-      let data = []
-      for ( let i = 3 ; i < 5137 ; i++) {
+      for ( let i = 3 ; i < sheetData.length ; i++) {
 
         /*
          * 앞부분만 떼가지고 Major를 하나 만들어준다 ( 이거는 연도에 상관없는 metadata이므로 major로 구분 )
@@ -99,13 +103,12 @@ export default class fileController {
           await majorService.update(i-2,obj1)
         }
         else {
-      
           await majorService.create(obj1)
         }
       }
 
       // 2021년 
-      for ( let i = 3; i < 5137; i++) {
+      for ( let i = 3; i < sheetData.length; i++) {
 
 
         let korean_ratio = sheetData[i][58]
@@ -269,66 +272,63 @@ export default class fileController {
         }
       }
 
-      let sheetData1 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
+      /**
+       * 대학검색기준자표 파싱!
+       */
+
+      let sheetData4 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
         header: 1,
         defval: '',
         blankrows: true
       })
 
-      for ( let i = 1; i < 182 ; i++){
+      for ( let i = 1; i < sheetData4.length ; i++){
 
         let obj = {
           id : i,
-          name : sheetData1[i][0],
-          group : sheetData1[i][1],
-          location : sheetData1[i][2],
-          min : sheetData1[i][3],
-          max : sheetData1[i][4]
+          name : sheetData4[i][0],
+          group : sheetData4[i][1],
+          location : sheetData4[i][2],
+          min : sheetData4[i][3],
+          max : sheetData4[i][4]
         }
 
-        // const check_university = await universityService.findOne({
-        //   id : i,
-        //   name : sheetData1[i][0],
-        //   group : sheetData1[i][1],
-        //   location : sheetData1[i][2],
-        //   min : sheetData1[i][3],
-        //   max : sheetData1[i][4]
-        // })
-
-        // if ( check_university == null) await universityService.create(obj)
-        // else await universityService.update(i,obj)
         await universityService.create(obj)
       }
 
-      let sheetData2 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
+      /**
+       * 변환 표준점수 파싱!
+       */
+
+      let sheetData5 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
            header: 1,
            defval: '',
            blankrows: true
       })
     
-      var line = sheetData2[0][0]
-      var univName = sheetData2[0][1]
-      var major = sheetData2[0][2]
+      var line = sheetData5[0][0]
+      var univName = sheetData5[0][1]
+      var major = sheetData5[0][2]
 
-      for ( let i = 1; i < 2250; i++) {
+      for ( let i = 1; i < sheetData5.length; i++) {
 
         let data = {}
 
-        if ( sheetData2[i][5] == "백분위") {
+        if ( sheetData5[i][5] == "백분위") {
           data = {
-            value : sheetData2[i].slice(56,157)
+            value : sheetData5[i].slice(56,157)
           }
         } else {
           data = {
-            value : sheetData2[i].slice(6,157)
+            value : sheetData5[i].slice(6,157)
           }
         }
 
-        if ( sheetData2[i][0].length > 1 ) line = sheetData2[i][0]
+        if ( sheetData5[i][0].length > 1 ) line = sheetData5[i][0]
 
-        if ( sheetData2[i][0].length > 1 ) univName = sheetData2[i][1]
+        if ( sheetData5[i][0].length > 1 ) univName = sheetData5[i][1]
 
-        if ( sheetData2[i][0].length > 1 ) major = sheetData2[i][2]
+        if ( sheetData5[i][0].length > 1 ) major = sheetData5[i][2]
 
 
         let obj = {
@@ -336,13 +336,36 @@ export default class fileController {
           line,
           univName,
           major,
-          subject : sheetData2[i][3],
-          applicationIndicator : sheetData2[i][5],
+          subject : sheetData5[i][3],
+          applicationIndicator : sheetData5[i][5],
           score : data 
 
         }
 
         await scoreTransitionService.create( obj)
+
+      }
+
+      /**
+       * 모의고사 영역별 최고점수 파싱
+       */
+
+      let sheetData6 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[6]], {
+        header: 1,
+        defval: '',
+        blankrows: true
+      })
+
+      for ( let i = 2 ; i < sheetData6.length ; i++) {
+
+        let modelObj = {
+          id : i + 1,
+          subject : sheetData6[i][0],
+          type : sheetData6[i][1],
+          score : sheetData6[i][2]
+        }
+
+        await highestScoreService.create(modelObj)
 
       }
 
@@ -356,6 +379,8 @@ export default class fileController {
     } catch ( e ) {
       res.send(createErrorResponse(e))
     }
+
+
   }
 
   static async uploadUniv(req,res) {
