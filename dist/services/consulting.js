@@ -30,7 +30,7 @@ class ConsultingService {
         model: _models.User,
         as: 'user',
         include: {
-          model: Score,
+          model: _models.Score,
           as: 'score'
         }
       }, {
@@ -47,7 +47,7 @@ class ConsultingService {
         model: _models.User,
         as: 'user',
         include: {
-          model: Score,
+          model: _models.Score,
           as: 'score'
         }
       }, {

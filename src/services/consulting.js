@@ -1,4 +1,4 @@
-import { Consulting , User, Redop } from  '../models'
+import { Consulting , User, Redop, Score } from  '../models'
 
 let instance = null
 
