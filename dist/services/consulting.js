@@ -28,7 +28,11 @@ class ConsultingService {
       where: JSON.parse(JSON.stringify(where)),
       include: [{
         model: _models.User,
-        as: 'user'
+        as: 'user',
+        include: {
+          model: Score,
+          as: 'score'
+        }
       }, {
         model: _models.Redop,
         as: 'redop'
@@ -41,7 +45,11 @@ class ConsultingService {
       where: JSON.parse(JSON.stringify(where)),
       include: [{
         model: _models.User,
-        as: 'user'
+        as: 'user',
+        include: {
+          model: Score,
+          as: 'score'
+        }
       }, {
         model: _models.Redop,
         as: 'redop'

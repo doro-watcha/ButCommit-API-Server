@@ -22,7 +22,11 @@ class ConsultingService {
       include: [
         {
 					model: User,
-					as: 'user',
+          as: 'user',
+          include : {
+            model : Score,
+            as : 'score'
+          }
 				},{
           model : Redop,
           as : 'redop'
@@ -36,7 +40,11 @@ class ConsultingService {
       include: [
         {
 					model: User,
-					as: 'user',
+          as: 'user',
+          include : {
+            model : Score,
+            as : 'score'
+          }
 				},{
           model : Redop,
           as : 'redop'
