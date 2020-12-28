@@ -722,7 +722,7 @@ class reportController {
               var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
               var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
               var highestForeign = null;
-              if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제2외국어", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
+              if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
               if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
                 highestTamgu1.score = tamgu1TransitionScore.score.value[0];
@@ -1579,13 +1579,11 @@ class reportController {
     console.log("totalScore");
     console.log(totalScore);
     console.log(score.line + "합계 = " + totalSum);
-    var naesinScore = 0;
-
-    if (naesinScore != 0 && isNaN(majorData.naesinRatio) == false) {
-      const naesinType = score.naesinType;
-      const _naesinScore = score.naesinScore;
-      naesinScore = await _services.naesinService.findOne(_naesinScore, majorData.major.univName, naesinType);
-    }
+    var naesinScore = 0; // if ( naesinScore != 0 &&  isNaN(majorData.naesinRatio) == false ) {
+    //   const naesinType = score.naesinType
+    //   const _naesinScore = score.naesinScore
+    //   naesinScore = await naesinService.findOne(_naesinScore, majorData.major.univName, naesinType )
+    // }
 
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
