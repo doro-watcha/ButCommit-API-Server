@@ -252,14 +252,14 @@ export default class testController {
             }
           }
 
-          // if ( societyDeterminant == 1 && scienceDeterminant == 1 ) {
+          if ( societyDeterminant == 1 && scienceDeterminant == 1 ) {
 
-          // }
+          }
 
-          // else {
+          else {
           
             await testService.create(obj)
-         // }
+         }
 
         }
           
