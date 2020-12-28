@@ -35,6 +35,22 @@ class Naesin extends _sequelize.default.Model {
       major: {
         type: _sequelize.default.STRING,
         allowNull: true
+      },
+      sosokUniversity: {
+        type: _sequelize.default.STRING,
+        allowNull: true
+      },
+      recruitmentUnit: {
+        type: _sequelize.default.STRING,
+        allowNull: true
+      },
+      recruitmentType: {
+        type: _sequelize.default.STRING,
+        allowNull: true
+      },
+      applicationIndicator: {
+        type: _sequelize.default.STRING,
+        allowNull: true
       }
     }, {
       sequelize

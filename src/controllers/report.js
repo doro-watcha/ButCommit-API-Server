@@ -1,4 +1,4 @@
-import { reportService , majorDataService, majorService, scoreService, highestScoreService, scoreTransitionService , reportDataService} from '../services'
+import { reportService , majorDataService, majorService, scoreService, highestScoreService, scoreTransitionService , reportDataService , naesinService } from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
@@ -2307,11 +2307,6 @@ export default class reportController {
     
     }
 
-
-
-    var naesinScore = 0
-    var naesinType = "naesin"
-
     console.log(totalSum)
     if ( isNaN(basicScore) == false ) {
       console.log(basicScore)
@@ -2331,13 +2326,21 @@ export default class reportController {
     console.log("totalScore")
     console.log(totalScore)
     console.log(score.line + "합계 = " + totalSum)
-  
+
+    var naesinScore = 0
+
+    // if ( naesinScore != 0 &&  isNaN(majorData.naesinRatio) == false ) {
+
+    //   const naesinType = score.naesinType
+    //   const _naesinScore = score.naesinScore
+
+    //   naesinScore = await naesinService.findOne(_naesinScore, majorData.major.univName, naesinType )
+
+    // }
 
     if ( create == true ) {
 
-
       const recommendations = await majorDataService.findRecommendations(totalSum)
-
 
       const modelObj = {
         score : newScore,
@@ -2350,10 +2353,7 @@ export default class reportController {
         actualPerfectScore : major_perfectScore,
         naesinScore
       }
-
-      console.log("계산결과값!")
-      console.log(modelObj)
-
+      
       return modelObj
     }
     else {

@@ -186,6 +186,10 @@ module.exports = {
 			status : 433,
 			ko : '상담 횟수 없음'
 		},
+		NAESIN_SCORE_NOT_FOUND : {
+			status : 434,
+			ko : '내신 성적 없음'
+		},
 
 
 

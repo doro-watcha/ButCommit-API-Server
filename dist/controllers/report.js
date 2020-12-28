@@ -1560,8 +1560,6 @@ class reportController {
       }
     }
 
-    var naesinScore = 0;
-    var naesinType = "naesin";
     console.log(totalSum);
 
     if (isNaN(basicScore) == false) {
@@ -1581,6 +1579,13 @@ class reportController {
     console.log("totalScore");
     console.log(totalScore);
     console.log(score.line + "합계 = " + totalSum);
+    var naesinScore = 0;
+
+    if (naesinScore != 0 && isNaN(majorData.naesinRatio) == false) {
+      const naesinType = score.naesinType;
+      const _naesinScore = score.naesinScore;
+      naesinScore = await _services.naesinService.findOne(_naesinScore, majorData.major.univName, naesinType);
+    }
 
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
@@ -1595,8 +1600,6 @@ class reportController {
         actualPerfectScore: major_perfectScore,
         naesinScore
       };
-      console.log("계산결과값!");
-      console.log(modelObj);
       return modelObj;
     } else {
       return totalSum;

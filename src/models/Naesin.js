@@ -29,7 +29,24 @@ export default class Naesin extends Sequelize.Model {
               major : {
                 type : Sequelize.STRING,
                 allowNull : true
+              },
+              sosokUniversity : {
+                type : Sequelize.STRING,
+                allowNull : true 
+              },
+              recruitmentUnit : {
+                type : Sequelize.STRING,
+                allowNull : true 
+              },
+              recruitmentType : {
+                type : Sequelize.STRING,
+                allowNull : true
+              },
+              applicationIndicator : {
+                type : Sequelize.STRING,
+                allowNull : true 
               }
+
             }, {
               sequelize
             }

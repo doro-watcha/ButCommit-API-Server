@@ -63,6 +63,7 @@ class notificationController {
         type
       } = result;
       const naesinScore = await _services.naesinService.findOne(score, type, univName);
+      if (naesinScore == null) throw Error('NAESIN_SCORE_NOT_FOUND');
       const response = {
         success: true,
         data: {

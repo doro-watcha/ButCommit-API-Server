@@ -51,7 +51,7 @@ export default class fileController {
     try { 
 
        const result = await Joi.validate(req.body,{
-         scoreTranstion : Joi.number().optional(),
+         scoreTransition : Joi.number().optional(),
          university : Joi.number().optional(),
          highest : Joi.number().optional(),
          naesin : Joi.number().optional(),
@@ -225,6 +225,7 @@ export default class fileController {
               emv : english_multiple_value,
               hmv : history_multiple_value,
 
+              naesinRatio : sheetData[i][93],
               balloon : sheetData[i][117]
             },
             prediction : {
@@ -289,19 +290,81 @@ export default class fileController {
           blankrows: true
         })
 
-        for ( let i = 1 ; i < sheetData3.length ; i++){
+        for ( let i = 1 ; i < ( sheetData3.length - 1 ) ; i = i + 4 ) {
 
-          let obj = {
-            id : i,
-            type : sheetData3[i][0],
-            univName : sheetData3[i][1],
-            major : sheetData3[i][2],
-            startScore : parseFloat(sheetData3[i][3]),
-            endScore : parseFloat(sheetData3[i][4]),
-            value : sheetData3[i][5]
+
+          for ( let j = 7 ; j < sheetData3[i].length - 7 ; j++) {
+
+            if (sheetData3[i][j].length == 0 ) break;
+
+            let naesin_section = String(sheetData3[i][j]).split('~')
+            let startScore = naesin_section[0]
+            let endScore = 0.0
+
+            if ( naesin_section.length > 1 ) {
+              endScore = (naesin_section[1])
+            } else if ( naesin_section.length == 1 ) {
+              endScore = (naesin_section[0])
+            }
+
+
+            let obj = {
+              type : "내신",
+              univName : sheetData3[i][0],
+              recruitmentType : sheetData3[i][1],
+              sosokUniversity : sheetData3[i][2],
+              recruitmentUnit : sheetData3[i][3],
+              applicationIndicator : sheetData3[i][6],
+              major : sheetData3[i][4],
+              startScore : parseFloat(startScore),
+              endScore : parseFloat(endScore),
+              value : sheetData3[i+1][j]
+            }
+
+            await naesinService.create(obj)
+
+
           }
 
-          await naesinService.create(obj)
+          for ( let j = 7 ; j < sheetData3[i].length - 7; j++){
+
+            if (sheetData3[i+2][j].length == 0 ) break
+            else if ( sheetData3[i+2][j] == " ( 수능 점수 - 한국사 점수 ) / 9 ") break
+            else if ( sheetData3[i+2][j] == "산출 불가") break
+            else if ( sheetData3[i+2][j] == "all") break
+            else if ( sheetData3[i+2][j] == "( 국어 백분위 + 수학 백분위 + 영어 환산표 점수 + 탐구 평균 백분위 ) x 1.25") break
+
+
+
+
+            let gumjeong_section = String(sheetData3[i+2][j]).split('~')
+            console.log(gumjeong_section)
+            let startScore = gumjeong_section[0]
+            let endScore = 0.0
+
+            if ( gumjeong_section.length > 1 ) {
+              endScore = gumjeong_section[1]
+            } else if ( gumjeong_section == 1 ) {
+              endScore = gumjeong_section[0]
+            }
+
+            let obj = {
+              type : "검정고시",
+              univName : sheetData3[i][0],
+              recruitmentType : sheetData3[i][1],
+              sosokUniversity : sheetData3[i][2],
+              recruitmentUnit : sheetData3[i][3],
+              applicationIndicator : sheetData3[i][6],
+              major : sheetData3[i][4],
+              startScore : parseFloat(startScore),
+              endScore : parseFloat(endScore),
+              value : sheetData3[i+3][j]
+            }
+
+            await naesinService.create(obj)
+
+          }
+
         }
       }
 
@@ -310,6 +373,8 @@ export default class fileController {
        */
 
        if ( university == 1 ) {
+
+        await universityService.deleteAll()
 
         let sheetData4 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[4]], {
           header: 1,
@@ -337,6 +402,8 @@ export default class fileController {
        */
 
        if ( scoreTransition == 1 ) {
+
+        await scoreTransitionService.deleteAll()
 
         let sheetData5 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
             header: 1,
@@ -390,6 +457,8 @@ export default class fileController {
        */
 
        if ( highest == true ) {
+
+        await highestScoreService.deleteAll()
 
         let sheetData6 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[6]], {
           header: 1,

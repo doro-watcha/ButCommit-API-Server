@@ -29,18 +29,37 @@ class NaesinService {
   }
 
   async findOne(score, type, univName) {
-    return await _models.Naesin.findOne({
-      where: {
-        type,
-        univName,
-        startScore: {
-          [Op.lte]: score
-        },
-        endScore: {
-          [Op.gte]: score
+    var options = {};
+
+    if (type === "검정고시") {
+      options = {
+        where: {
+          type,
+          univName,
+          startScore: {
+            [Op.gte]: score
+          },
+          endScore: {
+            [Op.lte]: score
+          }
         }
-      }
-    });
+      };
+    } else if (type === "내신") {
+      options = {
+        where: {
+          type,
+          univName,
+          startScore: {
+            [Op.lte]: score
+          },
+          endScore: {
+            [Op.gte]: score
+          }
+        }
+      };
+    }
+
+    return await _models.Naesin.findOne(options);
   }
 
   async deleteAll() {
