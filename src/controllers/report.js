@@ -945,7 +945,7 @@ export default class reportController {
       
       var highestForeign = null
 
-      if ( score.foreign.score != null) highestForeign = await highestScoreService.findOne("제2외국어", score.foreign.name )
+      if ( score.foreign.score != null) highestForeign = await highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name )
 
       // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
       if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
