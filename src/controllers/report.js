@@ -957,6 +957,11 @@ export default class reportController {
         if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0]
       }
 
+      console.log(highestTamgu1.score)
+      console.log(highestTamgu2.score)
+      console.log(highestForeign.score)
+      console.log(highestKorean.score)
+      console.log(highestMath.score)
 
       
       newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean.score
@@ -966,11 +971,13 @@ export default class reportController {
   
       if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
 
+      console.log("xcz")
       
       if ( ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") || (( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용") && score.math.type =="나")) {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath.score 
       } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath.score
 
+      console.log("zxcv")
     
       // 단국데 의치 예외처리
       if ( specialOption == "백분위 x 비율 ( 탐 )") {
@@ -2329,14 +2336,35 @@ export default class reportController {
 
     var naesinScore = 0
 
-    // if ( naesinScore != 0 &&  isNaN(majorData.naesinRatio) == false ) {
+    // if ( score.naesinScore != 0 &&  isNaN(majorData.metadata.naesinRatio) == false ) {
 
-    //   const naesinType = score.naesinType
-    //   const _naesinScore = score.naesinScore
+    //   let naesin = await naesinService.findOne(
+    //     majorData.major.univName,
+    //     majorData.major.recruitmentType,
+    //     majorData.major.recruitmentUnit,
+    //     majorData.major.sosokUniversity,
+    //     majorData.major.majorName,
+    //     score.naesinType,
+    //     score.naesinScore
+    //   )
 
-    //   naesinScore = await naesinService.findOne(_naesinScore, majorData.major.univName, naesinType )
+    //   if ( score.naesinType == "검정고시") {
 
+    //     if ( majorData.major.univName == "한양대") naesinScore = 98.5
+    //     else if ( majorData.major.univName == "부산교대"){
+    //       const korean = score.korean.percentile
+    //       const math = score.math.percentile
+    //       const english = majorData.gradeToScore.english.score[score.english.grade-1]
+    //       const tamgu = ( score.tamgu1.percentile + score.tamgu2.percentile) / 2
+
+    //       naesinScore = ( korean + math + english + tamgu ) * 1.25
+    //     }
+
+    //   }
+
+    //   if ( naesin != null ) naesinScore = naesin.value
     // }
+
 
     if ( create == true ) {
 

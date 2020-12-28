@@ -191,7 +191,6 @@ export default class fileController {
               group2021 : sheetData[i][20],
               additionalMember2021 : sheetData[i][9],
               
-
               initialMember : sheetData[i][11], // 1
               additionalMember : sheetData[i][12], // 14
               competitionRate : sheetData[i][18],
@@ -225,7 +224,7 @@ export default class fileController {
               emv : english_multiple_value,
               hmv : history_multiple_value,
 
-              naesinRatio : sheetData[i][93],
+              naesinRatio : sheetData[i][92],
               balloon : sheetData[i][117]
             },
             prediction : {
@@ -466,7 +465,7 @@ export default class fileController {
           blankrows: true
         })
 
-        for ( let i = 2 ; i < sheetData6.length ; i++) {
+        for ( let i = 1 ; i < sheetData6.length ; i++) {
 
           let modelObj = {
             id : i + 1,

@@ -55,19 +55,27 @@ class notificationController {
       const result = await _joi.default.validate(req.body, {
         score: _joi.default.number().required(),
         univName: _joi.default.string().required(),
-        type: _joi.default.string().required()
+        type: _joi.default.string().required(),
+        recruitmentType: _joi.default.string().required(),
+        recruitmentUnit: _joi.default.string().required(),
+        majorName: _joi.default.string().required(),
+        sosokUniversity: _joi.default.string().required()
       });
       const {
         score,
         univName,
-        type
+        type,
+        recruitmentType,
+        recruitmentUnit,
+        majorName,
+        sosokUniversity
       } = result;
-      const naesinScore = await _services.naesinService.findOne(score, type, univName);
+      const naesinScore = await _services.naesinService.findOne(univName, recruitmentType, recruitmentUnit, sosokUniversity, majorName, type, score);
       if (naesinScore == null) throw Error('NAESIN_SCORE_NOT_FOUND');
       const response = {
         success: true,
         data: {
-          value: naesinScore.value
+          naesinScore: naesinScore.value
         }
       };
       res.send(response);

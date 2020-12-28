@@ -235,7 +235,7 @@ class fileController {
               basicScore: sheetData[i][57],
               emv: english_multiple_value,
               hmv: history_multiple_value,
-              naesinRatio: sheetData[i][93],
+              naesinRatio: sheetData[i][92],
               balloon: sheetData[i][117]
             },
             prediction: {
@@ -445,7 +445,7 @@ class fileController {
           blankrows: true
         });
 
-        for (let i = 2; i < sheetData6.length; i++) {
+        for (let i = 1; i < sheetData6.length; i++) {
           let modelObj = {
             id: i + 1,
             subject: sheetData6[i][0],

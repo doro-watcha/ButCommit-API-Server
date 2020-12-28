@@ -28,37 +28,23 @@ class NaesinService {
     return await _models.Naesin.create(modelObj);
   }
 
-  async findOne(score, type, univName) {
-    var options = {};
-
-    if (type === "검정고시") {
-      options = {
-        where: {
-          type,
-          univName,
-          startScore: {
-            [Op.gte]: score
-          },
-          endScore: {
-            [Op.lte]: score
-          }
+  async findOne(univName, recruitmentType, recruitmentUnit, sosokUniversity, major, type, score) {
+    const options = {
+      where: {
+        type,
+        univName,
+        recruitmentType,
+        recruitmentUnit,
+        sosokUniversity,
+        major,
+        startScore: {
+          [Op.lte]: score
+        },
+        endScore: {
+          [Op.gte]: score
         }
-      };
-    } else if (type === "내신") {
-      options = {
-        where: {
-          type,
-          univName,
-          startScore: {
-            [Op.lte]: score
-          },
-          endScore: {
-            [Op.gte]: score
-          }
-        }
-      };
-    }
-
+      }
+    };
     return await _models.Naesin.findOne(options);
   }
 
