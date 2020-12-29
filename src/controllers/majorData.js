@@ -85,7 +85,7 @@ export default class majorDataController {
 
       var majorDataList = []
 
-      const result = await Joi.validate ( req.body , {
+      const result = await Joi.validate ( req.query , {
         year : Joi.number(),
         group : Joi.string().optional(),
         location : Joi.array().optional(),
@@ -95,12 +95,6 @@ export default class majorDataController {
         mathType : Joi.string().optional(),
         tamguType : Joi.string().optional()
       })
-
-      const parameter = await Joi.validate (req.params, {
-        location : Joi.optional()
-      })
-
-      const { location } = parameter 
 
       const { year, group, type , line, univName , mathType, tamguType } = result
 

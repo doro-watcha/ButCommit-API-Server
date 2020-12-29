@@ -89,7 +89,7 @@ class majorDataController {
   static async findList(req, res) {
     try {
       var majorDataList = [];
-      const result = await _joi.default.validate(req.body, {
+      const result = await _joi.default.validate(req.query, {
         year: _joi.default.number(),
         group: _joi.default.string().optional(),
         location: _joi.default.array().optional(),
@@ -99,12 +99,6 @@ class majorDataController {
         mathType: _joi.default.string().optional(),
         tamguType: _joi.default.string().optional()
       });
-      const parameter = await _joi.default.validate(req.params, {
-        location: _joi.default.optional()
-      });
-      const {
-        location
-      } = parameter;
       const {
         year,
         group,
