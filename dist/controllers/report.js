@@ -1549,6 +1549,7 @@ class reportController {
     }
 
     if (isNaN(naesinScore)) naesinScore = 0;
+    totalSum += naesinScore;
 
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);
@@ -1558,14 +1559,14 @@ class reportController {
         userId: score.userId,
         perfectScore,
         extraScore: extraScore,
-        totalScore: totalSum + naesinScore,
+        totalScore: totalSum,
         recommendations,
         actualPerfectScore: major_perfectScore,
         naesinScore
       };
       return modelObj;
     } else {
-      return totalSum + naesinScore;
+      return totalSum;
     }
   }
 
