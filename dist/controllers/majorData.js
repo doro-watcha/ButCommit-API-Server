@@ -109,6 +109,13 @@ class majorDataController {
         mathType,
         tamguType
       } = result;
+      console.log(group);
+      console.log(location);
+      console.log(type);
+      console.log(line);
+      console.log(univName);
+      console.log(mathType);
+      console.log(tamguType);
       const modelObj = {
         year
       };

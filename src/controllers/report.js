@@ -164,6 +164,9 @@ export default class reportController {
 
   static async getScore ( score, majorData , create ) {
 
+    console.log(majorData.major.univName)
+    console.log(majorData.major.majorName)
+
     /**
      * 점수 구하는 방법
      * 1. 들어온 성적, 이용될 만점 구하기
@@ -365,12 +368,16 @@ export default class reportController {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1) {
           tamgu1TransitionScore = SCORE_TRANSITION[i]
+          console.log("탐구1")
+          console.log(tamgu1TransitionScore.univName)
       
         } 
 
         
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject2) {
           tamgu2TransitionScore = SCORE_TRANSITION[i]
+          console.log("탐구2")
+          console.log(tamgu2TransitionScore.univName)
 
         } 
 
@@ -396,12 +403,17 @@ export default class reportController {
 
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].subject === subject1) {
             tamgu1TransitionScore = SCORE_TRANSITION[i]
+            console.log("서울대탐구1")
+            console.log(tamgu1TransitionScore.score)
 
           } 
   
           
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].subject === subject2) {
             tamgu2TransitionScore = SCORE_TRANSITION[i]
+
+            console.log("서울대탐구2")
+            console.log(tamgu2TransitionScore.score)
 
           } 
   
@@ -417,19 +429,22 @@ export default class reportController {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수가") {
           mathTransitionScore = SCORE_TRANSITION[i]
+          console.log("여기왔지롱")
+          console.log(mathTransitionScore.score)
 
         } 
       }
 
     }
 
-    else if ( calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
+    else if ( (calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") && score.math.type == "나") {
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수나") {
           mathTransitionScore = SCORE_TRANSITION[i]
-    
+          console.log("여기도왔지롱")
+          console.log(mathTransitionScore.score)
         } 
       }
 
@@ -859,6 +874,7 @@ export default class reportController {
     // 표준점수 x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "B") {
 
+      console.log("B다 임마")
     
       newScore.korean = score.korean.score * ( perfectScore.korean  ) / 100
       newScore.math = score.math.score * ( perfectScore.math  ) / 100
@@ -898,17 +914,23 @@ export default class reportController {
     else if ( applicationIndicatorType == "C") {
 
 
+      console.log("C다임마")
+      console.log(majorData.major.univName)
+      console.log(majorData.major.majorName)
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
 
    
 
       if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
   
-
+        console.log("tlqkf")
+        console.log(mathTransitionScore)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
 
       } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
 
+        console.log("zxcv")
+        console.log(mathTransitionScore)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
     
       } 
@@ -918,10 +940,15 @@ export default class reportController {
  
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
 
+        console.log("zxcvzxcvzxcvxv")
+
+        console.log(tamgu1TransitionScore)
+
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
     
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
    
+        console.log("zxcdag")
 
         if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
  
