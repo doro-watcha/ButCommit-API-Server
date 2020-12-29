@@ -365,11 +365,13 @@ export default class reportController {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1) {
           tamgu1TransitionScore = SCORE_TRANSITION[i]
+          console.log(tamgu1TransitionScore.score)
         } 
 
         
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject2) {
           tamgu2TransitionScore = SCORE_TRANSITION[i]
+          console.log(tamgu2TransitionScore.score)
         } 
 
       }
@@ -380,6 +382,7 @@ export default class reportController {
 
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "제2외/한") {
             foreignTransitionScore = SCORE_TRANSITION[i]
+            console.log(foreignTransitionScore.score)
           } 
 
         }
@@ -393,11 +396,13 @@ export default class reportController {
 
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].subject === subject1) {
             tamgu1TransitionScore = SCORE_TRANSITION[i]
+            console.log(tamgu1TransitionScore.score)
           } 
   
           
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].subject === subject2) {
             tamgu2TransitionScore = SCORE_TRANSITION[i]
+            console.log(tamgu2TransitionScore.score)
           } 
   
         }
@@ -411,8 +416,7 @@ export default class reportController {
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i] === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수가") {
-          mathTr
-          ansitionScore = SCORE_TRANSITION[i]
+          mathTransitionScore = SCORE_TRANSITION[i]
         } 
       }
 
@@ -423,8 +427,7 @@ export default class reportController {
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i] === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수나") {
-          mathTr
-          ansitionScore = SCORE_TRANSITION[i]
+          mathTransitionScore = SCORE_TRANSITION[i]
         } 
       }
 

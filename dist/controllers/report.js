@@ -313,10 +313,12 @@ class reportController {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
         if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === subject1) {
           tamgu1TransitionScore = _variables.SCORE_TRANSITION[i];
+          console.log(tamgu1TransitionScore.score);
         }
 
         if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === subject2) {
           tamgu2TransitionScore = _variables.SCORE_TRANSITION[i];
+          console.log(tamgu2TransitionScore.score);
         }
       }
 
@@ -324,6 +326,7 @@ class reportController {
         for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
           if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "제2외/한") {
             foreignTransitionScore = _variables.SCORE_TRANSITION[i];
+            console.log(foreignTransitionScore.score);
           }
         }
       }
@@ -332,10 +335,12 @@ class reportController {
         for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
           if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].subject === subject1) {
             tamgu1TransitionScore = _variables.SCORE_TRANSITION[i];
+            console.log(tamgu1TransitionScore.score);
           }
 
           if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].subject === subject2) {
             tamgu2TransitionScore = _variables.SCORE_TRANSITION[i];
+            console.log(tamgu2TransitionScore.score);
           }
         }
       }
@@ -344,15 +349,13 @@ class reportController {
     if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && score.math.type == "가") {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
         if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i] === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수가") {
-          mathTr;
-          ansitionScore = _variables.SCORE_TRANSITION[i];
+          mathTransitionScore = _variables.SCORE_TRANSITION[i];
         }
       }
     } else if (calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
         if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i] === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수나") {
-          mathTr;
-          ansitionScore = _variables.SCORE_TRANSITION[i];
+          mathTransitionScore = _variables.SCORE_TRANSITION[i];
         }
       }
     } //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한

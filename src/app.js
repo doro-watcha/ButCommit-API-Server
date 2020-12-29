@@ -11,6 +11,9 @@ import swaggerDoc from './swaggerDoc'
 import indexRouter from './routes/index'
 import models from './models'
 
+import { scoreTransitionController } from './controllers'
+
+
 
 
 var app = express();
@@ -38,8 +41,11 @@ models.sequelize
 		const passport = Authenticator.initialize(app)
     app.use(passport.initialize())
 
-    console.log("good")
 
+
+    scoreTransitionController.parse()
+
+    console.log("good")
 		app.listen(process.env.PORT, () => console.log(`App listening on port 3000`))
 	})
 	.catch((error) => {
