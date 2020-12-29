@@ -942,6 +942,9 @@ export default class reportController {
 
       var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
+
+      console.log(highestTamgu1)
+      console.log(highestTamgu2)
       
       var highestForeign = null
 

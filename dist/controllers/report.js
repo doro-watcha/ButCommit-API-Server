@@ -721,6 +721,8 @@ class reportController {
               if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
               var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
               var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
+              console.log(highestTamgu1);
+              console.log(highestTamgu2);
               var highestForeign = null;
               if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
