@@ -28,7 +28,7 @@ export default class reportController {
 
       if ( score == null ) throw Error('SCORE_NOT_FOUND')
 
-      const sameTamgu = ( ( score.tamgu1.name.indexOf("1") >= 0) && ( score.tamgu2.name.indexOf("1") >= 0 ) ) || ( ( score.tamgu1.name.indexOf("2") >= 0) && ( score.tamgu2.name.indexOf("2") >= 0) ) 
+      const sameTamgu =  score.tamgu1.name[0] === score.tamgu2.name[0]
 
       if ( majorData.ratio.math.ga == 0 && majorData.ratio.math.na != 0 && score.math.type == "가") throw Error('MATH_NA_NOT_FOUND')
       else if ( majorData.ratio.math.na == 0 &&  majorData.ratio.math.ga != 0 && score.math.type =="나") throw Error('MATH_GA_NOT_FOUND')
