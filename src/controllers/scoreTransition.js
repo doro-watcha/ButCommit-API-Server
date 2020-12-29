@@ -1,4 +1,4 @@
-import { scoreTransitionService, userService } from '../services'
+import { scoreTransitionService, userService ,naesinService } from '../services'
 import Joi from '@hapi/joi'
 
 import mime from 'mime'
@@ -7,7 +7,7 @@ import fs from 'fs'
 import xlsx from 'xlsx'
 
 import { createErrorResponse } from '../utils/functions'
-import { SCORE_TRANSITION } from '../utils/variables'
+import { SCORE_TRANSITION ,NAESIN } from '../utils/variables'
 
 export default class scoreTransitionController {
 
@@ -120,6 +120,90 @@ export default class scoreTransitionController {
         SCORE_TRANSITION.push(obj)
 
         await scoreTransitionService.create( obj)
+
+      }
+
+
+      await naesinService.deleteAll()
+
+    
+      let sheetData3 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[3]], {
+        header: 1,
+        defval: '',
+        blankrows: true
+      })
+
+      for ( let i = 1 ; i < ( sheetData3.length - 1 ) ; i = i + 4 ) {
+
+        for ( let j = 7 ; j < sheetData3[i].length - 7 ; j++) {
+
+          if (sheetData3[i][j].length == 0 ) break;
+
+          let naesin_section = String(sheetData3[i][j]).split('~')
+          let startScore = naesin_section[0]
+          let endScore = 0.0
+
+          if ( naesin_section.length > 1 ) {
+            endScore = (naesin_section[1])
+          } else if ( naesin_section.length == 1 ) {
+            endScore = (naesin_section[0])
+          }
+
+
+          let obj = {
+            type : "내신",
+            univName : sheetData3[i][0],
+            recruitmentType : sheetData3[i][1],
+            sosokUniversity : sheetData3[i][2],
+            recruitmentUnit : sheetData3[i][3],
+            applicationIndicator : sheetData3[i][6],
+            major : sheetData3[i][4],
+            startScore : parseFloat(startScore),
+            endScore : parseFloat(endScore),
+            value : sheetData3[i+1][j]
+          }
+
+          NAESIN.push(obj)
+          await naesinService.create(obj)
+
+        }
+
+        for ( let j = 7 ; j < sheetData3[i].length - 7; j++){
+
+          if (sheetData3[i+2][j].length == 0 ) break
+          else if ( sheetData3[i+2][j] == " ( 수능 점수 - 한국사 점수 ) / 9 ") break
+          else if ( sheetData3[i+2][j] == "산출 불가") break
+          else if ( sheetData3[i+2][j] == "all") break
+          else if ( sheetData3[i+2][j] == "( 국어 백분위 + 수학 백분위 + 영어 환산표 점수 + 탐구 평균 백분위 ) x 1.25") break
+
+
+          let gumjeong_section = String(sheetData3[i+2][j]).split('~')
+          let startScore = gumjeong_section[0]
+          let endScore = 0.0
+
+          if ( gumjeong_section.length > 1 ) {
+            endScore = gumjeong_section[1]
+          } else if ( gumjeong_section == 1 ) {
+            endScore = gumjeong_section[0]
+          }
+
+          let obj = {
+            type : "검정고시",
+            univName : sheetData3[i][0],
+            recruitmentType : sheetData3[i][1],
+            sosokUniversity : sheetData3[i][2],
+            recruitmentUnit : sheetData3[i][3],
+            applicationIndicator : sheetData3[i][6],
+            major : sheetData3[i][4],
+            startScore : parseFloat(startScore),
+            endScore : parseFloat(endScore),
+            value : sheetData3[i+3][j]
+          }
+
+          NAESIN.push(obj)
+          await naesinService.create(obj)
+
+        }
 
       }
 

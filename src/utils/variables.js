@@ -5,7 +5,7 @@ module.exports = {
 	
 	// percentile to score 탐구
 	SCORE_TRANSITION : [],
-
+	NAESIN : [],
 	// errors
 	errors: {
 		// 400 Bad Request
