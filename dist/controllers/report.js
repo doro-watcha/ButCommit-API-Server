@@ -350,12 +350,14 @@ class reportController {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
         if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i] === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수가") {
           mathTransitionScore = _variables.SCORE_TRANSITION[i];
+          console.log(mathTransitionScore.score);
         }
       }
     } else if (calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
         if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i] === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수나") {
           mathTransitionScore = _variables.SCORE_TRANSITION[i];
+          console.log(mathTransitionScore.score);
         }
       }
     } //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
@@ -684,12 +686,17 @@ class reportController {
         else if (applicationIndicatorType == "C") {
             console.log("C다 임마");
             newScore.korean = score.korean.score * perfectScore.korean / 200;
+            console.log("1");
 
             if ((calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
               newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 200;
+              console.log("2");
             } else if ((calculationSpecial.indexOf("수나 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "니") {
               newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 200;
+              console.log("3");
             } else newScore.math = score.math.score * perfectScore.math / 200;
+
+            console.log("5");
 
             if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
               newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
