@@ -192,7 +192,7 @@ module.exports = {
 		},
 		DIFFERENT_TAMGU_NOT_FOUND : {
 			status : 435,
-			ko : '탐구 성적 똑같음'
+			ko : '탐구1, 탐구2 응시과목 중복'
 		},
 
 
