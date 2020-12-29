@@ -928,7 +928,6 @@ export default class reportController {
       var tempTamgu2 = score.tamgu2.score
       var tempForeign = score.foreign.score
 
-      console.log(tempForeign)
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
         tempTamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
@@ -943,9 +942,6 @@ export default class reportController {
       var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
       var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
 
-      console.log(highestTamgu1)
-      console.log(highestTamgu2)
-      
       var highestForeign = null
 
       if ( score.foreign.score != null) highestForeign = await highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name )
@@ -960,11 +956,6 @@ export default class reportController {
         if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0]
       }
 
-      console.log(highestTamgu1.score)
-      console.log(highestTamgu2.score)
-      console.log(highestForeign.score)
-      console.log(highestKorean.score)
-      console.log(highestMath.score)
 
       
       newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean.score

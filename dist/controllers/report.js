@@ -709,7 +709,6 @@ class reportController {
               var tempTamgu1 = score.tamgu1.score;
               var tempTamgu2 = score.tamgu2.score;
               var tempForeign = score.foreign.score;
-              console.log(tempForeign);
 
               if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
                 tempTamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
@@ -721,8 +720,6 @@ class reportController {
               if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
               var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
               var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
-              console.log(highestTamgu1);
-              console.log(highestTamgu2);
               var highestForeign = null;
               if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
@@ -732,11 +729,6 @@ class reportController {
                 if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0];
               }
 
-              console.log(highestTamgu1.score);
-              console.log(highestTamgu2.score);
-              console.log(highestForeign.score);
-              console.log(highestKorean.score);
-              console.log(highestMath.score);
               newScore.korean = score.korean.score * perfectScore.korean / highestKorean.score;
               newScore.math = score.math.score * perfectScore.math / highestMath.score;
               newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
