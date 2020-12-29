@@ -37,6 +37,13 @@ class MajorDataService {
 		})
   }
 
+  async findByFilter ( options ) {
+
+    
+
+
+    return Maj
+  }
   
   async findRecommendations ( score ) {
 

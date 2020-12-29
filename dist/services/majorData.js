@@ -47,6 +47,10 @@ class MajorDataService {
     });
   }
 
+  async findByFilter(options) {
+    return Maj;
+  }
+
   async findRecommendations(score) {
     const Op = _sequelize.default.Op;
     return await _models.MajorData.findAll({

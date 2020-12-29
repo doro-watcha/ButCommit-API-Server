@@ -58,6 +58,7 @@ export default class reportController {
 
     try {
 
+      
       const id = req.params.id 
 
       const report = await reportService.findOne({id})

@@ -83,36 +83,150 @@ export default class majorDataController {
 
     try {
 
+      var majorDataList = []
 
-      const result = await Joi.validate ( req.query , {
+      const result = await Joi.validate ( req.body , {
         year : Joi.number(),
-        majorId : Joi.number()
+        group : Joi.string().optional(),
+        location : Joi.array().optional(),
+        type : Joi.string().optional(),
+        line : Joi.string().optional(),
+        univName : Joi.string().optional(),
+        mathType : Joi.string().optional(),
+        tamguType : Joi.string().optional()
       })
 
-      const { year, majorId} = result
+      const { year, group, location, type , line, univName , mathType, tamguType } = result
 
       const modelObj = {
-        year,
-        majorId
+        year
       }
 
       const { user } = req 
 
       const score = await scoreService.findOne({userId : user.id})
 
-      const majorDataList = await majorDataService.findList(modelObj)
+      const majorDataNotFiltered = await majorDataService.findList(modelObj)
 
-      const if_none_match = req.headers['if-none-match'] 
+      majorDataList = majorDataNotFiltered
+      
 
-      if ( if_none_match !== undefined && bycrypt.compareSync(score.updatedAt + user.email + majorDataList[0].updatedAt , if_none_match) ) {
+      // 군 필터링
+      if ( group !== undefined ) {
+        majorDataList = majorDataList.filter ( item => {
+          return item.major.group === group 
+        })
         
-        res.sendStatus(304)
+      }
+      // 대학 이름 필터링
+      if ( univName !== undefined ) {
+        majorDataList = majorDataList.filter ( item => {
+          return item.major.univName === univName
+        })
+      }
 
+      // 계열 필터링
+      if ( line !== undefined) {
+        majorDataList = majorDataList.filter ( item => {
+          return item.major.line === line
+        })
+      }
+      
+      // 지역 필터링
+      if ( location !== undefined) {
+
+        majorDataList = majorDataList.filter ( item => {
+          return location.includes(item.major.location)
+        })
 
       }
 
+      // 종류/분야 필터링
+
+      if ( type !== undefined) {
+
+        if ( type === "간호") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName.indexOf("간호") >= 0
+          })
+        }
+        else if ( type === "의예") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName === "의예과"
+          })
+        }
+        else if ( type === "의학") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName === "의학과"
+          })
+
+        }
+
+        else if ( type === "치의") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName === "치의예과"
+          })
+
+        }
+        else if ( type === "초등교육") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName === "초등교육과"
+          })
+
+        }
+        else if ( type === "한의") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName === "한의예과"
+          })
+
+        }
+        else if ( type === "수의") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.major.majorName === "수의예과"
+          })
+
+        }
+      }
+
+      // 수학 가/나 필터링
+      if ( mathType !== undefined) {
+
+        if ( mathType === "가") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.ratio.math.ga > 0
+          })
+        }
+
+        else if ( mathType ==="나") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.ratio.math.na > 0
+          })
+
+        }
+      }
+
+      // 과탐 ,사탐 필터링
+      if ( tamguType !== undefined ) {
+
+        if ( tamguType === "과탐") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.ratio.tamgu.science > 0
+          })
+        }
+        else if ( tamguType === "사탐") {
+          majorDataList = majorDataList.filter ( item => {
+            return item.ratio.tamgu.society > 0
+          })
+        }
+      }
+
+
+      console.log(majorDataNotFiltered.length)
+      console.log(majorDataList.length)
+
+
       let majorDatas = []
-      for ( let i = 3 ; i < 5137 ; i++){
+      for ( let i = 3 ; i < majorDataList.length ; i++){
 
 
         let majorData = majorDataList[i-3]
@@ -153,12 +267,6 @@ export default class majorDataController {
           majorDatas
         }
       }
-
-
-      const eTag = bycrypt.hashSync(score.updatedAt + user.email + majorDataList[0].updatedAt,8)
-      res.set('Cache-Control', `no-cache, private, max-age=36000`)
-      res.set('etag',eTag)
-
 
       res.send(response)
 
@@ -257,6 +365,8 @@ export default class majorDataController {
         mathType,
         tamguType
       }
+
+      const majorDataList = await majorDataService.findByFilter(options)
 
 
 
