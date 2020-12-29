@@ -191,6 +191,10 @@ module.exports = {
       status: 434,
       ko: '내신 성적 없음'
     },
+    DIFFERENT_TAMGU_NOT_FOUND: {
+      status: 435,
+      ko: '탐구 성적 똑같음'
+    },
     // 409
     USER_ALREADY_EXISTS: {
       status: 500,

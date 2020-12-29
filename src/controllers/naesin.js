@@ -80,4 +80,9 @@ export default class notificationController {
     }
   }
 
+  static async parse ( req, res) {
+
+    
+  }
+
 }

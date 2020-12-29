@@ -84,6 +84,8 @@ class notificationController {
     }
   }
 
+  static async parse(req, res) {}
+
 }
 
 exports.default = notificationController;

@@ -32,7 +32,8 @@ export default class reportController {
       else if ( majorData.ratio.math.na == 0 &&  majorData.ratio.math.ga != 0 && score.math.type =="나") throw Error('MATH_GA_NOT_FOUND')
       else if ( majorData.ratio.tamgu.science == 0 && majorData.ratio.tamgu.society != 0 && score.line == "자연") throw Error('SOCIETY_NOT_FOUND')
       else if ( majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.society != 0 && score.line == "인문") throw Error('SCIENCE_NOT_FOUND')
-
+      else if ( majorData.metadata.sooneungSpecial === "과탐응시 기준: 1+2 혹은 2+2 선택|같은 분야 1, 2 과목 불가") throw Error('DIFFERENT_TAMGU_NOT_FOUND')
+      else if ( majorData.metadata.sooneungSpecial === "과탐 1,2 구분없이 서로 다른 두 과목 선택") throw Error('DIFFERENT_TAMGU_NOT_FOUND')
 
       const modelObj = await reportController.getScore(score , majorData , true)
 
@@ -2313,7 +2314,6 @@ export default class reportController {
     var naesinScore = 0.0
 
     if ( score.naesinScore !== 0 &&  isNaN(majorData.metadata.naesinRatio) === false ) {
-
 
       const naesin = await naesinService.findOne(
         majorData.major.univName,
