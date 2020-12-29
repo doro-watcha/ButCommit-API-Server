@@ -1206,7 +1206,7 @@ class reportController {
     } else if (tamguReplace == "사 1과목 프랑스어 대체 가능" && score.foreign.name == "프랑스어") {
       tamguList = [tamgu1, tamgu2, foreign];
     } else if (tamguReplace == "사과 1과목 일본어 대체 가능" && score.foreign.name == "일본어") {
-      tamgList = [tamgu1, tamgu2, foreign];
+      tamguList = [tamgu1, tamgu2, foreign];
     } else if (tamguReplace == "사과 1과목 한문/중국어 대체 가능" && (score.foreign.name == "한문" || score.foreign.name == "중국어")) {
       tamguList = [tamgu1, tamgu2, foreign];
     } else tamguList = [tamgu1, tamgu2];
