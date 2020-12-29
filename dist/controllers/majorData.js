@@ -103,6 +103,7 @@ class majorDataController {
         year,
         group,
         type,
+        location,
         line,
         univName,
         mathType,

@@ -96,7 +96,7 @@ export default class majorDataController {
         tamguType : Joi.string().optional()
       })
 
-      const { year, group, type , line, univName , mathType, tamguType } = result
+      const { year, group, type ,location, line, univName , mathType, tamguType } = result
 
       console.log(group)
       console.log(location)
