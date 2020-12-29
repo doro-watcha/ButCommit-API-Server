@@ -1558,14 +1558,14 @@ class reportController {
         userId: score.userId,
         perfectScore,
         extraScore: extraScore,
-        totalScore: totalSum,
+        totalScore: totalSum + naesinScore,
         recommendations,
         actualPerfectScore: major_perfectScore,
         naesinScore
       };
       return modelObj;
     } else {
-      return totalSum;
+      return totalSum + naesinScore;
     }
   }
 

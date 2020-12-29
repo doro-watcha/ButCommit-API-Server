@@ -2359,7 +2359,7 @@ export default class reportController {
         userId : score.userId,
         perfectScore,
         extraScore : extraScore,
-        totalScore : totalSum,
+        totalScore : totalSum + naesinScore,
         recommendations,
         actualPerfectScore : major_perfectScore,
         naesinScore
@@ -2368,7 +2368,7 @@ export default class reportController {
       return modelObj
     }
     else {
-      return totalSum
+      return totalSum + naesinScore
     }
 
 
