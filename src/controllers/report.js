@@ -58,7 +58,6 @@ export default class reportController {
 
     try {
 
-      console.log(SCORE_TRANSITION)
       const id = req.params.id 
 
       const report = await reportService.findOne({id})
@@ -360,73 +359,59 @@ export default class reportController {
         subject1 = score.tamgu1.name
         subject2 = score.tamgu2.name
       }
-
-      for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
-
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1) {
-          tamgu1TransitionScore = SCORE_TRANSITION[i]
-        } 
-
-        
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject2) {
-          tamgu2TransitionScore = SCORE_TRANSITION[i]
-        } 
-
-      }
       
+      tamgu1TransitionScore = await scoreTransitionService.findOne({ 
+        univName : majorData.major.univName, 
+        major : majorData.major.majorName,
+        subject : subject1
+      })
+
+      tamgu2TransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName, 
+        major : majorData.major.majorName,
+        subject : subject2
+      })
+
       if ( tamguReplace.length > 1 && score.foreign.score != null) {
 
-        for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
-
-          if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "제2외/한") {
-            foreignTransitionScore = SCORE_TRANSITION[i]
-          } 
-
-        }
+        foreignTransitionScore = await scoreTransitionService.findOne({
+          univName : majorData.major.univName, 
+          major : majorData.major.majorName,
+          subject : "제2외/한"
+        })
       }
-      
+
 
       if ( majorData.major.univName.indexOf("서울대") >= 0 ) {
 
+        tamgu1TransitionScore = await scoreTransitionService.findOne({
+          univName : majorData.major.univName,
+          subject : subject1
+        })
 
-        for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
-
-          if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].subject === subject1) {
-            tamgu1TransitionScore = SCORE_TRANSITION[i]
-          } 
-  
-          
-          if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].subject === subject2) {
-            tamgu2TransitionScore = SCORE_TRANSITION[i]
-          } 
-  
-        }
+        tamgu2TransitionScore = await scoreTransitionService.findOne({
+          univName : majorData.major.univName,
+          subject : subject2
+        })
 
       }
   
     }
 
     if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") {
-
-      for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
-
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i] === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수가") {
-          mathTr
-          ansitionScore = SCORE_TRANSITION[i]
-        } 
-      }
-
+      mathTransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName,
+        major : majorData.major.majorName,
+        subject : "수가"
+      })
     }
 
     else if ( calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
-
-      for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
-
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i] === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수나") {
-          mathTr
-          ansitionScore = SCORE_TRANSITION[i]
-        } 
-      }
+      mathTransitionScore = await scoreTransitionService.findOne({
+        univName : majorData.major.univName,
+        major : majorData.major.majorName,
+        subject : "수나"
+      })
 
     }
 
@@ -1741,7 +1726,7 @@ export default class reportController {
       tamguList = [tamgu1,tamgu2,foreign]
     }
     else if ( tamguReplace == "사과 1과목 일본어 대체 가능" && ( score.foreign.name =="일본어")) {
-      tamguList = [tamgu1,tamgu2,foreign]
+      tamgList = [tamgu1,tamgu2,foreign]
     }
     else if ( tamguReplace == "사과 1과목 한문/중국어 대체 가능" && (score.foreign.name =="한문" || score.foreign.name =="중국어")){
       tamguList = [tamgu1, tamgu2, foreign]
