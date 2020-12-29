@@ -97,7 +97,7 @@ export default class majorDataController {
       })
 
       const parameter = await Joi.validate (req.params, {
-        location
+        location : Joi.optional()
       })
 
       const { location } = parameter 

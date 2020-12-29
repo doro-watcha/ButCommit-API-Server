@@ -100,7 +100,7 @@ class majorDataController {
         tamguType: _joi.default.string().optional()
       });
       const parameter = await _joi.default.validate(req.params, {
-        location
+        location: _joi.default.optional()
       });
       const {
         location
