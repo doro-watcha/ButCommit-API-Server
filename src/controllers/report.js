@@ -2312,49 +2312,42 @@ export default class reportController {
 
     var naesinScore = 0.0
 
-    // if ( score.naesinScore !== 0 &&  isNaN(majorData.metadata.naesinRatio) === false ) {
+    if ( score.naesinScore !== 0 &&  isNaN(majorData.metadata.naesinRatio) === false ) {
 
-    //   var naesin = null
-    //   for ( let i = 0; i < NAESIN.length ; i++) {
 
-    //     const univName = majorData.major.univName
-    //     const recruitmentType = majorData.major.recruitmentType
-    //     const recruitmentUnit = majorData.major.recruitmentUnit
-    //   }
-    //   if ( NAESIN.univName === majorData.major.univName && NAESIN.)
-    //   const naesin = await naesinService.findOne(
-    //     majorData.major.univName,
-    //     majorData.major.recruitmentType,
-    //     majorData.major.recruitmentUnit,
-    //     majorData.major.sosokUniversity,
-    //     majorData.major.majorName,
-    //     score.naesinType,
-    //     score.naesinScore
-    //   )
+      const naesin = await naesinService.findOne(
+        majorData.major.univName,
+        majorData.major.recruitmentType,
+        majorData.major.recruitmentUnit,
+        majorData.major.sosokUniversity,
+        majorData.major.majorName,
+        score.naesinType,
+        score.naesinScore
+      )
 
-    //   if ( score.naesinType === "검정고시") {
+      if ( score.naesinType === "검정고시") {
 
-    //     if ( majorData.major.univName === "한양대") naesinScore = 98.5
-    //     else if ( majorData.major.univName === "부산교대"){
-    //       const korean = score.korean.percentile
-    //       const math = score.math.percentile
-    //       const english = majorData.gradeToScore.english.score[score.english.grade-1]
-    //       const tamgu = ( score.tamgu1.percentile + score.tamgu2.percentile) / 2
+        if ( majorData.major.univName === "한양대") naesinScore = 98.5
+        else if ( majorData.major.univName === "부산교대"){
+          const korean = score.korean.percentile
+          const math = score.math.percentile
+          const english = majorData.gradeToScore.english.score[score.english.grade-1]
+          const tamgu = ( score.tamgu1.percentile + score.tamgu2.percentile) / 2
 
-    //       naesinScore = ( korean + math + english + tamgu ) * 1.25
-    //     }
-    //     else if ( majorData.major.univName === "광주교대") {
-    //       const history = majorData.gradeToScore.history.score[score.history.grade-1]
+          naesinScore = ( korean + math + english + tamgu ) * 1.25
+        }
+        else if ( majorData.major.univName === "광주교대") {
+          const history = majorData.gradeToScore.history.score[score.history.grade-1]
 
-    //       naesinScore = ( parseFloat(totalSum) - history ) / 9
-    //     }
+          naesinScore = ( parseFloat(totalSum) - history ) / 9
+        }
 
-    //   }
+      }
 
-    //   if ( naesin !== null ) naesinScore = naesin.value
-    // }
+      if ( naesin !== null ) naesinScore = naesin.value
+    }
 
-    // if ( isNaN(naesinScore) ) naesinScore = 0
+    if ( isNaN(naesinScore) ) naesinScore = 0
 
 
     totalSum = parseFloat(totalSum)  + naesinScore
