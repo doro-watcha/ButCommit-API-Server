@@ -234,10 +234,10 @@ export default class majorDataController {
 
 
       let majorDatas = []
-      for ( let i = 3 ; i < majorDataList.length ; i++){
+      for ( let i = 0 ; i < majorDataList.length ; i++){
 
 
-        let majorData = majorDataList[i-3]
+        let majorData = majorDataList[i]
 
 
         let transitionScore = 0

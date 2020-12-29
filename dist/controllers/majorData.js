@@ -218,8 +218,8 @@ class majorDataController {
       console.log(majorDataList.length);
       let majorDatas = [];
 
-      for (let i = 3; i < majorDataList.length; i++) {
-        let majorData = majorDataList[i - 3];
+      for (let i = 0; i < majorDataList.length; i++) {
+        let majorData = majorDataList[i];
         let transitionScore = 0;
 
         if (score.line == "인문" && majorData.ratio.tamgu.society > 0) {
