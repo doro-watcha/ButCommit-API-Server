@@ -5,6 +5,7 @@ module.exports = {
   usernameRegex: /^(?=.{6,24}$)([a-zA-Z0-9]+[.]{0,1}[a-zA-Z0-9]+)$/,
   passwordRegex: /^(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.*[a-zA-Z])[a-zA-Z0-9!@#\$%\^&\*]{8,20}$/,
   // percentile to score 탐구
+  SCORE_TRANSITION: [],
   // errors
   errors: {
     // 400 Bad Request

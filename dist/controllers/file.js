@@ -15,6 +15,8 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _xlsx = _interopRequireDefault(require("xlsx"));
 
+var _variables = require("../utils/variables");
+
 var _services = require("../services");
 
 var _functions = require("../utils/functions");
@@ -428,6 +430,9 @@ class fileController {
             applicationIndicator: sheetData5[i][5],
             score: data
           };
+
+          _variables.SCORE_TRANSITION.push(obj);
+
           await _services.scoreTransitionService.create(obj);
         }
       }

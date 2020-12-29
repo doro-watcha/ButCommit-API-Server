@@ -4,6 +4,7 @@ import mime from 'mime'
 import path from 'path'
 import fs from 'fs'
 import xlsx from 'xlsx'
+import { SCORE_TRANSITION } from '../utils/variables'
 import { majorService, universityService , majorDataService, scoreTransitionService, highestScoreService , naesinService } from '../services'
 
 import { createErrorResponse } from '../utils/functions'
@@ -445,6 +446,8 @@ export default class fileController {
             score : data 
 
           }
+
+          SCORE_TRANSITION.push(obj)
 
           await scoreTransitionService.create( obj)
 

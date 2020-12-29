@@ -4,7 +4,7 @@ module.exports = {
 	passwordRegex: /^(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.*[a-zA-Z])[a-zA-Z0-9!@#\$%\^&\*]{8,20}$/,
 	
 	// percentile to score 탐구
-
+	SCORE_TRANSITION : [],
 
 	// errors
 	errors: {
