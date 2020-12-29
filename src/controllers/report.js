@@ -904,9 +904,13 @@ export default class reportController {
 
       if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
   
+        console.log("시발")
+        console.log(mathTransitionScore)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
         console.log("2")
-      } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "니") {
+      } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
+        console.log("시발")
+        console.log(mathTransitionScore)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
         console.log("3")
       } 
