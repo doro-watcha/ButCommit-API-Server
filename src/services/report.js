@@ -133,6 +133,9 @@ class ReportService {
 				id
 			}
         })
+        if ( report == null ) {
+            throw Error ('REPORT_NOT_FOUND')
+        }
         await FinalReport.destroy({
             where : { reportId : report.id}
           })
