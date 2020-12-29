@@ -229,4 +229,40 @@ export default class majorDataController {
 
   }
 
+  static async findListByFilter ( req ,res) {
+
+    try {
+
+      const { req } = user 
+
+      const result = await Joi.validate(req.query, {
+        group : Joi.string().optional(),
+        location : Joi.string().optional(),
+        type : Joi.string().optional(),
+        line : Joi.string().optional(),
+        univName : Joi.string().optional(),
+        mathType : Joi.string().optional(),
+        tamguType : Joi.string().required(),
+
+      })
+
+      const { group, location, type , line , univName, mathType, tamguType} = result 
+
+      const options = {
+        group,
+        location,
+        type,
+        line,
+        univName,
+        mathType,
+        tamguType
+      }
+
+
+
+    } catch ( e ) {
+      res.send(createErrorResponse(e))
+    }
+  }
+
 }

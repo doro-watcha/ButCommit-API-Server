@@ -16,9 +16,16 @@ router.get('/:id' , (req,res) => {
   majorDataController.findOne(req,res)
 })
 
+
+
+router.get('/filter' , authenticate , (req,res) => {
+  majorDataController.findListByFilter(req,res)
+})
 router.get('/',authenticate, (req,res) => {
   majorDataController.findList(req,res)
 })
+
+
 
 router.patch('/:id', (req,res) => {
   majorDataController.update(req,res)

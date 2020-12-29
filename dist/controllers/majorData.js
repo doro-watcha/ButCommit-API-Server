@@ -215,6 +215,43 @@ class majorDataController {
     }
   }
 
+  static async findListByFilter(req, res) {
+    try {
+      const {
+        req
+      } = user;
+      const result = await _joi.default.validate(req.query, {
+        group: _joi.default.string().optional(),
+        location: _joi.default.string().optional(),
+        type: _joi.default.string().optional(),
+        line: _joi.default.string().optional(),
+        univName: _joi.default.string().optional(),
+        mathType: _joi.default.string().optional(),
+        tamguType: _joi.default.string().required()
+      });
+      const {
+        group,
+        location,
+        type,
+        line,
+        univName,
+        mathType,
+        tamguType
+      } = result;
+      const options = {
+        group,
+        location,
+        type,
+        line,
+        univName,
+        mathType,
+        tamguType
+      };
+    } catch (e) {
+      res.send((0, _functions.createErrorResponse)(e));
+    }
+  }
+
 }
 
 exports.default = majorDataController;
