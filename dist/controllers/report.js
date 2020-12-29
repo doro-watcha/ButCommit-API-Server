@@ -11,8 +11,6 @@ var _joi = _interopRequireDefault(require("@hapi/joi"));
 
 var _functions = require("../utils/functions");
 
-var _highestScore = _interopRequireDefault(require("../services/highestScore"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class reportController {
@@ -154,6 +152,37 @@ class reportController {
     const calculationSpecial = majorData.metadata.calculationSpecial;
     const tamguReplace = majorData.metadata.tamguReplace;
     const reflectionOption = majorData.metadata.reflectionOption;
+    const highestScore = {
+      "국어": 144,
+      "수학가": 137,
+      "수학나": 137,
+      "생활과윤리": 65,
+      "윤리와사상": 64,
+      "한국지리": 63,
+      "세계지리": 63,
+      "동아시아사": 67,
+      "세계사": 67,
+      "경제": 69,
+      "정치와 법": 69,
+      "사회문화": 71,
+      "물리학1": 64,
+      "화학1": 68,
+      "생명과학1": 71,
+      "지구과학1": 72,
+      "물리학2": 62,
+      "화학2": 70,
+      "생명과학2": 69,
+      "지구과학2": 69,
+      "독일어": 70,
+      "프랑스어": 68,
+      "스페인어": 68,
+      "중국어": 67,
+      "일본어": 69,
+      "러시아어": 68,
+      "아랍어": 86,
+      "베트남어": 75,
+      "한문": 69
+    };
     if (isNaN(basicScore) == false) major_perfectScore = major_perfectScore - basicScore;
     const major_ratio = majorData.ratio;
     let perfectScore = {
@@ -534,21 +563,21 @@ class reportController {
       newScore.tamgu2.score = score.tamgu2.score * 1.2;
     } else if (majorData.major.univName == "고려대(세종)") {
       const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
-      const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
-      const highestMath = await _services.highestScoreService.findOne("수학", math_type);
+      const highestKorean = highestScore["국어"];
+      const highestMath = highestScore[`수학${math_type}`];
       const highestTamgu = tamgu1TransitionScore.score.value[0];
       const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
       const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
       var value = 0;
 
       if (specialOption == "특정값: { ( 국어 표점 최고점 + 수학 표점 최고점 + 100 ) x 0.286 } + ( 탐구 변표 최고점 x 2 x 0.142 )") {
-        value = (highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000;
+        value = (highestKorean * perfectScore.korean + highestMath * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000;
       } else if (specialOption == "특정값: { ( 수학 표점 최고점 + 100 ) x 0.333 } + [ { 국어 표점 최고점 + ( 탐구 변표 최고점 x 2 ) } x 0.167 ] ") {
-        value = (highestMath.score + 100) * 0.333 + (highestKorean.score + highestTamgu * 2) * 0.167;
+        value = (highestMath + 100) * 0.333 + (highestKorean + highestTamgu * 2) * 0.167;
       } else if (specialOption == "특정값: { ( 국어 표점 최고점 + 100 ) x 0.4 } + { ( 수학 표점 최고점 x 0.2 ) or ( 탐구 변표 최고점 x 2 x 0.2 ) }") {
         var pickedScore = 0;
-        if ((score.tamgu1.percentile + score.tamgu2.percentile) / 2 > score.math.percentile) pickedScore = highestTamgu * 2 * 0.2;else pickedScore = highestMath.score * 0.2;
-        value = (highestKorean.score + 100) * 0.4 + pickedScore;
+        if ((score.tamgu1.percentile + score.tamgu2.percentile) / 2 > score.math.percentile) pickedScore = highestTamgu * 2 * 0.2;else pickedScore = highestMath * 0.2;
+        value = (highestKorean + 100) * 0.4 + pickedScore;
       }
 
       newScore.korean = score.korean.score * perfectScore.korean / value;
@@ -558,13 +587,13 @@ class reportController {
       newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value;
     } else if (majorData.major.univName == "이화여대") {
       const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
-      const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
-      const highestMath = await _services.highestScoreService.findOne("수학", math_type);
+      const highestKorean = highestScore["국어"];
+      const highestMath = highestScore[`수학${math_type}`];
       const highestTamgu1 = tamgu1TransitionScore.score.value[0];
       const highestTamgu2 = tamgu2TransitionScore.score.value[0];
       const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
       const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
-      const value = highestKorean.score * 0.3 + (highestTamgu1 + highestTamgu2 + highestMath.score) * 0.25;
+      const value = highestKorean * 0.3 + (highestTamgu1 + highestTamgu2 + highestMath) * 0.25;
       newScore.korean = score.korean.score * perfectScore.korean / value * 0.8;
       newScore.english = englishScore * perfectScore.english / 100;
       newScore.math = score.math.score * perfectScore.math / value * 0.8;
@@ -635,10 +664,10 @@ class reportController {
           if (tamguTranslation == "탐구: D타입") {
             var highest_tamgu_type = "";
             if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
-            var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
-            var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
-            newScore.tamgu1.score = score.tamgu1.score * perfectScore.tamgu / highestTamgu1.score;
-            newScore.tamgu2.score = score.tamgu2.score * perfectScore.tamgu / highestTamgu2.score;
+            var highestTamgu1 = highestScore[`${score.tamgu1.name}`];
+            var highestTamgu2 = highestScore[`${score.tamgu2.name}`];
+            newScore.tamgu1.score = score.tamgu1.score * perfectScore.tamgu / highestTamgu1;
+            newScore.tamgu2.score = score.tamgu2.score * perfectScore.tamgu / highestTamgu2;
           }
         } // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
         else if (applicationIndicatorType == "C") {
@@ -674,8 +703,8 @@ class reportController {
             }
           } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
           else if (applicationIndicatorType == "D") {
-              const highestKorean = await _services.highestScoreService.findOne("국어", "국어");
-              const highestMath = await _services.highestScoreService.findOne("수학", math_type);
+              const highestKorean = highestScore["국어"];
+              const highestMath = highestScore[`수학${math_type}`];
               var tempTamgu1 = score.tamgu1.score;
               var tempTamgu2 = score.tamgu2.score;
               var tempForeign = score.foreign.score;
@@ -688,26 +717,26 @@ class reportController {
 
               var highest_tamgu_type = "";
               if (tamgu_type == "자연") highest_tamgu_type = "과학탐구";else highest_tamgu_type = "사회탐구";
-              var highestTamgu1 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name);
-              var highestTamgu2 = await _services.highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name);
+              var highestTamgu1 = highestScore[`${score.tamgu1.name}`];
+              var highestTamgu2 = highestScore[`${score.tamgu2.name}`];
               var highestForeign = null;
-              if (score.foreign.score != null) highestForeign = await _services.highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name); // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
+              if (score.foreign.score != null) highestForeign = highestScore[`${score.foreign.name}`]; // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
               if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
-                highestTamgu1.score = tamgu1TransitionScore.score.value[0];
-                highestTamgu2.score = tamgu2TransitionScore.score.value[0];
-                if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0];
+                highestTamgu1 = tamgu1TransitionScore.score.value[0];
+                highestTamgu2 = tamgu2TransitionScore.score.value[0];
+                if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0];
               }
 
-              newScore.korean = score.korean.score * perfectScore.korean / highestKorean.score;
-              newScore.math = score.math.score * perfectScore.math / highestMath.score;
-              newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1.score;
-              newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2.score;
-              if (score.foreign.score != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign.score;
+              newScore.korean = score.korean.score * perfectScore.korean / highestKorean;
+              newScore.math = score.math.score * perfectScore.math / highestMath;
+              newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1;
+              newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2;
+              if (score.foreign.score != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign;
 
               if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && score.math.type == "가" || (calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") && score.math.type == "나") {
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath.score;
-              } else newScore.math = score.math.score * perfectScore.math / highestMath.score; // 단국데 의치 예외처리
+                newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath;
+              } else newScore.math = score.math.score * perfectScore.math / highestMath; // 단국데 의치 예외처리
 
 
               if (specialOption == "백분위 x 비율 ( 탐 )") {
@@ -1080,8 +1109,8 @@ class reportController {
       }
     } else {
       if (extraPoint == "+ [ 수가 ( 개인 취득 표준점수 / 전국최고 표준점수 ) x 10 ]" && score.math.type == "가") {
-        const highestMath = await _services.highestScoreService.findOne("수학", "가");
-        extraScore.math = score.math.score / highestMath.score * 10;
+        const highestMath = highestScore["수학가"];
+        extraScore.math = score.math.score / highestMath * 10;
       } else if (extraPoint == "수가 백분위 10%, 물리학Ⅱ, 화학Ⅱ, 생명과학Ⅱ 중 최상위 한 과목 백분위 5% 총점에 가산") {
         const tamgu1Name = score.tamgu1.name;
         const tamgu2Name = score.tamgu2.name;
@@ -1189,7 +1218,7 @@ class reportController {
 
       if (specialOption == "{ (탐구 변표 평균 +100) / (탐구변표최고점 +100) } X 비율") {
         const transitionHighestScore = tamgu1TransitionScore.score.value[0];
-        if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0];
+        if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0];
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
         if (tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign = foreignTransitionScore.score.value[100 - score.foreign.percentile];

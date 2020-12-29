@@ -1,8 +1,7 @@
-import { reportService , majorDataService, majorService, scoreService, highestScoreService, scoreTransitionService , reportDataService , naesinService } from '../services'
+import { reportService , majorDataService, majorService, scoreService, scoreTransitionService , reportDataService , naesinService } from '../services'
 import Joi from '@hapi/joi'
 
 import { createErrorResponse } from '../utils/functions'
-import highestScore from '../services/highestScore'
 
 export default class reportController {
 
@@ -182,6 +181,38 @@ export default class reportController {
     const calculationSpecial = majorData.metadata.calculationSpecial
     const tamguReplace = majorData.metadata.tamguReplace
     const reflectionOption = majorData.metadata.reflectionOption
+
+    const highestScore = {
+      "국어" : 144,
+      "수학가" : 137,
+      "수학나" : 137,
+      "생활과윤리" : 65,
+      "윤리와사상" : 64,
+      "한국지리" : 63,
+      "세계지리" : 63,
+      "동아시아사" : 67,
+      "세계사" : 67,
+      "경제" : 69,
+      "정치와 법" : 69,
+      "사회문화" : 71,
+      "물리학1" : 64,
+      "화학1" : 68,
+      "생명과학1" : 71,
+      "지구과학1" : 72,
+      "물리학2" : 62,
+      "화학2" : 70,
+      "생명과학2" : 69,
+      "지구과학2" : 69,
+      "독일어" : 70,
+      "프랑스어" : 68,
+      "스페인어" : 68,
+      "중국어" : 67,
+      "일본어" : 69,
+      "러시아어" : 68,
+      "아랍어" : 86,
+      "베트남어" : 75,
+      "한문" : 69
+    }
 
     if ( isNaN(basicScore) == false ) major_perfectScore = major_perfectScore - basicScore
 
@@ -676,8 +707,8 @@ export default class reportController {
 
       const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
 
-      const highestKorean = await highestScoreService.findOne("국어","국어")
-      const highestMath = await highestScoreService.findOne("수학",math_type)
+      const highestKorean = highestScore["국어"]
+      const highestMath = highestScore[`수학${math_type}`]
 
       const highestTamgu = tamgu1TransitionScore.score.value[0]
       
@@ -687,11 +718,11 @@ export default class reportController {
       var value = 0
 
       if ( specialOption == "특정값: { ( 국어 표점 최고점 + 수학 표점 최고점 + 100 ) x 0.286 } + ( 탐구 변표 최고점 x 2 x 0.142 )"){
-        value = ( highestKorean.score * perfectScore.korean + highestMath.score * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000
+        value = ( highestKorean * perfectScore.korean + highestMath * perfectScore.math + 100 * perfectScore.english + highestTamgu * 2 * perfectScore.tamgu) / 1000
       }
 
       else if ( specialOption == "특정값: { ( 수학 표점 최고점 + 100 ) x 0.333 } + [ { 국어 표점 최고점 + ( 탐구 변표 최고점 x 2 ) } x 0.167 ] ") {
-        value = ( highestMath.score + 100 ) * 0.333 + ( highestKorean.score + highestTamgu * 2 ) * 0.167
+        value = ( highestMath + 100 ) * 0.333 + ( highestKorean + highestTamgu * 2 ) * 0.167
       }
 
 
@@ -700,8 +731,8 @@ export default class reportController {
 
         var pickedScore = 0
         if ( ( score.tamgu1.percentile + score.tamgu2.percentile ) / 2 > score.math.percentile ) pickedScore = highestTamgu * 2 * 0.2
-        else pickedScore = highestMath.score * 0.2
-        value = ( highestKorean.score + 100 ) * 0.4 + pickedScore
+        else pickedScore = highestMath * 0.2
+        value = ( highestKorean + 100 ) * 0.4 + pickedScore
       }
 
 
@@ -720,8 +751,9 @@ export default class reportController {
 
       const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
 
-      const highestKorean = await highestScoreService.findOne("국어","국어")
-      const highestMath = await highestScoreService.findOne("수학",math_type)
+
+      const highestKorean = highestScore["국어"]
+      const highestMath = highestScore[`수학${math_type}`]
 
       const highestTamgu1 = tamgu1TransitionScore.score.value[0]
       const highestTamgu2 = tamgu2TransitionScore.score.value[0]
@@ -730,7 +762,7 @@ export default class reportController {
       const tamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
       
 
-      const value = ( highestKorean.score * 0.3 ) + ( highestTamgu1 + highestTamgu2 + highestMath.score ) * 0.25
+      const value = ( highestKorean * 0.3 ) + ( highestTamgu1 + highestTamgu2 + highestMath ) * 0.25
 
       newScore.korean = score.korean.score * perfectScore.korean / value * 0.8
       newScore.english = englishScore * perfectScore.english / 100
@@ -828,11 +860,11 @@ export default class reportController {
         if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
         else highest_tamgu_type = "사회탐구"
 
-        var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
-        var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
+        var highestTamgu1 = highestScore[`${score.tamgu1.name}`]
+        var highestTamgu2 = highestScore[`${score.tamgu2.name}`]
 
-        newScore.tamgu1.score = score.tamgu1.score * ( perfectScore.tamgu ) / highestTamgu1.score
-        newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu ) / highestTamgu2.score
+        newScore.tamgu1.score = score.tamgu1.score * ( perfectScore.tamgu ) / highestTamgu1
+        newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu ) / highestTamgu2
         
       }
       
@@ -885,8 +917,8 @@ export default class reportController {
     // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "D") {
 
-      const highestKorean = await highestScoreService.findOne("국어","국어")
-      const highestMath = await highestScoreService.findOne("수학",math_type)
+      const highestKorean = highestScore["국어"]
+      const highestMath = highestScore[`수학${math_type}`]
 
       var tempTamgu1 = score.tamgu1.score
       var tempTamgu2 = score.tamgu2.score
@@ -903,37 +935,38 @@ export default class reportController {
       if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
       else highest_tamgu_type = "사회탐구"
 
-      var highestTamgu1 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu1.name)
-      var highestTamgu2 = await highestScoreService.findOne(highest_tamgu_type, score.tamgu2.name)
+
+      var highestTamgu1 = highestScore[`${score.tamgu1.name}`]
+      var highestTamgu2 = highestScore[`${score.tamgu2.name}`]
 
       var highestForeign = null
 
-      if ( score.foreign.score != null) highestForeign = await highestScoreService.findOne("제 2외국어 / 한문", score.foreign.name )
+      if ( score.foreign.score != null) highestForeign = highestScore[`${score.foreign.name}`]
 
       // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
       if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
 
 
-        highestTamgu1.score = tamgu1TransitionScore.score.value[0]
-        highestTamgu2.score = tamgu2TransitionScore.score.value[0]
+        highestTamgu1 = tamgu1TransitionScore.score.value[0]
+        highestTamgu2 = tamgu2TransitionScore.score.value[0]
         
-        if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0]
       }
 
 
       
-      newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean.score
-      newScore.math = score.math.score * (perfectScore.math ) / highestMath.score
-      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1.score
-      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2.score
+      newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean
+      newScore.math = score.math.score * (perfectScore.math ) / highestMath
+      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1
+      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2
   
-      if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign.score
+      if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign
 
 
       
       if ( ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") || (( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용") && score.math.type =="나")) {
-        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath.score 
-      } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath.score
+        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath 
+      } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath
 
 
     
@@ -1554,9 +1587,9 @@ export default class reportController {
 
       if ( extraPoint == "+ [ 수가 ( 개인 취득 표준점수 / 전국최고 표준점수 ) x 10 ]" && score.math.type =="가") {
 
-        const highestMath = await highestScoreService.findOne("수학","가")
+        const highestMath = highestScore["수학가"]
 
-        extraScore.math = score.math.score / highestMath.score * 10
+        extraScore.math = score.math.score / highestMath * 10
       }
 
       else if ( extraPoint == "수가 백분위 10%, 물리학Ⅱ, 화학Ⅱ, 생명과학Ⅱ 중 최상위 한 과목 백분위 5% 총점에 가산") {
@@ -1720,7 +1753,7 @@ export default class reportController {
 
         const transitionHighestScore = tamgu1TransitionScore.score.value[0]
 
-        if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign.score = foreignTransitionScore.score.value[0]
+        if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0]
 
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
@@ -1728,7 +1761,6 @@ export default class reportController {
         if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign = foreignTransitionScore.score.value[100-score.foreign.percentile]
 
         totalScore.tamgu = (( newScore.tamgu1.score + newScore.tamgu2.score ) / 2 + 100 ) / ( transitionHighestScore + 100 ) * perfectScore.tamgu
-
 
       }
     }
