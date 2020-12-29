@@ -415,7 +415,7 @@ export default class reportController {
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i] === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수가") {
+        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수가") {
           mathTransitionScore = SCORE_TRANSITION[i]
           console.log(mathTransitionScore.score)
         } 
@@ -427,7 +427,7 @@ export default class reportController {
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i] === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수나") {
+        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수나") {
           mathTransitionScore = SCORE_TRANSITION[i]
           console.log(mathTransitionScore.score)
         } 
@@ -909,7 +909,7 @@ export default class reportController {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
         console.log("2")
       } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
-        console.log("시발")
+        console.log("시벌")
         console.log(mathTransitionScore)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
         console.log("3")

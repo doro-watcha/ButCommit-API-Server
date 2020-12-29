@@ -348,14 +348,14 @@ class reportController {
 
     if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && score.math.type == "가") {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
-        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i] === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수가") {
+        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수가") {
           mathTransitionScore = _variables.SCORE_TRANSITION[i];
           console.log(mathTransitionScore.score);
         }
       }
     } else if (calculationSpecial == "수나 지원시 변표사용" && score.math.type == "나") {
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
-        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i] === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수나") {
+        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === "수나") {
           mathTransitionScore = _variables.SCORE_TRANSITION[i];
           console.log(mathTransitionScore.score);
         }
@@ -694,7 +694,7 @@ class reportController {
               newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 200;
               console.log("2");
             } else if ((calculationSpecial.indexOf("수나 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
-              console.log("시발");
+              console.log("시벌");
               console.log(mathTransitionScore);
               newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 200;
               console.log("3");
