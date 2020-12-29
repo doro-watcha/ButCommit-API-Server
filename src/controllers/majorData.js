@@ -96,7 +96,13 @@ export default class majorDataController {
         tamguType : Joi.string().optional()
       })
 
-      const { year, group, location, type , line, univName , mathType, tamguType } = result
+      const parameter = await Joi.validate (req.params, {
+        location
+      })
+
+      const { location } = parameter 
+
+      const { year, group, type , line, univName , mathType, tamguType } = result
 
       console.log(group)
       console.log(location)
