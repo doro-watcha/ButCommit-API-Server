@@ -1561,8 +1561,7 @@ class reportController {
     //   if ( naesin !== null ) naesinScore = naesin.value
     // }
     // if ( isNaN(naesinScore) ) naesinScore = 0
-
-    totalSum += naesinScore;
+    //totalSum += naesinScore
 
     if (create == true) {
       const recommendations = await _services.majorDataService.findRecommendations(totalSum);

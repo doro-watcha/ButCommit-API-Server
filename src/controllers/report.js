@@ -2357,7 +2357,7 @@ export default class reportController {
     // if ( isNaN(naesinScore) ) naesinScore = 0
 
 
-    totalSum += naesinScore
+    //totalSum += naesinScore
 
 
     if ( create == true ) {
