@@ -120,7 +120,7 @@ export default class majorDataController {
       
 
       // 군 필터링
-      if ( group !== undefined ) {
+      if ( group !== undefined && group !== "전체") {
         majorDataList = majorDataList.filter ( item => {
           return item.major.group === group 
         })
@@ -134,7 +134,7 @@ export default class majorDataController {
       }
 
       // 계열 필터링
-      if ( line !== undefined) {
+      if ( line !== undefined && line !== "전체") {
         majorDataList = majorDataList.filter ( item => {
           return item.major.line === line
         })
@@ -151,7 +151,7 @@ export default class majorDataController {
 
       // 종류/분야 필터링
 
-      if ( type !== undefined) {
+      if ( type !== undefined && type !== "전체") {
 
         if ( type === "간호") {
           majorDataList = majorDataList.filter ( item => {
