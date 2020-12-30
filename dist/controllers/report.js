@@ -329,12 +329,15 @@ class reportController {
       }
 
       if (majorData.major.univName.indexOf("서울대") >= 0) {
+        var major = "";
+        if (score.line === "인문") major = "인문계열 지원자";else if (score.line === "자연") major = "자연계열 지원자";
+
         for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
-          if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].subject === subject1) {
+          if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === major && _variables.SCORE_TRANSITION[i].subject === subject1) {
             tamgu1TransitionScore = _variables.SCORE_TRANSITION[i];
           }
 
-          if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].subject === subject2) {
+          if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === major && _variables.SCORE_TRANSITION[i].subject === subject2) {
             tamgu2TransitionScore = _variables.SCORE_TRANSITION[i];
           }
         }
