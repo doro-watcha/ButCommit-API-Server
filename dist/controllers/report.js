@@ -311,11 +311,11 @@ class reportController {
       }
 
       for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
-        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === subject1) {
+        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === subject1 && _variables.SCORE_TRANSITION[i].line === score.line) {
           tamgu1TransitionScore = _variables.SCORE_TRANSITION[i];
         }
 
-        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === subject2) {
+        if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === majorData.major.majorName && _variables.SCORE_TRANSITION[i].subject === subject2 && _variables.SCORE_TRANSITION[i].line === score.line) {
           tamgu2TransitionScore = _variables.SCORE_TRANSITION[i];
         }
       }
