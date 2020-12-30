@@ -366,14 +366,14 @@ export default class reportController {
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1 && SCORE_TRANSITION[i].line === score.line) {
+        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1 ) {
           tamgu1TransitionScore = SCORE_TRANSITION[i]
 
       
         } 
 
         
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject2 && SCORE_TRANSITION[i].line === score.line) {
+        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject2 ) {
           tamgu2TransitionScore = SCORE_TRANSITION[i]
  
 
