@@ -396,8 +396,8 @@ export default class reportController {
 
         var major = ""
 
-        if ( score.line === "인문") major = "인문계열 지원자"
-        else if ( score.line === "자연") major = "자연계열 지원자"
+        if ( score.line === "인문") major = "인문계열 학과 지원자"
+        else if ( score.line === "자연") major = "자연계열 학과 지원자"
 
 
         for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
