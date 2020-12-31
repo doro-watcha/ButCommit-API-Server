@@ -911,6 +911,8 @@ export default class reportController {
     else if ( applicationIndicatorType == "C") {
 
       console.log("fuck")
+      console.log(majorData.major.majorName)
+      console.log(majorData.major.univName)
 
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200

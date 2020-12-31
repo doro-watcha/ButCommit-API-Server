@@ -678,6 +678,8 @@ class reportController {
         } // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
         else if (applicationIndicatorType == "C") {
             console.log("fuck");
+            console.log(majorData.major.majorName);
+            console.log(majorData.major.univName);
             newScore.korean = score.korean.score * perfectScore.korean / 200;
 
             if ((calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
