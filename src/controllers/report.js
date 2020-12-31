@@ -919,11 +919,14 @@ export default class reportController {
 
       if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
   
-
+        console.log("1")
+        console.log(mathTransitionScore.score)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
 
       } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
 
+        console.log("2")
+        console.log(mathTransitionScore.score)
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
     
       } 
@@ -933,6 +936,9 @@ export default class reportController {
  
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
 
+        console.log("3")
+        console.log(tamgu1TransitionScore.score)
+        console.log(tamgu2TransitionScore.score)
       
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
     
@@ -952,6 +958,10 @@ export default class reportController {
       // 경희대 국제 예외처리
       if ( specialOption == "탐구 본교 백분위변환표준점수+100 한 후 계산") {
 
+        console.log("sdasf")
+        console.log(tamgu1TransitionScore.score)
+        console.log(tamgu2TransitionScore.score)
+
         newScore.tamgu1.score = ( tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200
 
         newScore.tamgu2.score = ( tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200
@@ -961,6 +971,10 @@ export default class reportController {
 
       //가톨릭대 예외처리
       if ( specialOption == "탐구:  탐구 상위 1과목 변표 그대로   ") {
+
+        console.log("fff")
+        console.log(tamgu1TransitionScore.score)
+        console.log(tamgu2TransitionScore.score)
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
    
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
@@ -974,7 +988,7 @@ export default class reportController {
 
 
       console.log("fuci")
-      
+
       const highestKorean = highestScore["국어"]
       const highestMath = highestScore[`수학${math_type}`]
 

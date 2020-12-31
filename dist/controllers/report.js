@@ -681,12 +681,19 @@ class reportController {
             newScore.korean = score.korean.score * perfectScore.korean / 200;
 
             if ((calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
+              console.log("1");
+              console.log(mathTransitionScore.score);
               newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 200;
             } else if ((calculationSpecial.indexOf("수나 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
+              console.log("2");
+              console.log(mathTransitionScore.score);
               newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 200;
             } else newScore.math = score.math.score * perfectScore.math / 200;
 
             if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
+              console.log("3");
+              console.log(tamgu1TransitionScore.score);
+              console.log(tamgu2TransitionScore.score);
               newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
               newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
               if (tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
@@ -698,6 +705,9 @@ class reportController {
 
 
             if (specialOption == "탐구 본교 백분위변환표준점수+100 한 후 계산") {
+              console.log("sdasf");
+              console.log(tamgu1TransitionScore.score);
+              console.log(tamgu2TransitionScore.score);
               newScore.tamgu1.score = (tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200;
               newScore.tamgu2.score = (tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200;
               if (tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = (foreignTransitionScore.score.value[100 - score.foreign.percentile] + 100) * perfectScore.tamgu / 200;
@@ -705,6 +715,9 @@ class reportController {
 
 
             if (specialOption == "탐구:  탐구 상위 1과목 변표 그대로   ") {
+              console.log("fff");
+              console.log(tamgu1TransitionScore.score);
+              console.log(tamgu2TransitionScore.score);
               newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
               newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
             }
