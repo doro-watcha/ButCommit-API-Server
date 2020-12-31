@@ -341,11 +341,11 @@ export default class reportController {
 
     if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
-      if ( majorData.major.line == "인문") {
+      if ( score.line == "인문") {
         subject1 = "사탐"
         subject2 = "사탐"
       }
-      else if ( majorData.major.line == "자연") {
+      else if ( score.line == "자연") {
         subject1 = "과탐"
         subject2 = "과탐"
       }
@@ -368,8 +368,6 @@ export default class reportController {
 
         if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1 ) {
           tamgu1TransitionScore = SCORE_TRANSITION[i]
-
-      
         } 
 
         
@@ -912,6 +910,8 @@ export default class reportController {
     // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "C") {
 
+      console.log("fuck")
+
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
 
@@ -972,6 +972,9 @@ export default class reportController {
     // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "D") {
 
+
+      console.log("fuci")
+      
       const highestKorean = highestScore["국어"]
       const highestMath = highestScore[`수학${math_type}`]
 

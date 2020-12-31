@@ -289,10 +289,10 @@ class reportController {
     var subject2 = "";
 
     if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
-      if (majorData.major.line == "인문") {
+      if (score.line == "인문") {
         subject1 = "사탐";
         subject2 = "사탐";
-      } else if (majorData.major.line == "자연") {
+      } else if (score.line == "자연") {
         subject1 = "과탐";
         subject2 = "과탐";
       } else if (majorData.major.line == "공통" || majorData.major.line == "예체능") {
@@ -677,6 +677,7 @@ class reportController {
           }
         } // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
         else if (applicationIndicatorType == "C") {
+            console.log("fuck");
             newScore.korean = score.korean.score * perfectScore.korean / 200;
 
             if ((calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
@@ -709,6 +710,7 @@ class reportController {
             }
           } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
           else if (applicationIndicatorType == "D") {
+              console.log("fuci");
               const highestKorean = highestScore["국어"];
               const highestMath = highestScore[`수학${math_type}`];
               var tempTamgu1 = score.tamgu1.score;
