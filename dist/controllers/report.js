@@ -330,7 +330,7 @@ class reportController {
 
       if (majorData.major.univName.indexOf("서울대") >= 0) {
         var major = "";
-        if (score.line === "인문") major = "인문계열 학과 지원자";else if (score.line === "자연") major = "자연계열 학과 지원자";
+        if (majorData.major.line === "인문") major = "인문계열 학과 지원자";else if (majorData.major.line === "자연") major = "자연계열 학과 지원자";
 
         for (let i = 0; i < _variables.SCORE_TRANSITION.length; i++) {
           if (_variables.SCORE_TRANSITION[i].univName === majorData.major.univName && _variables.SCORE_TRANSITION[i].major === major && _variables.SCORE_TRANSITION[i].subject === subject1) {

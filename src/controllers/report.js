@@ -396,8 +396,8 @@ export default class reportController {
 
         var major = ""
 
-        if ( score.line === "인문") major = "인문계열 학과 지원자"
-        else if ( score.line === "자연") major = "자연계열 학과 지원자"
+        if ( majorData.major.line === "인문") major = "인문계열 학과 지원자"
+        else if ( majorData.major.line === "자연") major = "자연계열 학과 지원자"
 
 
         for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
@@ -405,14 +405,11 @@ export default class reportController {
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === major && SCORE_TRANSITION[i].subject === subject1) {
             tamgu1TransitionScore = SCORE_TRANSITION[i]
        
-
-          } 
+          }
   
           
           if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === major && SCORE_TRANSITION[i].subject === subject2) {
             tamgu2TransitionScore = SCORE_TRANSITION[i]
-
-        
 
           } 
   
