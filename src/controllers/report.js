@@ -980,6 +980,77 @@ export default class reportController {
  
       }
 
+
+      // 연세대 예외처리 
+      if ( majorData.major.univName === "연세대") {
+
+        if ( majorData.major.line == "자연") {
+          newScore.korean = newScore.korean / 600 * 1000
+          newScore.math = newScore.math * 1.5 / 900 * 1000
+          newScore.tamgu1.score = newScore.tamgu1.score * 3 / 900 * 1000
+          newScore.tamgu2.score = newScore.tamgu2.score * 3 / 900 * 1000
+        }
+
+        else if ( majorData.major.line == "인문") {
+          newScore.korean = newScore.korean / 600 * 1000
+          newScore.math = newScore.math / 600 * 1000
+          newScore.tamgu1.score = newScore.tamgu1.score / 600 * 1000
+          newScore.tamgu2.score = newScore.tamgu2.score / 600 * 1000
+        }
+      }
+
+      // 연세대(미래) 의예과 예외처리
+      if ( majorData.major.univName === "연세대(미래)" && majorData.major.majorName == "의예과"){
+        newScore.korean = newScore.korean / 900 * 1000
+        newScore.math = newScore.math * 1.5 / 900 * 1000
+        newScore.tamgu1.score = newScore.tamgu1.score * 3 / 900 * 1000
+        newScore.tamgu2.score = newScore.tamgu2.score * 3 / 900 * 1000
+      }
+
+      if ( majorData.major.univName === "서울대") {
+        newScore.tamgu1.score *= 0.8
+        newScore.tamgu2.scoere *= 0.8
+      }
+
+      // 고려대 예외처리
+
+      if ( majorData.major.univName == "고려대") {
+
+        if ( majorData.major.majorName == "사이버국방학과") {
+          newScore.korean = newScore.korean / 640 * 800
+          newScore.math = newScore.math * 1.2 / 640 * 800
+          newScore.tamgu1.score = newScore.tamgu1.score / 640 * 800
+          newScore.tamgu2.score = newScore.tamgu2.score / 640 * 800 
+
+        }
+
+        else if ( majorData.major.line == "자연") {
+
+          newScore.korean = newScore.korean / 640 * 1000
+          newScore.math = newScore.math * 1.2 / 560 * 1000
+          newScore.tamgu1.score = newScore.tamgu1.score / 640 * 1000
+          newScore.tamgu2.score = newScore.tamgu2.score / 640 * 1000
+
+        }
+
+        else if ( majorData.major.line == "인문") {
+
+          newScore.korean = newScore.korean / 560 * 1000
+          newScore.math = newScore.math / 560 * 1000
+          newScore.tamgu1.score = newScore.tamgu1.score * 0.8 / 560 * 1000
+          newScore.tamgu2.score = newScore.tamgu2.scroe * 0.8 / 560 * 1000
+
+
+        }
+      }
+
+      if ( majorData.major.univName =="가톨릭대") {
+
+        if ( majorData.major.majorName == "의예과") {
+          newScore.tamgu1.score *= 1.5
+          newScore.tamgu2.score *= 1.5
+        }
+      }
     }
 
     // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
