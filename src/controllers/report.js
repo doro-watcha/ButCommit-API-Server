@@ -1062,15 +1062,6 @@ export default class reportController {
         }
       }
 
-      // 가톨릭대 예외처리
-
-      if ( univName =="가톨릭대") {
-
-        if ( majorName == "의예과") {
-          newScore.tamgu1.score *= 1.5
-          newScore.tamgu2.score *= 1.5
-        }
-      }
 
       // 대구교대
 
@@ -1944,6 +1935,12 @@ export default class reportController {
     }
     else if ( univName == "고려대") {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score
+    }
+    else if ( univName == "가톨릭대" ) {
+
+      if ( majorName.indexOf("의예")>= 0 || majorName.indexOf("간호") >= 0 ) {
+        totalScore.tamgu = ( newScore.tamgu1.score + newScore.tamgu2.score ) * 1.5 
+      }
     }
 
     if ( univName =="이화여대") {

@@ -789,14 +789,6 @@ class reportController {
                 console.log("sdfasdf");
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * 0.8 / 560 * 1000;
               }
-            } // 가톨릭대 예외처리
-
-
-            if (univName == "가톨릭대") {
-              if (majorName == "의예과") {
-                newScore.tamgu1.score *= 1.5;
-                newScore.tamgu2.score *= 1.5;
-              }
             } // 대구교대
 
 
@@ -1341,6 +1333,10 @@ class reportController {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score;
     } else if (univName == "고려대") {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score;
+    } else if (univName == "가톨릭대") {
+      if (majorName.indexOf("의예") >= 0 || majorName.indexOf("간호") >= 0) {
+        totalScore.tamgu = (newScore.tamgu1.score + newScore.tamgu2.score) * 1.5;
+      }
     }
 
     if (univName == "이화여대") {
