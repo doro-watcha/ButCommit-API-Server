@@ -32,10 +32,10 @@ export default class reportController {
 
       if ( majorData.ratio.math.ga == 0 && majorData.ratio.math.na != 0 && score.math.type == "가") throw Error('MATH_NA_NOT_FOUND')
       else if ( majorData.ratio.math.na == 0 &&  majorData.ratio.math.ga != 0 && score.math.type =="나") throw Error('MATH_GA_NOT_FOUND')
-      else if ( majorData.ratio.tamgu.science == 0 && majorData.ratio.tamgu.society != 0 && score.line == "자연") throw Error('SOCIETY_NOT_FOUND')
-      else if ( majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.society != 0 && score.line == "인문") throw Error('SCIENCE_NOT_FOUND')
-      else if ( majorData.metadata.sooneungSpecial === "과탐응시 기준: 1+2 혹은 2+2 선택|같은 분야 1, 2 과목 불가" && score.line == "자연" && sameTamgu == true ) throw Error('DIFFERENT_TAMGU_NOT_FOUND')
-      else if ( majorData.metadata.sooneungSpecial === "과탐 1,2 구분없이 서로 다른 두 과목 선택" && score.line =="자연" && sameTamgu == true ) throw Error('DIFFERENT_TAMGU_NOT_FOUND')
+      else if ( majorData.ratio.tamgu.science == 0 && majorData.ratio.tamgu.society != 0 && line == "자연") throw Error('SOCIETY_NOT_FOUND')
+      else if ( majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.society != 0 && line == "인문") throw Error('SCIENCE_NOT_FOUND')
+      else if ( majorData.metadata.sooneungSpecial === "과탐응시 기준: 1+2 혹은 2+2 선택|같은 분야 1, 2 과목 불가" && line == "자연" && sameTamgu == true ) throw Error('DIFFERENT_TAMGU_NOT_FOUND')
+      else if ( majorData.metadata.sooneungSpecial === "과탐 1,2 구분없이 서로 다른 두 과목 선택" && line =="자연" && sameTamgu == true ) throw Error('DIFFERENT_TAMGU_NOT_FOUND')
 
       const modelObj = await reportController.getScore(score , majorData , true)
 
@@ -187,6 +187,9 @@ export default class reportController {
     const tamguReplace = majorData.metadata.tamguReplace
     const reflectionOption = majorData.metadata.reflectionOption
 
+    const univName = majorData.major.univName
+    const majorName = majorData.major.majorName
+
     const highestScore = {
       "국어" : 144,
       "수학가" : 137,
@@ -232,9 +235,9 @@ export default class reportController {
     }
 
   
-
     const math_type = score.math.type
-    const tamgu_type = score.line
+    const line = score.line
+    
     const english_type = major_ratio.english 
     const history_type = major_ratio.history 
 
@@ -244,7 +247,7 @@ export default class reportController {
       perfectScore.math = major_perfectScore * (major_ratio.math.na / 100 )
     }
 
-    if ( tamgu_type == "인문"){
+    if ( line == "인문"){
       perfectScore.tamgu = major_perfectScore * ( major_ratio.tamgu.society / 100)
     } else {
       perfectScore.tamgu = major_perfectScore * ( major_ratio.tamgu.science / 100)
@@ -266,7 +269,7 @@ export default class reportController {
       perfectScore.english = 135
     }
 
-    if ( majorData.major.univName.indexOf("전남대") >= 0 ) {
+    if ( univName.indexOf("전남대") >= 0 ) {
 
       if ( specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)") {
         perfectScore.korean = 320
@@ -324,7 +327,7 @@ export default class reportController {
 
     if ( majorData.metadata.extraPoint == "수가 선택시 1등급 상향") {
 
-      if ( score.math.type == "가" && score.math.grade != 1 ) {
+      if ( math_type == "가" && score.math.grade != 1 ) {
         score.math.grade = score.math.grade - 1 
       }
     }
@@ -341,16 +344,16 @@ export default class reportController {
 
     if ( tamguTranslation.indexOf("탐구 변표사용") >= 0 ) {
 
-      if ( score.line == "인문") {
+      if ( line == "인문") {
         subject1 = "사탐"
         subject2 = "사탐"
       }
-      else if ( score.line == "자연") {
+      else if ( line == "자연") {
         subject1 = "과탐"
         subject2 = "과탐"
       }
       else if ( majorData.major.line == "공통" || majorData.major.line == "예체능") {
-        if ( score.line == "인문") {
+        if ( line == "인문") {
           subject1 = "사탐"
           subject2 = "사탐"
         } else {
@@ -359,19 +362,19 @@ export default class reportController {
         }
       }
 
-      if ( majorData.major.univName.indexOf("과학기술원") >= 0  || majorData.major.univName.indexOf("서울대") >= 0) {
+      if ( univName.indexOf("과학기술원") >= 0  || univName.indexOf("서울대") >= 0) {
         subject1 = score.tamgu1.name
         subject2 = score.tamgu2.name
       }
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject1 ) {
+        if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === majorName && SCORE_TRANSITION[i].subject === subject1 ) {
           tamgu1TransitionScore = SCORE_TRANSITION[i]
         } 
 
         
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === subject2 ) {
+        if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === majorName && SCORE_TRANSITION[i].subject === subject2 ) {
           tamgu2TransitionScore = SCORE_TRANSITION[i]
  
 
@@ -383,7 +386,7 @@ export default class reportController {
 
         for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-          if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "제2외/한") {
+          if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === majorName && SCORE_TRANSITION[i].subject === "제2외/한") {
             foreignTransitionScore = SCORE_TRANSITION[i]
    
           } 
@@ -392,7 +395,7 @@ export default class reportController {
       }
       
 
-      if ( majorData.major.univName.indexOf("서울대") >= 0 ) {
+      if ( univName.indexOf("서울대") >= 0 ) {
 
         var major = ""
 
@@ -402,13 +405,13 @@ export default class reportController {
 
         for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-          if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === major && SCORE_TRANSITION[i].subject === subject1) {
+          if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === major && SCORE_TRANSITION[i].subject === subject1) {
             tamgu1TransitionScore = SCORE_TRANSITION[i]
        
           }
   
           
-          if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === major && SCORE_TRANSITION[i].subject === subject2) {
+          if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === major && SCORE_TRANSITION[i].subject === subject2) {
             tamgu2TransitionScore = SCORE_TRANSITION[i]
 
           } 
@@ -419,11 +422,11 @@ export default class reportController {
   
     }
 
-    if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") {
+    if ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && math_type =="가") {
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수가") {
+        if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === majorName && SCORE_TRANSITION[i].subject === "수가") {
           mathTransitionScore = SCORE_TRANSITION[i]
 
 
@@ -432,11 +435,11 @@ export default class reportController {
 
     }
 
-    else if ( (calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") && score.math.type == "나") {
+    else if ( (calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") && math_type == "나") {
 
       for ( let i = 0 ; i < SCORE_TRANSITION.length ; i++ ) {
 
-        if ( SCORE_TRANSITION[i].univName === majorData.major.univName && SCORE_TRANSITION[i].major === majorData.major.majorName && SCORE_TRANSITION[i].subject === "수나") {
+        if ( SCORE_TRANSITION[i].univName === univName && SCORE_TRANSITION[i].major === majorName && SCORE_TRANSITION[i].subject === "수나") {
           mathTransitionScore = SCORE_TRANSITION[i]
 
         } 
@@ -448,7 +451,7 @@ export default class reportController {
     
 
     //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
-    if ( majorData.major.univName == "가야대") {
+    if ( univName == "가야대") {
       newScore = await reportController.gayaScore(score,majorData)
 
   
@@ -622,7 +625,7 @@ export default class reportController {
     }
 
     
-    else if ( majorData.major.univName.indexOf("가천대")>= 0 && majorData.major.majorName != "한의예과" && majorData.major.majorName != "의예과" ) {
+    else if ( univName.indexOf("가천대")>= 0 && majorName != "한의예과" && majorName != "의예과" ) {
 
       if ( majorData.ratio.korean == "45/40/15") {
 
@@ -632,8 +635,8 @@ export default class reportController {
         var tamguScore = Math.max(score.tamgu1.percentile , score.tamgu2.percentile)
 
         if ( majorData.metadata.extraPoint.length > 3 ) {
-          if ( score.math.type == "가") mathScore *= 1.05
-          if ( score.line == "자연") tamguScore *= 1.03
+          if ( math_type == "가") mathScore *= 1.05
+          if ( line == "자연") tamguScore *= 1.03
         }
 
 
@@ -689,7 +692,7 @@ export default class reportController {
 
         if ( majorData.metadata.extraPoint.length > 3 ) {
 
-          if ( score.math.type == "가") mathScore *= 1.05
+          if ( math_type == "가") mathScore *= 1.05
         }
 
         const scoreList = [ {
@@ -726,14 +729,14 @@ export default class reportController {
       
     }
 
-    else if ( majorData.major.univName == "서강대") {
+    else if ( univName == "서강대") {
       newScore.korean = score.korean.score * 1.1
       newScore.math = score.math.score * 1.4
       newScore.tamgu1.score = score.tamgu1.score * 1.2
       newScore.tamgu2.score = score.tamgu2.score * 1.2
     }
     
-    else if ( majorData.major.univName == "고려대(세종)") {
+    else if ( univName == "고려대(세종)") {
 
       const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
 
@@ -777,7 +780,7 @@ export default class reportController {
 
     }
 
-    else if ( majorData.major.univName == "이화여대") {
+    else if ( univName == "이화여대") {
 
       const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
 
@@ -802,9 +805,6 @@ export default class reportController {
       if ( majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.score != null ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / value * 0.8
 
     }
-
-    // else if ( majorData.major.univName.indexOf("전남대") >= 0 && specialOption == "영역별 점수: 국(320) / 수(240) / 탐(240)"){
-
 
     // }
     
@@ -865,9 +865,9 @@ export default class reportController {
         newScore.tamgu2.score = tamgu2 * 0.42 + 63
       }
 
-      if ( majorData.major.univName == "순천향대") {
+      if ( univName == "순천향대") {
 
-        if ( majorData.major.majorName == "의예과" || majorData.major.majorName == "간호학과"){
+        if ( majorName == "의예과" ||majorName == "간호학과"){
           newScore.korean = score.korean.percentile * 0.2 * 2.0231
           newScore.math = score.math.percentile * 0.3 * 2.0231
           newScore.tamgu1.score = score.tamgu1.percentile * 0.2 * 2.0231
@@ -879,31 +879,29 @@ export default class reportController {
     else if ( applicationIndicatorType == "B") {
 
     
+      /**
+       * 일단 B타입에 맞게 점수를 싹 구한다
+       */
     
       newScore.korean = score.korean.score * ( perfectScore.korean  ) / 100
       newScore.math = score.math.score * ( perfectScore.math  ) / 100
-
       newScore.tamgu1.score = score.tamgu1.score  * ( perfectScore.tamgu) / 100
       newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu) / 100
-      newScore.foreign.score = score.foreign.score * (perfectScore.foreign) / 100 
-  
       if ( tamguReplace.length > 0 && score.foreign.score != null)  newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu ) / 100
 
+      /**
+       * 그러다가 탐구를 변표를 사용해야겠다는 대학들이 있으면 탐구를 바꿔준다
+       */
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
 
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
-   
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-     
         if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
       }
 
+
       // 대구가톨릭의예 예외처리
       if ( tamguTranslation == "탐구: D타입") {
-
-        var highest_tamgu_type = ""
-        if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
-        else highest_tamgu_type = "사회탐구"
 
         var highestTamgu1 = highestScore[`${score.tamgu1.name}`]
         var highestTamgu2 = highestScore[`${score.tamgu2.name}`]
@@ -917,27 +915,24 @@ export default class reportController {
     // ( 표준점수 / 200 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "C") {
 
-      console.log("fuck")
-      console.log(majorData.major.majorName)
-      console.log(majorData.major.univName)
-
+      /**
+       * 국어 점수는 그냥 구한다
+       */
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
 
-   
+      /**
+       * 수학점수는 변표가 필요한 학과면 변표를 구하고 아니면 그냥 일반적인 C타입으로 게산한다
+       */
 
-      if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && score.math.type == "가") {
+      if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0) && math_type == "가") {
   
-        console.log("1")
-        console.log(mathTransitionScore.score)
         if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
         else if( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
 
-      } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
+      } 
+      else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && math_type == "나") {
 
-        console.log("2")
-        console.log(mathTransitionScore.score)
-        
         if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200
         else if ( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
     
@@ -945,20 +940,16 @@ export default class reportController {
       else newScore.math = score.math.score * ( perfectScore.math  ) / 200
 
       
+      /**
+       * 
+       */
  
       if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
-
-        console.log("3")
-        console.log(tamgu1TransitionScore.score)
-        console.log(tamgu2TransitionScore.score)
-      
+ 
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
-    
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
    
- 
         if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
- 
       }
       else {
 
@@ -995,7 +986,7 @@ export default class reportController {
 
 
       // 연세대 예외처리 
-      if ( majorData.major.univName === "연세대") {
+      if ( univName === "연세대") {
 
         if ( majorData.major.line == "자연") {
           newScore.korean = score.korean.score / 600 * 1000
@@ -1015,7 +1006,7 @@ export default class reportController {
       }
 
       // 연세대(미래) 의예과 예외처리
-      if ( majorData.major.univName === "연세대(미래)" && majorData.major.majorName == "의예과"){
+      if ( univName === "연세대(미래)" && majorName == "의예과"){
         newScore.korean = score.korean.score / 900 * 1000
         if ( mathTransitionScore !== null ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.5 / 900 * 1000
         else newScore.math = score.math.score * 1.5 /900 * 1000
@@ -1023,19 +1014,19 @@ export default class reportController {
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * 3 / 900 * 1000
       }
 
-      if ( majorData.major.univName === "서울대") {
+      if ( univName === "서울대") {
         newScore.tamgu1.score *= 0.8
         newScore.tamgu2.scoere *= 0.8
       }
 
       // 고려대 예외처리
 
-      if ( majorData.major.univName == "고려대") {
+      if ( univName == "고려대") {
 
-        if ( majorData.major.majorName == "사이버국방학과") {
+        if ( majorName == "사이버국방학과") {
           newScore.korean = score.korean.score / 640 * 800
-          if ( mathTransitionScore !== null  ) newScore.math = mathTransitionScore.score.value[150-score.math.score] / 640 * 800
-          else newScore.math = score.math.score / 640 * 800
+          if ( mathTransitionScore !== null  ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.2 / 640 * 800
+          else newScore.math = score.math.score * 1.2 / 640 * 800
           newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 640 * 800
           newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 640 * 800
 
@@ -1044,8 +1035,8 @@ export default class reportController {
         else if ( majorData.major.line == "자연") {
 
           newScore.korean = score.korean.score / 640 * 1000
-          if ( mathTransitionScore !== null  ) newScore.math = mathTransitionScore.score.value[150-score.math.score] / 640 * 1000
-          else newScore.math = score.math.score / 640 * 1000
+          if ( mathTransitionScore !== null  ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.2 / 640 * 1000
+          else newScore.math = score.math.score * 1.2 / 640 * 1000
           newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 640 * 1000
           newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 640 * 1000
 
@@ -1065,9 +1056,9 @@ export default class reportController {
 
       // 가톨릭대 예외처리
 
-      if ( majorData.major.univName =="가톨릭대") {
+      if ( univName =="가톨릭대") {
 
-        if ( majorData.major.majorName == "의예과") {
+        if ( majorName == "의예과") {
           newScore.tamgu1.score *= 1.5
           newScore.tamgu2.score *= 1.5
         }
@@ -1075,7 +1066,7 @@ export default class reportController {
 
       // 대구교대
 
-      if ( majorData.major.univName == "대구교대") {
+      if ( univName == "대구교대") {
         newScore.tamgu1.score *= 1.5
         newScore.tamgu2.score *= 1.5
       }
@@ -1100,10 +1091,6 @@ export default class reportController {
         tempTamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
         if ( tamguReplace.length > 0 && score.foreign.score != null) tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
       }
-
-      var highest_tamgu_type = ""
-      if ( tamgu_type == "자연") highest_tamgu_type = "과학탐구"
-      else highest_tamgu_type = "사회탐구"
 
 
       var highestTamgu1 = highestScore[`${score.tamgu1.name}`]
@@ -1134,7 +1121,7 @@ export default class reportController {
 
 
       
-      if ( ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && score.math.type =="가") || (( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용") && score.math.type =="나")) {
+      if ( ( (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" ) && math_type == "가") || (( calculationSpecial == "수나 지원시 변표사용" ||calculationSpecial =="수나 선택시 변표사용") && math_type =="나")) {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath 
       } else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath
 
@@ -1220,7 +1207,7 @@ export default class reportController {
     // 등급: 4과목 평균 등급 환산점수
     else if ( applicationIndicatorType == "G") {
 
-      if ( majorData.major.univName.indexOf("경동대") >= 0) {
+      if ( univName.indexOf("경동대") >= 0) {
         const gyungDongScore = await reportController.getScoreByGrade(score, majorData)
         return gyungDongScore
       }
@@ -1372,8 +1359,8 @@ export default class reportController {
 
       else if ( extraPoint == "수가 백분위 10% , 과탐 1과목 백분위 10% 총점에 가산") {
  
-        if ( score.math.type =="가")extraScore.math = score.math.percentile * 0.1
-        if ( score.line == "자연") {
+        if ( math_type =="가")extraScore.math = score.math.percentile * 0.1
+        if ( line == "자연") {
           if ( newScore.tamgu1.score > newScore.tamgu2.score) {
             extraScore.tamgu1 = newScore.tamgu1.score * 0.1
           } else {
@@ -1383,7 +1370,7 @@ export default class reportController {
       }
 
       if ( extraSubject == "수가") {
-        if ( score.math.type =="가") {
+        if ( math_type =="가") {
 
           if ( extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.2 
@@ -1408,7 +1395,7 @@ export default class reportController {
       }
 
       else if ( extraSubject == "과탐") {
-        if (score.line =="자연") {
+        if (line =="자연") {
           extraScore.tamgu1 = ( newScore.tamgu1.score * extraValue) / 100 
           extraScore.tamgu2 = ( newScore.tamgu2.score * extraValue) / 100
 
@@ -1429,7 +1416,7 @@ export default class reportController {
       }
       else if ( extraSubject == "사탐" ){
 
-        if ( score.line == "인문") {
+        if ( line == "인문") {
           extraScore.tamgu1 = ( newScore.tamgu1.score * extraValue) / 100 
           extraScore.tamgu2 = ( newScore.tamgu2.score * extraValue) / 100
         }
@@ -1487,15 +1474,15 @@ export default class reportController {
       
 
         if ( extraPoint == "수가 백분위 20% , 과탐 백분위 10 %총점에 가산") {
-          if ( score.math.type == "가") extraScore.math = score.math.percentile * 0.2
-          if ( score.line == "자연") {
+          if ( math_type == "가") extraScore.math = score.math.percentile * 0.2
+          if ( line == "자연") {
             extraScore.tamgu1 = score.tamgu1.percentile * 0.1
             extraScore.tamgu2 = score.tamgu2.percentile * 0.1
           }
         }
         else if ( extraPoint == "수가 표준점수 15% , 과탐 표준점수 6% 총점에 가산") {
-          if ( score.math.type == "가") extraScore.math = score.math.score * 0.15
-          if ( score.line == "자연") {
+          if ( math_type == "가") extraScore.math = score.math.score * 0.15
+          if ( line == "자연") {
             extraScore.tamgu1 = score.tamgu1.score * 0.06
             extraScore.tamgu2 = score.tamgu2.score * 0.06
           }
@@ -1503,8 +1490,8 @@ export default class reportController {
         }
         else if ( extraPoint == "수가 표준점수 20% , 과탐 표준점수 6% 총점에 가산") {
 
-          if (score.math.type == "가") extraScore.math = score.math.score * 0.2
-          if ( score.line =="자연") {
+          if (math_type == "가") extraScore.math = score.math.score * 0.2
+          if ( line =="자연") {
             extraScore.tamgu1 = score.tamgu1.score * 0.06
             extraScore.tamgu2 = score.tamgu2.score * 0.06
           }
@@ -1513,17 +1500,17 @@ export default class reportController {
 
 
       else if ( extraPoint == "수가 표준점수 10% , 과탐 백분위 5% 총점에 가산"){
-        if ( score.math.type == "가") extraScore.math = score.math.score * 0.1
-        if ( score.line =="자연") {
+        if ( math_type == "가") extraScore.math = score.math.score * 0.1
+        if ( line =="자연") {
           extraScore.tamgu1 = score.tamgu1.percentile * 0.05
           extraScore.tamgu2 = score.tamgu2.percentile * 0.05
         }
       }
         else { 
 
-          if ( score.math.type == "가") extraScore.math = ( newScore.math * extra1) / 100 
+          if ( math_type == "가") extraScore.math = ( newScore.math * extra1) / 100 
 
-          if ( score.line == "자연") {
+          if ( line == "자연") {
             extraScore.tamgu1 = ( newScore.tamgu1.score * extra2 ) / 100
             extraScore.tamgu2 = ( newScore.tamgu2.score * extra2 ) / 100 
           }
@@ -1536,10 +1523,10 @@ export default class reportController {
 
       else if ( extraSubject == "수가 / 수나") {
 
-        if ( score.math.type == "가") {
+        if ( math_type == "가") {
           extraScore.math = ( newScore.math * extra1) / 100 
         }
-        else if ( score.math.type == "나") {
+        else if ( math_type == "나") {
           extraScore.math = ( newScore.math * extra2) / 100 
         }
 
@@ -1553,14 +1540,14 @@ export default class reportController {
 
       else if ( extraSubject == "과탐 / 사탐") {
 
-        if ( score.line == "자연") {
+        if ( line == "자연") {
 
           extraScore.tamgu1 = ( newScore.tamgu1.score * extra1 ) / 100
           extraScore.tamgu2 = ( newScore.tamgu2.score * extra1 ) / 100 
 
         }
 
-        else if ( score.line == "인문") {
+        else if ( line == "인문") {
 
           extraScore.tamgu1 = ( newScore.tamgu1.score * extra2) / 100
           extraScore.tamgu2 = ( newScore.tamgu2.score * extra2) / 100 
@@ -1571,7 +1558,7 @@ export default class reportController {
 
       else if( extraSubject == "사탐 / 제2외한") {
 
-        if ( score.line == "인문") {
+        if ( line == "인문") {
 
           extraScore.tamgu1 = ( newScore.tamgu1.score * extra1) / 100
           extraScore.tamgu2 = ( newScore.tamgu2.score * extra1) / 100
@@ -1582,7 +1569,7 @@ export default class reportController {
 
       else if ( extraSubject == "수가 / 국어") {
 
-        if ( score.math.type == "가") {
+        if ( math_type == "가") {
           extraScore.math = ( newScore.math * extra1 ) / 100
         }
         
@@ -1602,9 +1589,9 @@ export default class reportController {
 
       else if ( extraSubject == "수가 / 과I / 과Ⅱ" || extraSubject == "수가 / 과탐I / 과탐Ⅱ") {
 
-        if ( score.math.type =="가") extraScore.math = newScore.math * extra1 / 100
+        if ( math_type =="가") extraScore.math = newScore.math * extra1 / 100
 
-        if ( score.line == "자연") {
+        if ( line == "자연") {
           if ( score.tamgu1.name.indexOf("1") >= 0) {
             extraScore.tamgu1 = newScore.tamgu1.score * extra2 / 100
             
@@ -1634,7 +1621,7 @@ export default class reportController {
       }
 
 
-      if ( majorData.major.univName == "부산대") {
+      if ( univName == "부산대") {
         if ( extraSubject == score.foreign.name ) {
           extraScore.foreign = score.foreign.score * 0.05
         }
@@ -1696,7 +1683,7 @@ export default class reportController {
 
     else if ( extraType == "% 감산") {
       
-      if ( extraSubject == "수나" && score.math.type == "나") {
+      if ( extraSubject == "수나" && math_type == "나") {
         extraScore.math = -1 * ( newScore.math * extraValue) / 100 
       }
     }
@@ -1711,13 +1698,13 @@ export default class reportController {
       else if ( extraSubject == "수가") {
 
  
-        if ( score.math.type == "가") extraScore.math = extraValue
+        if ( math_type == "가") extraScore.math = extraValue
 
       }
 
       else if ( extraSubject == "과탐") {
 
-        if ( score.line == "자연") {
+        if ( line == "자연") {
           extraScore.tamgu1 = extraValue
           extraScore.tamgu2 = extraValue 
         }
@@ -1725,10 +1712,10 @@ export default class reportController {
 
       else if ( extraSubject == "수가 / 과탐") {
 
-        if ( score.math.type == "가"){
+        if ( math_type == "가"){
           extraScore.math = extra1
         }
-        if ( score.line == "자연") {
+        if ( line == "자연") {
           extraScore.tamgu1 = extra2
           extraScore.tamgu2 = extra2 
         }
@@ -1740,11 +1727,11 @@ export default class reportController {
 
       if ( extraSubject == "수가 / 과탐") {
 
-        if ( score.math.type == "가") {
+        if ( math_type == "가") {
           extraScore.math = ( newScore.math * extra1) / 100
         }
 
-        if ( score.line == "자연") {
+        if ( line == "자연") {
           extraScore.tamgu1 = extra2
           extraScore.tamgu2 = extra2 
         }
@@ -1755,7 +1742,7 @@ export default class reportController {
     
     else {
 
-      if ( extraPoint == "+ [ 수가 ( 개인 취득 표준점수 / 전국최고 표준점수 ) x 10 ]" && score.math.type =="가") {
+      if ( extraPoint == "+ [ 수가 ( 개인 취득 표준점수 / 전국최고 표준점수 ) x 10 ]" && math_type =="가") {
 
         const highestMath = highestScore["수학가"]
 
@@ -1769,11 +1756,11 @@ export default class reportController {
         var tamgu1Score = 0
         var tamgu2Score = 0
 
-        if ( score.math.type == "가") {
+        if ( math_type == "가") {
           extraScore.math = newScore.math * 0.1
         }
 
-        if ( score.line == "자연") {
+        if ( line == "자연") {
           if ( tamgu1Name == "물리학2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
 
             tamgu1Score = score.tamgu1.percentile
@@ -1788,7 +1775,7 @@ export default class reportController {
         }
       }
 
-      else if ( extraPoint == "수가 10% / 과탐(상위 3개영역에 포함될 경우) 10점 가산" && score.math.type =="가" && score.line == "자연") {
+      else if ( extraPoint == "수가 10% / 과탐(상위 3개영역에 포함될 경우) 10점 가산" && math_type =="가" && line == "자연") {
 
         extraScore.math = newScore.math * 0.1  
       }
@@ -1801,11 +1788,11 @@ export default class reportController {
         var tamgu1Score = 0
         var tamgu2Score = 0
 
-        if ( score.math.type == "가") {
+        if ( math_type == "가") {
           extraScore.math = newScore.math * 0.1
         }
 
-        if ( score.line == "자연") {
+        if ( line == "자연") {
           if ( tamgu1Name == "물리학2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
 
             tamgu1Score = score.tamgu1.percentile
@@ -1843,7 +1830,7 @@ export default class reportController {
 
       else if (extraPoint == "수가 10%, 물Ⅱ, 화Ⅱ, 생Ⅱ 중 최상위 한 과목 5%") {
 
-        if ( score.math.type == "가"){
+        if ( math_type == "가"){
           extraScore.math = newScore.math * 0.1
         }
 
@@ -1858,14 +1845,14 @@ export default class reportController {
 
     }
 
-    if ( majorData.major.univName == "동아대" && majorData.major.majorName.indexOf("의예") >= 0) {
+    if ( univName == "동아대" && majorName.indexOf("의예") >= 0) {
 
       if ( score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") extraScore.tamgu += 3
 
       if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu += 3
     }
 
-    if ( majorData.major.univName =="부경대" && majorData.major.line == "자연") {
+    if ( univName =="부경대" && majorData.major.line == "자연") {
       extraScore.tamgu *= 2
     }
 
@@ -1891,10 +1878,10 @@ export default class reportController {
     if ( tamguReplace == "사과 1과목 대체 가능" && score.foreign.name != null ) {
       tamguList = [tamgu1, tamgu2, foreign]
     }
-    else if ( tamguReplace == "과 1과목 대체 가능" && score.line =="자연" && score.foreign.name != null) {
+    else if ( tamguReplace == "과 1과목 대체 가능" && line =="자연" && score.foreign.name != null) {
       tamguList = [tamgu1, tamgu2, foreign]
     }
-    else if ( tamguReplace == "사 1과목 대체 가능" && score.line =="인문" && score.foreign.name != null){
+    else if ( tamguReplace == "사 1과목 대체 가능" && line =="인문" && score.foreign.name != null){
       tamguList = [tamgu1,tamgu2, foreign]
     }
     else if ( tamguReplace == "사과 1과목 프랑스어/독일어 대체 가능"  && ( score.foreign.name == "프랑스어" || score.foreign.name == "독일어")) {
@@ -1944,11 +1931,14 @@ export default class reportController {
       }
     }
 
-    if ( majorData.major.univName == "고려대(세종)" ) {
+    if ( univName == "고려대(세종)" ) {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score
     }
+    else if ( univName == "고려대") {
+      totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu.score
+    }
 
-    if ( majorData.major.univName =="이화여대") {
+    if ( univName =="이화여대") {
       const scoreList = [newScore.tamgu1.score, newScore.tamgu2.score, newScore.foreign.score]
 
       scoreList.sort(function(a, b) { 
@@ -1978,7 +1968,7 @@ export default class reportController {
 
     // 홍익대 예외 
 
-    if ( majorData.major.univName.indexOf("홍익대") >= 0) {
+    if ( univName.indexOf("홍익대") >= 0) {
 
 
       newScore.korean = score.korean.score * major_ratio.korean / 100
@@ -2384,7 +2374,7 @@ export default class reportController {
         return b - a
       })
 
-      if ( majorData.major.univName == "한성대" && score.math.type == "가") {
+      if ( univName == "한성대" && math_type == "가") {
         if ( scoreList[0] == totalScore.korean ) scoreList[1] += 10
         else if ( scoreList[0] == totalScore.math ) scoreList[0] += 30
       }
@@ -2448,11 +2438,9 @@ export default class reportController {
 
     if ( score.naesinScore !== 0 &&  isNaN(majorData.metadata.naesinRatio) === false ) {
 
-      const univName = majorData.major.univName
       const recruitmentType = majorData.major.recruitmentType
       const recruitmentUnit = majorData.major.recruitmentUnit
       const sosokUniversity = majorData.major.sosokUniversity
-      const majorName = majorData.major.majorName
       const naesinType = score.naesinType
       const _naesinScore = score.naesinScore
 
@@ -2470,8 +2458,8 @@ export default class reportController {
 
       if ( score.naesinType === "검정고시") {
 
-        if ( majorData.major.univName === "한양대") naesinScore = 98.5
-        else if ( majorData.major.univName === "부산교대"){
+        if ( univName === "한양대") naesinScore = 98.5
+        else if ( univName === "부산교대"){
           const korean = score.korean.percentile
           const math = score.math.percentile
           const english = majorData.gradeToScore.english.score[score.english.grade-1]
@@ -2479,7 +2467,7 @@ export default class reportController {
 
           naesinScore = ( korean + math + english + tamgu ) * 1.25
         }
-        else if ( majorData.major.univName === "광주교대") {
+        else if ( univName === "광주교대") {
           const history = majorData.gradeToScore.history.score[score.history.grade-1]
 
           naesinScore = ( parseFloat(totalSum) - history ) / 9
