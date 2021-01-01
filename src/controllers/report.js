@@ -930,17 +930,13 @@ export default class reportController {
        * 수학점수는 변표가 필요한 학과면 변표를 구하고 아니면 그냥 일반적인 C타입으로 게산한다
        */
 
-      if ( ( calculationSpecial.indexOf("수가 지원시 변표사용") >= 0 || calculationSpecial.indexOf("수가 선택시 변표사용") >= 0 || calculationSpecial.indexOf("수가나 백분위에 따른 변표 사용")) && math_type == "가") {
+       
+      if ( mathTransitionScore !== null) {
   
+        console.log(mathTransitionScore)
         if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
         else if( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
 
-      } 
-      else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0 || calculationSpecial.indexOf("수가나 백분위에 따른 변표 사용")) && math_type == "나") {
-
-        if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200
-        else if ( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
-    
       } 
       else newScore.math = score.math.score * ( perfectScore.math  ) / 200
 
@@ -1122,6 +1118,7 @@ export default class reportController {
       
 
       if ( mathTransitionScore !== null ) {
+        console.log(mathTransitionScore)
         if ( mathTransitionScore.applicationIndicator == "표준점수" ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / highestMath 
         else if ( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / highestMath
 
