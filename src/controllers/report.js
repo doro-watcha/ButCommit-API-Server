@@ -864,6 +864,16 @@ export default class reportController {
         newScore.tamgu1.score = tamgu1 * 0.42 + 63
         newScore.tamgu2.score = tamgu2 * 0.42 + 63
       }
+
+      if ( majorData.major.univName == "순천향대") {
+
+        if ( majorData.major.majorName == "의예과" || majorData.major.majorName == "간호학과"){
+          newScore.korean = score.korean.percentile * 0.2 * 2.0231
+          newScore.math = score.math.percentile * 0.3 * 2.0231
+          newScore.tamgu1.score = score.tamgu1.percentile * 0.2 * 2.0231
+          newScore.tamgu2.score = score.tamgu2.percentile * 0.2 * 2.0231 
+        }
+      }
     }
     // 표준점수 x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "B") {
@@ -1044,12 +1054,21 @@ export default class reportController {
         }
       }
 
+      // 가톨릭대 예외처리
+
       if ( majorData.major.univName =="가톨릭대") {
 
         if ( majorData.major.majorName == "의예과") {
           newScore.tamgu1.score *= 1.5
           newScore.tamgu2.score *= 1.5
         }
+      }
+
+      // 대구교대
+
+      if ( majorData.major.univName == "대구교대") {
+        newScore.tamgu1.score *= 1.5
+        newScore.tamgu2.score *= 1.5
       }
     }
 
@@ -1828,6 +1847,17 @@ export default class reportController {
       }
 
 
+    }
+
+    if ( majorData.major.univName == "동아대" && majorData.major.majorName.indexOf("의예") >= 0) {
+
+      if ( score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") extraScore.tamgu += 3
+
+      if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu += 3
+    }
+
+    if ( majorData.major.univName =="부경대" && majorData.major.line == "자연") {
+      extraScore.tamgu *= 2
     }
 
 
