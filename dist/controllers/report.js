@@ -700,6 +700,16 @@ class reportController {
         else if (applicationIndicatorType == "C") {
             console.log("C타입입니다");
             /**
+             *  과목 별 표준점수 최고점 박아놓고 시작 
+             */
+
+            const highestKorean = highestScore["국어"];
+            const highestMath = highestScore[`수학${math_type}`];
+            var highestTamgu1 = highestScore[`${score.tamgu1.name}`];
+            var highestTamgu2 = highestScore[`${score.tamgu2.name}`];
+            var highestForeign = null;
+            if (score.foreign.score != null) highestForeign = highestScore[`${score.foreign.name}`];
+            /**
              * C타입도 일단 구해놓는다
              */
 
@@ -805,6 +815,11 @@ class reportController {
             if (univName == "대구교대") {
               newScore.tamgu1.score *= 1.5;
               newScore.tamgu2.score *= 1.5;
+            }
+
+            if (univName == "이화여대") {
+              newScore.korean = score.korean.score / highestKorean * perfectScore.korean;
+              newScore.math = score.math.score / highestMath * perfectScore.math;
             }
           } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
           else if (applicationIndicatorType == "D") {
