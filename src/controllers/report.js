@@ -994,7 +994,7 @@ export default class reportController {
       if ( univName === "연세대") {
 
         if ( majorData.major.line == "자연") {
-          newScore.korean = score.korean.score / 600 * 1000
+          newScore.korean = score.korean.score / 900 * 1000
           if ( mathTransitionScore !== null )  newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.5 / 900 * 1000
           else newScore.math = score.math.score / 600 * 1000
           newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * 3 / 900 * 1000
@@ -1936,12 +1936,12 @@ export default class reportController {
     else if ( univName == "고려대") {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score
     }
-    else if ( univName == "가톨릭대" ) {
+    // else if ( univName == "가톨릭대" ) {
 
-      if ( majorName.indexOf("의예")>= 0 || majorName.indexOf("간호") >= 0 ) {
-        totalScore.tamgu = ( newScore.tamgu1.score + newScore.tamgu2.score ) * 1.5 
-      }
-    }
+    //   if ( majorName.indexOf("의예")>= 0 || majorName.indexOf("간호") >= 0 ) {
+    //     totalScore.tamgu = ( newScore.tamgu1.score + newScore.tamgu2.score ) * 1.5 
+    //   }
+    // }
 
     if ( univName =="이화여대") {
       const scoreList = [newScore.tamgu1.score, newScore.tamgu2.score, newScore.foreign.score]
