@@ -2011,7 +2011,7 @@ export default class reportController {
           }
           else if ( i == 1 ) {
             tamguGrade = score.tamgu2.grade 
-            tamguName = socre.tamgu2.name 
+            tamguName = score.tamgu2.name 
           }
 
           if ( tamguName.indexOf("1") >= 0 ) {
