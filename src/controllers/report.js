@@ -930,13 +930,16 @@ export default class reportController {
   
         console.log("1")
         console.log(mathTransitionScore.score)
-        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
+        if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
+        else if( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
 
       } else if ( ( calculationSpecial.indexOf("수나 지원시 변표사용") >=0 || calculationSpecial.indexOf("수나 선택시 변표사용") >= 0) && score.math.type == "나") {
 
         console.log("2")
         console.log(mathTransitionScore.score)
-        newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
+        
+        if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200
+        else if ( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
     
       } 
       else newScore.math = score.math.score * ( perfectScore.math  ) / 200
