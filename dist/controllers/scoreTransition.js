@@ -78,8 +78,7 @@ class scoreTransitionController {
       sheetRows: 10000
     });
 
-    let sheetsList = workbook.SheetNames;
-    await _services.scoreTransitionService.deleteAll();
+    let sheetsList = workbook.SheetNames; //await scoreTransitionService.deleteAll()
 
     let sheetData5 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
       header: 1,
