@@ -41,6 +41,7 @@ class reportController {
       });
       if (score == null) throw Error('SCORE_NOT_FOUND');
       const sameTamgu = score.tamgu1.name[0] === score.tamgu2.name[0];
+      const line = score.line;
       if (majorData.ratio.math.ga == 0 && majorData.ratio.math.na != 0 && score.math.type == "가") throw Error('MATH_NA_NOT_FOUND');else if (majorData.ratio.math.na == 0 && majorData.ratio.math.ga != 0 && score.math.type == "나") throw Error('MATH_GA_NOT_FOUND');else if (majorData.ratio.tamgu.science == 0 && majorData.ratio.tamgu.society != 0 && line == "자연") throw Error('SOCIETY_NOT_FOUND');else if (majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.society != 0 && line == "인문") throw Error('SCIENCE_NOT_FOUND');else if (majorData.metadata.sooneungSpecial === "과탐응시 기준: 1+2 혹은 2+2 선택|같은 분야 1, 2 과목 불가" && line == "자연" && sameTamgu == true) throw Error('DIFFERENT_TAMGU_NOT_FOUND');else if (majorData.metadata.sooneungSpecial === "과탐 1,2 구분없이 서로 다른 두 과목 선택" && line == "자연" && sameTamgu == true) throw Error('DIFFERENT_TAMGU_NOT_FOUND');
       const modelObj = await reportController.getScore(score, majorData, true);
       const report = await _services.reportService.create(modelObj);

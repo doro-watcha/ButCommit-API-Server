@@ -30,6 +30,8 @@ export default class reportController {
 
       const sameTamgu =  score.tamgu1.name[0] === score.tamgu2.name[0]
 
+      const line = score.line
+
       if ( majorData.ratio.math.ga == 0 && majorData.ratio.math.na != 0 && score.math.type == "가") throw Error('MATH_NA_NOT_FOUND')
       else if ( majorData.ratio.math.na == 0 &&  majorData.ratio.math.ga != 0 && score.math.type =="나") throw Error('MATH_GA_NOT_FOUND')
       else if ( majorData.ratio.tamgu.science == 0 && majorData.ratio.tamgu.society != 0 && line == "자연") throw Error('SOCIETY_NOT_FOUND')
