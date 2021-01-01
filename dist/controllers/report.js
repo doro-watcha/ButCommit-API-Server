@@ -1732,6 +1732,10 @@ class reportController {
     console.log("totalSum까지 계산 완료했습니다");
 
     if (univName == "대구교대") {
+      newScore.korean = Math.floor(newScore.korean);
+      newScore.math = Math.floor(newScore.math);
+      newScore.english = Math.floor(newScore.english);
+      newScore.tamgu = Math.floor(newScore.tamgu);
       totalScore.korean = Math.floor(totalScore.korean);
       totalScore.math = Math.floor(totalScore.math);
       totalScore.english = Math.floor(totalScore.english);
