@@ -1631,7 +1631,22 @@ class reportController {
     var naesinScore = 0.0;
 
     if (score.naesinScore !== 0 && isNaN(majorData.metadata.naesinRatio) === false) {
-      const naesin = await _services.naesinService.findOne(majorData.major.univName, majorData.major.recruitmentType, majorData.major.recruitmentUnit, majorData.major.sosokUniversity, majorData.major.majorName, score.naesinType, score.naesinScore);
+      const univName = majorData.major.univName;
+      const recruitmentType = majorData.major.recruitmentType;
+      const recruitmentUnit = majorData.major.recruitmentUnit;
+      const sosokUniversity = majorData.major.sosokUniversity;
+      const majorName = majorData.major.majorName;
+      const naesinType = score.naesinType;
+      const _naesinScore = score.naesinScore;
+      var naesin = "";
+
+      for (let i = 0; i < _variables.NAESIN.length; i++) {
+        if (univName == _variables.NAESIN[i].univName && recruitmentType == _variables.NAESIN[i].recruitmentType && recruitmentUnit == _variables.NAESIN[i].recruitmentUnit && sosokUniversity == _variables.NAESIN[i].sosokUniversity && majorName == _variables.NAESIN[i].majorName && naesinType == _variables.NAESIN[i].naesinType) {
+          if (_naesinScore >= _variables.NAESIN[i].startScore && _naesinScore <= _variables.NAESIN[i].endScore) {
+            naesin = _variables.NAESIN[i];
+          }
+        }
+      }
 
       if (score.naesinType === "검정고시") {
         if (majorData.major.univName === "한양대") naesinScore = 98.5;else if (majorData.major.univName === "부산교대") {

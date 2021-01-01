@@ -2439,15 +2439,25 @@ export default class reportController {
 
     if ( score.naesinScore !== 0 &&  isNaN(majorData.metadata.naesinRatio) === false ) {
 
-      const naesin = await naesinService.findOne(
-        majorData.major.univName,
-        majorData.major.recruitmentType,
-        majorData.major.recruitmentUnit,
-        majorData.major.sosokUniversity,
-        majorData.major.majorName,
-        score.naesinType,
-        score.naesinScore
-      )
+      const univName = majorData.major.univName
+      const recruitmentType = majorData.major.recruitmentType
+      const recruitmentUnit = majorData.major.recruitmentUnit
+      const sosokUniversity = majorData.major.sosokUniversity
+      const majorName = majorData.major.majorName
+      const naesinType = score.naesinType
+      const _naesinScore = score.naesinScore
+
+      var naesin = ""
+
+      for ( let i = 0 ; i < NAESIN.length ; i++) {
+
+        if ( univName == NAESIN[i].univName && recruitmentType == NAESIN[i].recruitmentType && recruitmentUnit == NAESIN[i].recruitmentUnit && sosokUniversity == NAESIN[i].sosokUniversity && majorName == NAESIN[i].majorName && naesinType == NAESIN[i].naesinType) {
+
+          if ( _naesinScore >= NAESIN[i].startScore && _naesinScore <= NAESIN[i].endScore){
+            naesin = NAESIN[i]
+          }
+        }
+      }
 
       if ( score.naesinType === "검정고시") {
 
