@@ -829,7 +829,7 @@ class reportController {
               if (score.foreign.score != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign;
 
               if ((calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용") && math_type == "가" || (calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수나 선택시 변표사용") && math_type == "나") {
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath;
+                if (mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath;else if (mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100 - score.math.percentile] * perfectScore.math / highestMath;
               } else newScore.math = score.math.score * perfectScore.math / highestMath; // 단국데 의치 예외처리
 
 
