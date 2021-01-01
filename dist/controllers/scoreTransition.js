@@ -120,8 +120,7 @@ class scoreTransitionController {
 
     }
 
-    console.log("변환표준점수 파싱 완료 ");
-    await _services.naesinService.deleteAll();
+    console.log("변환표준점수 파싱 완료 "); //await naesinService.deleteAll()
 
     let sheetData3 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[3]], {
       header: 1,
@@ -155,9 +154,8 @@ class scoreTransitionController {
           value: sheetData3[i + 1][j]
         };
 
-        _variables.NAESIN.push(obj);
+        _variables.NAESIN.push(obj); //await naesinService.create(obj)
 
-        await _services.naesinService.create(obj);
       }
 
       for (let j = 7; j < sheetData3[i].length - 7; j++) {
@@ -185,9 +183,8 @@ class scoreTransitionController {
           value: sheetData3[i + 3][j]
         };
 
-        _variables.NAESIN.push(obj);
+        _variables.NAESIN.push(obj); //await naesinService.create(obj)
 
-        await _services.naesinService.create(obj);
       }
     }
 

@@ -1069,8 +1069,7 @@ export default class reportController {
     // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
     else if ( applicationIndicatorType == "D") {
 
-
-      console.log("fuci")
+      console.log("D타입입니다")
 
       const highestKorean = highestScore["국어"]
       const highestMath = highestScore[`수학${math_type}`]
@@ -2449,17 +2448,31 @@ export default class reportController {
       const naesinType = score.naesinType
       const _naesinScore = score.naesinScore
 
-      var naesin = ""
+      console.log( recruitmentType)
+      console.log(recruitmentUnit)
+      console.log(sosokUniversity)
+      console.log(naesinType)
+      console.log(_naesinScore)
+      console.log(majorName)
+      console.log(univName)
+
+      var naesin = null
 
       for ( let i = 0 ; i < NAESIN.length ; i++) {
 
-        if ( univName == NAESIN[i].univName && recruitmentType == NAESIN[i].recruitmentType && recruitmentUnit == NAESIN[i].recruitmentUnit && sosokUniversity == NAESIN[i].sosokUniversity && majorName == NAESIN[i].majorName && naesinType == NAESIN[i].naesinType) {
+        if ( univName == NAESIN[i].univName && recruitmentType == NAESIN[i].recruitmentType && recruitmentUnit == NAESIN[i].recruitmentUnit && sosokUniversity == NAESIN[i].sosokUniversity && majorName == NAESIN[i].major && naesinType == NAESIN[i].type) {
 
-          if ( _naesinScore >= NAESIN[i].startScore && _naesinScore <= NAESIN[i].endScore){
+          console.log(NAESIN[i].startScore)
+          console.log(NAESIN[i].endScore)
+          if ( _naesinScore >= parseFloat(NAESIN[i].startScore) && _naesinScore <= parseFloat(NAESIN[i].endScore)){
             naesin = NAESIN[i]
+
+            console.log("나는 선택됐어 내신!" + naesin)
           }
         }
       }
+
+      console.log(naesin)
 
       if ( score.naesinType === "검정고시") {
 

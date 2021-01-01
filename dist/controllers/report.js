@@ -800,7 +800,7 @@ class reportController {
             }
           } // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
           else if (applicationIndicatorType == "D") {
-              console.log("fuci");
+              console.log("D타입입니다");
               const highestKorean = highestScore["국어"];
               const highestMath = highestScore[`수학${math_type}`];
               var tempTamgu1 = score.tamgu1.score;
@@ -1646,15 +1646,28 @@ class reportController {
       const sosokUniversity = majorData.major.sosokUniversity;
       const naesinType = score.naesinType;
       const _naesinScore = score.naesinScore;
-      var naesin = "";
+      console.log(recruitmentType);
+      console.log(recruitmentUnit);
+      console.log(sosokUniversity);
+      console.log(naesinType);
+      console.log(_naesinScore);
+      console.log(majorName);
+      console.log(univName);
+      var naesin = null;
 
       for (let i = 0; i < _variables.NAESIN.length; i++) {
-        if (univName == _variables.NAESIN[i].univName && recruitmentType == _variables.NAESIN[i].recruitmentType && recruitmentUnit == _variables.NAESIN[i].recruitmentUnit && sosokUniversity == _variables.NAESIN[i].sosokUniversity && majorName == _variables.NAESIN[i].majorName && naesinType == _variables.NAESIN[i].naesinType) {
-          if (_naesinScore >= _variables.NAESIN[i].startScore && _naesinScore <= _variables.NAESIN[i].endScore) {
+        if (univName == _variables.NAESIN[i].univName && recruitmentType == _variables.NAESIN[i].recruitmentType && recruitmentUnit == _variables.NAESIN[i].recruitmentUnit && sosokUniversity == _variables.NAESIN[i].sosokUniversity && majorName == _variables.NAESIN[i].major && naesinType == _variables.NAESIN[i].type) {
+          console.log(_variables.NAESIN[i].startScore);
+          console.log(_variables.NAESIN[i].endScore);
+
+          if (_naesinScore >= parseFloat(_variables.NAESIN[i].startScore) && _naesinScore <= parseFloat(_variables.NAESIN[i].endScore)) {
             naesin = _variables.NAESIN[i];
+            console.log("나는 선택됐어 내신!" + naesin);
           }
         }
       }
+
+      console.log(naesin);
 
       if (score.naesinType === "검정고시") {
         if (univName === "한양대") naesinScore = 98.5;else if (univName === "부산교대") {
