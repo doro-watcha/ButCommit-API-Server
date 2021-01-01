@@ -281,10 +281,10 @@ class reportController {
      */
 
 
-    var tamgu1TransitionScore = "";
-    var tamgu2TransitionScore = "";
-    var foreignTransitionScore = "";
-    var mathTransitionScore = "";
+    var tamgu1TransitionScore = null;
+    var tamgu2TransitionScore = null;
+    var foreignTransitionScore = null;
+    var mathTransitionScore = null;
     var subject1 = "";
     var subject2 = "";
 
@@ -737,12 +737,12 @@ class reportController {
             if (majorData.major.univName === "연세대") {
               if (majorData.major.line == "자연") {
                 newScore.korean = score.korean.score / 600 * 1000;
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] * 1.5 / 900 * 1000;
+                if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] * 1.5 / 900 * 1000;else newScore.math = score.math.score / 600 * 1000;
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * 3 / 900 * 1000;
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * 3 / 900 * 1000;
               } else if (majorData.major.line == "인문") {
                 newScore.korean = score.korean.score / 600 * 1000;
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 600 * 1000;
+                if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 600 * 1000;else newScore.math = score.math.scroe / 600 * 1000;
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] / 600 * 1000;
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu1.percentile] / 600 * 1000;
               }
@@ -751,7 +751,7 @@ class reportController {
 
             if (majorData.major.univName === "연세대(미래)" && majorData.major.majorName == "의예과") {
               newScore.korean = score.korean.score / 900 * 1000;
-              newScore.math = mathTransitionScore.score.value[150 - score.math.score] * 1.5 / 900 * 1000;
+              if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] * 1.5 / 900 * 1000;else newScore.math = score.math.score * 1.5 / 900 * 1000;
               newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * 3 / 900 * 1000;
               newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * 3 / 900 * 1000;
             }
@@ -765,17 +765,17 @@ class reportController {
             if (majorData.major.univName == "고려대") {
               if (majorData.major.majorName == "사이버국방학과") {
                 newScore.korean = score.korean.score / 640 * 800;
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] * 1.2 / 560 * 800;
+                if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 640 * 800;else newScore.math = score.math.score / 640 * 800;
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] / 640 * 800;
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] / 640 * 800;
               } else if (majorData.major.line == "자연") {
                 newScore.korean = score.korean.score / 640 * 1000;
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] * 1.2 / 560 * 1000;
+                if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 640 * 1000;else newScore.math = score.math.score / 640 * 1000;
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] / 640 * 1000;
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] / 640 * 1000;
               } else if (majorData.major.line == "인문") {
                 newScore.korean = score.korean.score / 560 * 1000;
-                newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 560 * 1000;
+                if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 560 * 1000;else newScore.math = score.math.score / 500 * 1000;
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * 0.8 / 560 * 1000;
                 newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * 0.8 / 560 * 1000;
               }
