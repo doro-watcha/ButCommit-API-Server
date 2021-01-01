@@ -123,8 +123,10 @@ export default class scoreTransitionController {
 
       }
 
+      console.log("변환표준점수 파싱 완료 ")
 
-      // await naesinService.deleteAll()
+
+       await naesinService.deleteAll()
 
     
       let sheetData3 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[3]], {
@@ -164,7 +166,7 @@ export default class scoreTransitionController {
           }
 
           NAESIN.push(obj)
-          //await naesinService.create(obj)
+          await naesinService.create(obj)
 
         }
 
@@ -201,13 +203,13 @@ export default class scoreTransitionController {
           }
 
           NAESIN.push(obj)
-          //await naesinService.create(obj)
+          await naesinService.create(obj)
 
         }
 
       }
 
-      console.log("good")
+      console.log("내신 점수 파싱완료")
 
     }
   

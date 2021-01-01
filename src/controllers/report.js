@@ -921,67 +921,68 @@ export default class reportController {
     else if ( applicationIndicatorType == "C") {
 
       /**
-       * 국어 점수는 그냥 구한다
+       * C타입도 일단 구해놓는다
        */
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / 200
+      newScore.math = score.math.score * ( perfectScore.math ) / 200
+      newScore.tamgu1.score = score.tamgu1.score * (perfectScore.tamgu) / 100
+      newScore.tamgu2.score = score.tamgu2.score * (perfectScore.tamgu) / 100
+      if ( score.foreign.name != null ) newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu) / 100 
+      
+      var mathTransition = null
+      var tamgu1Transition = null 
+      var tamgu2Transition = null 
+      var foreignTransition = null 
 
-      /**
-       * 수학점수는 변표가 필요한 학과면 변표를 구하고 아니면 그냥 일반적인 C타입으로 게산한다
-       */
-
-       
       if ( mathTransitionScore !== null) {
   
-        console.log(mathTransitionScore)
-        if ( mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
-        else if( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
+        if ( mathTransitionScore.applicationIndicator == "표준점수") {
+          newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
+          mathTransition = mathTransitionScore.score.value[150-score.math.score]
+        }
+        else if( mathTransitionScore.applicationIndicator == "백분위") {
+          newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / 100
+          mathTransition = mathTransitionScore.score.value[100-score.math.percentile]
+        }
 
       } 
-      else newScore.math = score.math.score * ( perfectScore.math  ) / 200
 
       
       /**
-       * 
+       * 탐구 점수는 변표가 필요한 학과면 변표로 구하고 아니면 일반적인 C타입으로 생성한다
        */
  
-      if ( tamguTranslation.indexOf("탐구 변표사용") >= 0) { 
+      if ( tamgu1TransitionScore !== null) { 
  
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
-   
-        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
-      }
-      else {
 
-        newScore.tamgu1.score = score.tamgu1.score * (perfectScore.tamgu) / 100
-        newScore.tamgu2.score = score.tamgu2.score * (perfectScore.tamgu) / 100
-        newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu) / 100 
+        tamgu1Transition = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
+        tamgu2Transition = tamgu2TransitionScore.score.value[100-score-tamgu2.percentile]
+
+        if ( tamguReplace.length > 0 && score.foreign.score != null) {
+          newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / 100 
+          foreignTransition = foreignTransitionScore.score.value[100-score.foreign.percentile]
+
+        }
+
+        
       }
+
 
       // 경희대 국제 예외처리
       if ( specialOption == "탐구 본교 백분위변환표준점수+100 한 후 계산") {
 
-        console.log("sdasf")
-        console.log(tamgu1TransitionScore.score)
-        console.log(tamgu2TransitionScore.score)
-
-        newScore.tamgu1.score = ( tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] + 100) * perfectScore.tamgu / 200
-
-        newScore.tamgu2.score = ( tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] + 100) * perfectScore.tamgu / 200
-      
-        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = ( foreignTransitionScore.score.value[100-score.foreign.percentile] + 100) * perfectScore.tamgu / 200
+        newScore.tamgu1.score = ( tamgu1Transition + 100) * perfectScore.tamgu / 200
+        newScore.tamgu2.score = ( tamgu2Transition + 100) * perfectScore.tamgu / 200
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = ( foreignTransition + 100) * perfectScore.tamgu / 200
       }
 
       //가톨릭대 예외처리
       if ( specialOption == "탐구:  탐구 상위 1과목 변표 그대로   ") {
-
-        console.log("fff")
-        console.log(tamgu1TransitionScore.score)
-        console.log(tamgu2TransitionScore.score)
-        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
-   
-        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+        newScore.tamgu1.score = tamgu1Transition
+        newScore.tamgu2.score = tamgu2Transition
  
       }
 
@@ -991,28 +992,28 @@ export default class reportController {
 
         if ( majorData.major.line == "자연") {
           newScore.korean = score.korean.score / 900 * 1000
-          if ( mathTransitionScore !== null )  newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.5 / 900 * 1000
+          if ( mathTransitionScore !== null )  newScore.math = mathTransition * 1.5 / 900 * 1000
           else newScore.math = score.math.score / 600 * 1000
-          newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * 3 / 900 * 1000
-          newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * 3 / 900 * 1000
+          newScore.tamgu1.score = tamgu1Transition * 3 / 900 * 1000
+          newScore.tamgu2.score = tamgu2Transition * 3 / 900 * 1000
         }
 
         else if ( majorData.major.line == "인문") {
           newScore.korean = score.korean.score / 600 * 1000
-          if ( mathTransitionScore !== null ) newScore.math = mathTransitionScore.score.value[150-score.math.score] / 600 * 1000
+          if ( mathTransitionScore !== null ) newScore.math = mathTransition / 600 * 1000
           else newScore.math = score.math.scroe / 600 * 1000
-          newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 600 * 1000
-          newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 600 * 1000
+          newScore.tamgu1.score = tamgu1Transition / 600 * 1000
+          newScore.tamgu2.score = tamgu2Transition / 600 * 1000
         }
       }
 
       // 연세대(미래) 의예과 예외처리
       if ( univName === "연세대(미래)" && majorName == "의예과"){
         newScore.korean = score.korean.score / 900 * 1000
-        if ( mathTransitionScore !== null ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.5 / 900 * 1000
+        if ( mathTransitionScore !== null ) newScore.math = mathTransition * 1.5 / 900 * 1000
         else newScore.math = score.math.score * 1.5 /900 * 1000
-        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * 3 / 900 * 1000
-        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * 3 / 900 * 1000
+        newScore.tamgu1.score = tamgu1Transition * 3 / 900 * 1000
+        newScore.tamgu2.score = tamgu2Transition * 3 / 900 * 1000
       }
 
       if ( univName === "서울대") {
@@ -1026,34 +1027,32 @@ export default class reportController {
 
         if ( majorName == "사이버국방학과") {
           newScore.korean = score.korean.score / 640 * 800
-          if ( mathTransitionScore !== null  ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.2 / 640 * 800
+          if ( mathTransitionScore !== null  ) newScore.math = mathTransition * 1.2 / 640 * 800
           else newScore.math = score.math.score * 1.2 / 640 * 800
-          newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 640 * 800
-          newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 640 * 800
+          newScore.tamgu1.score = tamgu1Transition / 640 * 800
+          newScore.tamgu2.score = tamgu2Transition / 640 * 800
 
         }
 
         else if ( majorData.major.line == "자연") {
 
           newScore.korean = score.korean.score / 640 * 1000
-          if ( mathTransitionScore !== null  ) newScore.math = mathTransitionScore.score.value[150-score.math.score] * 1.2 / 640 * 1000
+          if ( mathTransitionScore !== null  ) newScore.math = mathTransition * 1.2 / 640 * 1000
           else newScore.math = score.math.score * 1.2 / 640 * 1000
-          newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / 640 * 1000
-          newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / 640 * 1000
+          newScore.tamgu1.score = tamgu1TransitionScore / 640 * 1000
+          newScore.tamgu2.score = tamgu2TransitionScore / 640 * 1000
 
         }
 
         else if ( majorData.major.line == "인문") {
 
-          console.log("zxcv")
+ 
           newScore.korean = score.korean.score / 560 * 1000
-          if ( mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150-score.math.score] / 560 * 1000
+          if ( mathTransitionScore !== null) newScore.math = mathTransition / 560 * 1000
           else newScore.math = score.math.score / 500 * 1000
-          console.log("ddd")
-          newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * 0.8 / 560 * 1000
-          console.log("sdfasdf")
-          newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * 0.8 / 560 * 1000
 
+          newScore.tamgu1.score = tamgu1Transition * 0.8 / 560 * 1000
+          newScore.tamgu2.score = tamgu2Transition * 0.8 / 560 * 1000
 
         }
       }
