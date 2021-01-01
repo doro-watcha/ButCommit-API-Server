@@ -1740,6 +1740,10 @@ class reportController {
       totalScore.math = Math.floor(totalScore.math);
       totalScore.english = Math.floor(totalScore.english);
       totalScore.tamgu = Math.floor(totalScore.tamgu);
+      perfectScore.korean = Math.floor(perfectScore.korean);
+      perfectScore.math = Math.floor(perfectScore.math);
+      perfectScore.english = Math.floor(perfectScore.english);
+      perfectScore.tamgu = Math.floor(perfectScore.tamgu);
     }
 
     console.log(totalScore.korean);
