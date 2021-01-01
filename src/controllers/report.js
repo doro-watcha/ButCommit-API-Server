@@ -2411,11 +2411,11 @@ export default class reportController {
 
 
     // 마지막으로 totalSum을 조정해보장
-    if ( majorData.gradeToScore.history.way == "가산점") {
+    if ( majorData.gradeToScore.history.way == "가산점" || majorData.gradeToScore.history.way == "감점") {
       totalSum += totalScore.history
     }
 
-    if ( majorData.gradeToScore.english.way == "가산점") {
+    if ( majorData.gradeToScore.english.way == "가산점" || majorData.gradeToScore.english.way =="감점")  {
       totalSum += totalScore.english
     }
 
