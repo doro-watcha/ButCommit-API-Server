@@ -1737,6 +1737,7 @@ class reportController {
       newScore.english = Math.floor(newScore.english);
       newScore.tamgu1.score = Math.floor(newScore.tamgu1.score);
       newScore.tamgu2.score = Math.floor(newScore.tamgu2.score);
+      if (score.foreign.score != null) newScore.foreign.score = Math.floor(newScore.foreign.score);
       perfectScore.korean = Math.floor(perfectScore.korean);
       perfectScore.math = Math.floor(perfectScore.math);
       perfectScore.english = Math.floor(perfectScore.english);
