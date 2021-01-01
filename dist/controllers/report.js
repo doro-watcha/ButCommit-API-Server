@@ -744,7 +744,7 @@ class reportController {
                 newScore.korean = score.korean.score / 600 * 1000;
                 if (mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150 - score.math.score] / 600 * 1000;else newScore.math = score.math.scroe / 600 * 1000;
                 newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] / 600 * 1000;
-                newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu1.percentile] / 600 * 1000;
+                newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] / 600 * 1000;
               }
             } // 연세대(미래) 의예과 예외처리
 
