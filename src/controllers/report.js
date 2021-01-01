@@ -190,6 +190,9 @@ export default class reportController {
     const univName = majorData.major.univName
     const majorName = majorData.major.majorName
 
+    console.log(univName)
+    console.log(majorName)
+
     const highestScore = {
       "국어" : 144,
       "수학가" : 137,
@@ -1044,10 +1047,13 @@ export default class reportController {
 
         else if ( majorData.major.line == "인문") {
 
+          console.log("zxcv")
           newScore.korean = score.korean.score / 560 * 1000
           if ( mathTransitionScore !== null) newScore.math = mathTransitionScore.score.value[150-score.math.score] / 560 * 1000
           else newScore.math = score.math.score / 500 * 1000
+          console.log("ddd")
           newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * 0.8 / 560 * 1000
+          console.log("sdfasdf")
           newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * 0.8 / 560 * 1000
 
 
@@ -1935,7 +1941,7 @@ export default class reportController {
       totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score
     }
     else if ( univName == "고려대") {
-      totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu.score
+      totalScore.tamgu = newScore.tamgu1.score + newScore.tamgu2.score
     }
 
     if ( univName =="이화여대") {
