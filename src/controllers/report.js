@@ -2539,6 +2539,12 @@ export default class reportController {
       totalScore.english = Math.floor(totalScore.english)
       totalScore.tamgu = Math.floor(totalScore.tamgu)
     }
+    console.log(totalScore.korean)
+    console.log(totalScore.math)
+    console.log(totalScore.english)
+    console.log(totalScore.tamgu)
+
+    // if ( univName == "대구교대") throw Error('SCORE_NOT_FOUND')
 
 
     var naesinScore = 0.0

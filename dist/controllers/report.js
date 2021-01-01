@@ -1738,6 +1738,11 @@ class reportController {
       totalScore.tamgu = Math.floor(totalScore.tamgu);
     }
 
+    console.log(totalScore.korean);
+    console.log(totalScore.math);
+    console.log(totalScore.english);
+    console.log(totalScore.tamgu); // if ( univName == "대구교대") throw Error('SCORE_NOT_FOUND')
+
     var naesinScore = 0.0;
 
     if (score.naesinScore !== 0 && isNaN(majorData.metadata.naesinRatio) === false) {
