@@ -78,8 +78,7 @@ class scoreTransitionController {
       sheetRows: 10000
     });
 
-    let sheetsList = workbook.SheetNames;
-    await _services.scoreTransitionService.deleteAll();
+    let sheetsList = workbook.SheetNames; //await scoreTransitionService.deleteAll()
 
     let sheetData5 = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
       header: 1,
@@ -117,9 +116,8 @@ class scoreTransitionController {
         score: data
       };
 
-      _variables.SCORE_TRANSITION.push(obj);
+      _variables.SCORE_TRANSITION.push(obj); //await scoreTransitionService.create( obj)
 
-      await _services.scoreTransitionService.create(obj);
     }
 
     console.log("변환표준점수 파싱 완료 "); //await naesinService.deleteAll()

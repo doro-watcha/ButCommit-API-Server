@@ -192,6 +192,7 @@ export default class reportController {
     const univName = majorData.major.univName
     const majorName = majorData.major.majorName
 
+    console.log("=========================================================")
     console.log(univName)
     console.log(majorName)
 
@@ -953,6 +954,8 @@ export default class reportController {
       var foreignTransition = null 
 
       if ( mathTransitionScore !== null) {
+
+        console.log("수학 변표를 구했습니다")
   
         if ( mathTransitionScore.applicationIndicator == "표준점수") {
           newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 200 
@@ -971,6 +974,8 @@ export default class reportController {
        */
  
       if ( tamgu1TransitionScore !== null) { 
+
+        console.log("탐구 변표를 구했습니다")
  
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
         newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] * perfectScore.tamgu / 100 
@@ -1019,7 +1024,7 @@ export default class reportController {
         else if ( majorData.major.line == "인문") {
           newScore.korean = score.korean.score / 600 * 1000
           if ( mathTransitionScore !== null ) newScore.math = mathTransition / 600 * 1000
-          else newScore.math = score.math.scroe / 600 * 1000
+          else newScore.math = score.math.score / 600 * 1000
           newScore.tamgu1.score = tamgu1Transition / 600 * 1000
           newScore.tamgu2.score = tamgu2Transition / 600 * 1000
         }
@@ -1029,7 +1034,7 @@ export default class reportController {
       if ( univName === "연세대(미래)" && majorName == "의예과"){
         newScore.korean = score.korean.score / 900 * 1000
         if ( mathTransitionScore !== null ) newScore.math = mathTransition * 1.5 / 900 * 1000
-        else newScore.math = score.math.score * 1.5 /900 * 1000
+        else newScore.math = score.math.score * 1.5 / 900 * 1000
         newScore.tamgu1.score = tamgu1Transition * 3 / 900 * 1000
         newScore.tamgu2.score = tamgu2Transition * 3 / 900 * 1000
       }
@@ -1053,12 +1058,13 @@ export default class reportController {
         }
 
         else if ( majorData.major.line == "자연") {
+          console.log("고려대 자연입니다")
 
           newScore.korean = score.korean.score / 640 * 1000
           if ( mathTransitionScore !== null  ) newScore.math = mathTransition * 1.2 / 640 * 1000
           else newScore.math = score.math.score * 1.2 / 640 * 1000
-          newScore.tamgu1.score = tamgu1TransitionScore / 640 * 1000
-          newScore.tamgu2.score = tamgu2TransitionScore / 640 * 1000
+          newScore.tamgu1.score = tamgu1Transition / 640 * 1000
+          newScore.tamgu2.score = tamgu2Transition / 640 * 1000
 
         }
 
@@ -1087,6 +1093,12 @@ export default class reportController {
         newScore.korean = score.korean.score / highestKorean * perfectScore.korean
         newScore.math = score.math.score / highestMath * perfectScore.math
       }
+
+
+      console.log("C타입이 끝나고 바로 찍어보는 점수입니다")
+      console.log(newScore.math)
+      console.log(newScore.tamgu1.score)
+      console.log(newScore.tamgu2.score)
     }
 
     // ( 표준점수 / 과목 별 표준점수 최고점 ) x (총점에 따른 비율) [ 국, 수, 탐 ] + 영 + 한
@@ -2639,6 +2651,8 @@ export default class reportController {
 
 
     totalSum = parseFloat(totalSum)  + naesinScore
+
+    if ( isNaN(totalSum)) throw Error('SCORE_NOT_FOUND')
 
 
     if ( create == true ) {

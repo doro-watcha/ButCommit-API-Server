@@ -73,7 +73,7 @@ export default class scoreTransitionController {
 
     let sheetsList = workbook.SheetNames
 
-      await scoreTransitionService.deleteAll()
+      //await scoreTransitionService.deleteAll()
 
       let sheetData5 = xlsx.utils.sheet_to_json(workbook.Sheets[sheetsList[5]], {
           header: 1,
@@ -119,7 +119,7 @@ export default class scoreTransitionController {
 
         SCORE_TRANSITION.push(obj)
 
-        await scoreTransitionService.create( obj)
+        //await scoreTransitionService.create( obj)
 
       }
 
