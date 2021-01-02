@@ -704,8 +704,8 @@ class reportController {
              *  과목 별 표준점수 최고점 박아놓고 시작 
              */
 
-            const highestKorean = highestScore["국어"];
-            const highestMath = highestScore[`수학${math_type}`];
+            var highestKorean = highestScore["국어"];
+            var highestMath = highestScore[`수학${math_type}`];
             var highestTamgu1 = highestScore[`${score.tamgu1.name}`];
             var highestTamgu2 = highestScore[`${score.tamgu2.name}`];
             var highestForeign = null;
@@ -725,6 +725,7 @@ class reportController {
             var foreignTransition = null;
 
             if (mathTransitionScore !== null) {
+              highestMath = mathTransitionScore.score.value[0];
               console.log("수학 변표를 구했습니다");
 
               if (mathTransitionScore.applicationIndicator == "표준점수") {
@@ -742,6 +743,8 @@ class reportController {
 
             if (tamgu1TransitionScore !== null) {
               console.log("탐구 변표를 구했습니다");
+              higehstTamgu1 = tamgu1TransitionScore.score.value[0];
+              highestTamgu2 = tamgu2TransitionScore.score.value[0];
               newScore.tamgu1.score = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile] * perfectScore.tamgu / 100;
               newScore.tamgu2.score = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile] * perfectScore.tamgu / 100;
               tamgu1Transition = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
@@ -749,6 +752,7 @@ class reportController {
 
               if (tamguReplace.length > 0 && score.foreign.score != null) {
                 console.log("제2외국어 변표를 구해보자");
+                highestForeign = foreignTransitionScore.score.value[0];
                 newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / 100;
                 foreignTransition = foreignTransitionScore.score.value[100 - score.foreign.percentile];
               }
