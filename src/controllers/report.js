@@ -2013,10 +2013,14 @@ export default class reportController {
     if ( tamgu1TransitionScore !== null) { 
       scoreSet.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
       scoreSet.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+
+      scoreSet.tamgu1.high = tamgu1TransitionScore.score.value[0]
+      scoreSet.tamgu2.high = tamgu2TransitionScore.score.value[0]
     }
 
     if ( foreignTransitionScore != null ) {
       scoreSet.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile]
+      scoreSet.foreign.high = foreignTransitionScore.score.value[0]
     }
     const _scoreList = [scoreSet.tamgu1, scoreSet.tamgu2, scoreSet.foreign]
 
