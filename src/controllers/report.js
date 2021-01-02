@@ -1446,6 +1446,13 @@ export default class reportController {
 
         if ( score.tamgu1.name.indexOf("2") >= 0) extraScore.tamgu1 = ( newScore.tamgu1.score * extraValue) / 100
         if ( score.tamgu2.name.indexOf("2") >= 0) extraScore.tamgu2 = ( newScore.tamgu2.score * extraValue) / 100 
+
+        console.log("과탐2니깐 여기서 가산점을 계산해!")
+        console.log(newScore.tamgu1.score)
+        console.log(newScore.tamgu2.score)
+        console.log(extraScore.tamgu1)
+        console.log(extraScore.tamgu2)
+        console.log(extraValue)
       }
 
       else if ( extraSubject == "물리학") {
@@ -1897,6 +1904,9 @@ export default class reportController {
     }
 
     console.log( "가산점 계산까지 완료했습니다")
+    console.log(extraScore.tamgu1)
+    console.log(extraScore.tamgu2)
+    console.log(extraValue)
 
 
     const totalScore = {
@@ -1963,6 +1973,9 @@ export default class reportController {
 
       totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
 
+      extraScore.tamgu1 /= 2
+      extraScore.tamgu2 /= 2
+
       if ( applicationIndicatorType == "F") totalScore.tamgu *= 2
 
       // 인하대 예외처리
@@ -2021,15 +2034,15 @@ export default class reportController {
 
 
     if ( tamgu1TransitionScore !== null) { 
-      scoreSet.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
-      scoreSet.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+      scoreSet.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] + extraScore.tamgu1
+      scoreSet.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] + extraScore.tamgu2
 
       scoreSet.tamgu1.high = tamgu1TransitionScore.score.value[0]
       scoreSet.tamgu2.high = tamgu2TransitionScore.score.value[0]
     }
 
     if ( foreignTransitionScore != null ) {
-      scoreSet.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile]
+      scoreSet.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] + extraScore.foreign
       scoreSet.foreign.high = foreignTransitionScore.score.value[0]
     }
     const _scoreList = [scoreSet.tamgu1, scoreSet.tamgu2, scoreSet.foreign]
@@ -2595,6 +2608,14 @@ export default class reportController {
       perfectScore.english = Math.floor(perfectScore.english)
       perfectScore.tamgu = Math.floor(perfectScore.tamgu)
     }
+
+    console.log("========New Score==========")
+    console.log(newScore.korean)
+    console.log(newScore.math)
+    console.log(newScore.english)
+    console.log(newScore.tamgu1.score)
+    console.log(newScore.tamgu2.score)
+    console.log("========Total Score==========")
     console.log(totalScore.korean)
     console.log(totalScore.math)
     console.log(totalScore.english)
@@ -2612,15 +2633,6 @@ export default class reportController {
       const sosokUniversity = majorData.major.sosokUniversity
       const naesinType = score.naesinType
       const _naesinScore = score.naesinScore
-
-      console.log( recruitmentType)
-      console.log(recruitmentUnit)
-      console.log(sosokUniversity)
-      console.log(naesinType)
-      console.log(_naesinScore)
-      console.log(majorName)
-      console.log(univName)
-
       var naesin = null
 
       for ( let i = 0 ; i < NAESIN.length ; i++) {
