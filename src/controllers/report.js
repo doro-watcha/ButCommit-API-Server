@@ -2054,7 +2054,7 @@ export default class reportController {
       return b.score - a.score
     })
 
-    if ( univName.indexOf( "한양대") >=0 || univName.indexOf("한국외대") >= 0 || univName == "아주대" || univName == "광주과학기술원" || univName == "이화여대") {
+    if ( univName.indexOf( "한양대") >=0  || univName == "아주대" || univName == "광주과학기술원" || univName == "이화여대") {
 
       var tamgu1Minus = 0
       var tamgu2Minus = 0
