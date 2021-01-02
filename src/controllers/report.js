@@ -2020,29 +2020,32 @@ export default class reportController {
     var scoreSet = {
       tamgu1 : {
         score : 0,
-        high : _highestTamgu1
+        high : _highestTamgu1,
+        extra : extraScore.tamgu1
       },
       tamgu2 : {
         score : 0,
-        high : _highestTamgu2
+        high : _highestTamgu2,
+        extra : extraScore.tamgu2
       },
       foreign : {
         score : 0,
-        high : _highestForeign
+        high : _highestForeign,
+        extra : extraScore.foreign
       }
     } 
 
 
     if ( tamgu1TransitionScore !== null) { 
-      scoreSet.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] + extraScore.tamgu1
-      scoreSet.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] + extraScore.tamgu2
+      scoreSet.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] 
+      scoreSet.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
 
       scoreSet.tamgu1.high = tamgu1TransitionScore.score.value[0]
       scoreSet.tamgu2.high = tamgu2TransitionScore.score.value[0]
     }
 
     if ( foreignTransitionScore != null ) {
-      scoreSet.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] + extraScore.foreign
+      scoreSet.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile]
       scoreSet.foreign.high = foreignTransitionScore.score.value[0]
     }
     const _scoreList = [scoreSet.tamgu1, scoreSet.tamgu2, scoreSet.foreign]
@@ -2087,7 +2090,7 @@ export default class reportController {
       }
 
 
-      totalScore.tamgu = ( _scoreList[0].score - tamgu1Minus + _scoreList[1].score - tamgu2Minus) / ( _scoreList[0].high + _scoreList[0].high ) * perfectScore.tamgu 
+      totalScore.tamgu = ( _scoreList[0].score - tamgu1Minus + _scoreList[1].score - tamgu2Minus) / ( _scoreList[0].high + _scoreList[0].high ) * perfectScore.tamgu + _scoreList[0].extra + _scoreList[1].extra
 
     }
 
