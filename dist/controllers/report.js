@@ -1462,7 +1462,7 @@ class reportController {
       newScore.tamgu1.score = scoreSet.tamgu1.score / scoreSet.tamgu1.high;
       newScore.tamgu2.score = scoreSet.tamgu2.score / scoreSet.tamgu2.high;
       if (score.foreign.name != null) newScore.foreign.score = scoreSet.foreign.score / scoreSet.foreign.high;
-      totalScore.tamgu = (_scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high) * perfectScore.tamgu;
+      totalScore.tamgu = (_scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high) * perfectScore.tamgu / 2;
     } // 울산대 예외
 
 

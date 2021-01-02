@@ -2070,7 +2070,7 @@ export default class reportController {
 
       if ( score.foreign.name != null) newScore.foreign.score = (scoreSet.foreign.score ) / ( scoreSet.foreign.high)
 
-      totalScore.tamgu = ( _scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high ) * perfectScore.tamgu 
+      totalScore.tamgu = ( _scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high ) * perfectScore.tamgu / 2
     }
 
   
