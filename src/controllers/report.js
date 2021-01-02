@@ -787,33 +787,7 @@ export default class reportController {
 
     }
 
-    // else if ( univName == "이화여대") {
 
-    //   const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
-
-
-    //   const highestKorean = highestScore["국어"]
-    //   const highestMath = highestScore[`수학${math_type}`]
-
-    //   const highestTamgu1 = tamgu1TransitionScore.score.value[0]
-    //   const highestTamgu2 = tamgu2TransitionScore.score.value[0]
-
-    //   const tamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
-    //   const tamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
-      
-
-    //   const value = ( highestKorean * 0.3 ) + ( highestTamgu1 + highestTamgu2 + highestMath ) * 0.25
-
-    //   newScore.korean = score.korean.score * perfectScore.korean / value * 0.8
-    //   newScore.english = englishScore * perfectScore.english / 100
-    //   newScore.math = score.math.score * perfectScore.math / value * 0.8
-    //   newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value * 0.8
-    //   newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value * 0.8
-    //   if ( majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.score != null ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / value * 0.8
-
-    // }
-
-    // }
     
     else if ( applicationIndicatorType == "A") {
 
@@ -979,7 +953,7 @@ export default class reportController {
 
         console.log("탐구 변표를 구했습니다")
 
-        higehstTamgu1 = tamgu1TransitionScore.score.value[0]
+        highestTamgu1 = tamgu1TransitionScore.score.value[0]
         highestTamgu2 = tamgu2TransitionScore.score.value[0]
  
         newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] * perfectScore.tamgu / 100
