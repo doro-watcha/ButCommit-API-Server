@@ -876,6 +876,9 @@ class reportController {
                 highestTamgu1 = tamgu1TransitionScore.score.value[0];
                 highestTamgu2 = tamgu2TransitionScore.score.value[0];
                 if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0];
+                newScore.tamgu1.score = tempTamgu1 / highestTamgu1 * perfectScore.tamgu;
+                newScore.tamgu2.score = tempTamgu2 / highestTamgu2 * perfectScore.tamgu;
+                if (score.foreign.name != null) newScore.foreign.score = tempForeign / highestForeign / perfectScore.tamgu;
               } // 단국대 의치 예외처리
 
 
