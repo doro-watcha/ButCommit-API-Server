@@ -599,22 +599,23 @@ class reportController {
       newScore.math = score.math.score * perfectScore.math / value;
       newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value;
       newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value;
-    } else if (univName == "이화여대") {
-      const englishScore = majorData.gradeToScore.english.score[score.english.grade - 1];
-      const highestKorean = highestScore["국어"];
-      const highestMath = highestScore[`수학${math_type}`];
-      const highestTamgu1 = tamgu1TransitionScore.score.value[0];
-      const highestTamgu2 = tamgu2TransitionScore.score.value[0];
-      const tamgu1 = tamgu1TransitionScore.score.value[100 - score.tamgu1.percentile];
-      const tamgu2 = tamgu2TransitionScore.score.value[100 - score.tamgu2.percentile];
-      const value = highestKorean * 0.3 + (highestTamgu1 + highestTamgu2 + highestMath) * 0.25;
-      newScore.korean = score.korean.score * perfectScore.korean / value * 0.8;
-      newScore.english = englishScore * perfectScore.english / 100;
-      newScore.math = score.math.score * perfectScore.math / value * 0.8;
-      newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value * 0.8;
-      newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value * 0.8;
-      if (majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100 - score.foreign.percentile] * perfectScore.tamgu / value * 0.8;
-    } // }
+    } // else if ( univName == "이화여대") {
+    //   const englishScore = majorData.gradeToScore.english.score[score.english.grade-1]
+    //   const highestKorean = highestScore["국어"]
+    //   const highestMath = highestScore[`수학${math_type}`]
+    //   const highestTamgu1 = tamgu1TransitionScore.score.value[0]
+    //   const highestTamgu2 = tamgu2TransitionScore.score.value[0]
+    //   const tamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
+    //   const tamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
+    //   const value = ( highestKorean * 0.3 ) + ( highestTamgu1 + highestTamgu2 + highestMath ) * 0.25
+    //   newScore.korean = score.korean.score * perfectScore.korean / value * 0.8
+    //   newScore.english = englishScore * perfectScore.english / 100
+    //   newScore.math = score.math.score * perfectScore.math / value * 0.8
+    //   newScore.tamgu1.score = tamgu1 * perfectScore.tamgu / value * 0.8
+    //   newScore.tamgu2.score = tamgu2 * perfectScore.tamgu / value * 0.8
+    //   if ( majorData.metadata.tamguReplace == "사과 1과목 대체 가능" && score.foreign.score != null ) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] * perfectScore.tamgu / value * 0.8
+    // }
+    // }
     else if (applicationIndicatorType == "A") {
         console.log("A타입입니다");
         var korean = score.korean.percentile;
@@ -826,11 +827,6 @@ class reportController {
               newScore.tamgu2.score *= 1.5;
             }
 
-            if (univName == "이화여대") {
-              newScore.korean = score.korean.score / highestKorean * perfectScore.korean;
-              newScore.math = score.math.score / highestMath * perfectScore.math;
-            }
-
             console.log("C타입이 끝나고 바로 찍어보는 점수입니다");
             console.log(newScore.math);
             console.log(newScore.tamgu1.score);
@@ -843,7 +839,7 @@ class reportController {
                */
 
               const highestKorean = highestScore["국어"];
-              const highestMath = highestScore[`수학${math_type}`];
+              var highestMath = highestScore[`수학${math_type}`];
               var highestTamgu1 = highestScore[`${score.tamgu1.name}`];
               var highestTamgu2 = highestScore[`${score.tamgu2.name}`];
               var highestForeign = null;
@@ -864,20 +860,21 @@ class reportController {
                 highestTamgu2 = tamgu2TransitionScore.score.value[0];
                 if (tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0];
               }
+              /**
+              * 수학 변표가 필요한 애들은 수학점수 변경 
+              */
+
+
+              if (mathTransitionScore !== null) {
+                highestMath = mathTransitionScore.score.value[0];
+                if (mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath;else if (mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100 - score.math.percentile] * perfectScore.math / highestMath;
+              } else newScore.math = score.math.score * perfectScore.math / highestMath;
 
               newScore.korean = score.korean.score * perfectScore.korean / highestKorean;
               newScore.math = score.math.score * perfectScore.math / highestMath;
               newScore.tamgu1.score = tempTamgu1 * perfectScore.tamgu / highestTamgu1;
               newScore.tamgu2.score = tempTamgu2 * perfectScore.tamgu / highestTamgu2;
-              if (score.foreign.score != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign;
-              /**
-               * 수학 변표가 필요한 애들은 수학점수 변경 
-               */
-
-              if (mathTransitionScore !== null) {
-                if (mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath;else if (mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100 - score.math.percentile] * perfectScore.math / highestMath;
-              } else newScore.math = score.math.score * perfectScore.math / highestMath; // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
-
+              if (score.foreign.score != null) newScore.foreign.score = tempForeign * perfectScore.tamgu / highestForeign; // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
 
               if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
                 newScore.tamgu1.score = tempTamgu1 / highestTamgu1 * perfectScore.tamgu;
