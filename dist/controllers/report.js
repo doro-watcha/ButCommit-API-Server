@@ -1004,9 +1004,9 @@ class reportController {
 
         if (line == "자연") {
           if (newScore.tamgu1.score > newScore.tamgu2.score) {
-            extraScore.tamgu1 = newScore.tamgu1.score * 0.1;
+            extraScore.tamgu1 = newScore.tamgu1.percentile * 0.1;
           } else {
-            extraScore.tamgu2 = newScore.tamgu2.score * 0.1;
+            extraScore.tamgu2 = newScore.tamgu2.percentile * 0.1;
           }
         }
       }
@@ -1369,8 +1369,12 @@ class reportController {
       totalScore.tamgu = tamguList[0].score;
     } else if (majorData.metadata.tamguNumber == 2) {
       totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2;
-      extraScore.tamgu1 /= 2;
-      extraScore.tamgu2 /= 2;
+
+      if (univName !== "성신여대" || univName !== "군산대" || univName !== "숭실대") {
+        extraScore.tamgu1 /= 2;
+        extraScore.tamgu2 /= 2;
+      }
+
       if (applicationIndicatorType == "F") totalScore.tamgu *= 2; // 인하대 예외처리
 
       if (specialOption == "{ (탐구 변표 평균 +100) / (탐구변표최고점 +100) } X 비율") {

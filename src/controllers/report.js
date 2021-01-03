@@ -1378,9 +1378,9 @@ export default class reportController {
         if ( math_type =="가")extraScore.math = score.math.percentile * 0.1
         if ( line == "자연") {
           if ( newScore.tamgu1.score > newScore.tamgu2.score) {
-            extraScore.tamgu1 = newScore.tamgu1.score * 0.1
+            extraScore.tamgu1 = newScore.tamgu1.percentile * 0.1
           } else {
-            extraScore.tamgu2 = newScore.tamgu2.score * 0.1
+            extraScore.tamgu2 = newScore.tamgu2.percentile * 0.1
           }
         }
       }
@@ -1949,8 +1949,10 @@ export default class reportController {
 
       totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
 
-      extraScore.tamgu1 /= 2
-      extraScore.tamgu2 /= 2
+      if ( univName !== "성신여대" || univName !== "군산대" || univName !== "숭실대") {
+        extraScore.tamgu1 /= 2
+        extraScore.tamgu2 /= 2
+      }
 
       if ( applicationIndicatorType == "F") totalScore.tamgu *= 2
 
