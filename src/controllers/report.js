@@ -1021,7 +1021,7 @@ export default class reportController {
 
       if ( univName === "서울대") {
         newScore.tamgu1.score *= 0.8
-        newScore.tamgu2.scoere *= 0.8
+        newScore.tamgu2.score *= 0.8
       }
 
       // 고려대 예외처리
