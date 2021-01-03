@@ -1949,7 +1949,8 @@ export default class reportController {
 
       totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
 
-      if ( univName !== "성신여대" || univName !== "군산대" || univName !== "숭실대") {
+      if ( univName !== "성신여대" && univName !== "군산대" && univName !== "숭실대") {
+        console.log("/2 를 하자")
         extraScore.tamgu1 /= 2
         extraScore.tamgu2 /= 2
       }
