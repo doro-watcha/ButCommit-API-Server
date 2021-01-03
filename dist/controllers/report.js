@@ -778,9 +778,9 @@ class reportController {
             newScore.tamgu2.score = tamgu2Transition * 3 / 900 * 1000;
           }
 
-          if (univName === "서울대") {
-            newScore.tamgu1.score *= 0.8;
-            newScore.tamgu2.score *= 0.8;
+          if (univName === "서울대" && tamgu1Transition != null) {
+            newScore.tamgu1.score = tamgu1Transition * 1.6;
+            newScore.tamgu2.score = tamgu2Transition * 1.6;
           } // 고려대 예외처리
 
 
