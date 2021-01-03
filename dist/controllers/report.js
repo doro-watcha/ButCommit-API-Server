@@ -1331,6 +1331,12 @@ class reportController {
      * 탐구 반영 갯수에 따라서 달라진다
      */
 
+    if (univName !== "성신여대" && univName !== "군산대" && univName !== "숭실대" && majorData.metadata.tamguNumber == 2) {
+      console.log("탐구점수 /2 를 하자");
+      extraScore.tamgu1 /= 2;
+      extraScore.tamgu2 /= 2;
+    }
+
     var tamguList = [];
     var tamgu1 = {
       score: newScore.tamgu1.score + extraScore.tamgu1,
@@ -1369,13 +1375,6 @@ class reportController {
       totalScore.tamgu = tamguList[0].score;
     } else if (majorData.metadata.tamguNumber == 2) {
       totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2;
-
-      if (univName !== "성신여대" && univName !== "군산대" && univName !== "숭실대") {
-        console.log("/2 를 하자");
-        extraScore.tamgu1 /= 2;
-        extraScore.tamgu2 /= 2;
-      }
-
       if (applicationIndicatorType == "F") totalScore.tamgu *= 2; // 인하대 예외처리
 
       if (specialOption == "{ (탐구 변표 평균 +100) / (탐구변표최고점 +100) } X 비율") {

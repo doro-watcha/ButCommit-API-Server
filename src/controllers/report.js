@@ -1897,6 +1897,13 @@ export default class reportController {
     /**
      * 탐구 반영 갯수에 따라서 달라진다
      */
+
+    if ( univName !== "성신여대" && univName !== "군산대" && univName !== "숭실대" && majorData.metadata.tamguNumber == 2) {
+      console.log("탐구점수 /2 를 하자")
+      extraScore.tamgu1 /= 2
+      extraScore.tamgu2 /= 2
+    }
+
     var tamguList = []
 
     var tamgu1 = {
@@ -1949,11 +1956,7 @@ export default class reportController {
 
       totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
 
-      if ( univName !== "성신여대" && univName !== "군산대" && univName !== "숭실대") {
-        console.log("/2 를 하자")
-        extraScore.tamgu1 /= 2
-        extraScore.tamgu2 /= 2
-      }
+
 
       if ( applicationIndicatorType == "F") totalScore.tamgu *= 2
 
