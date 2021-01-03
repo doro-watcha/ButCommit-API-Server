@@ -1378,9 +1378,9 @@ export default class reportController {
         if ( math_type =="가")extraScore.math = score.math.percentile * 0.1
         if ( line == "자연") {
           if ( newScore.tamgu1.score > newScore.tamgu2.score) {
-            extraScore.tamgu1 = newScore.tamgu1.percentile * 0.1
+            extraScore.tamgu1 = score.tamgu1.percentile * 0.1
           } else {
-            extraScore.tamgu2 = newScore.tamgu2.percentile * 0.1
+            extraScore.tamgu2 = score.tamgu2.percentile * 0.1
           }
         }
       }
