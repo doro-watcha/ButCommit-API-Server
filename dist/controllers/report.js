@@ -1251,19 +1251,19 @@ class reportController {
         var tamgu2Score = 0;
 
         if (math_type == "가") {
-          extraScore.math = newScore.math * 0.1;
+          extraScore.math = score.math.percentile * 0.1;
         }
 
         if (line == "자연") {
           if (tamgu1Name == "물리학2" || tamgu1Name == "화학2" || tamgu1Name == "생명과학2") {
-            tamgu1Score = score.tamgu1.percentile;
+            tamgu1Score = score.tamgu1.percentile * 0.05;
           }
 
           if (tamgu2Name == "물리학2" || tamgu2Name == "화학2" || tamgu2Name == "생명과학2") {
-            tamgu2Score = score.tamgu2.percentile;
+            tamgu2Score = score.tamgu2.percentile * 0.05;
           }
 
-          extraScore.tamgu = Math.max(tamgu1Score, tamgu2Score) * 0.05;
+          if (tamgu1Score > tamgu2Score) extraScore.tamgu1 = tamgu1Score;else extraScore.tamgu2 = tamgu2Score;
         }
       } else if (extraPoint == "수가 10% / 과탐(상위 3개영역에 포함될 경우) 10점 가산" && math_type == "가" && line == "자연") {
         extraScore.math = newScore.math * 0.1;
