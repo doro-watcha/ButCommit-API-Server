@@ -1329,7 +1329,7 @@ export default class reportController {
   
 
 
-    if ( english_type == "가산"|| english_type == "감산" || majorData.gradeToScore.english.way == "감점" || majorData.gradeToScore.english.wah =="가산점") {
+    if ( english_type == "가산"|| english_type == "감산" || majorData.gradeToScore.english.way == "감점" || majorData.gradeToScore.english.way =="가산점") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade-1] * emv
     }
 
@@ -1349,7 +1349,7 @@ export default class reportController {
     }
 
 
-    
+    console.log("1")
 
     if ( extraType == "% 가산") {
 

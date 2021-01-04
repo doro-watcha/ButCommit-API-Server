@@ -967,7 +967,7 @@ class reportController {
       }
     }
 
-    if (english_type == "가산" || english_type == "감산" || majorData.gradeToScore.english.way == "감점" || majorData.gradeToScore.english.wah == "가산점") {
+    if (english_type == "가산" || english_type == "감산" || majorData.gradeToScore.english.way == "감점" || majorData.gradeToScore.english.way == "가산점") {
       extraScore.english = majorData.gradeToScore.english.score[score.english.grade - 1] * emv;
     }
 
@@ -984,6 +984,8 @@ class reportController {
       extra2 = parseInt(extraValue.split(" // ")[1]);
       extra3 = parseInt(extraValue.split(" // ")[2]);
     }
+
+    console.log("1");
 
     if (extraType == "% 가산") {
       if (extraPoint == "제2외국어/한문 표준점수의 총점에 2% 가산" && score.foreign.name != null) {
