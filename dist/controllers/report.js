@@ -1012,7 +1012,9 @@ class reportController {
             extraScore.tamgu2 = score.tamgu2.percentile * 0.1;
           }
         }
-      } else if (extraSubject == "수가") {
+      }
+
+      if (extraSubject == "수가") {
         if (math_type == "가") {
           if (extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.2;
