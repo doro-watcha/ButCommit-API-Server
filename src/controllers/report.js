@@ -1209,8 +1209,8 @@ export default class reportController {
       }
 
       if ( univName == "동명대" && majorName == "군사학과"){
-        newScore.korean.score *= 600/635
-        newScore.math.score *= 600/635
+        newScore.korean *= 600/635
+        newScore.math *= 600/635
         newScore.tamgu1.score *= 600/635
         newScore.tamgu2.score *= 600/635
         newScore.foreign.score *= 600/635
