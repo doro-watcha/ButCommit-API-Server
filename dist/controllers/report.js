@@ -1029,7 +1029,7 @@ class reportController {
             extraScore.math = score.math.percentile * 0.1;
           } else if (extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.1;
-          } else if (extraPoint = "수가 백분위 x 0.15 전형총점에 가산") {
+          } else if (extraPoint == "수가 백분위 x 0.15 전형총점에 가산") {
             extraScore.math = score.math.percentile * 0.15;
           } else {
             console.log("여기아니야?");
