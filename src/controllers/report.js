@@ -1104,19 +1104,18 @@ export default class reportController {
        * 탐구 변표까지 적용해가지고 일단 D타입에 맞게 점수 구함 
        */
 
-      var tempTamgu1 = score.tamgu1.score
-      var tempTamgu2 = score.tamgu2.score
-      var tempForeign = score.foreign.score
 
       if ( tamgu1TransitionScore !== null ) {
-
-        tempTamgu1 = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile]
-        tempTamgu2 = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile]
-        if ( tamguReplace.length > 0 && score.foreign.score != null) tempForeign = foreignTransitionScore.score.value[100-score.foreign.percentile]
+        console.log("D타입인데 탐구 변표를 써보자")
 
         highestTamgu1 = tamgu1TransitionScore.score.value[0]
         highestTamgu2 = tamgu2TransitionScore.score.value[0]
         if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0]
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / highestTamgu1
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / highestTamgu2
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / highestForeign
+
+
 
       }
 
