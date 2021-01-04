@@ -1388,7 +1388,7 @@ export default class reportController {
         }
       }
 
-      if ( extraSubject == "수가") {
+      else if ( extraSubject == "수가") {
         if ( math_type =="가") {
 
           if ( extraPoint == "수가 백분위 20% 총점에 가산") {
@@ -1409,6 +1409,7 @@ export default class reportController {
  
     
           else {
+            console.log("여기아니야?")
             extraScore.math = ( newScore.math * extraValue ) / 100 
           }
          
