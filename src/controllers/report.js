@@ -1111,9 +1111,11 @@ export default class reportController {
         highestTamgu1 = tamgu1TransitionScore.score.value[0]
         highestTamgu2 = tamgu2TransitionScore.score.value[0]
         if ( tamguReplace.length > 0 && score.foreign.score != null) highestForeign = foreignTransitionScore.score.value[0]
-        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / highestTamgu1
-        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / highestTamgu2
-        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / highestForeign
+
+
+        newScore.tamgu1.score = tamgu1TransitionScore.score.value[100-score.tamgu1.percentile] / highestTamgu1 * perfectScore.tamgu
+        newScore.tamgu2.score = tamgu2TransitionScore.score.value[100-score.tamgu2.percentile] / highestTamgu2 * perfectScore.tamgu
+        if ( tamguReplace.length > 0 && score.foreign.score != null) newScore.foreign.score = foreignTransitionScore.score.value[100-score.foreign.percentile] / highestForeign * perfectScore.tamgu
 
 
 
