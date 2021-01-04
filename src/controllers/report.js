@@ -1952,7 +1952,7 @@ export default class reportController {
       
 
       if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" )) {
-        totalScore.tamgu =  ( tamguList[0].score + tamguList[1].score ) / 2 + ( tamguList[0].extra + tamguList[1].extra) /2
+        totalScore.tamgu =  ( tamguList[0].score + tamguList[1].score ) / 2 
       }
 
       else {

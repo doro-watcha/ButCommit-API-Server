@@ -1368,7 +1368,7 @@ class reportController {
       totalScore.tamgu = tamguList[0].score;
     } else if (majorData.metadata.tamguNumber == 2) {
       if (univName == "성신여대" || univName == "부경대" || univName == "춘천교대") {
-        totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2 + (tamguList[0].extra + tamguList[1].extra) / 2;
+        totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2;
       } else {
         // 일반 대학의 경우 
         totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2; // 가산점도 /2 를 해서 표시해준다
