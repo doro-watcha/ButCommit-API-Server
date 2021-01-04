@@ -1876,9 +1876,6 @@ export default class reportController {
       if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu += 3
     }
 
-    if ( univName =="부경대" && majorData.major.line == "자연") {
-      extraScore.tamgu *= 2
-    }
 
     console.log( "가산점 계산까지 완료했습니다")
     console.log(extraScore.tamgu1)
@@ -1892,32 +1889,30 @@ export default class reportController {
       english : newScore.english + extraScore.english,
       tamgu : 0,
       history : newScore.history + extraScore.history,
-      foreign : newScore.foreign.score + extraScore.foreign
+      foreign : newScore.foreign.score
     }
 
     /**
      * 탐구 반영 갯수에 따라서 달라진다
      */
 
-    if ( (univName == "성신여대" || univName == "군산대" || univName == "숭실대" )&& majorData.metadata.tamguNumber == 2) {
-      console.log("탐구점수  * 2 를 하자")
-      extraScore.tamgu1 *= 2
-      extraScore.tamgu2 *= 2
-    }
     var tamguList = []
 
     var tamgu1 = {
       score : newScore.tamgu1.score + extraScore.tamgu1,
-      name : score.tamgu1.name 
+      name : score.tamgu1.name,
+      extra : extraScore.tamgu1
     } 
     var tamgu2 = {
       score : newScore.tamgu2.score + extraScore.tamgu2,
-      name : score.tamgu2.name 
+      name : score.tamgu2.name,
+      extra : extraScore.tamgu2 
     }
 
     var foreign = {
-      score : totalScore.foreign,
-      name : score.foreign.name
+      score : totalScore.foreign + extraScore.foreign,
+      name : score.foreign.name,
+      extra : extraScore.foreign 
     }
 
     if ( tamguReplace == "사과 1과목 대체 가능" && score.foreign.name != null ) {
@@ -1954,12 +1949,21 @@ export default class reportController {
     
     else if ( majorData.metadata.tamguNumber == 2 ) {
 
-      totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
+      
 
-      if ( (univName == "성신여대" || univName == "군산대" || univName == "숭실대" )) {
-        console.log("탐구점수  * 2 를 하자")
+      if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" )) {
+        totalScore.tamgu ( tamguList[0].score + tamguList[1].score ) / 2 + ( tamguList[0].extra + tanguList[1].extra) /2
+      }
+
+      else {
+
+        // 일반 대학의 경우 
+        totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
+
+        // 가산점도 /2 를 해서 표시해준다
         extraScore.tamgu1 /= 2
         extraScore.tamgu2 /= 2
+
       }
 
 
