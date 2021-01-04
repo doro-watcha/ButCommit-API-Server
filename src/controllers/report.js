@@ -2086,10 +2086,10 @@ export default class reportController {
     }
 
     if ( univName == "숭실대") {
-      newScore.tamgu1.score = ( scoreSet.tamgu1.score ) / ( scoreSet.tamgu1.high)
-      newScore.tamgu2.score = ( scoreSet.tamgu2.score ) / ( scoreSet.tamgu2.high)
+      newScore.tamgu1.score = ( scoreSet.tamgu1.score ) / ( scoreSet.tamgu1.high) * perfectScore.tamgu
+      newScore.tamgu2.score = ( scoreSet.tamgu2.score ) / ( scoreSet.tamgu2.high) * perfectScore.tamgu 
 
-      if ( score.foreign.name != null) newScore.foreign.score = (scoreSet.foreign.score ) / ( scoreSet.foreign.high)
+      if ( score.foreign.name != null) newScore.foreign.score = (scoreSet.foreign.score ) / ( scoreSet.foreign.high) * perfectScore.tamgu
 
       totalScore.tamgu = ( _scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high ) * perfectScore.tamgu / 2
     }
