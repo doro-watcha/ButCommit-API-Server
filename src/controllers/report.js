@@ -1092,6 +1092,14 @@ export default class reportController {
       if ( score.foreign.score != null) highestForeign = highestScore[`${score.foreign.name}`]
 
 
+
+      newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean
+      newScore.math = score.math.score * (perfectScore.math ) / highestMath
+      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1
+      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2
+      if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign
+
+
       /**
        * 탐구 변표까지 적용해가지고 일단 D타입에 맞게 점수 구함 
        */
@@ -1123,14 +1131,7 @@ export default class reportController {
         else if ( mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100-score.math.percentile] * perfectScore.math / highestMath
 
       }
-      else newScore.math = score.math.score * ( perfectScore.math  ) / highestMath
 
-
-      newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean
-      newScore.math = score.math.score * (perfectScore.math ) / highestMath
-      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1
-      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2
-      if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign
 
 
 
@@ -1138,9 +1139,6 @@ export default class reportController {
 
       // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
       if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
-
-
-
 
         newScore.tamgu1.score = tempTamgu1 / highestTamgu1 * perfectScore.tamgu
         newScore.tamgu2.score = tempTamgu2 / highestTamgu2 * perfectScore.tamgu
