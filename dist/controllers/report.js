@@ -1378,15 +1378,15 @@ class reportController {
     if (majorData.metadata.tamguNumber == 1) {
       totalScore.tamgu = tamguList[0].score;
     } else if (majorData.metadata.tamguNumber == 2) {
-      totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2;
+      if (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || univName == "동아대" && majorName == "의예과") {
+        totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2 + (tamguList[0].extra + tamguList[1].extra) / 2;
+      } else {
+        totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2; // 가산점도 /2 를 해서 표시해준다
 
-      if (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || univName == "동아대" && majorName == "의예과") {} else {
-        // 가산점도 /2 를 해서 표시해준다
         extraScore.tamgu1 /= 2;
         extraScore.tamgu2 /= 2;
-      }
+      } // 인하대 예외처리
 
-      if (applicationIndicatorType == "F") totalScore.tamgu *= 2; // 인하대 예외처리
 
       if (specialOption == "{ (탐구 변표 평균 +100) / (탐구변표최고점 +100) } X 비율") {
         const transitionHighestScore = tamgu1TransitionScore.score.value[0];
