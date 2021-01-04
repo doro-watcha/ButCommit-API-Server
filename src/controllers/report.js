@@ -1963,14 +1963,16 @@ export default class reportController {
     else if ( majorData.metadata.tamguNumber == 2 ) {
 
       
+      if ( applicationIndicatorType == "F" ) {
+
+        totalScore.tamgu = ( tamguList[0].score + tamguList[1].score)
+      }
 
 
-      if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") )) {
+      else if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") )) {
         totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2 + ( tamguList[0].extra + tamguList[1].extra) / 2 
 
       }
-
-      else if ( applicationIndicatorType == "F") totalScore.tamgu = ( tamguList[0].score + tamguList[1].score)
 
       else {
 
