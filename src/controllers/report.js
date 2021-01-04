@@ -1870,9 +1870,9 @@ export default class reportController {
 
     if ( univName == "동아대" && majorName.indexOf("의예") >= 0) {
 
-      if ( score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") extraScore.tamgu += 3
+      if ( score.tamgu1.name == "화학2" || score.tamgu1.name == "생명과학2") extraScore.tamgu1 += 3
 
-      if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu += 3
+      if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu2 += 3
     }
 
 
