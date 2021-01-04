@@ -986,6 +986,9 @@ class reportController {
     }
 
     console.log("1");
+    console.log(extraType);
+    console.log(extraSubject);
+    console.log(extraPoint);
 
     if (extraType == "% 가산") {
       if (extraPoint == "제2외국어/한문 표준점수의 총점에 2% 가산" && score.foreign.name != null) {
