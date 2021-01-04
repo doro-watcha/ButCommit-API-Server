@@ -853,13 +853,6 @@ class reportController {
             if (mathTransitionScore !== null) {
               highestMath = mathTransitionScore.score.value[0];
               if (mathTransitionScore.applicationIndicator == "표준점수") newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / highestMath;else if (mathTransitionScore.applicationIndicator == "백분위") newScore.math = mathTransitionScore.score.value[100 - score.math.percentile] * perfectScore.math / highestMath;
-            } // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
-
-
-            if (specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
-              newScore.tamgu1.score = tempTamgu1 / highestTamgu1 * perfectScore.tamgu;
-              newScore.tamgu2.score = tempTamgu2 / highestTamgu2 * perfectScore.tamgu;
-              if (score.foreign.name != null) newScore.foreign.score = tempForeign / highestForeign / perfectScore.tamgu;
             } // 단국대 의치 예외처리
 
 
@@ -916,6 +909,14 @@ class reportController {
                 if (calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
                   newScore.math = mathTransitionScore.score.value[150 - score.math.score] * perfectScore.math / 160;
                 }
+
+                if (univName == "동명대" && majorName == "군사학과") {
+                  newScore.korean.score *= 600 / 635;
+                  newScore.math.score *= 600 / 635;
+                  newScore.tamgu1.score *= 600 / 635;
+                  newScore.tamgu2.score *= 600 / 635;
+                  newScore.foreign.score *= 600 / 635;
+                }
               } // 등급: 4과목 평균 등급 환산점수
               else if (applicationIndicatorType == "G") {
                   if (univName.indexOf("경동대") >= 0) {
@@ -930,8 +931,9 @@ class reportController {
                   } // 등급: 과목 별 등급에 따른 환산점수의 합
                   else if (applicationIndicatorType == "I") {
                       newScore = await reportController.getScoreByGrade(score, majorData);
-                    } // 가산점을 구해보자!
+                    }
 
+    console.log("가산점 계산을 시작하겠습니다"); // 가산점을 구해보자!
 
     const extraType = majorData.metadata.extraType;
     const extraSubject = majorData.metadata.extraSubject;
@@ -984,6 +986,10 @@ class reportController {
     }
 
     if (extraType == "% 가산") {
+      if (extraPoint == "제2외국어/한문 표준점수의 총점에 2% 가산" && score.foreign.name != null) {
+        extraScore.foreign = score.foreign.score * 0.02;
+      }
+
       if (extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name == "중국어") {
         extraScore.foreign = score.foreign.score * 0.05;
       } else if (extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name == "일본어") {
@@ -1006,9 +1012,7 @@ class reportController {
             extraScore.tamgu2 = score.tamgu2.percentile * 0.1;
           }
         }
-      }
-
-      if (extraSubject == "수가") {
+      } else if (extraSubject == "수가") {
         if (math_type == "가") {
           if (extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.2;
@@ -1134,7 +1138,6 @@ class reportController {
 
         extraScore.korean = newScore.korean * extra2 / 100;
       } else if (extraSubject == "제2외국어/한문") {
-        console.log("가산value를 찾아보자 " + extraValue);
         extraScore.foreign = newScore.foreign.score * extraValue / 100;
       } else if (extraSubject == "수가 / 과탐 / 사탐") {} else if (extraSubject == "수가 / 과I / 과Ⅱ" || extraSubject == "수가 / 과탐I / 과탐Ⅱ") {
         if (math_type == "가") extraScore.math = newScore.math * extra1 / 100;

@@ -1240,6 +1240,7 @@ export default class reportController {
       newScore = await reportController.getScoreByGrade(score,majorData)
     }
 
+    console.log("가산점 계산을 시작하겠습니다")
 
     // 가산점을 구해보자!
 
