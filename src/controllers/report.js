@@ -1095,9 +1095,9 @@ export default class reportController {
 
       newScore.korean = score.korean.score * ( perfectScore.korean ) / highestKorean
       newScore.math = score.math.score * (perfectScore.math ) / highestMath
-      newScore.tamgu1.score = tempTamgu1 * ( perfectScore.tamgu ) / highestTamgu1
-      newScore.tamgu2.score = tempTamgu2 * ( perfectScore.tamgu ) / highestTamgu2
-      if ( score.foreign.score != null) newScore.foreign.score = tempForeign * ( perfectScore.tamgu ) / highestForeign
+      newScore.tamgu1.score = score.tamgu1.score * ( perfectScore.tamgu ) / highestTamgu1
+      newScore.tamgu2.score = score.tamgu2.score * ( perfectScore.tamgu ) / highestTamgu2
+      if ( score.foreign.score != null) newScore.foreign.score = score.foreign.score * ( perfectScore.tamgu ) / highestForeign
 
 
       /**
