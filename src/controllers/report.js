@@ -1136,16 +1136,6 @@ export default class reportController {
 
 
 
-
-
-      // GIST , 서울시립대 , 한국외대 , 한양대 예외처리 
-      if ( specialOption == "( 탐구 변표 / 변표 최고점 ) X 비율") {
-
-        newScore.tamgu1.score = tempTamgu1 / highestTamgu1 * perfectScore.tamgu
-        newScore.tamgu2.score = tempTamgu2 / highestTamgu2 * perfectScore.tamgu
-        if ( score.foreign.name != null) newScore.foreign.score = tempForeign / highestForeign / perfectScore.tamgu
-      }
-
       // 단국대 의치 예외처리
       if ( specialOption == "백분위 x 비율 ( 탐 )") {
         newScore.tamgu1.score = ( score.tamgu1.percentile * perfectScore.tamgu) / 100
@@ -1216,6 +1206,15 @@ export default class reportController {
 
       if ( calculationSpecial == "수가 지원시 변표사용" || calculationSpecial == "수나 지원시 변표사용" || calculationSpecial == "수가 선택시 변표사용" || calculationSpecial == "수가 지원시 변표사용") {
         newScore.math = mathTransitionScore.score.value[150-score.math.score] * perfectScore.math / 160 
+      }
+
+      if ( univName == "동명대" && majorName == "군사학과"){
+        newScore.korean.score *= 600/635
+        newScore.math.score *= 600/635
+        newScore.tamgu1.score *= 600/635
+        newScore.tamgu2.score *= 600/635
+        newScore.foreign.score *= 600/635
+
       }
     }
     
@@ -1353,6 +1352,10 @@ export default class reportController {
 
     if ( extraType == "% 가산") {
 
+      if ( extraPoint == "제2외국어/한문 표준점수의 총점에 2% 가산" && score.foreign.name != null){
+        extraScore.foreign = score.foreign.score * 0.02
+      }
+
       if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
         extraScore.foreign = score.foreign.score * 0.05
       }
@@ -1384,7 +1387,7 @@ export default class reportController {
         }
       }
 
-      if ( extraSubject == "수가") {
+      else if ( extraSubject == "수가") {
         if ( math_type =="가") {
 
           if ( extraPoint == "수가 백분위 20% 총점에 가산") {
@@ -1398,6 +1401,9 @@ export default class reportController {
           }
           else if ( extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.1
+          }
+          else if ( extraPoint = "수가 백분위 x 0.15 전형총점에 가산") {
+            extraScore.math = score.math.percentile * 0.15
           }
  
     
@@ -1600,6 +1606,7 @@ export default class reportController {
 
       else if ( extraSubject == "제2외국어/한문") {
 
+  
         extraScore.foreign = ( newScore.foreign.score * extraValue ) / 100
       }
 
@@ -1949,15 +1956,13 @@ export default class reportController {
     else if ( majorData.metadata.tamguNumber == 2 ) {
 
       
+      totalScore.tamgu =  ( tamguList[0].score + tamguList[1].score ) / 2 
 
-      if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" )) {
-        totalScore.tamgu =  ( tamguList[0].score + tamguList[1].score ) / 2 
+      if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") )) {
+
       }
 
       else {
-
-        // 일반 대학의 경우 
-        totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2
 
         // 가산점도 /2 를 해서 표시해준다
         extraScore.tamgu1 /= 2
@@ -2555,11 +2560,11 @@ export default class reportController {
 
 
     // 마지막으로 totalSum을 조정해보장
-    if ( majorData.gradeToScore.history.way == "가산점" || majorData.gradeToScore.history.way == "감점") {
+    if ( majorData.gradeToScore.history.way == "가산점" || majorData.gradeToScore.history.way == "감점")  {
       totalSum += totalScore.history
     }
 
-    if ( majorData.gradeToScore.english.way == "가산점" || majorData.gradeToScore.english.way =="감점")  {
+    if ( majorData.gradeToScore.english.way == "가산점" || majorData.gradeToScore.english.way =="감점" )  {
       totalSum += totalScore.english
     }
 

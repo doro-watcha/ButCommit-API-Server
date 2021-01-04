@@ -1018,6 +1018,8 @@ class reportController {
             extraScore.math = score.math.percentile * 0.1;
           } else if (extraPoint == "수가 백분위 20% 총점에 가산") {
             extraScore.math = score.math.percentile * 0.1;
+          } else if (extraPoint = "수가 백분위 x 0.15 전형총점에 가산") {
+            extraScore.math = score.math.percentile * 0.15;
           } else {
             extraScore.math = newScore.math * extraValue / 100;
           }
@@ -1132,6 +1134,7 @@ class reportController {
 
         extraScore.korean = newScore.korean * extra2 / 100;
       } else if (extraSubject == "제2외국어/한문") {
+        console.log("가산value를 찾아보자 " + extraValue);
         extraScore.foreign = newScore.foreign.score * extraValue / 100;
       } else if (extraSubject == "수가 / 과탐 / 사탐") {} else if (extraSubject == "수가 / 과I / 과Ⅱ" || extraSubject == "수가 / 과탐I / 과탐Ⅱ") {
         if (math_type == "가") extraScore.math = newScore.math * extra1 / 100;
@@ -1364,12 +1367,10 @@ class reportController {
     if (majorData.metadata.tamguNumber == 1) {
       totalScore.tamgu = tamguList[0].score;
     } else if (majorData.metadata.tamguNumber == 2) {
-      if (univName == "성신여대" || univName == "부경대" || univName == "춘천교대") {
-        totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2;
-      } else {
-        // 일반 대학의 경우 
-        totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2; // 가산점도 /2 를 해서 표시해준다
+      totalScore.tamgu = (tamguList[0].score + tamguList[1].score) / 2;
 
+      if (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || univName == "동아대" && majorName == "의예과") {} else {
+        // 가산점도 /2 를 해서 표시해준다
         extraScore.tamgu1 /= 2;
         extraScore.tamgu2 /= 2;
       }
