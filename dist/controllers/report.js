@@ -803,7 +803,7 @@ class reportController {
               newScore.tamgu2.score = tamgu2Transition / 640 * 1000;
             } else if (majorData.major.line == "인문") {
               newScore.korean = score.korean.score / 560 * 1000;
-              if (mathTransitionScore !== null) newScore.math = mathTransition / 560 * 1000;else newScore.math = score.math.score / 500 * 1000;
+              if (mathTransitionScore !== null) newScore.math = mathTransition / 560 * 1000;else newScore.math = score.math.score / 560 * 1000;
               newScore.tamgu1.score = tamgu1Transition * 0.8 / 560 * 1000;
               newScore.tamgu2.score = tamgu2Transition * 0.8 / 560 * 1000;
             }
