@@ -2634,10 +2634,7 @@ export default class reportController {
 
     var naesinScore = 0.0
 
-    console.log(score.naesinScore)
-    console.log(majorData.metadata.naesinRatio)
-
-    if ( score.naesinScore !== 0 &&  majorData.metadata.naesinRatio.length > 0 ) {
+    if ( score.naesinScore !== 0 &&  isNaN(majorData.metadata.naesinRatio) === false ) {
 
       const recruitmentType = majorData.major.recruitmentType
       const recruitmentUnit = majorData.major.recruitmentUnit
