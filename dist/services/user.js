@@ -67,6 +67,7 @@ class UserService {
 
   async update(id, user) {
     console.log(user.editTimes);
+    if (user.password) user.password = _models.User.hashPassword(user.password);
     await _models.User.update(user, {
       where: {
         id
