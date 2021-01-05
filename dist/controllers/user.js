@@ -71,7 +71,8 @@ class userController {
         academyId: _joi.default.number(),
         adminLevel: _joi.default.number(),
         telephone: _joi.default.string(),
-        isMoneyPaid: _joi.default.number()
+        isMoneyPaid: _joi.default.number(),
+        password: _joi.default.string()
       });
       const {
         name,
@@ -83,7 +84,8 @@ class userController {
         academyId,
         adminLevel,
         telephone,
-        isMoneyPaid
+        isMoneyPaid,
+        password
       } = result;
       const modelObj = {
         name,
@@ -95,7 +97,8 @@ class userController {
         academyId,
         adminLevel,
         telephone,
-        isMoneyPaid
+        isMoneyPaid,
+        pasword
       };
       const user = await _services.userService.update(id, modelObj);
       const response = {
