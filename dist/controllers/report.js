@@ -1806,10 +1806,8 @@ class reportController {
     console.log(totalScore.tamgu); // if ( univName == "대구교대") throw Error('SCORE_NOT_FOUND')
 
     var naesinScore = 0.0;
-    console.log(score.naesinScore);
-    console.log(majorData.metadata.naesinRatio);
 
-    if (score.naesinScore !== 0 && majorData.metadata.naesinRatio.length > 0) {
+    if (score.naesinScore !== 0 && isNaN(majorData.metadata.naesinRatio) === false) {
       const recruitmentType = majorData.major.recruitmentType;
       const recruitmentUnit = majorData.major.recruitmentUnit;
       const sosokUniversity = majorData.major.sosokUniversity;
