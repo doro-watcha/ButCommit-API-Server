@@ -38,6 +38,11 @@ export default class reportController {
       else if ( majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.society != 0 && line == "인문") throw Error('SCIENCE_NOT_FOUND')
       else if ( majorData.metadata.sooneungSpecial === "과탐응시 기준: 1+2 혹은 2+2 선택|같은 분야 1, 2 과목 불가" && line == "자연" && sameTamgu == true ) throw Error('DIFFERENT_TAMGU_NOT_FOUND')
       else if ( majorData.metadata.sooneungSpecial === "과탐 1,2 구분없이 서로 다른 두 과목 선택" && line =="자연" && sameTamgu == true ) throw Error('DIFFERENT_TAMGU_NOT_FOUND')
+      else if ( majorData.major.univName == "고려대"  && majorData.major.line == "인문") {
+        if ( majorData.major.majorName == "간호대학(인문)") throw Error('SCIENCE_NOT_FOUND')
+        else if ( majorData.major.majorName == "자유전공학부") throw Error('SCIENCE_NOT_FOUND')
+        else if ( majorData.major.majorName == "컴퓨터학과") throw Error('SCIENCE_NOT_FOUND')
+       }
 
       const modelObj = await reportController.getScore(score , majorData , true)
 
@@ -1888,8 +1893,8 @@ export default class reportController {
     }
     
     if ( univName == "한성대") {
-      if ( score.math.percentile >= score.korean.percentile ) extraScore.math = 40
-      else if ( score.math.percentile < score.korean.percentile ) extraScore.math = 20
+      if ( score.math.percentile + 10 >= score.korean.percentile ) extraScore.math = 40
+      else if ( score.math.percentile + 10 < score.korean.percentile ) extraScore.math = 20
     }
 
     console.log( "가산점 계산까지 완료했습니다")
