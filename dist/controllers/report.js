@@ -149,6 +149,7 @@ class reportController {
     /**
      * 1. 들어온 성적, 이용될 만점 구하기 
      */
+    console.log("점수 구해보자~");
     var major_perfectScore = majorData.metadata.perfectScore;
     const basicScore = majorData.metadata.basicScore;
     const specialOption = majorData.metadata.specialOption;
@@ -293,6 +294,7 @@ class reportController {
     var mathTransitionScore = null;
     var subject1 = "";
     var subject2 = "";
+    console.log("newScore 구하겠습니다");
 
     if (tamguTranslation.indexOf("탐구 변표사용") >= 0) {
       if (line == "인문") {
@@ -334,6 +336,8 @@ class reportController {
         }
       }
 
+      console.log("변표구하자");
+
       if (univName.indexOf("서울대") >= 0) {
         var major = "";
         if (majorData.major.line === "인문") major = "인문계열 학과 지원자";else if (majorData.major.line === "자연") major = "자연계열 학과 지원자";
@@ -362,8 +366,9 @@ class reportController {
           mathTransitionScore = _variables.SCORE_TRANSITION[i];
         }
       }
-    } //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
+    }
 
+    console.log("계산드가자"); //백분위 x (총점에 따른 비율)  [ 국, 수, 탐 ] + 영 + 한
 
     if (univName == "가야대") {
       newScore = await reportController.gayaScore(score, majorData);
@@ -919,12 +924,7 @@ class reportController {
                 }
               } // 등급: 4과목 평균 등급 환산점수
               else if (applicationIndicatorType == "G") {
-                  if (univName.indexOf("경동대") >= 0) {
-                    const gyungDongScore = await reportController.getScoreByGrade(score, majorData);
-                    return gyungDongScore;
-                  } else {
-                    newScore = await reportController.getScoreByGrade(score, majorData);
-                  }
+                  newScore = await reportController.getScoreByGrade(score, majorData);
                 } // 등급: [ 국,수,탐,영 평균 등급 활용 : ( 각 과목 별 평균등급에  해당하는 점수 x 비율 ) 의 합 ]
                 else if (applicationIndicatorType == "H") {
                     newScore = await reportController.getScoreByGrade(score, majorData);
@@ -984,11 +984,6 @@ class reportController {
       extra2 = parseInt(extraValue.split(" // ")[1]);
       extra3 = parseInt(extraValue.split(" // ")[2]);
     }
-
-    console.log("1");
-    console.log(extraType);
-    console.log(extraSubject);
-    console.log(extraPoint);
 
     if (extraType == "% 가산") {
       if (extraPoint == "제2외국어/한문 표준점수의 총점에 2% 가산" && score.foreign.name != null) {
@@ -1807,7 +1802,7 @@ class reportController {
 
     var naesinScore = 0.0;
 
-    if (score.naesinScore !== 0 && isNaN(majorData.metadata.naesinRatio) === false) {
+    if (score.naesinScore !== 0 && majorData.metadata.naesinRatio !== undefined) {
       const recruitmentType = majorData.major.recruitmentType;
       const recruitmentUnit = majorData.major.recruitmentUnit;
       const sosokUniversity = majorData.major.sosokUniversity;
@@ -1879,13 +1874,17 @@ class reportController {
     var foreignScore = 0;
 
     if (univName.indexOf("경동대") >= 0) {
+      console.log("경동대입니다");
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
       const originalGrade = (score.korean.grade + score.math.grade + score.english.grade + tamgu) / 4;
       const grade = Math.floor(originalGrade);
       if (grade == 9) translationScore = 630;else {
         translationScore = 700 - (grade - 1) * 8;
       }
-      return translationScore;
+      koreanScore = translationScore / 4;
+      mathScore = translationScore / 4;
+      tamguScore = translationScore / 4;
+      englishScore = translationScore / 4;
     } else if (univName == "광주여대") {
       const tamgu = Math.max(score.tamgu1.grade, score.tamgu2.grade);
       koreanScore = (450 - 10 * (score.korean.grade - 1)) / 3;
