@@ -98,7 +98,7 @@ export default class userController {
             adminLevel,
             telephone,
             isMoneyPaid,
-            pasword
+            password
           }
 
           const user = await userService.update(id, modelObj )

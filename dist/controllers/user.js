@@ -98,7 +98,7 @@ class userController {
         adminLevel,
         telephone,
         isMoneyPaid,
-        pasword
+        password
       };
       const user = await _services.userService.update(id, modelObj);
       const response = {
