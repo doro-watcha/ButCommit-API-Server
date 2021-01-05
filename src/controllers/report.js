@@ -1886,7 +1886,11 @@ export default class reportController {
 
       if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu2 += 3
     }
-
+    
+    if ( univName == "한성대") {
+      if ( score.math.percentile >= score.korean.percentile ) extraScore.math = 40
+      else if ( score.math.percentile < score.korean.percentile ) extraScore.math = 20
+    }
 
     console.log( "가산점 계산까지 완료했습니다")
     console.log(extraScore.tamgu1)
@@ -2103,7 +2107,7 @@ export default class reportController {
 
       if ( score.foreign.name != null) newScore.foreign.score = scoreSet.foreign.score  / scoreSet.foreign.high * perfectScore.tamgu
 
-      totalScore.tamgu = ( _scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high ) * perfectScore.tamgu / 2
+      totalScore.tamgu = ( _scoreList[0].score / _scoreList[0].high + _scoreList[1].score / _scoreList[1].high ) * perfectScore.tamgu / 2 + extraScore.tamgu1.score + extraScore.tamgu2.score
     }
 
   
@@ -2596,6 +2600,28 @@ export default class reportController {
     if ( isNaN(basicScore) == false ) {
       totalSum += basicScore
 
+    }
+
+    if ( univName == "부산대") {
+
+      if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if( extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name =="일본어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "프랑스어 표준점수 5% 총점에 가산" && score.foreign.name =="프랑스어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "독일어 표준점수 5% 총점에 가산" && score.foreign.name == "독일어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "러시아어 표준점수 5% 총점에 가산" && score.foreign.name =="러시아어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
+        totalSum += score.foreign.score * 0.05
+      }
     }
 
     console.log("totalSum까지 계산 완료했습니다")
