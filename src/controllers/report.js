@@ -1891,7 +1891,21 @@ export default class reportController {
 
       if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu2 += 3
     }
-    
+
+    if ( univName == "서경대") {
+
+      if ( extraPoint == "수가 5%, 과탐 5% 가산" && tamguReplace == "사과 1과목 대체 가능") {
+
+        if ( math_type == "가") extraScore.math = newScore.math * 0.05
+        
+        if ( line == "자연") {
+          console.log("예외처리로 여기 갔다옴")
+          extraScore.tamgu1 = newScore.tamgu1.score * 0.05
+          extraScore.tamgu2 = newScore.tamgu2.score * 0.05
+          extraScore.foreign = newScore.foreign.score * 0.05
+        }
+      }
+    }
 
     console.log( "가산점 계산까지 완료했습니다")
     console.log(extraScore.tamgu1)
@@ -1973,6 +1987,7 @@ export default class reportController {
 
 
       else if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") || univName == "부산대")) {
+      
         totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2 + ( tamguList[0].extra + tamguList[1].extra) / 2 
 
       }
@@ -1983,6 +1998,7 @@ export default class reportController {
         // 가산점도 /2 를 해서 표시해준다
         extraScore.tamgu1 /= 2
         extraScore.tamgu2 /= 2
+        extraScore.foreign /= 2
 
       }
 

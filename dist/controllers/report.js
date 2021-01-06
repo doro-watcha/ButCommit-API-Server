@@ -1319,6 +1319,19 @@ class reportController {
       if (score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu2 += 3;
     }
 
+    if (univName == "서경대") {
+      if (extraPoint == "수가 5%, 과탐 5% 가산" && tamguReplace == "사과 1과목 대체 가능") {
+        if (math_type == "가") extraScore.math = newScore.math * 0.05;
+
+        if (line == "자연") {
+          console.log("예외처리로 여기 갔다옴");
+          extraScore.tamgu1 = newScore.tamgu1.score * 0.05;
+          extraScore.tamgu2 = newScore.tamgu2.score * 0.05;
+          extraScore.foreign = newScore.foreign.score * 0.05;
+        }
+      }
+    }
+
     console.log("가산점 계산까지 완료했습니다");
     console.log(extraScore.tamgu1);
     console.log(extraScore.tamgu2);
@@ -1384,6 +1397,7 @@ class reportController {
 
         extraScore.tamgu1 /= 2;
         extraScore.tamgu2 /= 2;
+        extraScore.foreign /= 2;
       } // 인하대 예외처리
 
 
