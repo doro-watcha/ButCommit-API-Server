@@ -1539,6 +1539,7 @@ class reportController {
     if (reflectionSubject == "국") {
       totalSum = totalScore.korean;
     } else if (reflectionSubject == "국+수+영") {
+      console.log("국+수+영 해야디");
       totalSum = totalScore.korean + totalScore.math + totalScore.english;
     } else if (reflectionSubject == "국+수+영+탐+한") {
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu + totalScore.history;

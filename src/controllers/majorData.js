@@ -248,6 +248,9 @@ export default class majorDataController {
         else if (  score.line == "자연" && majorData.ratio.tamgu.science > 0){
           transitionScore = await reportController.getScore(score,majorData,false)
         }
+        else if ( majorData.ratio.tamgu == "" || majorData.ratio.tamgu == undefined){
+          transitionScore = await reportController.getScore(score,majorData,false)
+        }
 
         let prediction = "최초합유력"
 
