@@ -194,6 +194,10 @@ module.exports = {
 			status : 435,
 			ko : '탐구1, 탐구2 응시과목 중복'
 		},
+		TAMGU_MATH_NOT_MATCH :{
+			status : 436,
+			ko : "수가, 과탐 지원불가"
+		},
 
 
 
