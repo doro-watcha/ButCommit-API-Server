@@ -1940,7 +1940,7 @@ export default class reportController {
     }
 
     var foreign = {
-      score : totalScore.foreign + extraScore.foreign,
+      score : newScore.foreign + extraScore.foreign,
       name : score.foreign.name,
       extra : extraScore.foreign 
     }
@@ -1986,7 +1986,11 @@ export default class reportController {
       }
 
 
-      else if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") || univName == "부산대")) {
+      else if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") )) {
+        
+        console.log("예외처리해서 탐구다 이 새기야!")
+        console.log(tamguList[0].name)
+        console.log(tamguList[1].name)
       
         totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2 + ( tamguList[0].extra + tamguList[1].extra) / 2 
 
@@ -2599,6 +2603,36 @@ export default class reportController {
       totalSum = -1
     }
 
+    if ( univName == "부산대") {
+
+      console.log(extraPoint)
+      console.log(score.foreign.name)
+
+      if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if( extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name =="일본어") {
+        totalSum +=  score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "프랑스어 표준점수 5% 총점에 가산" && score.foreign.name =="프랑스어") {
+        totalSum +=  score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "독일어 표준점수 5% 총점에 가산" && score.foreign.name == "독일어") {
+        console.log(totalSum)
+        console.log("ㄱㅈㅇ")
+        console.log(score.foreign.score * 0.05)
+        totalSum +=  score.foreign.score * 0.05
+        console.log(totalSum)
+      }
+      else if ( extraPoint == "러시아어 표준점수 5% 총점에 가산" && score.foreign.name =="러시아어") {
+        totalSum += score.foreign.score * 0.05
+      }
+      else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
+        totalSum +=  score.foreign.score * 0.05
+      }
+    }
+    console.log(totalSum)
+
 
     // 마지막으로 totalSum을 조정해보장
     if ( majorData.gradeToScore.history.way == "가산점" || majorData.gradeToScore.history.way == "감점")  {
@@ -2609,6 +2643,7 @@ export default class reportController {
       totalSum += totalScore.english
     }
 
+    console.log(totalSum)
     if ( major_perfectScore < totalSum ) {
       if ( specialOption.indexOf("가산점 부여 후 점수 100 초과 시 100으로 반영") >= 0 ) {
         totalSum = major_perfectScore
@@ -2626,10 +2661,15 @@ export default class reportController {
     
     }
 
-    if ( isNaN(basicScore) == false ) {
+    console.log(totalSum)
+
+    if ( isNaN(basicScore) == false && basicScore !== undefined && basicScore !== "") {
+      console.log("fuck")
+      console.log(basicScore)
       totalSum += basicScore
 
     }
+    console.log(totalSum)
 
     console.log("totalSum까지 계산 완료했습니다")
 
@@ -2647,6 +2687,9 @@ export default class reportController {
       perfectScore.english = Math.floor(perfectScore.english)
       perfectScore.tamgu = Math.floor(perfectScore.tamgu)
     }
+
+
+    console.log(totalSum)
     console.log("========New Score==========")
     console.log(newScore.korean)
     console.log(newScore.math)
