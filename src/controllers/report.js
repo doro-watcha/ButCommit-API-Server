@@ -1892,10 +1892,6 @@ export default class reportController {
       if ( score.tamgu2.name == "화학2" || score.tamgu2.name == "생명과학2") extraScore.tamgu2 += 3
     }
     
-    if ( univName == "한성대") {
-      if ( score.math.percentile + 10 >= score.korean.percentile ) extraScore.math = 40
-      else if ( score.math.percentile + 10 < score.korean.percentile ) extraScore.math = 20
-    }
 
     console.log( "가산점 계산까지 완료했습니다")
     console.log(extraScore.tamgu1)
@@ -1976,7 +1972,7 @@ export default class reportController {
       }
 
 
-      else if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") )) {
+      else if ( (univName == "성신여대" || univName == "부경대" || univName == "춘천교대" || ( univName == "동아대" && majorName == "의예과") || univName == "부산대")) {
         totalScore.tamgu = ( tamguList[0].score + tamguList[1].score ) / 2 + ( tamguList[0].extra + tamguList[1].extra) / 2 
 
       }
@@ -2180,6 +2176,29 @@ export default class reportController {
     else if ( reflectionSubject == "국+수+영+탐") {
 
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.tamgu
+
+      if ( univName == "한성대"){
+
+        var mathExtra = 0
+
+        if ( math_type == "가" ) mathExtra = 10
+      
+        if ( score.math.percentile + mathExtra >= score.korean.percentile ) {
+          newScore.korean = score.korean.percentile * 2
+          newScore.math = ( score.math.percentile + mathExtra ) * 4
+        }
+        else if ( score.math.percentile + mathExtra < score.korean.percentile ) {
+          newScore.korean = score.korean.percentile * 4
+          newScore.math = ( score.math.percentile + mathExtra ) * 2
+        }
+
+        if ( score.math.percentile + mathExtra >= score.korean.percentile) extraScore.math = 40
+        else extraScore.math = 20
+      
+        
+
+        totalSum = (newScore.korean) + newScore.math + extraScore.math + totalScore.english * 0.25 + totalScore.tamgu * 0.15
+      }
     }
 
     else if ( reflectionSubject == "국+수+영+한") {
@@ -2542,18 +2561,7 @@ export default class reportController {
     // 한성대 
     else if ( reflectionSubject == "( 국, 수가나 우수영역 순서대로 40% + 20% ) + 영 25% + 탐 15%") {
 
-      const scoreList = [ totalScore.korean, totalScore.math]
 
-      scoreList.sort(function(a, b) { 
-        return b - a
-      })
-
-      if ( univName == "한성대" && math_type == "가") {
-        if ( scoreList[0] == totalScore.korean ) scoreList[1] += 10
-        else if ( scoreList[0] == totalScore.math ) scoreList[0] += 30
-      }
-
-      totalSum = scoreList[0] * 0.4 + scoreList[1] * 0.2 + totalScore.english * 0.25 + totalScore.tamgu * 0.15
 
     }
 
@@ -2607,28 +2615,6 @@ export default class reportController {
 
     }
 
-    if ( univName == "부산대") {
-
-      if ( extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name =="중국어") {
-        totalSum += score.foreign.score * 0.05
-      }
-      else if( extraPoint == "일본어 표준점수 5% 총점에 가산" && score.foreign.name =="일본어") {
-        totalSum += score.foreign.score * 0.05
-      }
-      else if ( extraPoint == "프랑스어 표준점수 5% 총점에 가산" && score.foreign.name =="프랑스어") {
-        totalSum += score.foreign.score * 0.05
-      }
-      else if ( extraPoint == "독일어 표준점수 5% 총점에 가산" && score.foreign.name == "독일어") {
-        totalSum += score.foreign.score * 0.05
-      }
-      else if ( extraPoint == "러시아어 표준점수 5% 총점에 가산" && score.foreign.name =="러시아어") {
-        totalSum += score.foreign.score * 0.05
-      }
-      else if ( extraPoint == "한문 표준점수 5% 총점에 가산" && score.foreign.name =="한문") {
-        totalSum += score.foreign.score * 0.05
-      }
-    }
-
     console.log("totalSum까지 계산 완료했습니다")
 
     if ( univName == "대구교대") {
@@ -2651,12 +2637,23 @@ export default class reportController {
     console.log(newScore.english)
     console.log(newScore.tamgu1.score)
     console.log(newScore.tamgu2.score)
+    console.log(newScore.foreign.score)
+    console.log("======= Extra Score ===========")
+    console.log(extraScore.korean)
+    console.log(extraScore.math)
+    console.log(extraScore.english)
+    console.log(extraScore.tamgu1)
+    console.log(extraScore.tamgu2)
+    console.log(extraScore.foreign)
+    
     console.log("========Total Score==========")
     console.log(totalScore.korean)
     console.log(totalScore.math)
     console.log(totalScore.english)
     console.log(totalScore.tamgu)
 
+    console.log("총합계(내신제외)")
+    console.log(totalSum)
     // if ( univName == "대구교대") throw Error('SCORE_NOT_FOUND')
 
     var naesinScore = 0.0
