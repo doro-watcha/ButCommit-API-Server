@@ -1773,6 +1773,7 @@ class reportController {
     if (univName == "부산대") {
       console.log(extraPoint);
       console.log(score.foreign.name);
+      extraScore.foreign *= 2;
 
       if (extraPoint == "중국어 표준점수 5% 총점에 가산" && score.foreign.name == "중국어") {
         totalSum += score.foreign.score * 0.05;
