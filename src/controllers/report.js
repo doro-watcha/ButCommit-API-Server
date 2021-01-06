@@ -2201,11 +2201,11 @@ export default class reportController {
       
         if ( score.math.percentile + mathExtra >= score.korean.percentile ) {
           newScore.korean = score.korean.percentile * 2
-          newScore.math = ( score.math.percentile + mathExtra ) * 4
+          newScore.math = ( score.math.percentile ) * 4
         }
         else if ( score.math.percentile + mathExtra < score.korean.percentile ) {
           newScore.korean = score.korean.percentile * 4
-          newScore.math = ( score.math.percentile + mathExtra ) * 2
+          newScore.math = ( score.math.percentile ) * 2
         }
 
         if ( score.math.percentile + mathExtra >= score.korean.percentile) extraScore.math = 40
