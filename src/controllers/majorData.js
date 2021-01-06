@@ -248,7 +248,7 @@ export default class majorDataController {
         else if (  score.line == "자연" && majorData.ratio.tamgu.science > 0){
           transitionScore = await reportController.getScore(score,majorData,false)
         }
-        else if ( majorData.ratio.tamgu == "" || majorData.ratio.tamgu == undefined){
+        else if ( majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.science == 0){
           transitionScore = await reportController.getScore(score,majorData,false)
         }
 

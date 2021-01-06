@@ -226,7 +226,7 @@ class majorDataController {
           transitionScore = await _report.default.getScore(score, majorData, false);
         } else if (score.line == "자연" && majorData.ratio.tamgu.science > 0) {
           transitionScore = await _report.default.getScore(score, majorData, false);
-        } else if (majorData.ratio.tamgu == "" || majorData.ratio.tamgu == undefined) {
+        } else if (majorData.ratio.tamgu.society == 0 && majorData.ratio.tamgu.science == 0) {
           transitionScore = await _report.default.getScore(score, majorData, false);
         }
 
