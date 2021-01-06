@@ -2197,7 +2197,7 @@ export default class reportController {
       
         
 
-        totalSum = (newScore.korean) + newScore.math + extraScore.math + totalScore.english * 0.25 + totalScore.tamgu * 0.15
+        totalSum = (newScore.korean) + newScore.math + extraScore.math + totalScore.english + totalScore.tamgu
       }
     }
 

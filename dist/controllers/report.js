@@ -1541,7 +1541,7 @@ class reportController {
         }
 
         if (score.math.percentile + mathExtra >= score.korean.percentile) extraScore.math = 40;else extraScore.math = 20;
-        totalSum = newScore.korean + newScore.math + extraScore.math + totalScore.english * 0.25 + totalScore.tamgu * 0.15;
+        totalSum = newScore.korean + newScore.math + extraScore.math + totalScore.english + totalScore.tamgu;
       }
     } else if (reflectionSubject == "국+수+영+한") {
       totalSum = totalScore.korean + totalScore.math + totalScore.english + totalScore.history;
