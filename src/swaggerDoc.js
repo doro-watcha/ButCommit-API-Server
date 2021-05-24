@@ -1,7 +1,7 @@
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 
-// import { schema as Commit } from './models/Commit'
+import { schema as Commit } from './models/Commit'
 
 const ApiResponse = {
 	type: 'object',
@@ -52,6 +52,22 @@ const parameters = {
 		schema: {
 			type: 'integer',
 		},
+	},
+	username : {
+		name : 'username',
+		in: 'query',
+		description : 'github 유저명 ex) goddoro',
+		shcema : {
+			type : 'string'
+		}
+	},
+	startDate : {
+		name : 'startDate',
+		in : 'query',
+		description : '1일 1커밋 시작 날짜 ex) 2021-05-24',
+		schema : {
+			type : 'date'
+		}
 	}
 
 
@@ -67,7 +83,7 @@ const options = {
 		},
 		components: {
 			schemas: {
-
+				Commit
 			},
 			securitySchemes: {
 				bearerAuth: {

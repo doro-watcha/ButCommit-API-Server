@@ -4,9 +4,10 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
 var _swaggerJsdoc = _interopRequireDefault(require("swagger-jsdoc"));
 
+var _Commit = require("./models/Commit");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { schema as Commit } from './models/Commit'
 const ApiResponse = {
   type: 'object',
   properties: {
@@ -54,6 +55,22 @@ const parameters = {
     schema: {
       type: 'integer'
     }
+  },
+  username: {
+    name: 'username',
+    in: 'query',
+    description: 'github 유저명 ex) goddoro',
+    shcema: {
+      type: 'string'
+    }
+  },
+  startDate: {
+    name: 'startDate',
+    in: 'query',
+    description: '1일 1커밋 시작 날짜 ex) 2021-05-24',
+    schema: {
+      type: 'date'
+    }
   }
 };
 const options = {
@@ -64,7 +81,9 @@ const options = {
       version: '2.0.0'
     },
     components: {
-      schemas: {},
+      schemas: {
+        Commit: _Commit.schema
+      },
       securitySchemes: {
         bearerAuth: {
           type: 'http',

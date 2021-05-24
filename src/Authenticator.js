@@ -1,6 +1,7 @@
 import passport from 'passport'
 import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
 
+import { userService, academyService } from './services'
 import { createErrorResponse } from './utils/functions'
 
 // singleton instance
