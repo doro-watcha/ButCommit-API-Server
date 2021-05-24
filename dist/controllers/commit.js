@@ -28,7 +28,11 @@ class commitController {
         startDate
       } = result;
       const commits = [];
-      const html = await _axios.default.get("https://github.com/" + username);
+      const html = await _axios.default.get("https://github.com/" + username).catch(function (error) {
+        if (error.response.status == 404) {
+          throw Error('USER_NOT_FOUND');
+        }
+      });
 
       const $ = _cheerio.default.load(html.data);
 

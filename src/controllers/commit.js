@@ -21,7 +21,11 @@ export default class commitController {
 
 
       const commits = []
-      const html = await axios.get("https://github.com/" + username)
+      const html = await axios.get("https://github.com/" + username).catch ( function (error){
+        if ( error.response.status == 404) {
+          throw Error('USER_NOT_FOUND')
+        }
+      })
       const $ = cheerio.load(html.data)
       $('.ContributionCalendar-day').each ( function (index,element){
 
