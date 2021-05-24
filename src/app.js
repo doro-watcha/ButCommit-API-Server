@@ -66,10 +66,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const job = schedule.scheduleJob('0 * * * * *',function(){
-
-  fcmService.checkCommit()
-})
+//const job = schedule.scheduleJob('0 * * * * *',function(){
+//	console.log("WOW")
+//  fcmService.checkCommit()
+//})
 
 
 

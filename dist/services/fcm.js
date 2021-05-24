@@ -44,6 +44,7 @@ class FcmService {
     //   'cGwH-muAS7uuOqfNyNC8ws:APA91bHLgss3F8RoC_wUw9HvGr-KSLhavSp5HEpuLLYtDEM_8Vjw-I57JJaK4y7O6E_8KjRm0IfAWbKS9JurI12r0eekGOiCd21oj9gl7PxuonUrJldS7LjPreYpTlSqe1Zdsh2_5vj7'
     // //target_token은 푸시 메시지를 받을 디바이스의 토큰값입니다
     const users = await _models.User.findAll();
+    console.log(users);
 
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
@@ -57,7 +58,8 @@ class FcmService {
       const $ = _cheerio.default.load(html.data);
 
       const length = $('.ContributionCalendar-day').length;
-      const lastCommitCount = $('.ContributionCalendar-day')[length - 1].attribs['date-count'];
+      console.log($('.ContributionCalendar-day')[365].attribs);
+      const lastCommitCount = $('.ContributionCalendar-day')[365].attribs['data-count'];
       console.log("length = " + length);
       console.log("lastCommitCount" + lastCommitCount);
 

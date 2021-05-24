@@ -36,7 +36,7 @@ class FcmService {
     // //target_token은 푸시 메시지를 받을 디바이스의 토큰값입니다
 
     const users = await User.findAll()
-
+	console.log(users)
     for ( let i = 0 ; i < users.length; i++){
 
       const user = users[i]
@@ -52,7 +52,8 @@ class FcmService {
 
       const $ = cheerio.load(html.data)
       const length = $('.ContributionCalendar-day').length
-      const lastCommitCount = $('.ContributionCalendar-day')[length-1].attribs['date-count']
+	    console.log($('.ContributionCalendar-day')[365].attribs)
+      const lastCommitCount = $('.ContributionCalendar-day')[365].attribs['data-count']
 
       console.log("length = " + length)
       console.log("lastCommitCount" + lastCommitCount)

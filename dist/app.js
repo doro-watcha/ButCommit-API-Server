@@ -70,10 +70,10 @@ app.use(function (err, req, res, next) {
 
   res.status(err.status || 500);
   res.render('error');
-});
-
-const job = _nodeSchedule.default.scheduleJob('0 * * * * *', function () {//fcmService.checkCommit()
-});
+}); //const job = schedule.scheduleJob('0 * * * * *',function(){
+//	console.log("WOW")
+//  fcmService.checkCommit()
+//})
 
 app.listen(3000);
 module.exports = app;
