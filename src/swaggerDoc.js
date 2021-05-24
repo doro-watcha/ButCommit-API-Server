@@ -1,7 +1,7 @@
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 
-import { schema as Commit } from './models/Commit'
+// import { schema as Commit } from './models/Commit'
 
 const ApiResponse = {
 	type: 'object',
@@ -67,7 +67,7 @@ const options = {
 		},
 		components: {
 			schemas: {
-				Commit
+
 			},
 			securitySchemes: {
 				bearerAuth: {

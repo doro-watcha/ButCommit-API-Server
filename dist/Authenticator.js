@@ -9,8 +9,6 @@ var _passport = _interopRequireDefault(require("passport"));
 
 var _passportJwt = require("passport-jwt");
 
-var _services = require("./services");
-
 var _functions = require("./utils/functions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -37,7 +35,7 @@ class Authenticator {
     };
     const jwtStrategy = new _passportJwt.Strategy(jwtStrategyOption, async (req, payload, done) => {
       try {
-        const user = await _services.userService.findOne({
+        const user = await userService.findOne({
           id: payload.id
         });
         if (user) done(null, user);else done(null, false);

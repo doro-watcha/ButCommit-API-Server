@@ -4,10 +4,9 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
 var _swaggerJsdoc = _interopRequireDefault(require("swagger-jsdoc"));
 
-var _Commit = require("./models/Commit");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { schema as Commit } from './models/Commit'
 const ApiResponse = {
   type: 'object',
   properties: {
@@ -65,9 +64,7 @@ const options = {
       version: '2.0.0'
     },
     components: {
-      schemas: {
-        Commit: _Commit.schema
-      },
+      schemas: {},
       securitySchemes: {
         bearerAuth: {
           type: 'http',
