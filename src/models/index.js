@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import dbConfig from '../config/db-config'
 
-const CommitModel = require('./Commit')
+import UserCommitModel from './UserCommit'
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
@@ -9,7 +9,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 
 const models = {
- Commit : CommitModel.init(sequelize, Sequelize)
+ UserCommit : UserCommitModel.init(sequelize, Sequelize)
 
 
 }

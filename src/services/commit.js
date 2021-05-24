@@ -1,4 +1,4 @@
-import { Commit } from  '../models'
+import { UserCommit } from  '../models'
 
 let instance = null
 

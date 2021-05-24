@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize'
 
-export default class Commit extends Sequelize.Model {
+export default class UserCommit extends Sequelize.Model {
 
 
     static init(sequelize) {

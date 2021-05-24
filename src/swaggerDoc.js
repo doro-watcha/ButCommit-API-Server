@@ -1,7 +1,7 @@
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 
-import { schema as Commit } from './models/Commit'
+import { schema as Commit } from './models/UserCommit'
 
 const ApiResponse = {
 	type: 'object',

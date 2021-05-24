@@ -4,7 +4,7 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
 var _swaggerJsdoc = _interopRequireDefault(require("swagger-jsdoc"));
 
-var _Commit = require("./models/Commit");
+var _UserCommit = require("./models/UserCommit");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -82,7 +82,7 @@ const options = {
     },
     components: {
       schemas: {
-        Commit: _Commit.schema
+        Commit: _UserCommit.schema
       },
       securitySchemes: {
         bearerAuth: {
