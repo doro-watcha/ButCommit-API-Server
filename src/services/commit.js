@@ -13,7 +13,7 @@ class CommitService {
   }
 
   async create ( modelObj ) {
-    return await Consulting.create(modelObj)
+    return await Commit.create(modelObj)
   }
 
 }
