@@ -12,6 +12,11 @@ router.get('/', (req,res) => {
   commitController.crawl(req,res)
 })
 
+router.get('/check', (req,res) => {
+  commitController.check(req,res)
+})
+
+
 
 
 /**

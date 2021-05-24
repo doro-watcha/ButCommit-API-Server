@@ -64,6 +64,30 @@ export default class commitController {
   }
   
 
+  static async check ( req, res) {
+
+    try {
+
+      const result = await Joi.validate(req.query, {
+        username : Joi.string().required()
+      })
+
+      const { username } = result
+
+      await axios.get("https://github.com/" + username).catch ( function (error){
+        if ( error.response.status == 404) {
+          throw Error('USER_NOT_FOUND')
+        } 
+      })
+
+      res.send({ sucess : true})
+
+
+    } catch ( e ) {
+      res.send(createErrorResponse(e))
+    }
+  }
+
 
     
 

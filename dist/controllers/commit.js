@@ -65,6 +65,27 @@ class commitController {
     }
   }
 
+  static async check(req, res) {
+    try {
+      const result = await _joi.default.validate(req.query, {
+        username: _joi.default.string().required()
+      });
+      const {
+        username
+      } = result;
+      await _axios.default.get("https://github.com/" + username).catch(function (error) {
+        if (error.response.status == 404) {
+          throw Error('USER_NOT_FOUND');
+        }
+      });
+      res.send({
+        sucess: true
+      });
+    } catch (e) {
+      res.send((0, _functions.createErrorResponse)(e));
+    }
+  }
+
 }
 
 exports.default = commitController;

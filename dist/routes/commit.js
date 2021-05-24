@@ -15,6 +15,9 @@ const router = new _express.Router();
 router.get('/', (req, res) => {
   _controllers.commitController.crawl(req, res);
 });
+router.get('/check', (req, res) => {
+  _controllers.commitController.check(req, res);
+});
 /**
  * @swagger
  *
