@@ -16,6 +16,7 @@ export default class Commit extends Sequelize.Model {
             
               }
 
+              
             },{
               sequelize
             }
