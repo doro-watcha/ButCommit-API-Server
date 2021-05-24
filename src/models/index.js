@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import dbConfig from '../config/db-config'
 
-import CommitModel from './Commit'
+const CommitModel = require('./Commit')
 
 const env = process.env.NODE_ENV || 'development'
 const config = dbConfig[env]
