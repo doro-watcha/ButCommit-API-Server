@@ -20,6 +20,10 @@ var _index = _interopRequireDefault(require("./routes/index"));
 
 var _models = _interopRequireDefault(require("./models"));
 
+var _nodeSchedule = _interopRequireDefault(require("node-schedule"));
+
+var _services = require("./services");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express.default)(); // view engine setup
@@ -67,5 +71,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const job = _nodeSchedule.default.scheduleJob('0 * * * * *', function () {//fcmService.checkCommit()
+});
+
 app.listen(3000);
 module.exports = app;

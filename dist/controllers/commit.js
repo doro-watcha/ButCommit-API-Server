@@ -11,6 +11,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _cheerio = _interopRequireDefault(require("cheerio"));
 
+var _services = require("../services");
+
 var _functions = require("../utils/functions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -48,6 +50,7 @@ class commitController {
           });
         }
       });
+      console.log("length = " + $('.ContributionCalendar-day').length);
       commits.sort(function (a, b) {
         a = new Date(a.date);
         b = new Date(b.date);
@@ -70,6 +73,7 @@ class commitController {
       const result = await _joi.default.validate(req.query, {
         username: _joi.default.string().required()
       });
+      await _services.fcmService.testSend();
       const {
         username
       } = result;
@@ -79,7 +83,7 @@ class commitController {
         }
       });
       res.send({
-        sucess: true
+        success: true
       });
     } catch (e) {
       res.send((0, _functions.createErrorResponse)(e));

@@ -11,6 +11,9 @@ import swaggerDoc from './swaggerDoc'
 import indexRouter from './routes/index'
 import models from './models'
 
+import schedule from 'node-schedule'
+
+import {fcmService}  from './services'
 
 
 var app = express();
@@ -39,6 +42,7 @@ models.sequelize
     app.use(passport.initialize())
 
     console.log("good")
+
 		app.listen(process.env.PORT, () => console.log(`App listening on port 3000`))
 	})
 	.catch((error) => {
@@ -62,7 +66,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+const job = schedule.scheduleJob('0 * * * * *',function(){
+
+  //fcmService.checkCommit()
+})
+
 
 
 app.listen(3000);
 module.exports = app;
+

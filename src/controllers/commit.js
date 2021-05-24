@@ -3,6 +3,7 @@ import Joi from '@hapi/joi'
 import axios from 'axios'
 import cheerio from 'cheerio'
 
+import { fcmService } from '../services'
 import { createErrorResponse } from '../utils/functions'
 
 
@@ -42,6 +43,8 @@ export default class commitController {
 
       })
 
+      console.log("length = " + $('.ContributionCalendar-day').length)
+
       commits.sort(function(a, b) {
         a = new Date(a.date);
         b = new Date(b.date);
@@ -71,6 +74,8 @@ export default class commitController {
       const result = await Joi.validate(req.query, {
         username : Joi.string().required()
       })
+
+      await fcmService.testSend()
 
       const { username } = result
 
