@@ -5,7 +5,7 @@
     "development": {
       "username": "root",
       "password": "gusgh0705",
-      "database": "daehakga",
+      "database": "butcommit",
       "host": "127.0.0.1",
       "dialect": "mysql",
       "operatorsAliases": false

@@ -20,8 +20,6 @@ var _index = _interopRequireDefault(require("./routes/index"));
 
 var _models = _interopRequireDefault(require("./models"));
 
-var _controllers = require("./controllers");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express.default)(); // view engine setup
@@ -49,9 +47,6 @@ _models.default.sequelize.sync({
   const passport = _Authenticator.default.initialize(app);
 
   app.use(passport.initialize());
-
-  _controllers.scoreTransitionController.parse();
-
   console.log("good");
   app.listen(process.env.PORT, () => console.log(`App listening on port 3000`));
 }).catch(error => {

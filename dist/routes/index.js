@@ -1,56 +1,6 @@
 "use strict";
 
-var _university = _interopRequireDefault(require("./university"));
-
-var _score = _interopRequireDefault(require("./score"));
-
-var _auth = _interopRequireDefault(require("./auth"));
-
-var _user = _interopRequireDefault(require("./user"));
-
-var _report = _interopRequireDefault(require("./report"));
-
-var _major = _interopRequireDefault(require("./major"));
-
-var _consulting = _interopRequireDefault(require("./consulting"));
-
-var _paymentRecord = _interopRequireDefault(require("./paymentRecord"));
-
-var _academy = _interopRequireDefault(require("./academy"));
-
-var _file = _interopRequireDefault(require("./file"));
-
-var _majorData = _interopRequireDefault(require("./majorData"));
-
-var _test = _interopRequireDefault(require("./test"));
-
-var _highestScore = _interopRequireDefault(require("./highestScore"));
-
-var _scoreTransition = _interopRequireDefault(require("./scoreTransition"));
-
-var _finalReport = _interopRequireDefault(require("./finalReport"));
-
-var _community = _interopRequireDefault(require("./community"));
-
-var _notification = _interopRequireDefault(require("./notification"));
-
-var _gradeUniversity = _interopRequireDefault(require("./gradeUniversity"));
-
-var _naesin = _interopRequireDefault(require("./naesin"));
-
-var _comment = _interopRequireDefault(require("./comment"));
-
-var _autoTransition = _interopRequireDefault(require("./autoTransition"));
-
-var _redop = _interopRequireDefault(require("./redop"));
-
-var _reportData = _interopRequireDefault(require("./reportData"));
-
-var _finalReportData = _interopRequireDefault(require("./finalReportData"));
-
-var _product = _interopRequireDefault(require("./product"));
-
-var _gradeCut = _interopRequireDefault(require("./gradeCut"));
+var _commit = _interopRequireDefault(require("./commit"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64,30 +14,5 @@ router.get('/', function (req, res, next) {
     title: 'Express'
   });
 });
-router.use('/university', _university.default);
-router.use('/score', _score.default);
-router.use('/auth', _auth.default);
-router.use('/user', _user.default);
-router.use('/report', _report.default);
-router.use('/major', _major.default);
-router.use('/consulting', _consulting.default);
-router.use('/paymentRecord', _paymentRecord.default);
-router.use('/academy', _academy.default);
-router.use('/file', _file.default);
-router.use('/majorData', _majorData.default);
-router.use('/test', _test.default);
-router.use('/highestScore', _highestScore.default);
-router.use('/scoreTransition', _scoreTransition.default);
-router.use('/notification', _notification.default);
-router.use('/community', _community.default);
-router.use('/finalReport', _finalReport.default);
-router.use('/gradeUniversity', _gradeUniversity.default);
-router.use('/naesin', _naesin.default);
-router.use('/comment', _comment.default);
-router.use('/autoTransition', _autoTransition.default);
-router.use('/redop', _redop.default);
-router.use('/reportData', _reportData.default);
-router.use('/finalReportData', _finalReportData.default);
-router.use('/product', _product.default);
-router.use('/gradeCut', _gradeCut.default);
+router.use('/commit', _commit.default);
 module.exports = router;
