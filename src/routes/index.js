@@ -3,6 +3,7 @@ var router = express.Router();
 
 import commitRouter from './commit'
 import userRouter from './user'
+import groupRouter from './m'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,6 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/commit', commitRouter)
 router.use('/user', userRouter)
+router.use('/group', groupRouter)
 
 
 
