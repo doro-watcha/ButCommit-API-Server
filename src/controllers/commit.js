@@ -80,7 +80,7 @@ export default class commitController {
         } 
       })
 
-      res.send({ sucess : true})
+      res.send({ success : true})
 
 
     } catch ( e ) {
