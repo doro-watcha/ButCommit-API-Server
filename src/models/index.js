@@ -9,7 +9,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 
 const models = {
- Commit : CommitModel.init(sequelize, Sequelize),
+ Commit : CommitModel.init(sequelize, Sequelize)
 
 
 }
