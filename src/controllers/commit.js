@@ -14,10 +14,11 @@ export default class commitController {
 
       const result = await Joi.validate(req.query, {
         username : Joi.string().required(),
-        startDate : Joi.date().optional()
+        startDate : Joi.date().required()
       })
 
       const { username , startDate } = result 
+
 
       const commits = []
       const html = await axios.get("https://github.com/" + username)

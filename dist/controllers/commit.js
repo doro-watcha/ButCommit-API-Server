@@ -21,7 +21,7 @@ class commitController {
     try {
       const result = await _joi.default.validate(req.query, {
         username: _joi.default.string().required(),
-        startDate: _joi.default.date().optional()
+        startDate: _joi.default.date().required()
       });
       const {
         username,
