@@ -27,6 +27,15 @@ export default class Commit extends Sequelize.Model {
 
   
       }
+
+
+		toJSON() {
+			const object = Object.assign({}, this.dataValues)
+
+			
+			return object
+		}
+    
   
     
 }

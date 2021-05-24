@@ -27,6 +27,11 @@ class Commit extends _sequelize.default.Model {
 
   static associate(models) {}
 
+  toJSON() {
+    const object = Object.assign({}, this.dataValues);
+    return object;
+  }
+
 }
 
 exports.default = Commit;
