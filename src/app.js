@@ -68,7 +68,7 @@ app.use(function(err, req, res, next) {
 
 const job = schedule.scheduleJob('0 * * * * *',function(){
 
-  //fcmService.checkCommit()
+  fcmService.checkCommit()
 })
 
 
