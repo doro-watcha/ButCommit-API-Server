@@ -1,6 +1,6 @@
-import universityService from './university'
+import commitService from './commit'
 
 
 module.exports = {
-
+    commitService
 }

@@ -1,7 +1,9 @@
 "use strict";
 
-var _university = _interopRequireDefault(require("./university"));
+var _commit = _interopRequireDefault(require("./commit"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = {};
+module.exports = {
+  commitService: _commit.default
+};

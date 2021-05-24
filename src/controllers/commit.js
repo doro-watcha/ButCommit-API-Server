@@ -19,8 +19,6 @@ export default class commitController {
 
       const { username , startDate } = result 
 
-
-
       const commits = []
       const html = await axios.get("https://github.com/" + username)
       const $ = cheerio.load(html.data)

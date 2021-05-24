@@ -1,19 +1,21 @@
-// import { Commit } from  '../models'
+import { Commit } from  '../models'
 
-// let instance = null
+let instance = null
 
-// class CommitService {
+class CommitService {
 
-//     constructor() {
-// 		if (!instance) {
-// 			console.log('Commit Service 생성' + this)
-// 			instance = this
-// 		}
-// 		return instance
-//   }
+    constructor() {
+		if (!instance) {
+			console.log('Commit Service 생성' + this)
+			instance = this
+		}
+		return instance
+  }
 
-//   async create ( modelObj ) {
-//     return await Consulting.create(modelObj)
-//   }
+  async create ( modelObj ) {
+    return await Consulting.create(modelObj)
+  }
 
-// }
+}
+
+export default new CommitService()
