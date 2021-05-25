@@ -58,8 +58,8 @@ class FcmService {
       const $ = _cheerio.default.load(html.data);
 
       const length = $('.ContributionCalendar-day').length;
-      console.log($('.ContributionCalendar-day')[365].attribs);
-      const lastCommitCount = $('.ContributionCalendar-day')[365].attribs['data-count'];
+      console.log($('.ContributionCalendar-day')[length - 6].attribs);
+      const lastCommitCount = $('.ContributionCalendar-day')[length - 6].attribs['data-count'];
       console.log("length = " + length);
       console.log("lastCommitCount" + lastCommitCount);
 

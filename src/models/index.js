@@ -13,7 +13,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 const models = {
  UserCommit : UserCommitModel.init(sequelize, Sequelize),
  User : UserModel.init(sequelize, Sequelize),
- Group : GroupModel.init(sequelize, Sequelzie)
+ Group : GroupModel.init(sequelize, Sequelize)
 
 
 }

@@ -3,7 +3,7 @@ var router = express.Router();
 
 import commitRouter from './commit'
 import userRouter from './user'
-import groupRouter from './m'
+import groupRouter from './group'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
